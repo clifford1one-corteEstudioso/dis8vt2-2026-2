@@ -69,12 +69,11 @@ mi meta era hacer el primer el prototipo, para hacerla SMART, definí todos sus 
 7. lograr que la IA detecte estos patrones
 8. descubrir niveles promedio de cantidad de estos patrones en cada video(en este caso, dentro de MÍ algoritmo)
 
-## recorrido del cliente
+## viaje del usuario
 
-1. descubrimiento
-2. consideración
-3. decisión
-4. comprar
-5. experiencia de usuario
-6. fidelización
-7. promoción
+1. Awareness
+2. Consideration
+3. Adopción
+3. Uso activo
+4. Retención
+5. Advocacy
