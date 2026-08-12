@@ -57,3 +57,24 @@ mi meta era hacer el primer el prototipo, para hacerla SMART, definí todos sus 
 - investigar hacer apps con google ai studio
 
 - revisar qué tipos de accesos tienen estas tecnologías y elegir la que cumpla más con lo que necesito
+
+### meta-SMART-2
+
+1. investigar cómo se hacen las IA
+2. definir qué lenguaje de programación me conviene usar para que pueda correr en un android. 
+3. investigar que manera de crear la app cumple con los requisitos que tengo y me permite descargarla en un android(android studio, google ai studio, expo.dev, kotlin, etc).
+4. revisar permisos y a qué pueden acceder estas tecnologías y lenguajes
+5. lograr que la IA vea mi pantalla y entienda qué está viendo
+6. definir conductas o patrones en el contenido que promueven el uso por arrastre
+7. lograr que la IA detecte estos patrones
+8. descubrir niveles promedio de cantidad de estos patrones en cada video(en este caso, dentro de MÍ algoritmo)
+
+## recorrido del cliente
+
+1. descubrimiento
+2. consideración
+3. decisión
+4. comprar
+5. experiencia de usuario
+6. fidelización
+7. promoción
