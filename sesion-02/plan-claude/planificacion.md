@@ -15,51 +15,55 @@ Punto de partida: **miércoles 12 de agosto 2026** (sesión-01).
 
 El feedback de clase fue claro: **antes de programar hay que decidir con qué**. Por eso las metas SMART de 3 días son los pasos 2-4 de `meta-SMART-2`, no el paso 1.
 
-### SMART 1 — Decisión de stack (vence vie 14 ago, 20:00)
+### Meta DECISIÓN — Decisión de stack (vence vie 14 ago, 20:00)
 
 > Antes del viernes 14/08 a las 20:00 tendré `sesion-02/decision-tecnica.md` con una matriz comparativa de **3 vías** de construcción — (a) Android nativo/Kotlin, (b) Expo + React Native, (c) Google AI Studio applets — evaluadas contra **5 criterios**: acceso a captura de pantalla en Android (MediaProjection / Accessibility Service), permisos que exige y qué muestra al usuario, si permite instalar el build en **mi** teléfono sin Play Store, curva de aprendizaje realista en menos de 2 semanas, y costo de inferencia por hora de uso. Cierra con **1 vía elegida** y un párrafo de justificación.
 
 - Medible: matriz 3×5 completa + 1 decisión escrita.
 - Por qué esta y no "investigar cómo se hacen las IA": esa meta no es medible ni acotable. Esta sí, y desbloquea todo lo demás.
 
-### SMART 2 — App propia corriendo en mi teléfono (vence sáb 15 ago, 20:00)
+### Meta TELÉFONO — App propia corriendo en mi teléfono (vence sáb 15 ago, 20:00)
 
-> Antes del sábado 15/08 a las 20:00 tendré instalada **en mi Android** una app hecha por mí con la vía elegida en SMART 1, que al abrirse solicite el permiso de captura de pantalla y muestre en pantalla si fue concedido o denegado.
+> Antes del sábado 15/08 a las 20:00 tendré instalada **en mi Android** una app hecha por mí con la vía elegida en Meta DECISIÓN, que al abrirse solicite el permiso de captura de pantalla y muestre en pantalla si fue concedido o denegado.
 
 - Medible: video de 15 s de la app corriendo en el teléfono + el repo/proyecto commiteado.
 - Esto responde directamente al feedback "lograr instalar una app mía en un teléfono".
 - Es un *hola mundo con permiso*, no el prototipo. Lo que valida es la vía, no la IA.
 
-### SMART 3 — Taxonomía v0.1 de patrones (vence sáb 15 ago, 20:00)
+### Meta PATRONES — Taxonomía v0.1 de patrones (vence sáb 15 ago, 20:00)
 
 > Antes del sábado 15/08 a las 20:00 tendré `sesion-02/patrones-arrastre-v0.1.md` con **6 patrones** de contenido que promueven el uso por arrastre, cada uno con: nombre, definición operacional en una frase, **señal observable** (qué vería un modelo en el frame o el audio) y 2 ejemplos reales con link + timestamp tomados de mi propio feed.
 
 - Medible: 6 patrones × 4 campos × 2 ejemplos.
 - Esta es la meta de **diseño**, y es la que alimenta tanto el prototipo (paso 7: que la IA los detecte) como el marco teórico de la memoria. La "señal observable" es la bisagra: sin ella el paso 7 no tiene qué buscar.
 
-**Para la clase basta con presentar 2** (el encargo pide "al menos dos"). Yo presentaría la 1 y la 3 — son las que muestran criterio de diseño; la 2 es la evidencia de que avancé.
+**Para la clase basta con presentar 2** (el encargo pide "al menos dos"). Yo presentaría **DECISIÓN y PATRONES** — son las que muestran criterio de diseño; TELÉFONO es la evidencia de que avancé.
+
+> **Nota de nomenclatura.** Estas tres metas salen todas de `meta-SMART-2` del `sesion-01/README.md`, que es la versión corregida tras el feedback del profe. La primera versión (`meta-SMART`, la de "ver curso de coursera de python") está descartada y no se toca. Les puse nombre en vez de número justamente para que no se confundan con esas dos versiones.
+
+> ⚠️ **Desactualizado desde el sáb 15.** El jueves y el viernes no se avanzó; el sprint se recomprimió en sábado + domingo. Plan vigente: **[`plan-fin-de-semana.md`](./plan-fin-de-semana.md)**. El reparto de abajo queda como referencia de la estimación original.
 
 **Reparto real (según disponibilidad):**
 
 | Día | Ventana | Horas útiles | Qué va ahí y por qué |
 | --- | --- | --- | --- |
-| **jue 13** | 19:00 → 22:30 | ~3 h, cansado | **SMART 1, investigación.** Leer y llenar la matriz 3×5. Tarea de lectura, no de código: es lo único que rinde después de un día completo. **No instalar nada esta noche.** |
-| **vie 14** | almuerzo, 1 h | 1 h | **Cerrar SMART 1**: escribir el párrafo de decisión. Y dejar **descargando** el SDK/toolchain de la vía elegida — que baje solo mientras estás ocupado. |
-| **vie 14** | 22:00 → 00:00 | ~2 h, fundido | **SMART 3, recolección.** Barrer tu propio feed anotando ejemplos con timestamp. Es tarea de captura, no de análisis: aguanta el cansancio. (Recolectar patrones de arrastre a medianoche desde tu propio feed es, además, trabajo de campo bastante honesto.) |
-| **sáb 15** | 10:00 → 18:00 | ~6 h, tu mejor bloque | 10:00–13:00 **SMART 2 con timebox duro**. 14:00–17:00 **SMART 3, redacción** de los 6 patrones. 17:00 cierre y a arreglarte. |
+| **jue 13** | 19:00 → 22:30 | ~3 h, cansado | **Meta DECISIÓN, investigación.** Leer y llenar la matriz 3×5. Tarea de lectura, no de código: es lo único que rinde después de un día completo. **No instalar nada esta noche.** |
+| **vie 14** | almuerzo, 1 h | 1 h | **Cerrar Meta DECISIÓN**: escribir el párrafo de decisión. Y dejar **descargando** el SDK/toolchain de la vía elegida — que baje solo mientras estás ocupado. |
+| **vie 14** | 22:00 → 00:00 | ~2 h, fundido | **Meta PATRONES, recolección.** Barrer tu propio feed anotando ejemplos con timestamp. Es tarea de captura, no de análisis: aguanta el cansancio. (Recolectar patrones de arrastre a medianoche desde tu propio feed es, además, trabajo de campo bastante honesto.) |
+| **sáb 15** | 10:00 → 18:00 | ~6 h, tu mejor bloque | 10:00–13:00 **Meta TELÉFONO con timebox duro**. 14:00–17:00 **Meta PATRONES, redacción** de los 6 patrones. 17:00 cierre y a arreglarte. |
 | **dom 16** | 14:00 → 21:00 | ~5 h, con resaca | Ya es Bloque B (ver abajo). Nada de código. |
 
-**Total real del sprint de 3 días: ~12 horas útiles.** Las tres metas SMART completas piden entre 12 y 18 h, y la que tiene toda la varianza es SMART 2.
+**Total real del sprint de 3 días: ~12 horas útiles.** Las tres metas SMART completas piden entre 12 y 18 h, y la que tiene toda la varianza es Meta TELÉFONO.
 
-### Regla de corte para SMART 2 (importante)
+### Regla de corte para Meta TELÉFONO (importante)
 
-Montar por primera vez un toolchain de Android puede tomar 2 horas o puede tomar 8. Es la única tarea de la semana que puede comerse el sábado entero y dejarte sin SMART 3 — que es la que sí vas a presentar.
+Montar por primera vez un toolchain de Android puede tomar 2 horas o puede tomar 8. Es la única tarea de la semana que puede comerse el sábado entero y dejarte sin Meta PATRONES — que es la que sí vas a presentar.
 
-> **A las 13:00 del sábado paro, pase lo que pase.** Si la app no está en el teléfono, escribo en `decision-tecnica.md` en qué paso exacto se cayó (qué comando, qué error) y sigo con SMART 3.
+> **A las 13:00 del sábado paro, pase lo que pase.** Si la app no está en el teléfono, escribo en `decision-tecnica.md` en qué paso exacto se cayó (qué comando, qué error) y sigo con Meta PATRONES.
 
 Ese registro de la falla no es tiempo perdido: es material directo para el **Mapa 3 (flujo técnico)** del miércoles y para el punto de viabilidad técnica de la memoria (§B4). "No pude instalarlo por X" es una respuesta legítima y fundamentada; "no alcancé a mirarlo" no.
 
-Y recuerda que el encargo pide **dos** metas SMART: presentas la **1** y la **3**. SMART 2 es evidencia extra, no requisito. No dejes que la opcional se coma a las obligatorias.
+Y recuerda que el encargo pide **dos** metas SMART: presentas **DECISIÓN** y **PATRONES**. Meta TELÉFONO es evidencia extra, no requisito. No dejes que la opcional se coma a las obligatorias.
 
 ---
 
@@ -81,7 +85,7 @@ Un perfil es una decisión de proyecto, no un trámite. Para una intervención d
 
 - **Mapa 1 — Viaje del usuario (zoom out).** Las 6 etapas: Awareness → Consideración → Adopción/Onboarding → Uso → Retención → Advocacy. Por etapa: acciones, pensamiento, emoción, puntos de dolor, oportunidad de diseño. El punto difícil de este proyecto está en **Retención**: una app cuyo éxito es que la uses menos tiene un problema de retención estructural, y eso es material de memoria, no solo del mapa.
 - **Mapa 2 — Flujo funcional.** Lógica de navegación desde la experiencia. Sintaxis **Garrett** estricta: rombo = decisión, rectángulo = proceso, conectores con dirección explícita. Referencia: `jjg.net/ia/visvocab/spanish.html`.
-- **Mapa 3 — Flujo técnico.** Aquí se cobra lo de SMART 1: arquitectura del sistema, flujo de permisos de Android, qué pasa si el usuario revoca el permiso de captura, error y recuperación, tiempos de carga de la inferencia, dónde corre el modelo (en el teléfono o en servidor) y qué se envía. **La decisión técnica del jueves es literalmente el insumo de este mapa** — por eso va primero en la semana.
+- **Mapa 3 — Flujo técnico.** Aquí se cobra lo de Meta DECISIÓN: arquitectura del sistema, flujo de permisos de Android, qué pasa si el usuario revoca el permiso de captura, error y recuperación, tiempos de carga de la inferencia, dónde corre el modelo (en el teléfono o en servidor) y qué se envía. **La decisión técnica del jueves es literalmente el insumo de este mapa** — por eso va primero en la semana.
 
 ### Calendario
 
@@ -89,7 +93,7 @@ Con lunes y martes completos, este bloque deja de ser el problema. Horas disponi
 
 - **dom 16 (14:00 → 21:00, ~5 h):** Definir el perfil primario y hacer el **Mapa 1** a mano, en papel. Borrador sucio, sin digitalizar. Si el cuerpo da, empezar el **Mapa 2**; si no, no pasa nada — el lunes lo cubre. Nada de pantallas ni toolchains: papel y plumón, que es justo lo que piden los mapas.
 - **lun 17 (09:00 → 12:00):** **La propuesta externa, primero.** Tiene deadline propio y ajeno a esto; sacarla temprano evita que se expanda y te coma la tarde. (Si tiene hora de envío, confírmala — es lo único de la semana que no puedes mover.)
-- **lun 17 (14:00 → 19:00):** **Mapa 2** (funcional) y **Mapa 3** (técnico), montado sobre la decisión de SMART 1. Revisar el vocabulario de Garrett **antes** de empezar el Mapa 2, no después.
+- **lun 17 (14:00 → 19:00):** **Mapa 2** (funcional) y **Mapa 3** (técnico), montado sobre la decisión de Meta DECISIÓN. Revisar el vocabulario de Garrett **antes** de empezar el Mapa 2, no después.
 - **mar 18 (mañana y tarde):** Digitalizar los tres, subir la matriz a Miro, exportar A3 a PDF con marcas y sangrado.
 - **mar 18 (noche):** **IMPRIMIR.** No dejar la impresión A3 para el miércoles en la mañana — es el punto de falla clásico de esta entrega.
 - **mié 19:** Sesión-02, revisión en mesa.
@@ -99,9 +103,9 @@ Con lunes y martes completos, este bloque deja de ser el problema. Horas disponi
 Si terminas de imprimir con tiempo, hay dos candidatos y **no alcanzan los dos**:
 
 1. **Bajar a texto el capítulo Usuario (§A3)** ← recomendado. Acabas de pasar tres días metido en el perfil primario; escribir las 2–3 personas con eso fresco cuesta la mitad que reconstruirlo la semana siguiente desde cero. Descuenta unas 3 h del Bloque C, que es el que está bajo el agua.
-2. **Segundo intento de SMART 2** (la app en el teléfono), si el sábado se cayó.
+2. **Segundo intento de Meta TELÉFONO** (la app en el teléfono), si el sábado se cayó.
 
-Va primero el 1. La app no tiene fecha de entrega; el 26 sí. Y el punto de viabilidad técnica de la memoria (§B4) se puede responder con la investigación de SMART 1 aunque no tengas nada compilando.
+Va primero el 1. La app no tiene fecha de entrega; el 26 sí. Y el punto de viabilidad técnica de la memoria (§B4) se puede responder con la investigación de Meta DECISIÓN aunque no tengas nada compilando.
 
 **Checklist de salida (del encargo-16):**
 
@@ -127,7 +131,7 @@ El backlog completo de correcciones, cruzado contra el feedback de Héctor Novoa
 1. Invertir el orden del marco teórico (Economía → Psicología Cognitiva → Diseño) y reescribir 2.1, que justifica el orden actual.
 2. Renombrar "Biología Humana" → "Psicología Cognitiva y Conductual".
 3. Capítulo **Usuario** con 2–3 personas — hoy no existe, y comparte trabajo con el perfil primario del encargo-16.
-4. Declarar si el proyecto es app de terceros o manifiesto de diseño ético — sale de SMART 1.
+4. Declarar si el proyecto es app de terceros o manifiesto de diseño ético — sale de Meta DECISIÓN.
 
 **Sobre la maquetación:** no maquetes las 60 páginas esta quincena. Construye el sistema (retícula, estilos, maestras — todo eso es independiente del contenido) y demuéstralo en un piloto. El vertido completo va después, con el texto estable.
 
@@ -178,7 +182,7 @@ Esta es la mitad que **más pesa** en la evaluación del 26. Ver [`correcciones-
 
 - **jue 20 – vie 21:** Reordenar marco teórico + reescribir 2.1 + renombrar 2.2 (§A1, A2).
 - **sáb 22 – dom 23:** Capítulo Usuario con 2–3 personas (§A3), reciclando el perfil del encargo-16. Ludopatía con Schüll (§B1). Activar fuentes ya listadas y no citadas (§C2).
-- **lun 24:** Declarar alcance técnico app vs. manifiesto (§B4, desde SMART 1). Nombrar habituación (§B3).
+- **lun 24:** Declarar alcance técnico app vs. manifiesto (§B4, desde Meta DECISIÓN). Nombrar habituación (§B3).
 - **mar 25:** Pasada de typos y coherencia sobre el texto ya reestructurado.
 
 **Maquetación (tardes):**
@@ -223,6 +227,6 @@ Son unas 5 h diarias sostenidas. Si esa semana se parece a esta (un día complet
 
 1. **La impresión A3 del mar 18.** Punto de falla más probable de toda la quincena.
 2. **Diagramar texto inestable.** El texto se reescribe la misma semana en que lo maquetas. Por eso el piloto sobre el cap. 3, no el vertido completo. Y si hay que sacrificar algo el 26, **sacrifica maquetación, no reestructuración**: lo primero se recupera en septiembre, lo segundo es lo que te pidieron.
-3. **SMART 2 se puede comer el fin de semana.** Si el sábado 15 al mediodía la app no compila, corto y entrego SMART 1 + SMART 3, que son las dos que voy a presentar igual. El teléfono no bloquea el encargo-16.
+3. **Meta TELÉFONO se puede comer el fin de semana.** Si el sábado 15 al mediodía la app no compila, corto y entrego Meta DECISIÓN + Meta PATRONES, que son las dos que voy a presentar igual. El teléfono no bloquea el encargo-16.
 4. **Cuántos perfiles imprimir.** 1 perfil son 3 A3; 2 perfiles son 6. Resolver el miércoles 12 o jueves 13, no el lunes 17.
 5. **8.400 palabras y 1 imagen.** El déficit gráfico de la memoria es el riesgo real del hito de 30 días, y no se resuelve con páginas maestras — se resuelve produciendo diagramas. Por eso el inventario del fin de semana.

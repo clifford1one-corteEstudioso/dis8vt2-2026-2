@@ -50,7 +50,7 @@ Ese capítulo es, además, **la mayor oportunidad gráfica de toda la memoria** 
 
 Estado real: "dark pattern" aparece **una sola vez** en todo el documento, y Brignull (2023) está citado 2 veces. O sea, el concepto está rozado, no desarrollado. Héctor lo marcó como ausente y Zerené como el ancla disciplinar de la problemática.
 
-Necesita sección propia con taxonomía y **ejemplos anotados de las plataformas que atacas** (Instagram, TikTok, YouTube Shorts). Nota que esto es literalmente lo mismo que tu **SMART 3 de los 3 días** (taxonomía de 6 patrones con señal observable y ejemplos con timestamp) — ese trabajo entra directo a este capítulo. Un solo esfuerzo, dos entregas.
+Necesita sección propia con taxonomía y **ejemplos anotados de las plataformas que atacas** (Instagram, TikTok, YouTube Shorts). Nota que esto es literalmente lo mismo que tu **Meta PATRONES de los 3 días** (taxonomía de 6 patrones con señal observable y ejemplos con timestamp) — ese trabajo entra directo a este capítulo. Un solo esfuerzo, dos entregas.
 
 ### A6. Apartado: **cómo funciona el algoritmo de recomendación**
 
@@ -87,7 +87,7 @@ Hay que responder dos cosas explícitamente en la memoria:
 1. **¿Qué es el proyecto?** ¿App de terceros, o manifiesto/guía de diseño ético dirigido a las empresas desarrolladoras? Héctor pide que lo declares. No es una pregunta retórica: cambia el alcance, el usuario y la validación.
 2. **Si es app: ¿cómo, técnicamente?** Qué API, qué permiso, qué limitación acepta.
 
-**Esto es literalmente tu SMART 1 de los 3 días.** El documento `decision-tecnica.md` del viernes 14 no es solo para el prototipo: es el insumo del **Mapa 3 (flujo técnico)** del miércoles 19 **y** la corrección de este punto en la memoria. Tres entregas, un trabajo.
+**Esto es literalmente tu Meta DECISIÓN de los 3 días.** El documento `decision-tecnica.md` del viernes 14 no es solo para el prototipo: es el insumo del **Mapa 3 (flujo técnico)** del miércoles 19 **y** la corrección de este punto en la memoria. Tres entregas, un trabajo.
 
 ### B5. Voz propia
 
@@ -148,7 +148,7 @@ Ordenado por impacto en la evaluación ÷ esfuerzo:
 1. **A1** — reordenar el marco teórico + reescribir 2.1
 2. **A2** — renombrar biología → psicología cognitiva y conductual
 3. **A3** — capítulo Usuario con 2–3 personas (comparte trabajo con el encargo-16)
-4. **B4** — declarar qué es el proyecto: app de terceros o manifiesto (sale de SMART 1)
+4. **B4** — declarar qué es el proyecto: app de terceros o manifiesto (sale de Meta DECISIÓN)
 
 **Alto impacto, bajo costo:**
 
@@ -159,7 +159,7 @@ Ordenado por impacto en la evaluación ÷ esfuerzo:
 **Importante, se puede empujar a septiembre (hito 30 días, vie 11 sep):**
 
 8. **A4** — capítulo de análisis de referentes + matriz visual de los 15
-9. **A5** — sección de dark patterns (crece desde SMART 3)
+9. **A5** — sección de dark patterns (crece desde Meta PATRONES)
 10. **C1** — incorporar Norman, Lovink, Celis/Citton, Sadin
 11. **A6** — apartado del algoritmo de recomendación
 12. **B2**, **B5** — consecuencias y voz propia
