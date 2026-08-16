@@ -1,45 +1,58 @@
 # recolección de patrones
 
-## hooks
+## patrones identificados
+
+### hooks
 
 - mecanismo:  El comportamiento por defecto al scrollear es seguir scrolleando; el usuario se detiene solo cuando algo capta su atención. Un hook busca retener generando *curiosity gap* mediante, value exchange o generar emociones, planteando una pregunta en la mente del espectador (setup) antes de resolverla.
 - señal observable: genera curiosity gap. Value exchange, contradicción, emoción.
 - ejemplo: *this cofee should NOT taste good...*
 - fuente: Content Marketing Institute (Liz Willitz, Joseph Sugarman vía CMI);
 
-## abrir bucles
+### abrir bucles
 
 - mecanismo: la forma en que el dialogo está escrito y/o interpretado, donde se abren múltiples temas o preguntas sin cerrarlos, o si se cierra se abre otro inmediatamente. **Tensiones no resueltas**. "Your brian hates unfinished stories"
 - señal observable: comparación entre las veces que se abre y se cierra un tópico o escenario.
 - ejemplo: [zackdfilms](https://youtube.com/shorts/c5G_25dhoeU?si=uum_juM1GdUQWbR8)
 - fuente: <https://www.linkedin.com/top-content/marketing/social-media-engagement-tactics/writing-open-loop-social-media-posts-for-engagement/>
 
-## introducción constante de estímulos
+### introducción constante de estímulos
 
 - mecanismo: si el hook es lo que te hace entrar, este mecanismo es el que impide que te vayas. Consiste en cada 2-4 segundos introducir movimientos y/o sonidos como estímulo para el espectador. Transiciones, cambios de escena, texto en pantalla, etc.
 - señal observable: cuando cada 2 segundos a menos se introduce un nuevo elemento en pantalla
 - ejemplo: <https://youtube.com/shorts/7TzTbqhpGVM?si=XgVhisAZQ1EVgMWz>
 - fuente: [Overstimulating TV Shows](https://kidok.app/blog/how-to-tell-if-a-tv-show-is-overstimulating)
 
-## generar emociones
+### generar emociones
 
 - mecanismo: las emociones funcionan como impulsos que nos obligan a reaccionar ante nuestro entorno. Cuando un video genera una reacción emocional, e cerebro le da prioridad.
 - señal observable: opinar o ejercer acciones que van en contra de lo popular, y trasmitir orgullo sobre ello.
-- ejemplo: ragebait, cometer errores apropósito, etc.
+- ejemplo: rage bait, cometer errores apropósito, etc.
 - fuente: <https://youtu.be/d43tivfx0qw>
 
-## cliff-hangers
+### cliff-hangers
 
-- mecanismo: 
-- señal observable: cuando el contenido anunciado en el video, está disponible en otro canal, ya sea otro video posteior, otra red social, un link, etc.
-- ejemplo: <https://www.tiktok.com/@pleh.naim/video/7399747017288846622?is_from_webapp=1&sender_device=pc>
+- mecanismo: en un comienzo se da entender que cierto elemento o conflicto será resuelto o visto en el video. Cuando se transparenta que no, el espectador siente que ya invirtió recursos en el video, por lo que no terminar de verlo se siente como un desperdicio.
+- señal observable: cuando el contenido que esl espectador presume es parte del video, está disponible mediante otro canal, ya sea otro video, otra red social, un link, etc.
+- ejemplo: <https://www.tiktok.com/@pleh.naim/video/7399747017288846622?is_from_webapp=1&sender_device=pc> <https://www.instagram.com/reel/Db81RRxh4kt/?igsh=MW0ya3VxcTZwOHV0Zg==>
 - fuente: <https://www.dictionary.com/browse/cliffhanger>
+
+### estirar el chicle
+
+- mecanismo: para evitar que el espectador adelante el video, se da a entender que se hará una revelación inmediatamente. Pero se introducen frases de relleno entre el setup y la revelación, para alargar el tiempo de visualización.
+- señal observable: introducción de diálogos que no aportan a la trama, construcción de mundo o conflicto del contenido, entre las el setup y la revelación.
+- ejemplo: [video de ejemplo](./files/ejemplo-patron-chicle.mp4)
+- fuente:
+
+## pendientes
+
+- fuente estirar el chicle
+- revisar patrón "generar emociones"(definir si es propio o una mezcla de otros)
 
 ## personas
 
 - [Mr. Beast](https://www.youtube.com/@MrBeast)
 - [zackdfilms](https://www.youtube.com/@zackdfilms)
-
 
 ## acciones
 

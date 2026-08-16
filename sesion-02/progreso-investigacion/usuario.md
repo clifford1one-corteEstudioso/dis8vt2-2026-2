@@ -1,0 +1,7 @@
+# Perfil primario
+
+Diseñador/a gráfico freelance de 25-32 años, que gestiona 3-5 clientes simultáneos y depende de Instagram diariamente: portafolio, búsqueda de referentes visuales, comunicación con clientes vía DM, y estudio de tendencias de la competencia. El teléfono es, literalmente, su herramienta de trabajo — no puede desinstalar la app ni bloquearla sin costo profesional directo. La trampa aparece en el mismo gesto que la herramienta: abrir Instagram "para revisar un mensaje de cliente" y, 40 minutos después, seguir scrolleando contenido no relacionado al trabajo, sin haber decidido conscientemente quedarse. Ya intentó estrategias de autorregulación genéricas (límites de tiempo de pantalla, modo escala de grises) y fallaron, porque tratan todo uso como igual de prescindible — cuando para él/ella, parte del uso es indispensable y otra parte es pura fricción no deseada.
+
+## Cómo se conecta con la propuesta
+
+El mecanismo central del proyecto (sello visual tipo "ley de etiquetado de alimentos", que indica en tiempo real la densidad de patrones engañosos de un video) le da a este usuario una herramienta de triage: distinguir entre contenido con valor real para su trabajo (referentes, tendencias) y contenido diseñado solo para retenerlo. No oculta ni degrada nada — solo hace explícito lo que hoy es invisible, justo en el momento de tránsito entre uso dirigido y uso de arrastre.
