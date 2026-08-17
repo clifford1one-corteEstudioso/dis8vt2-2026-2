@@ -18,15 +18,23 @@ se me ocurre v2: que la primera vez que uses la app te muestre ejemplos y casos 
 
 ### mi versión - m1
 
-1. awareness: ocurre cuando un usuario reconoce su uso como problemático. O cuando desea apoyo para usar menos su celular.
+1. awareness: ocurre cuando un usuario reconoce su uso como problemático. O cuando desea apoyo para usar menos su celular
 2. consideración: utiliza distintas alternativas, aplicaciones como digital wellbeing, oneSec, Freedom, etc.
 3. onboarding:
-   - instalación de la app/APK.
+   - instalación de la app/APK
    - Determinar niveles de intensidad del feedback.
-   - activar permisos de accesibilidad.
-4. uso: la APK corre por encima de otras apps, capaz de leer lo que hay en pantalla. Cuando sale un tiktok es capaz de leer el nivel de oscuridad, e indica el nivel mediante feedback.
-5. retención: no hay mecanismo que fuerce la atención, el sello está siempre disponible, pero el usuario decide si le presta atención o lo ignora.
+   - activar permisos de accesibilidad
+4. uso: la APK corre por encima de otras apps, capaz de leer lo que hay en pantalla. Cuando sale un tiktok es capaz de leer el nivel de oscuridad, e indica el nivel mediante feedback
+5. retención: no hay mecanismo que fuerce la atención, el sello está siempre disponible, pero el usuario decide si le presta atención o lo ignora
 6. advocacy: el usuario termina por aprender a reconocer tiktoks oscuros de manera autónoma
+
+| - | awareness | consideration | onboarding | use | retención | advocacy |
+| - | - | - | - | - | - | - |
+| **acciones** |  | Usa distintas alternativas: apps como Digital Wellbeing, OneSec, Freedom | Instala APK, activa AccessibilityService y fuentes desconocidas | App corre sobre Instagram, lee lo que hay en pantalla, VLM analiza y muestra nivel de oscuridad |  |  |
+| **pensamiento** |  |  |  |  |  |  |
+| **emoción** |  |  |  |  |  |  |
+| **dolor** |  |  |  |  |  |  |
+| **oportunidad** |  |  |  |  |  |  |
 
 ## mapa-2: Diagrama de Flujo Funcional
 
@@ -77,7 +85,10 @@ flowchart TB
 Objetivo: Detallar la arquitectura del sistema, respuestas del hardware/software y gestión de excepciones.
 Detalle Requerido:
 
-* Software: Flujos de error, recuperación de credenciales, tiempos de carga, permisos de sistema.
-* Hardware: Patrones de iluminación LED, tiempos de pulsación de botones para vinculación (Bluetooth), respuestas mecánicas, sensores y tolerancias de material.
+- Software: Flujos de error, recuperación de credenciales, tiempos de carga, permisos de sistema.
+
+- Hardware: Patrones de iluminación LED, tiempos de pulsación de botones para vinculación (Bluetooth), respuestas mecánicas, sensores y tolerancias de material.
 
 ### mi versión - m3
+
+to do
