@@ -30,10 +30,10 @@ se me ocurre v2: que la primera vez que uses la app te muestre ejemplos y casos 
 
 | - | awareness | consideration | onboarding | use | retención | advocacy |
 | - | - | - | - | - | - | - |
-| **acciones** |  | Usa distintas alternativas: apps como Digital Wellbeing, OneSec, Freedom | Instala APK, activa AccessibilityService y fuentes desconocidas | App corre sobre Instagram, lee lo que hay en pantalla, VLM analiza y muestra nivel de oscuridad |  |  |
-| **pensamiento** |  |  |  |  |  |  |
-| **emoción** |  |  |  |  |  |  |
-| **dolor** |  |  |  |  |  |  |
+| **acciones** | usuario ve tiktok durante horas | Usa distintas alternativas: apps como Digital Wellbeing, OneSec, Freedom | Descarga APK, activa AccessibilityService e instalación desde fuentes desconocidas | App corre sobre Instagram, lee lo que hay en pantalla, VLM analiza y muestra nivel de oscuridad |  |  |
+| **pensamiento** | "puedo estar todo un día sin ver tiktok, pero una vez empiezo, me cuesta mucho detenerme" | estas alternativas ejercen bloqueos ciegos, no me informan nada sobre qué los hace tomar las decisiones y parecieran no tener criterios más allá de los temporales que yo establecí | tener que activar la instalación me hace pensar que no es seguro | no me había dado cuenta cuánto del contenido que consumo es oscuro |  |  |
+| **emoción** | frustración con sigo mismo | frustración hacia la app(lo hacen de la manera más sencilla y no dedicado al usuario) |  |  |  |  |
+| **dolor** | dejo de invetir tiempo en cosas que me importan |  |  |  |  |  |
 | **oportunidad** |  |  |  |  |  |  |
 
 ## mapa-2: Diagrama de Flujo Funcional
