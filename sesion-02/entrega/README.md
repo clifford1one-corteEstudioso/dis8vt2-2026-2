@@ -40,9 +40,9 @@ se me ocurre v2: que la primera vez que uses la app te muestre ejemplos y casos 
 
 ### plantilla - m2
 
-* **Objetivo:** Definir la lógica de navegación y los procesos desde la perspectiva de la experiencia del usuario.  
+- **Objetivo:** Definir la lógica de navegación y los procesos desde la perspectiva de la experiencia del usuario.  
 
-* **Sintaxis:** Utilizar el **Lenguaje Visual de Garrett** (rombos para decisiones, rectángulos para procesos, conectores con direccionalidad explícita).
+- **Sintaxis:** Utilizar el **Lenguaje Visual de Garrett** (rombos para decisiones, rectángulos para procesos, conectores con direccionalidad explícita).
 
 ### mi versión - m2
 
@@ -50,7 +50,7 @@ se me ocurre v2: que la primera vez que uses la app te muestre ejemplos y casos 
 flowchart TB
     n3["¿opciones de accesibilidad activas?"] --> n4["Sí"] & n5["No"]
     n5 --> n6["Activar opciones de accesibilidad"]
-    n7["¿opcion de instalar desde fuentes desconocidas activada?"] --> n8["Sí"] & n9["No"]
+    n7["¿opción de instalar desde fuentes desconocidas activada?"] --> n8["Sí"] & n9["No"]
     n1["Inicio"] --> n12["descargar archivo .zip"]
     n8 --> n10["Ejecutar APK"]
     n10 --> n11["Abrir app"]
@@ -74,7 +74,7 @@ flowchart TB
     n1@{ shape: text}
     n16@{ shape: diam}
     style n1 stroke-width:2px,stroke-dasharray: 0
-``` 
+```
 
 - [editor mermaid](https://mermaid.ai/app/projects/2754080d-5a23-45b5-857f-8bedf2b56a8e/diagrams/c04bd30d-d449-4ea2-a8c5-1dcb3315e7a4/share/invite/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb2N1bWVudElEIjoiYzA0YmQzMGQtZDQ0OS00ZWEyLWE4YzUtMWRjYjMzMTVlN2E0IiwiYWNjZXNzIjoiVmlldyIsImlhdCI6MTc4NjkyNDc0NH0.yZLcGxkb04tXgjUpW9VpBzJV1bHkOZmyuuE4KwqbPns?entryPoint=share-modal)
 
