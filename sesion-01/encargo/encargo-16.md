@@ -1,7 +1,5 @@
 # **Encargo 16: Triple Mapa y Avance de Memoria**
 
-## 
-
 ## **1\. Contexto y Enfoque del Encargo**
 
 [Entramos en **modo aceleración (Sprint)**.](https://drive.google.com/file/d/1IFjJIGDzV0HAoGQWeWAkT5-EKME_FMRi/view?usp=drive_link) Aunque los requisitos formales de la memoria son obligatorios, la prioridad real de este semestre es **demostrar con éxito que el proyecto resuelve el problema de un tercero** a través de la evolución y validación de prototipos.
@@ -76,8 +74,6 @@ Debe contemplar de forma secuencial las **6 etapas del viaje**:
 
 La entrega consta de **dos formatos obligatorios** (digital y físico):
 
-```
-
 ┌──────────────────────────────────────────────────────────────────────────────────┐
 │                             FORMATOS DE ENTREGA                                  │
 ├─────────────────┬────────────────────────────────────────────────────────────────┤
@@ -86,12 +82,9 @@ La entrega consta de **dos formatos obligatorios** (digital y físico):
 │ Físico (Clase)  │ CADA MAPA IMPRESO EN FORMATO A3 (3 láminas A3 por perfil).     │
 └─────────────────┴────────────────────────────────────────────────────────────────┘
 
-```
-
 1. **Digital (Tablero Miro):** Cargar la matriz completa organizada por perfil de usuario en la casilla asignada a cada estudiante.  
-2.   
-3. **Físico (Impresión Obligatoria):** Presentar en clase **cada uno de los tres mapas impresos individualmente en formato A3** (1 lámina A3 para el Journey Map, 1 A3 para el Flujo Funcional y 1 A3 para el Flujo Técnico).  
-4. 
+
+2. **Físico (Impresión Obligatoria):** Presentar en clase **cada uno de los tres mapas impresos individualmente en formato A3** (1 lámina A3 para el Journey Map, 1 A3 para el Flujo Funcional y 1 A3 para el Flujo Técnico).
 
 ## **5\. Checklist de Verificación para la Clase**
 
@@ -102,4 +95,3 @@ La entrega consta de **dos formatos obligatorios** (digital y físico):
 * \[ \] **Respaldo Digital en Miro:** Matriz completa cargada en el tablero colaborativo.  
 *   
 * \[ \] **Avance de Memoria:** Trabajo activado según la fecha del grupo correspondiente (**Grupo 1: Próxima Semana** / **Grupo 2: Semana Subsiguiente**).
-
