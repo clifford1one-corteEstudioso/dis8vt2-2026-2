@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<title>Mapa 1 — User Journey Map / v2 síntesis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   MAPA 1 · USER JOURNEY MAP — v2 (síntesis)
+   Misma estética de detección que v1, con menos carga:
+   · una etiqueta de clase por FILA, no por celda
+   · sin índices, códigos ni valores conf
+   · la curva emocional absorbe la fila "emoción"
+   · textos reducidos a una línea
+   Salida: A3 horizontal (420 x 297 mm)
+   ============================================================ */
+
+:root{
+  --bg:        #070a0c;
+  --page:      #0b1013;
+  --ink:       #e6f0f4;
+  --ink-dim:   #93a7b1;
+  --ink-faint: #55666e;
+  --rule:      rgba(120,160,175,.20);
+  --grid:      rgba(120,190,210,.04);
+  --hud:       #37e2ff;
+
+  --c-acc:  #2ad4ee;
+  --c-cit:  #a78bfa;
+  --c-emo:  #ffb527;
+  --c-pai:  #ff5f6d;
+  --c-opp:  #9ae62b;
+  --c-pha:  #eaf6fa;
+
+  --fill:   .045;
+  --edge:   .16;
+  --chip-ink:#05090b;
+}
+:root[data-theme="light"]{
+  --bg:        #e9edee;
+  --page:      #ffffff;
+  --ink:       #0d1417;
+  --ink-dim:   #4d5f68;
+  --ink-faint: #8a9aa2;
+  --rule:      rgba(20,50,60,.24);
+  --grid:      rgba(20,80,100,.045);
+  --hud:       #0286a5;
+
+  --c-acc:  #0286a5;
+  --c-cit:  #6d3fd4;
+  --c-emo:  #b06f00;
+  --c-pai:  #cc2436;
+  --c-opp:  #4a7a00;
+  --c-pha:  #0d1417;
+
+  --fill:   .05;
+  --edge:   .30;
+  --chip-ink:#ffffff;
+}
+
+*{ box-sizing:border-box; margin:0; padding:0; }
+
+body{
+  background:var(--bg);
+  font-family:"Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  padding:14mm 0;
+}
+
+.sheet-wrap{ overflow:hidden; margin:0 auto; }
+.page{
+  position:relative;
+  width:420mm; height:297mm;
+  padding:13mm 14mm 10mm;
+  background:var(--page); color:var(--ink);
+  overflow:hidden;
+  display:flex; flex-direction:column; gap:6mm;
+  flex:none;
+  transform-origin:top left;
+  box-shadow:0 0 0 1px var(--rule), 0 18px 60px rgba(0,0,0,.5);
+}
+.page::before{
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background-image:
+    linear-gradient(var(--grid) .2mm, transparent .2mm),
+    linear-gradient(90deg, var(--grid) .2mm, transparent .2mm);
+  background-size:20mm 20mm, 20mm 20mm;
+}
+
+/* ---------- escuadras de bounding box ---------- */
+.det{
+  position:relative;
+  border:.25mm solid color-mix(in srgb, var(--c) calc(var(--edge)*100%), transparent);
+  background-color:color-mix(in srgb, var(--c) calc(var(--fill)*100%), transparent);
+  background-image:
+    linear-gradient(var(--c),var(--c)), linear-gradient(var(--c),var(--c)),
+    linear-gradient(var(--c),var(--c)), linear-gradient(var(--c),var(--c)),
+    linear-gradient(var(--c),var(--c)), linear-gradient(var(--c),var(--c)),
+    linear-gradient(var(--c),var(--c)), linear-gradient(var(--c),var(--c));
+  background-repeat:no-repeat;
+  background-size:
+    6mm .5mm, .5mm 6mm,  6mm .5mm, .5mm 6mm,
+    6mm .5mm, .5mm 6mm,  6mm .5mm, .5mm 6mm;
+  background-position:
+    left top, left top,   right top, right top,
+    left bottom, left bottom,  right bottom, right bottom;
+}
+
+/* ---------- cabecera ---------- */
+.hud{
+  display:flex; align-items:flex-end; justify-content:space-between; gap:10mm;
+  position:relative; z-index:2;
+}
+.kicker{
+  font-family:"JetBrains Mono", ui-monospace, Consolas, monospace;
+  font-size:2.6mm; letter-spacing:.34em; text-transform:uppercase;
+  color:var(--hud); display:flex; align-items:center; gap:2.4mm; margin-bottom:2mm;
+}
+.kicker .dot{
+  width:2mm; height:2mm; border-radius:50%; background:var(--hud);
+  box-shadow:0 0 0 1.2mm color-mix(in srgb, var(--hud) 16%, transparent);
+}
+h1{ font-size:12mm; line-height:1.02; font-weight:700; letter-spacing:-.025em; }
+h1 span{ color:var(--ink-faint); font-weight:400; }
+.sub{ margin-top:2.5mm; font-size:3.6mm; color:var(--ink-dim); max-width:170mm; line-height:1.35; }
+.stamp{
+  text-align:right;
+  font-family:"JetBrains Mono", ui-monospace, Consolas, monospace;
+  font-size:2.5mm; letter-spacing:.16em; color:var(--ink-faint); line-height:1.9;
+  text-transform:uppercase;
+}
+.stamp b{ color:var(--ink); font-weight:500; }
+
+/* ---------- matriz ---------- */
+.matrix{
+  position:relative; z-index:2; flex:1; min-height:0;
+  display:grid;
+  grid-template-columns:16mm repeat(6, 1fr);
+  grid-template-rows:15mm 52mm 1fr 1.08fr 1fr 1fr;
+  gap:3mm;
+}
+
+/* eje de clases */
+.axis{
+  display:flex; align-items:center; justify-content:flex-end; gap:2.5mm;
+  padding-right:1mm;
+}
+.axis .name{
+  writing-mode:vertical-rl; transform:rotate(180deg);
+  font-family:"JetBrains Mono", ui-monospace, Consolas, monospace;
+  font-size:3mm; font-weight:700; letter-spacing:.34em; text-transform:uppercase;
+  color:var(--c);
+}
+.axis .swatch{ width:1.8mm; align-self:stretch; margin:3mm 0; background:var(--c); }
+
+/* fila de fases */
+.phase{
+  display:flex; align-items:baseline; gap:2.5mm;
+  padding:0 1mm 2mm;
+  border-bottom:.5mm solid color-mix(in srgb, var(--c-pha) 55%, transparent);
+}
+.phase .n{
+  font-family:"JetBrains Mono", ui-monospace, Consolas, monospace;
+  font-size:3.2mm; font-weight:700; letter-spacing:.1em;
+  color:var(--chip-ink); background:var(--c-pha);
+  padding:.6mm 1.6mm .4mm;
+}
+.phase .t{ font-size:6mm; font-weight:600; letter-spacing:-.015em; }
+
+/* ---------- banda de emoción ---------- */
+.band{ grid-column:2 / -1; position:relative; }
+.band svg{ display:block; width:100%; height:100%; }
+.pt{ position:absolute; left:var(--x); top:var(--y); transform:translate(-50%,-50%); }
+.pt .d{
+  display:block; width:3.2mm; height:3.2mm; border-radius:50%;
+  background:var(--c-emo);
+  box-shadow:0 0 0 1.4mm color-mix(in srgb, var(--c-emo) 18%, transparent);
+}
+.pt .l{
+  position:absolute; left:50%; bottom:100%; margin-bottom:3.5mm;
+  transform:translateX(-50%);
+  width:52mm; text-align:center;
+  font-size:3.4mm; line-height:1.25; color:var(--ink); font-weight:500;
+}
+.pt.below .l{ bottom:auto; top:100%; margin:3.5mm 0 0; }
+
+/* celdas de texto */
+.cell{
+  padding:4.5mm 4mm;
+  display:flex; align-items:center;
+  font-size:3.7mm; line-height:1.32; color:var(--ink);
+}
+.cell.quote{
+  font-style:italic; font-size:3.6mm;
+  color:color-mix(in srgb, var(--ink) 82%, var(--c-cit));
+}
+
+/* ---------- pie ---------- */
+.foot{
+  position:relative; z-index:2;
+  display:flex; align-items:flex-end; justify-content:space-between; gap:10mm;
+  padding-top:3mm; border-top:.4mm solid var(--rule);
+}
+.note{ font-size:3.2mm; color:var(--ink-dim); max-width:180mm; line-height:1.35; }
+.note b{ color:var(--ink); font-weight:600; }
+.ref{
+  font-family:"JetBrains Mono", ui-monospace, Consolas, monospace;
+  font-size:2.4mm; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--ink-faint); text-align:right; line-height:1.7;
+}
+
+/* ---------- controles (solo pantalla) ---------- */
+.bar{
+  position:fixed; top:0; left:0; right:0; z-index:99;
+  display:flex; gap:8px; justify-content:center;
+  padding:8px; background:color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter:blur(8px); border-bottom:1px solid var(--rule);
+}
+.bar button{
+  font-family:"JetBrains Mono", ui-monospace, Consolas, monospace;
+  font-size:11px; letter-spacing:.12em; text-transform:uppercase;
+  padding:7px 14px; cursor:pointer; color:var(--ink);
+  background:transparent; border:1px solid var(--rule);
+}
+.bar button:hover{ border-color:var(--hud); color:var(--hud); }
+
+/* ---------- impresión ---------- */
+@page{ size:A3 landscape; margin:0; }
+@media print{
+  html,body{ background:#fff; padding:0; margin:0; }
+  .bar{ display:none !important; }
+  .sheet-wrap{ width:auto !important; height:auto !important; overflow:visible !important; }
+  .page{ transform:none !important; box-shadow:none; width:420mm; height:297mm; }
+  *{ -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <button onclick="document.documentElement.dataset.theme = document.documentElement.dataset.theme==='dark'?'light':'dark'">Tema oscuro / claro</button>
+  <button onclick="window.print()">Imprimir A3 horizontal</button>
+</div>
+
+<div class="sheet-wrap">
+<div class="page" id="page">
+
+  <header class="hud">
+    <div>
+      <div class="kicker"><span class="dot"></span> mapa 01 · viaje del usuario</div>
+      <h1>Seis fases, <span>una sola pregunta:</span><br>¿qué estoy consumiendo?</h1>
+      <p class="sub">Un overlay con VLM local lee la pantalla mientras el usuario scrollea y devuelve el nivel de oscuridad del contenido.</p>
+    </div>
+    <div class="stamp">
+      sesión 02 · entrega<br>
+      <b>A3 · 420 × 297 mm</b><br>
+      v2 — síntesis
+    </div>
+  </header>
+
+  <main class="matrix">
+
+    <!-- fases -->
+    <div></div>
+    <div class="phase"><span class="n">01</span><span class="t">awareness</span></div>
+    <div class="phase"><span class="n">02</span><span class="t">consideración</span></div>
+    <div class="phase"><span class="n">03</span><span class="t">onboarding</span></div>
+    <div class="phase"><span class="n">04</span><span class="t">uso</span></div>
+    <div class="phase"><span class="n">05</span><span class="t">retención</span></div>
+    <div class="phase"><span class="n">06</span><span class="t">advocacy</span></div>
+
+    <!-- curva emocional -->
+    <div class="axis" style="--c:var(--c-emo)"><span class="swatch"></span><span class="name">emoción</span></div>
+    <div class="band">
+      <svg viewBox="0 0 600 100" preserveAspectRatio="none" aria-hidden="true">
+        <line x1="0" y1="50" x2="600" y2="50" stroke="var(--c-emo)" stroke-width=".7"
+              stroke-dasharray="3 7" opacity=".35"/>
+        <path d="M50,72 L150,77 L250,60 L350,39 L450,50 L550,66 L550,50 L50,50 Z"
+              fill="var(--c-emo)" opacity=".12"/>
+        <polyline points="50,72 150,77 250,60 350,39 450,50 550,66"
+                  fill="none" stroke="var(--c-emo)" stroke-width="1.6"
+                  stroke-linejoin="round" stroke-linecap="round"/>
+      </svg>
+      <span class="pt below" style="--x:8.333%;  --y:72%"><i class="d"></i><span class="l">frustración consigo mismo</span></span>
+      <span class="pt below" style="--x:25%;     --y:77%"><i class="d"></i><span class="l">frustración con la app</span></span>
+      <span class="pt below" style="--x:41.667%; --y:60%"><i class="d"></i><span class="l">desconfianza + curiosidad</span></span>
+      <span class="pt"       style="--x:58.333%; --y:39%"><i class="d"></i><span class="l">cuestionamiento propio</span></span>
+      <span class="pt"       style="--x:75%;     --y:50%"><i class="d"></i><span class="l">neutralidad</span></span>
+      <span class="pt below" style="--x:91.667%; --y:66%"><i class="d"></i><span class="l">frustración con los creadores</span></span>
+    </div>
+
+    <!-- acción -->
+    <div class="axis" style="--c:var(--c-acc)"><span class="swatch"></span><span class="name">acción</span></div>
+    <div class="cell det" style="--c:var(--c-acc)">ve Instagram durante horas</div>
+    <div class="cell det" style="--c:var(--c-acc)">prueba Digital Wellbeing, OneSec, Freedom</div>
+    <div class="cell det" style="--c:var(--c-acc)">instala la APK y cede permisos de accesibilidad</div>
+    <div class="cell det" style="--c:var(--c-acc)">el overlay lee la pantalla y marca la oscuridad</div>
+    <div class="cell det" style="--c:var(--c-acc)">scrollea esperando el análisis</div>
+    <div class="cell det" style="--c:var(--c-acc)">comparte briefs y recomienda la app</div>
+
+    <!-- voz -->
+    <div class="axis" style="--c:var(--c-cit)"><span class="swatch"></span><span class="name">voz</span></div>
+    <div class="cell det quote" style="--c:var(--c-cit)">«una vez que empiezo, me cuesta mucho detenerme»</div>
+    <div class="cell det quote" style="--c:var(--c-cit)">«bloquean a ciegas, sin decirme con qué criterio»</div>
+    <div class="cell det quote" style="--c:var(--c-cit)">«pedir accesibilidad me hace pensar que no es seguro»</div>
+    <div class="cell det quote" style="--c:var(--c-cit)">«no sabía cuánto de lo que consumo es oscuro»</div>
+    <div class="cell det quote" style="--c:var(--c-cit)">«¿lo estoy absorbiendo, o solo corre por encima?»</div>
+    <div class="cell det quote" style="--c:var(--c-cit)">«ahora veo cuándo me están tratando de hacer weón»</div>
+
+    <!-- dolor -->
+    <div class="axis" style="--c:var(--c-pai)"><span class="swatch"></span><span class="name">dolor</span></div>
+    <div class="cell det" style="--c:var(--c-pai)">pierde el tiempo que le importa</div>
+    <div class="cell det" style="--c:var(--c-pai)">el bloqueo llega en el momento equivocado</div>
+    <div class="cell det" style="--c:var(--c-pai)">cede datos de su conducta y su algoritmo</div>
+    <div class="cell det" style="--c:var(--c-pai)">la responsabilidad sigue siendo suya</div>
+    <div class="cell det" style="--c:var(--c-pai)">ver lo insustancial de aquello en que invierte tiempo</div>
+    <div class="cell det" style="--c:var(--c-pai)">riesgo de habituación al sello</div>
+
+    <!-- oportunidad -->
+    <div class="axis" style="--c:var(--c-opp)"><span class="swatch"></span><span class="name">oportunidad</span></div>
+    <div class="cell det" style="--c:var(--c-opp)">concientizar sin imponer</div>
+    <div class="cell det" style="--c:var(--c-opp)">informar en vez de bloquear</div>
+    <div class="cell det" style="--c:var(--c-opp)">explicar los permisos antes de pedirlos</div>
+    <div class="cell det" style="--c:var(--c-opp)">mostrar el análisis en tiempo real</div>
+    <div class="cell det" style="--c:var(--c-opp)">variar la visualidad para evitar la habituación</div>
+    <div class="cell det" style="--c:var(--c-opp)">briefs con lo detectado, tipo Spotify Wrapped</div>
+
+  </main>
+
+  <footer class="foot">
+    <p class="note"><b>No hay mecanismo que fuerce la atención</b> — es justo en contra de ello donde se trabaja. El sello está siempre disponible; el usuario decide si lo atiende o lo ignora.</p>
+    <div class="ref">versión extendida con la tabla completa: index-v1.html</div>
+  </footer>
+
+</div>
+</div>
+
+<script>
+if (new URLSearchParams(location.search).get('theme') === 'light')
+  document.documentElement.dataset.theme = 'light';
+
+function fit(){
+  const page = document.getElementById('page');
+  const wrap = page.parentElement;
+  const w = page.offsetWidth, h = page.offsetHeight;
+  const s = Math.min(1, (window.innerWidth - 60) / w);
+  page.style.transform = 'scale(' + s + ')';
+  wrap.style.width  = (w * s) + 'px';
+  wrap.style.height = (h * s) + 'px';
+}
+addEventListener('resize', fit);
+addEventListener('load', fit);
+fit();
+</script>
+</body>
+</html>

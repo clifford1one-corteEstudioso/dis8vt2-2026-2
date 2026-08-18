@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<title>Mapa 2 — Diagrama de Flujo Funcional</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   MAPA 2 · DIAGRAMA DE FLUJO FUNCIONAL
+   Lenguaje visual de Garrett + estética de detección.
+   Geometría en milímetros: el lienzo mide exactamente lo que
+   dice .stage, y el viewBox del SVG usa las mismas
+   unidades, así que 1 unidad = 1 mm sobre el papel.
+   Salida: hoja de 480 x 350 mm (se imprime a A3 con "ajustar a pagina")
+   ============================================================ */
+
+:root{
+  --bg:        #070a0c;
+  --page:      #0b1013;
+  --ink:       #e6f0f4;
+  --ink-dim:   #93a7b1;
+  --ink-faint: #55666e;
+  --rule:      rgba(120,160,175,.20);
+  --grid:      rgba(120,190,210,.04);
+  --hud:       #37e2ff;
+
+  --c-proc: #2ad4ee;   /* proceso            */
+  --c-dec:  #ffb527;   /* decisión           */
+  --c-fix:  #ff5f6d;   /* requisito / bloqueo*/
+  --c-out:  #9ae62b;   /* salida al usuario  */
+  --c-term: #eaf6fa;   /* terminal           */
+
+  --fill: .05;
+  --edge: .20;
+  --chip-ink:#05090b;
+}
+:root[data-theme="light"]{
+  --bg:        #e9edee;
+  --page:      #ffffff;
+  --ink:       #0d1417;
+  --ink-dim:   #4d5f68;
+  --ink-faint: #8a9aa2;
+  --rule:      rgba(20,50,60,.24);
+  --grid:      rgba(20,80,100,.045);
+  --hud:       #0286a5;
+
+  --c-proc: #0286a5;
+  --c-dec:  #b06f00;
+  --c-fix:  #cc2436;
+  --c-out:  #4a7a00;
+  --c-term: #0d1417;
+
+  --fill: .06;
+  --edge: .36;
+  --chip-ink:#ffffff;
+}
+
+*{ box-sizing:border-box; margin:0; padding:0; }
+
+body{
+  background:var(--bg);
+  font-family:"Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  padding:14mm 0;
+}
+
+.sheet-wrap{ overflow:hidden; margin:0 auto; }
+.page{
+  position:relative;
+  width:480mm; height:350mm;
+  padding:16mm 16mm 14mm;
+  background:var(--page); color:var(--ink);
+  overflow:hidden;
+  display:flex; flex-direction:column;
+  flex:none;
+  transform-origin:top left;
+  box-shadow:0 0 0 1px var(--rule), 0 18px 60px rgba(0,0,0,.5);
+}
+.page::before{
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background-image:
+    linear-gradient(var(--grid) .2mm, transparent .2mm),
+    linear-gradient(90deg, var(--grid) .2mm, transparent .2mm);
+  background-size:20mm 20mm, 20mm 20mm;
+}
+
+/* ---------- cabecera ---------- */
+.hud{
+  display:flex; align-items:flex-end; justify-content:space-between; gap:10mm;
+  position:relative; z-index:2; height:38mm;
+}
+.kicker{
+  font-family:"JetBrains Mono", ui-monospace, Consolas, monospace;
+  font-size:2.6mm; letter-spacing:.34em; text-transform:uppercase;
+  color:var(--hud); display:flex; align-items:center; gap:2.4mm; margin-bottom:2mm;
+}
+.kicker .dot{
+  width:2mm; height:2mm; border-radius:50%; background:var(--hud);
+  box-shadow:0 0 0 1.2mm color-mix(in srgb, var(--hud) 16%, transparent);
+}
+h1{ font-size:11mm; line-height:1.02; font-weight:700; letter-spacing:-.025em; }
+h1 span{ color:var(--ink-faint); font-weight:400; }
+.sub{ margin-top:2.2mm; font-size:3.3mm; color:var(--ink-dim); max-width:185mm; line-height:1.35; }
+.stamp{
+  text-align:right;
+  font-family:"JetBrains Mono", ui-monospace, Consolas, monospace;
+  font-size:2.5mm; letter-spacing:.16em; color:var(--ink-faint); line-height:1.9;
+  text-transform:uppercase;
+}
+.stamp b{ color:var(--ink); font-weight:500; }
+
+/* ---------- lienzo ----------
+   El diagrama se dibuja SIEMPRE en su tamaño nativo (392 x 215 mm) dentro de
+   .stage, y .stage se escala de forma uniforme con --k. Así el SVG y los nodos
+   HTML crecen exactamente igual y nunca se desalinean.
+   flex:none es obligatorio: sin él, el navegador comprime el lienzo cuando la
+   columna no cabe y el diagrama se recorta por abajo. */
+.canvas{
+  position:relative; z-index:2;
+  --k:1.14;
+  width:calc(392mm * var(--k));
+  height:calc(215mm * var(--k));
+  margin:6mm auto;
+  flex:none;
+}
+.stage{
+  position:absolute; top:0; left:0;
+  width:392mm; height:215mm;
+  transform:scale(var(--k));
+  transform-origin:0 0;
+}
+.stage svg{ position:absolute; inset:0; width:100%; height:100%; overflow:visible; }
+
+/* ---------- nodos ---------- */
+.node{
+  position:absolute;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center; padding:2mm 3mm;
+  font-size:3.1mm; line-height:1.25; color:var(--ink);
+}
+.node .code{
+  margin-top:1.2mm;
+  font-family:"JetBrains Mono", ui-monospace, Consolas, monospace;
+  font-size:2.4mm; letter-spacing:.06em; color:var(--c);
+}
+/* caja con escuadras */
+.node.box{
+  border:.25mm solid color-mix(in srgb, var(--c) calc(var(--edge)*100%), transparent);
+  background-color:color-mix(in srgb, var(--c) calc(var(--fill)*100%), transparent);
+  background-image:
+    linear-gradient(var(--c),var(--c)), linear-gradient(var(--c),var(--c)),
+    linear-gradient(var(--c),var(--c)), linear-gradient(var(--c),var(--c)),
+    linear-gradient(var(--c),var(--c)), linear-gradient(var(--c),var(--c)),
+    linear-gradient(var(--c),var(--c)), linear-gradient(var(--c),var(--c));
+  background-repeat:no-repeat;
+  background-size:
+    5mm .5mm, .5mm 5mm,  5mm .5mm, .5mm 5mm,
+    5mm .5mm, .5mm 5mm,  5mm .5mm, .5mm 5mm;
+  background-position:
+    left top, left top,   right top, right top,
+    left bottom, left bottom,  right bottom, right bottom;
+}
+/* terminal: píldora sólida */
+.node.terminal{
+  border-radius:99mm; background:var(--c-term); color:var(--chip-ink);
+  font-family:"JetBrains Mono", ui-monospace, Consolas, monospace;
+  font-weight:700; letter-spacing:.24em; text-transform:uppercase; font-size:2.8mm;
+}
+/* rombo: el contorno lo dibuja el SVG, aquí solo va el texto */
+.node.dec{ padding:0; font-weight:500; }
+/* pie técnico bajo un rombo — desplazado a un lado para no tapar el conector */
+.cap{
+  position:absolute;
+  font-family:"JetBrains Mono", ui-monospace, Consolas, monospace;
+  font-size:2.3mm; line-height:1.3; letter-spacing:.04em; color:var(--c-dec); opacity:.9;
+}
+.cap.l{ text-align:right; }
+.cap.r{ text-align:left; }
+
+/* rombos dibujados en SVG */
+.dia{
+  fill:color-mix(in srgb, var(--c) 7%, transparent);
+  stroke:color-mix(in srgb, var(--c) 32%, transparent);
+  stroke-width:.25;
+}
+.dia-brk{ stroke:var(--c); stroke-width:.5; }
+
+/* etiquetas de arista */
+.elab{
+  position:absolute; transform:translate(-50%,-50%);
+  font-family:"JetBrains Mono", ui-monospace, Consolas, monospace;
+  font-size:2.5mm; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+  padding:.5mm 1.4mm; white-space:nowrap;
+  background:var(--page); color:var(--lc, var(--ink-dim));
+}
+
+/* rótulo de zona */
+.zone{
+  position:absolute; display:flex; align-items:center; gap:2.5mm;
+  font-family:"JetBrains Mono", ui-monospace, Consolas, monospace;
+  font-size:2.6mm; letter-spacing:.26em; text-transform:uppercase; color:var(--ink-faint);
+}
+.zone b{
+  color:var(--chip-ink); background:var(--ink-dim);
+  padding:.6mm 1.6mm .4mm; font-weight:700; letter-spacing:.1em;
+}
+.zone em{ font-style:normal; color:var(--ink); }
+
+/* ---------- pie ---------- */
+.foot{
+  position:relative; z-index:2; margin-top:auto;
+  display:flex; align-items:flex-end; justify-content:space-between; gap:10mm;
+  padding-top:3mm; border-top:.4mm solid var(--rule);
+}
+.legend{ display:flex; flex-wrap:wrap; gap:2mm 6mm; }
+.lg{
+  display:flex; align-items:center; gap:1.8mm;
+  font-family:"JetBrains Mono", ui-monospace, Consolas, monospace;
+  font-size:2.3mm; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-dim);
+}
+.lg .sq{ width:5mm; height:3.4mm; border:.35mm solid var(--lc); background:color-mix(in srgb, var(--lc) 18%, transparent); }
+.lg .di{ width:4.4mm; height:4.4mm; border:.35mm solid var(--lc); background:color-mix(in srgb, var(--lc) 18%, transparent); transform:rotate(45deg) scale(.8); }
+.lg .pill{ width:5mm; height:3mm; border-radius:99mm; background:var(--c-term); }
+.lg .dash{ width:6mm; height:0; border-top:.5mm dashed var(--ink-faint); }
+.note{ font-size:2.9mm; color:var(--ink-dim); max-width:120mm; line-height:1.35; text-align:right; }
+.note b{ color:var(--ink); font-weight:600; }
+
+/* ---------- controles (solo pantalla) ---------- */
+.bar{
+  position:fixed; top:0; left:0; right:0; z-index:99;
+  display:flex; gap:8px; justify-content:center;
+  padding:8px; background:color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter:blur(8px); border-bottom:1px solid var(--rule);
+}
+.bar button{
+  font-family:"JetBrains Mono", ui-monospace, Consolas, monospace;
+  font-size:11px; letter-spacing:.12em; text-transform:uppercase;
+  padding:7px 14px; cursor:pointer; color:var(--ink);
+  background:transparent; border:1px solid var(--rule);
+}
+.bar button:hover{ border-color:var(--hud); color:var(--hud); }
+
+/* ---------- impresión ---------- */
+@page{ size:480mm 350mm; margin:0; }
+@media print{
+  html,body{ background:#fff; padding:0; margin:0; }
+  .bar{ display:none !important; }
+  .sheet-wrap{ width:auto !important; height:auto !important; overflow:visible !important; }
+  .page{ transform:none !important; box-shadow:none; width:480mm; height:350mm; }
+  *{ -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <button onclick="document.documentElement.dataset.theme = document.documentElement.dataset.theme==='dark'?'light':'dark'">Tema oscuro / claro</button>
+  <button onclick="window.print()">Imprimir / exportar PDF</button>
+</div>
+
+<div class="sheet-wrap">
+<div class="page" id="page">
+
+  <header class="hud">
+    <div>
+      <div class="kicker"><span class="dot"></span> mapa 02 · diagrama de flujo funcional</div>
+      <h1>Instalar una vez, <span>analizar siempre</span></h1>
+      <p class="sub">Lógica de navegación desde la perspectiva del usuario. Lenguaje visual de Garrett: rombos para decisiones, rectángulos para procesos, conectores con direccionalidad explícita.</p>
+    </div>
+    <div class="stamp">
+      sesión 02 · entrega<br>
+      <b>480 × 350 mm</b><br>
+      mapa 2
+    </div>
+  </header>
+
+  <div class="canvas" id="canvas">
+    <div class="stage">
+      <svg id="wires" viewBox="0 0 392 215" aria-hidden="true"></svg>
+      <div id="layer"></div>
+    </div>
+  </div>
+
+  <footer class="foot">
+    <div class="legend">
+      <span class="lg"><i class="pill"></i>inicio</span>
+      <span class="lg" style="--lc:var(--c-proc)"><i class="sq"></i>proceso</span>
+      <span class="lg" style="--lc:var(--c-dec)"><i class="di"></i>decisión</span>
+      <span class="lg" style="--lc:var(--c-fix)"><i class="sq"></i>requisito a resolver</span>
+      <span class="lg" style="--lc:var(--c-out)"><i class="sq"></i>salida al usuario</span>
+      <span class="lg"><i class="dash"></i>retorno / bucle</span>
+    </div>
+    <p class="note">Los dos rombos de permisos son <b>bloqueantes</b>: no dejan avanzar hasta resolverse. El rombo del análisis no bloquea — si no hay contenido sustancial, el usuario sigue scrolleando sin enterarse.</p>
+  </footer>
+
+</div>
+</div>
+
+<script>
+/* ============================================================
+   GEOMETRÍA — todo en milímetros sobre el lienzo de 392 x 215.
+   x,y de cada nodo = su CENTRO. Para mover algo, cambia x/y
+   aquí; las aristas se recalculan solas desde los anclajes.
+   ============================================================ */
+
+const NODES = [
+  /* ---- ZONA A · puesta en marcha ---- */
+  {id:'start', k:'terminal', c:'--c-term', x:44,  y:18,  w:52, h:12, t:'Inicio'},
+  {id:'zip',   k:'box', c:'--c-proc', x:44,  y:42,  w:76, h:18, t:'descargar archivo .zip'},
+  {id:'d1',    k:'dec', c:'--c-dec',  x:44,  y:84,  w:78, h:46, t:'¿instalación desde fuentes desconocidas activada?'},
+  {id:'fix1',  k:'box', c:'--c-fix',  x:115, y:84,  w:50, h:26, t:'Permitir instalar desde fuentes desconocidas'},
+  {id:'apk',   k:'box', c:'--c-proc', x:44,  y:124, w:76, h:18, t:'Ejecutar APK'},
+  {id:'open',  k:'box', c:'--c-proc', x:44,  y:148, w:76, h:18, t:'Abrir app'},
+  {id:'d2',    k:'dec', c:'--c-dec',  x:44,  y:186, w:78, h:46, t:'¿opciones de accesibilidad activas?'},
+  {id:'fix2',  k:'box', c:'--c-fix',  x:115, y:186, w:50, h:26, t:'Activar opciones de accesibilidad'},
+
+  /* ---- ZONA B · bucle de análisis ---- */
+  {id:'scroll',k:'box', c:'--c-proc', x:196, y:104, w:64, h:22, t:'Usuario scrollea en Instagram'},
+  {id:'detect',k:'box', c:'--c-proc', x:250, y:24,  w:64, h:22, t:'App detecta contenido en pantalla'},
+  {id:'vlm',   k:'box', c:'--c-proc', x:334, y:24,  w:64, h:22, t:'VLM analiza el contenido en pantalla'},
+  {id:'d3',    k:'dec', c:'--c-dec',  x:334, y:104, w:78, h:46, t:'¿hay contenido sustancial para analizar?', cap:'según parámetros predeterminados', capside:'l'},
+  {id:'mark',  k:'box', c:'--c-out',  x:334, y:184, w:64, h:26, t:'Se muestran y destacan los elementos y patrones oscuros'},
+  {id:'level', k:'box', c:'--c-out',  x:250, y:184, w:64, h:26, t:'Se muestra indicador del nivel de oscuridad'},
+];
+
+const EDGES = [
+  /* zona A — camino principal */
+  {f:'start', fs:'b', t:'zip',  ts:'t'},
+  {f:'zip',   fs:'b', t:'d1',   ts:'t'},
+  {f:'d1',    fs:'b', t:'apk',  ts:'t', lab:'Sí',  lp:[44,111],  lc:'--c-dec'},
+  {f:'apk',   fs:'b', t:'open', ts:'t'},
+  {f:'open',  fs:'b', t:'d2',   ts:'t'},
+
+  /* zona A — correcciones (bucles de permiso) */
+  {f:'d1',   fs:'r', t:'fix1', ts:'l', lab:'No', lp:[86,78], lc:'--c-fix', k:'fix'},
+  {f:'fix1', fs:'t', t:'d1',   ts:'t', pts:[[115,56],[44,56]], k:'loop'},
+  {f:'d2',   fs:'r', t:'fix2', ts:'l', lab:'No', lp:[86,180], lc:'--c-fix', k:'fix'},
+  {f:'fix2', fs:'t', t:'d2',   ts:'t', pts:[[115,160],[44,160]], k:'loop'},
+
+  /* traspaso zona A -> zona B */
+  {f:'d2', fs:'b', t:'scroll', ts:'l', pts:[[44,212],[150,212],[150,104]],
+   lab:'Sí', lp:[60,212], lc:'--c-dec'},
+
+  /* zona B — el bucle */
+  {f:'scroll', fs:'t', t:'detect', ts:'l', pts:[[196,24]]},
+  {f:'detect', fs:'r', t:'vlm',    ts:'l'},
+  {f:'vlm',    fs:'b', t:'d3',     ts:'t'},
+  {f:'d3',     fs:'b', t:'mark',   ts:'t', lab:'Sí', lp:[345,152], lc:'--c-dec'},
+  {f:'mark',   fs:'l', t:'level',  ts:'r'},
+  {f:'level',  fs:'l', t:'scroll', ts:'b', pts:[[196,184]], k:'loop'},
+  {f:'d3',     fs:'l', t:'scroll', ts:'r', lab:'No', lp:[266,104], lc:'--c-dec', k:'loop'},
+];
+
+const ZONES = [
+  {x:0,   y:0, tag:'A', t:'Puesta en marcha', s:'una sola vez'},
+  {x:160, y:0, tag:'B', t:'Bucle de análisis', s:'se repite en cada pantalla'},
+];
+
+/* ============================================================
+   MOTOR DE DIBUJO
+   ============================================================ */
+const NS = 'http://www.w3.org/2000/svg';
+const byId = Object.fromEntries(NODES.map(n => [n.id, n]));
+
+function anchor(n, s){
+  const hw = n.w/2, hh = n.h/2;
+  return {t:[n.x, n.y-hh], b:[n.x, n.y+hh], l:[n.x-hw, n.y], r:[n.x+hw, n.y]}[s];
+}
+
+/* polilínea -> path con esquinas redondeadas */
+function roundPath(pts, r){
+  if (pts.length < 3) return `M${pts[0][0]},${pts[0][1]} L${pts[pts.length-1][0]},${pts[pts.length-1][1]}`;
+  let d = `M${pts[0][0]},${pts[0][1]}`;
+  for (let i = 1; i < pts.length-1; i++){
+    const p0 = pts[i-1], p1 = pts[i], p2 = pts[i+1];
+    const d1 = Math.hypot(p1[0]-p0[0], p1[1]-p0[1]);
+    const d2 = Math.hypot(p2[0]-p1[0], p2[1]-p1[1]);
+    const rr = Math.min(r, d1/2, d2/2);
+    const a = [p1[0] + (p0[0]-p1[0])/d1*rr, p1[1] + (p0[1]-p1[1])/d1*rr];
+    const b = [p1[0] + (p2[0]-p1[0])/d2*rr, p1[1] + (p2[1]-p1[1])/d2*rr];
+    d += ` L${a[0]},${a[1]} Q${p1[0]},${p1[1]} ${b[0]},${b[1]}`;
+  }
+  const last = pts[pts.length-1];
+  d += ` L${last[0]},${last[1]}`;
+  return d;
+}
+
+const svg = document.getElementById('wires');
+const layer = document.getElementById('layer');
+
+/* definiciones: puntas de flecha por color */
+const defs = document.createElementNS(NS,'defs');
+[['ok','var(--ink-dim)'], ['fix','var(--c-fix)'], ['loop','var(--ink-faint)']].forEach(([k,col]) => {
+  const m = document.createElementNS(NS,'marker');
+  m.setAttribute('id','ah-'+k);
+  m.setAttribute('viewBox','0 0 10 10');
+  m.setAttribute('refX','9'); m.setAttribute('refY','5');
+  m.setAttribute('markerWidth','3.4'); m.setAttribute('markerHeight','3.4');
+  m.setAttribute('markerUnits','userSpaceOnUse');
+  m.setAttribute('orient','auto-start-reverse');
+  const p = document.createElementNS(NS,'path');
+  p.setAttribute('d','M0,1 L10,5 L0,9 z');
+  p.setAttribute('fill',col);
+  m.appendChild(p); defs.appendChild(m);
+});
+svg.appendChild(defs);
+
+/* 1 · rombos (contorno + escuadras en los vértices) */
+const gShapes = document.createElementNS(NS,'g');
+svg.appendChild(gShapes);
+NODES.filter(n => n.k === 'dec').forEach(n => {
+  const hw = n.w/2, hh = n.h/2;
+  const V = [[n.x, n.y-hh], [n.x+hw, n.y], [n.x, n.y+hh], [n.x-hw, n.y]];
+  const g = document.createElementNS(NS,'g');
+  g.setAttribute('style', `--c:var(${n.c})`);
+  const poly = document.createElementNS(NS,'polygon');
+  poly.setAttribute('class','dia');
+  poly.setAttribute('points', V.map(p => p.join(',')).join(' '));
+  g.appendChild(poly);
+  /* escuadras: tramo corto desde cada vértice hacia sus dos vecinos */
+  V.forEach((v, i) => {
+    [V[(i+1)%4], V[(i+3)%4]].forEach(w => {
+      const l = document.createElementNS(NS,'line');
+      l.setAttribute('class','dia-brk');
+      l.setAttribute('x1', v[0]); l.setAttribute('y1', v[1]);
+      l.setAttribute('x2', v[0] + (w[0]-v[0])*0.26);
+      l.setAttribute('y2', v[1] + (w[1]-v[1])*0.26);
+      g.appendChild(l);
+    });
+  });
+  gShapes.appendChild(g);
+});
+
+/* 2 · conectores */
+const gWires = document.createElementNS(NS,'g');
+svg.appendChild(gWires);
+EDGES.forEach(e => {
+  const A = byId[e.f], B = byId[e.t];
+  const pts = [anchor(A, e.fs), ...(e.pts || []), anchor(B, e.ts)];
+  const path = document.createElementNS(NS,'path');
+  path.setAttribute('d', roundPath(pts, 4));
+  path.setAttribute('fill','none');
+  const kind = e.k || 'ok';
+  const col = kind === 'fix' ? 'var(--c-fix)' : kind === 'loop' ? 'var(--ink-faint)' : 'var(--ink-dim)';
+  path.setAttribute('stroke', col);
+  path.setAttribute('stroke-width', kind === 'loop' ? '.4' : '.55');
+  if (kind === 'loop') path.setAttribute('stroke-dasharray','2.4 2');
+  path.setAttribute('marker-end', 'url(#ah-' + kind + ')');
+  gWires.appendChild(path);
+
+  if (e.lab){
+    const s = document.createElement('span');
+    s.className = 'elab';
+    s.textContent = e.lab;
+    s.style.left = e.lp[0] + 'mm';
+    s.style.top  = e.lp[1] + 'mm';
+    if (e.lc) s.style.setProperty('--lc', `var(${e.lc})`);
+    layer.appendChild(s);
+  }
+});
+
+/* 3 · nodos */
+NODES.forEach(n => {
+  const d = document.createElement('div');
+  d.className = 'node ' + (n.k === 'dec' ? 'dec' : n.k === 'terminal' ? 'terminal' : 'box');
+  d.style.setProperty('--c', `var(${n.c})`);
+  const w = n.k === 'dec' ? n.w * 0.56 : n.w;
+  const h = n.k === 'dec' ? n.h * 0.62 : n.h;
+  d.style.left = (n.x - w/2) + 'mm';
+  d.style.top  = (n.y - h/2) + 'mm';
+  d.style.width = w + 'mm';
+  d.style.height = h + 'mm';
+  d.innerHTML = n.t + (n.code ? `<span class="code">${n.code}</span>` : '');
+  layer.appendChild(d);
+
+  if (n.cap){
+    const side = n.capside || 'r';
+    const cw = n.w * 1.15;
+    const c = document.createElement('div');
+    c.className = 'cap ' + side;
+    c.textContent = n.cap;
+    c.style.left = (side === 'l' ? n.x - 3 - cw : n.x + 3) + 'mm';
+    c.style.top  = (n.y + n.h/2 + 2) + 'mm';
+    c.style.width = cw + 'mm';
+    layer.appendChild(c);
+  }
+});
+
+/* 4 · rótulos de zona */
+ZONES.forEach(z => {
+  const d = document.createElement('div');
+  d.className = 'zone';
+  d.style.left = z.x + 'mm';
+  d.style.top  = z.y + 'mm';
+  d.innerHTML = `<b>${z.tag}</b><em>${z.t}</em>· ${z.s}`;
+  layer.appendChild(d);
+});
+
+/* ---------- tema por URL + ajuste de vista previa ---------- */
+if (new URLSearchParams(location.search).get('theme') === 'light')
+  document.documentElement.dataset.theme = 'light';
+
+function fit(){
+  const page = document.getElementById('page');
+  const wrap = page.parentElement;
+  const s = Math.min(1, (window.innerWidth - 60) / page.offsetWidth);
+  page.style.transform = 'scale(' + s + ')';
+  wrap.style.width  = (page.offsetWidth * s) + 'px';
+  wrap.style.height = (page.offsetHeight * s) + 'px';
+}
+addEventListener('resize', fit);
+addEventListener('load', fit);
+fit();
+</script>
+</body>
+</html>

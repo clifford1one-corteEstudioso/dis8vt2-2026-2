@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<title>Mapa 3 — Diagrama de Flujo Técnico</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   MAPA 3 · DIAGRAMA DE FLUJO TÉCNICO
+   Arquitectura del sistema, permisos y gestión de excepciones.
+   Geometría en milímetros: el lienzo mide 392 x 221 mm y el
+   viewBox del SVG usa las mismas unidades, así que
+   1 unidad = 1 mm sobre el papel.
+   Salida: hoja de 480 x 350 mm (se imprime a A3 con "ajustar a pagina")
+   ============================================================ */
+
+:root{
+  --bg:        #070a0c;
+  --page:      #0b1013;
+  --ink:       #e6f0f4;
+  --ink-dim:   #93a7b1;
+  --ink-faint: #55666e;
+  --rule:      rgba(120,160,175,.20);
+  --grid:      rgba(120,190,210,.04);
+  --hud:       #37e2ff;
+
+  --c-proc: #2ad4ee;   /* proceso del sistema    */
+  --c-dec:  #ffb527;   /* decisión / guarda      */
+  --c-fix:  #ff5f6d;   /* excepción y recuperación */
+  --c-out:  #9ae62b;   /* salida al usuario      */
+  --c-term: #eaf6fa;   /* terminal               */
+
+  --fill: .05;
+  --edge: .20;
+  --chip-ink:#05090b;
+}
+:root[data-theme="light"]{
+  --bg:        #e9edee;
+  --page:      #ffffff;
+  --ink:       #0d1417;
+  --ink-dim:   #4d5f68;
+  --ink-faint: #8a9aa2;
+  --rule:      rgba(20,50,60,.24);
+  --grid:      rgba(20,80,100,.045);
+  --hud:       #0286a5;
+
+  --c-proc: #0286a5;
+  --c-dec:  #b06f00;
+  --c-fix:  #cc2436;
+  --c-out:  #4a7a00;
+  --c-term: #0d1417;
+
+  --fill: .06;
+  --edge: .36;
+  --chip-ink:#ffffff;
+}
+
+*{ box-sizing:border-box; margin:0; padding:0; }
+
+body{
+  background:var(--bg);
+  font-family:"Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  padding:14mm 0;
+}
+
+.sheet-wrap{ overflow:hidden; margin:0 auto; }
+.page{
+  position:relative;
+  width:480mm; height:350mm;
+  padding:16mm 16mm 14mm;
+  background:var(--page); color:var(--ink);
+  overflow:hidden;
+  display:flex; flex-direction:column;
+  flex:none;
+  transform-origin:top left;
+  box-shadow:0 0 0 1px var(--rule), 0 18px 60px rgba(0,0,0,.5);
+}
+.page::before{
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background-image:
+    linear-gradient(var(--grid) .2mm, transparent .2mm),
+    linear-gradient(90deg, var(--grid) .2mm, transparent .2mm);
+  background-size:20mm 20mm, 20mm 20mm;
+}
+
+/* ---------- cabecera ---------- */
+.hud{
+  display:flex; align-items:flex-end; justify-content:space-between; gap:10mm;
+  position:relative; z-index:2; height:32mm;
+}
+.kicker{
+  font-family:"JetBrains Mono", ui-monospace, Consolas, monospace;
+  font-size:2.6mm; letter-spacing:.34em; text-transform:uppercase;
+  color:var(--hud); display:flex; align-items:center; gap:2.4mm; margin-bottom:1.8mm;
+}
+.kicker .dot{
+  width:2mm; height:2mm; border-radius:50%; background:var(--hud);
+  box-shadow:0 0 0 1.2mm color-mix(in srgb, var(--hud) 16%, transparent);
+}
+h1{ font-size:9.5mm; line-height:1.02; font-weight:700; letter-spacing:-.025em; }
+h1 span{ color:var(--ink-faint); font-weight:400; }
+.sub{ margin-top:1.8mm; font-size:3.1mm; color:var(--ink-dim); max-width:200mm; line-height:1.32; }
+.stamp{
+  text-align:right;
+  font-family:"JetBrains Mono", ui-monospace, Consolas, monospace;
+  font-size:2.4mm; letter-spacing:.16em; color:var(--ink-faint); line-height:1.8;
+  text-transform:uppercase;
+}
+.stamp b{ color:var(--ink); font-weight:500; }
+
+/* ---------- lienzo ----------
+   El diagrama se dibuja SIEMPRE en su tamaño nativo (392 x 221 mm) dentro de
+   .stage, y .stage se escala de forma uniforme con --k. Así el SVG y los nodos
+   HTML crecen exactamente igual y nunca se desalinean.
+   flex:none es obligatorio: sin él, el navegador comprime el lienzo cuando la
+   columna no cabe y el diagrama se recorta por abajo. */
+.canvas{
+  position:relative; z-index:2;
+  --k:1.14;
+  width:calc(392mm * var(--k));
+  height:calc(221mm * var(--k));
+  margin:6mm auto;
+  flex:none;
+}
+.stage{
+  position:absolute; top:0; left:0;
+  width:392mm; height:221mm;
+  transform:scale(var(--k));
+  transform-origin:0 0;
+}
+.stage svg{ position:absolute; inset:0; width:100%; height:100%; overflow:visible; }
+
+/* ---------- nodos ---------- */
+.node{
+  position:absolute;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center; padding:1.6mm 2.6mm;
+  font-size:2.95mm; line-height:1.24; color:var(--ink);
+}
+.node .code{
+  margin-top:1mm;
+  font-family:"JetBrains Mono", ui-monospace, Consolas, monospace;
+  font-size:2.3mm; letter-spacing:.02em; color:var(--c); word-break:break-word;
+}
+.node.box{
+  border:.25mm solid color-mix(in srgb, var(--c) calc(var(--edge)*100%), transparent);
+  background-color:color-mix(in srgb, var(--c) calc(var(--fill)*100%), transparent);
+  background-image:
+    linear-gradient(var(--c),var(--c)), linear-gradient(var(--c),var(--c)),
+    linear-gradient(var(--c),var(--c)), linear-gradient(var(--c),var(--c)),
+    linear-gradient(var(--c),var(--c)), linear-gradient(var(--c),var(--c)),
+    linear-gradient(var(--c),var(--c)), linear-gradient(var(--c),var(--c));
+  background-repeat:no-repeat;
+  background-size:
+    4.5mm .5mm, .5mm 4.5mm,  4.5mm .5mm, .5mm 4.5mm,
+    4.5mm .5mm, .5mm 4.5mm,  4.5mm .5mm, .5mm 4.5mm;
+  background-position:
+    left top, left top,   right top, right top,
+    left bottom, left bottom,  right bottom, right bottom;
+}
+.node.terminal{
+  border-radius:99mm; background:var(--c-term); color:var(--chip-ink);
+  font-family:"JetBrains Mono", ui-monospace, Consolas, monospace;
+  font-weight:700; letter-spacing:.24em; text-transform:uppercase; font-size:2.7mm;
+}
+.node.dec{ padding:0; font-weight:500; }
+/* conector fuera de página */
+.node.conn{
+  border-radius:50%; border:.5mm solid var(--c-fix); color:var(--c-fix);
+  background:color-mix(in srgb, var(--c-fix) 10%, transparent);
+  font-family:"JetBrains Mono", ui-monospace, Consolas, monospace;
+  font-weight:700; font-size:4mm; letter-spacing:0; padding:0;
+}
+
+/* pie técnico bajo un rombo — desplazado a un lado para no tapar el conector */
+.cap{
+  position:absolute;
+  font-family:"JetBrains Mono", ui-monospace, Consolas, monospace;
+  font-size:2.25mm; line-height:1.3; letter-spacing:.02em; color:var(--c-dec); opacity:.9;
+}
+.cap.l{ text-align:right; }
+.cap.r{ text-align:left; }
+
+/* rombos dibujados en SVG */
+.dia{
+  fill:color-mix(in srgb, var(--c) 7%, transparent);
+  stroke:color-mix(in srgb, var(--c) 32%, transparent);
+  stroke-width:.25;
+}
+.dia-brk{ stroke:var(--c); stroke-width:.5; }
+
+/* etiquetas de arista */
+.elab{
+  position:absolute; transform:translate(-50%,-50%);
+  font-family:"JetBrains Mono", ui-monospace, Consolas, monospace;
+  font-size:2.4mm; font-weight:700; letter-spacing:.12em; text-transform:uppercase;
+  padding:.5mm 1.3mm; white-space:nowrap;
+  background:var(--page); color:var(--lc, var(--ink-dim));
+}
+
+/* rótulo de zona */
+.zone{
+  position:absolute; display:flex; align-items:center; gap:2.5mm;
+  font-family:"JetBrains Mono", ui-monospace, Consolas, monospace;
+  font-size:2.5mm; letter-spacing:.26em; text-transform:uppercase; color:var(--ink-faint);
+}
+.zone b{
+  color:var(--chip-ink); background:var(--ink-dim);
+  padding:.6mm 1.6mm .4mm; font-weight:700; letter-spacing:.1em;
+}
+.zone em{ font-style:normal; color:var(--ink); }
+
+/* ---------- pie ---------- */
+.foot{
+  position:relative; z-index:2; margin-top:auto;
+  display:flex; align-items:flex-end; justify-content:space-between; gap:8mm;
+  padding-top:2.6mm; border-top:.4mm solid var(--rule);
+}
+.legend{ display:flex; flex-wrap:wrap; gap:1.6mm 5mm; }
+.lg{
+  display:flex; align-items:center; gap:1.6mm;
+  font-family:"JetBrains Mono", ui-monospace, Consolas, monospace;
+  font-size:2.2mm; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-dim);
+}
+.lg .sq{ width:4.6mm; height:3.2mm; border:.35mm solid var(--lc); background:color-mix(in srgb, var(--lc) 18%, transparent); }
+.lg .di{ width:4.2mm; height:4.2mm; border:.35mm solid var(--lc); background:color-mix(in srgb, var(--lc) 18%, transparent); transform:rotate(45deg) scale(.8); }
+.lg .pill{ width:4.6mm; height:2.8mm; border-radius:99mm; background:var(--c-term); }
+.lg .cir{ width:4mm; height:4mm; border-radius:50%; border:.4mm solid var(--c-fix); }
+.lg .dash{ width:5.5mm; height:0; border-top:.5mm dashed var(--ink-faint); }
+.note{ font-size:2.8mm; color:var(--ink-dim); max-width:118mm; line-height:1.32; text-align:right; }
+.note b{ color:var(--ink); font-weight:600; }
+
+/* ---------- controles (solo pantalla) ---------- */
+.bar{
+  position:fixed; top:0; left:0; right:0; z-index:99;
+  display:flex; gap:8px; justify-content:center;
+  padding:8px; background:color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter:blur(8px); border-bottom:1px solid var(--rule);
+}
+.bar button{
+  font-family:"JetBrains Mono", ui-monospace, Consolas, monospace;
+  font-size:11px; letter-spacing:.12em; text-transform:uppercase;
+  padding:7px 14px; cursor:pointer; color:var(--ink);
+  background:transparent; border:1px solid var(--rule);
+}
+.bar button:hover{ border-color:var(--hud); color:var(--hud); }
+
+/* ---------- impresión ---------- */
+@page{ size:480mm 350mm; margin:0; }
+@media print{
+  html,body{ background:#fff; padding:0; margin:0; }
+  .bar{ display:none !important; }
+  .sheet-wrap{ width:auto !important; height:auto !important; overflow:visible !important; }
+  .page{ transform:none !important; box-shadow:none; width:480mm; height:350mm; }
+  *{ -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <button onclick="document.documentElement.dataset.theme = document.documentElement.dataset.theme==='dark'?'light':'dark'">Tema oscuro / claro</button>
+  <button onclick="window.print()">Imprimir / exportar PDF</button>
+</div>
+
+<div class="sheet-wrap">
+<div class="page" id="page">
+
+  <header class="hud">
+    <div>
+      <div class="kicker"><span class="dot"></span> mapa 03 · diagrama de flujo técnico</div>
+      <h1>Dos permisos que se pueden caer <span>en cualquier momento</span></h1>
+      <p class="sub">Arquitectura del sistema y gestión de excepciones. Todo el flujo cuelga de dos permisos revocables — superposición y accesibilidad — más un tercer punto de fallo: que la inferencia local no llegue a tiempo.</p>
+    </div>
+    <div class="stamp">
+      sesión 02 · entrega<br>
+      <b>480 × 350 mm</b><br>
+      mapa 3
+    </div>
+  </header>
+
+  <div class="canvas" id="canvas">
+    <div class="stage">
+      <svg id="wires" viewBox="0 0 392 221" aria-hidden="true"></svg>
+      <div id="layer"></div>
+    </div>
+  </div>
+
+  <footer class="foot">
+    <div class="legend">
+      <span class="lg"><i class="pill"></i>inicio</span>
+      <span class="lg" style="--lc:var(--c-proc)"><i class="sq"></i>proceso</span>
+      <span class="lg" style="--lc:var(--c-dec)"><i class="di"></i>guarda / decisión</span>
+      <span class="lg" style="--lc:var(--c-fix)"><i class="sq"></i>excepción y recuperación</span>
+      <span class="lg" style="--lc:var(--c-out)"><i class="sq"></i>salida al usuario</span>
+      <span class="lg"><i class="cir"></i>conector: continúa en Ⓐ</span>
+      <span class="lg"><i class="dash"></i>retorno / reintento</span>
+    </div>
+    <p class="note">Ningún fallo detiene el scroll: la app degrada a estado <b>«analizando»</b> y lo reintenta. Solo la revocación de un permiso saca al usuario del ciclo, y siempre con un aviso antes de mandarlo a ajustes.</p>
+  </footer>
+
+</div>
+</div>
+
+<script>
+/* ============================================================
+   GEOMETRÍA — milímetros sobre el lienzo de 392 x 221.
+   x,y de cada nodo = su CENTRO. Las aristas se calculan solas
+   desde los anclajes (t/b/l/r); 'pts' añade codos intermedios.
+   ============================================================ */
+
+const NODES = [
+  /* ---------- ZONA A · arranque y permisos ---------- */
+  {id:'m0', k:'terminal', c:'--c-term', x:112, y:16,  w:52, h:12, t:'Inicio'},
+  {id:'m1', k:'dec', c:'--c-dec',  x:112, y:56,  w:76, h:44,
+   t:'¿permiso de superposición activo?', cap:'canDrawOverlays()'},
+  {id:'r1', k:'box', c:'--c-fix',  x:36,  y:56,  w:64, h:32,
+   t:'mensaje: «Se requiere permiso para mostrar sobre otras apps. Actívelo para continuar.»'},
+  {id:'r2', k:'box', c:'--c-fix',  x:36,  y:104, w:64, h:30,
+   t:'redirigir a ajustes de superposición', code:'ACTION_MANAGE_OVERLAY_PERMISSION'},
+  {id:'m2', k:'box', c:'--c-proc', x:112, y:108, w:76, h:20, t:'funciona en segundo plano'},
+  {id:'m3', k:'dec', c:'--c-dec',  x:112, y:156, w:76, h:44,
+   t:'¿servicio de accesibilidad conectado?', cap:'onServiceConnected()'},
+  {id:'s1', k:'box', c:'--c-fix',  x:36,  y:156, w:64, h:34,
+   t:'guardar datos completos · descartar datos parciales o incompletos'},
+  {id:'s2', k:'box', c:'--c-fix',  x:36,  y:200, w:64, h:32,
+   t:'mensaje: «Las opciones de accesibilidad han sido desactivadas. Para continuar, enciéndalas.»'},
+  {id:'s3', k:'box', c:'--c-fix',  x:112, y:200, w:76, h:24, t:'redirigir a ajustes › accesibilidad'},
+  {id:'cA', k:'conn', c:'--c-fix', x:36,  y:26,  w:11, h:11, t:'A'},
+
+  /* ---------- ZONA B · ciclo de análisis ---------- */
+  {id:'p1', k:'box', c:'--c-proc', x:216, y:24,  w:64, h:26, t:'detecta contenido en pantalla'},
+  {id:'p2', k:'box', c:'--c-proc', x:288, y:24,  w:64, h:26, t:'extrae el contenido', code:'AccessibilityNodeInfo'},
+  {id:'p3', k:'box', c:'--c-proc', x:358, y:24,  w:60, h:26, t:'envía a VLM local', code:'Gemma 3n'},
+  {id:'p4', k:'dec', c:'--c-dec',  x:358, y:88,  w:64, h:44, t:'¿inferencia completa dentro del tiempo esperado?'},
+  {id:'q1', k:'box', c:'--c-fix',  x:286, y:88,  w:68, h:28, t:'mostrar estado «analizando» sin bloquear el scroll'},
+  {id:'p5', k:'box', c:'--c-proc', x:358, y:152, w:64, h:24, t:'retorna nivel de oscuridad'},
+  {id:'p6', k:'dec', c:'--c-dec',  x:282, y:152, w:68, h:44, t:'¿el permiso de superposición sigue activo?'},
+  {id:'p7', k:'box', c:'--c-out',  x:212, y:152, w:60, h:28, t:'renderiza el indicador sobre el contenido'},
+  {id:'q2', k:'box', c:'--c-fix',  x:282, y:200, w:72, h:24, t:'descartar el resultado del análisis'},
+  {id:'cB', k:'conn', c:'--c-fix', x:232, y:200, w:11, h:11, t:'A'},
+];
+
+const EDGES = [
+  /* zona A — camino principal */
+  {f:'m0', fs:'b', t:'m1', ts:'t'},
+  {f:'m1', fs:'b', t:'m2', ts:'t', lab:'Sí', lp:[118,88], lc:'--c-dec'},
+  {f:'m2', fs:'b', t:'m3', ts:'t'},
+
+  /* zona A — excepción 1: sin permiso de superposición */
+  {f:'m1', fs:'l', t:'r1', ts:'r', lab:'No', lp:[71,49], lc:'--c-fix', k:'fix'},
+  {f:'r1', fs:'b', t:'r2', ts:'t', k:'fix'},
+  {f:'r2', fs:'r', t:'m1', ts:'t', pts:[[71,104],[71,28]], k:'loop'},
+
+  /* zona A — excepción 2: accesibilidad desconectada */
+  {f:'m3', fs:'l', t:'s1', ts:'r', lab:'No', lp:[71,149], lc:'--c-fix', k:'fix'},
+  {f:'s1', fs:'b', t:'s2', ts:'t', k:'fix'},
+  {f:'s2', fs:'r', t:'s3', ts:'l', k:'fix'},
+  {f:'s3', fs:'t', t:'m3', ts:'b', k:'loop'},
+
+  /* conector A: vuelve al aviso de permiso */
+  {f:'cA', fs:'b', t:'r1', ts:'t', k:'fix'},
+
+  /* traspaso zona A -> zona B */
+  {f:'m3', fs:'r', t:'p1', ts:'l', pts:[[168,156],[168,24]], lab:'Sí', lp:[168,140], lc:'--c-dec'},
+
+  /* zona B — el ciclo */
+  {f:'p1', fs:'r', t:'p2', ts:'l'},
+  {f:'p2', fs:'r', t:'p3', ts:'l'},
+  {f:'p3', fs:'b', t:'p4', ts:'t'},
+  {f:'p4', fs:'b', t:'p5', ts:'t', lab:'Sí', lp:[366,124], lc:'--c-dec'},
+  {f:'p5', fs:'l', t:'p6', ts:'r'},
+  {f:'p6', fs:'l', t:'p7', ts:'r', lab:'Sí', lp:[245,144], lc:'--c-dec'},
+  {f:'p7', fs:'l', t:'p1', ts:'l', pts:[[176,152],[176,24]], k:'loop'},
+
+  /* zona B — excepción 3: inferencia fuera de tiempo */
+  {f:'p4', fs:'l', t:'q1', ts:'r', lab:'timeout / error', lp:[336,80], lc:'--c-fix', k:'fix'},
+  {f:'q1', fs:'l', t:'p1', ts:'b', pts:[[216,88]], k:'loop'},
+
+  /* zona B — excepción 4: permiso revocado a mitad de sesión */
+  {f:'p6', fs:'b', t:'q2', ts:'t', lab:'no · revocado', lp:[282,182], lc:'--c-fix', k:'fix'},
+  {f:'q2', fs:'l', t:'cB', ts:'r', k:'fix'},
+];
+
+const ZONES = [
+  {x:0,   y:0, tag:'A', t:'Arranque y permisos', s:'bloqueante'},
+  {x:182, y:0, tag:'B', t:'Ciclo de análisis',   s:'una vuelta por pantalla'},
+];
+
+/* ============================================================
+   MOTOR DE DIBUJO
+   ============================================================ */
+const NS = 'http://www.w3.org/2000/svg';
+const byId = Object.fromEntries(NODES.map(n => [n.id, n]));
+
+function anchor(n, s){
+  const hw = n.w/2, hh = n.h/2;
+  return {t:[n.x, n.y-hh], b:[n.x, n.y+hh], l:[n.x-hw, n.y], r:[n.x+hw, n.y]}[s];
+}
+
+function roundPath(pts, r){
+  if (pts.length < 3) return `M${pts[0][0]},${pts[0][1]} L${pts[pts.length-1][0]},${pts[pts.length-1][1]}`;
+  let d = `M${pts[0][0]},${pts[0][1]}`;
+  for (let i = 1; i < pts.length-1; i++){
+    const p0 = pts[i-1], p1 = pts[i], p2 = pts[i+1];
+    const d1 = Math.hypot(p1[0]-p0[0], p1[1]-p0[1]);
+    const d2 = Math.hypot(p2[0]-p1[0], p2[1]-p1[1]);
+    const rr = Math.min(r, d1/2, d2/2);
+    const a = [p1[0] + (p0[0]-p1[0])/d1*rr, p1[1] + (p0[1]-p1[1])/d1*rr];
+    const b = [p1[0] + (p2[0]-p1[0])/d2*rr, p1[1] + (p2[1]-p1[1])/d2*rr];
+    d += ` L${a[0]},${a[1]} Q${p1[0]},${p1[1]} ${b[0]},${b[1]}`;
+  }
+  const last = pts[pts.length-1];
+  d += ` L${last[0]},${last[1]}`;
+  return d;
+}
+
+const svg = document.getElementById('wires');
+const layer = document.getElementById('layer');
+
+const defs = document.createElementNS(NS,'defs');
+[['ok','var(--ink-dim)'], ['fix','var(--c-fix)'], ['loop','var(--ink-faint)']].forEach(([k,col]) => {
+  const m = document.createElementNS(NS,'marker');
+  m.setAttribute('id','ah-'+k);
+  m.setAttribute('viewBox','0 0 10 10');
+  m.setAttribute('refX','9'); m.setAttribute('refY','5');
+  m.setAttribute('markerWidth','3.2'); m.setAttribute('markerHeight','3.2');
+  m.setAttribute('markerUnits','userSpaceOnUse');
+  m.setAttribute('orient','auto-start-reverse');
+  const p = document.createElementNS(NS,'path');
+  p.setAttribute('d','M0,1 L10,5 L0,9 z');
+  p.setAttribute('fill',col);
+  m.appendChild(p); defs.appendChild(m);
+});
+svg.appendChild(defs);
+
+/* 1 · rombos */
+const gShapes = document.createElementNS(NS,'g');
+svg.appendChild(gShapes);
+NODES.filter(n => n.k === 'dec').forEach(n => {
+  const hw = n.w/2, hh = n.h/2;
+  const V = [[n.x, n.y-hh], [n.x+hw, n.y], [n.x, n.y+hh], [n.x-hw, n.y]];
+  const g = document.createElementNS(NS,'g');
+  g.setAttribute('style', `--c:var(${n.c})`);
+  const poly = document.createElementNS(NS,'polygon');
+  poly.setAttribute('class','dia');
+  poly.setAttribute('points', V.map(p => p.join(',')).join(' '));
+  g.appendChild(poly);
+  V.forEach((v, i) => {
+    [V[(i+1)%4], V[(i+3)%4]].forEach(w => {
+      const l = document.createElementNS(NS,'line');
+      l.setAttribute('class','dia-brk');
+      l.setAttribute('x1', v[0]); l.setAttribute('y1', v[1]);
+      l.setAttribute('x2', v[0] + (w[0]-v[0])*0.26);
+      l.setAttribute('y2', v[1] + (w[1]-v[1])*0.26);
+      g.appendChild(l);
+    });
+  });
+  gShapes.appendChild(g);
+});
+
+/* 2 · conectores */
+const gWires = document.createElementNS(NS,'g');
+svg.appendChild(gWires);
+EDGES.forEach(e => {
+  const A = byId[e.f], B = byId[e.t];
+  const pts = [anchor(A, e.fs), ...(e.pts || []), anchor(B, e.ts)];
+  const path = document.createElementNS(NS,'path');
+  path.setAttribute('d', roundPath(pts, 4));
+  path.setAttribute('fill','none');
+  const kind = e.k || 'ok';
+  const col = kind === 'fix' ? 'var(--c-fix)' : kind === 'loop' ? 'var(--ink-faint)' : 'var(--ink-dim)';
+  path.setAttribute('stroke', col);
+  path.setAttribute('stroke-width', kind === 'loop' ? '.4' : '.55');
+  if (kind === 'loop') path.setAttribute('stroke-dasharray','2.4 2');
+  path.setAttribute('marker-end', 'url(#ah-' + kind + ')');
+  gWires.appendChild(path);
+
+  if (e.lab){
+    const s = document.createElement('span');
+    s.className = 'elab';
+    s.textContent = e.lab;
+    s.style.left = e.lp[0] + 'mm';
+    s.style.top  = e.lp[1] + 'mm';
+    if (e.lc) s.style.setProperty('--lc', `var(${e.lc})`);
+    layer.appendChild(s);
+  }
+});
+
+/* 3 · nodos */
+NODES.forEach(n => {
+  const cls = n.k === 'dec' ? 'dec' : n.k === 'terminal' ? 'terminal' : n.k === 'conn' ? 'conn' : 'box';
+  const d = document.createElement('div');
+  d.className = 'node ' + cls;
+  d.style.setProperty('--c', `var(${n.c})`);
+  const w = n.k === 'dec' ? n.w * 0.58 : n.w;
+  const h = n.k === 'dec' ? n.h * 0.62 : n.h;
+  d.style.left = (n.x - w/2) + 'mm';
+  d.style.top  = (n.y - h/2) + 'mm';
+  d.style.width = w + 'mm';
+  d.style.height = h + 'mm';
+  d.innerHTML = n.t + (n.code ? `<span class="code">${n.code}</span>` : '');
+  layer.appendChild(d);
+
+  if (n.cap){
+    const side = n.capside || 'r';
+    const cw = n.w * 1.15;
+    const c = document.createElement('div');
+    c.className = 'cap ' + side;
+    c.textContent = n.cap;
+    c.style.left = (side === 'l' ? n.x - 3 - cw : n.x + 3) + 'mm';
+    c.style.top  = (n.y + n.h/2 + 1.5) + 'mm';
+    c.style.width = cw + 'mm';
+    layer.appendChild(c);
+  }
+});
+
+/* 4 · rótulos de zona */
+ZONES.forEach(z => {
+  const d = document.createElement('div');
+  d.className = 'zone';
+  d.style.left = z.x + 'mm';
+  d.style.top  = z.y + 'mm';
+  d.innerHTML = `<b>${z.tag}</b><em>${z.t}</em>· ${z.s}`;
+  layer.appendChild(d);
+});
+
+/* ---------- tema por URL + ajuste de vista previa ---------- */
+if (new URLSearchParams(location.search).get('theme') === 'light')
+  document.documentElement.dataset.theme = 'light';
+
+function fit(){
+  const page = document.getElementById('page');
+  const wrap = page.parentElement;
+  const s = Math.min(1, (window.innerWidth - 60) / page.offsetWidth);
+  page.style.transform = 'scale(' + s + ')';
+  wrap.style.width  = (page.offsetWidth * s) + 'px';
+  wrap.style.height = (page.offsetHeight * s) + 'px';
+}
+addEventListener('resize', fit);
+addEventListener('load', fit);
+fit();
+</script>
+</body>
+</html>
