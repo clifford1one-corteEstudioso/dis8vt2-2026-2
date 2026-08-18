@@ -101,33 +101,36 @@ Detalle Requerido:
 
 ```mermaid
 flowchart TB
-    n0["Inicio: onboarding completo"] --> n0b{"¿SYSTEM_ALERT_WINDOW activo?<br/>canDrawOverlays()"}
-    n0b -->|Sí| n1["App en background, servicio de accesibilidad activo"]
-    n0b -->|No| n0c["Mostrar mensaje:<br/>'Se requiere permiso para mostrar sobre otras apps.<br/>Por favor actívelo.'"]
-    n0c --> n0d["Redirigir vía ACTION_MANAGE_OVERLAY_PERMISSION"]
+    n0["inicio"] --> n0b["¿SYSTEM_ALERT_WINDOW activo?<br>canDrawOverlays()"]
+    n0b -- sí --> n1["funciona en segundo plano"]
+    n0b -- No --> n0c@{ label: "mensaje:<br>'Se requiere permiso para mostrar sobre otras apps.<br>Active el permiso para continuar.'" }
+    n0c --> n0d["redirigir vía ACTION_MANAGE_OVERLAY_PERMISSION"]
     n0d --> n0b
-
-    n1 --> n2{"¿Servicio de accesibilidad conectado?<br/>onServiceConnected()"}
-    n2 -->|Sí| n3["Detecta contenido en pantalla"]
-    n2 -->|No / desconectado| n4["Guardar datos completos del análisis en curso;<br/>descartar datos parciales/incompletos"]
-    n4 --> n4b["Mostrar mensaje:<br/>'Las opciones de accesibilidad han sido desactivadas.<br/>Para continuar con el análisis, por favor enciéndalas.'"]
-    n4b --> n5["Redirigir a Configuración > Accesibilidad"]
+    n1 --> n2["¿servicio de accesibilidad conectado?<br>onServiceConnected()"]
+    n2 -- Sí --> n3["detecta contenido en pantalla"]
+    n2 -- no --> n4["guardar datos completos.<br>Descartar datos parciales/incompletos"]
+    n4 --> n4b@{ label: "mensaje:<br>'Las opciones de accesibilidad han sido desactivadas.<br>Para continuar con el análisis, por favor enciéndalas.'" }
+    n4b --> n5["redirigir a configuración &gt; accesibilidad"]
     n5 --> n2
-
-    n3 --> n6["Extrae AccessibilityNodeInfo del contenido"]
-    n6 --> n7["Envía a VLM local (Gemma 3n / MediaPipe LiteRT)"]
-    n7 --> n8{"¿Inferencia completa dentro de tiempo esperado?"}
-    n8 -->|Sí| n9["Retorna nivel de oscuridad"]
-    n8 -->|Timeout / error de inferencia| n10["Mostrar estado 'analizando' o fallback sin bloquear scroll"]
+    n3 --> n6["extrae accessibilityNodeInfo del contenido"]
+    n6 --> n7["envía a VLM local (Gemma 3n)"]
+    n7 --> n8["¿inferencia completa dentro de tiempo esperado?"]
+    n8 -- Sí --> n9["retorna nivel de oscuridad"]
+    n8 -- timeout / error de inferencia --> n10@{ label: "mostrar estado 'analizando' sin bloquear scroll" }
     n10 --> n3
-
-    n9 --> n11{"¿SYSTEM_ALERT_WINDOW sigue activo?"}
-    n11 -->|Sí| n12["Renderiza indicador (overlay) sobre el contenido"]
-    n11 -->|No, revocado a mitad de sesión| n0c
+    n9 --> n11["¿SYSTEM_ALERT_WINDOW sigue activo?"]
+    n11 -- sí --> n12["renderiza indicador (overlay) sobre el contenido"]
+    n11 -- no, revocado a mitad de sesión --> n11b["descartar resultado de análisis<br>(no se puede mostrar sin overlay)"]
+    n11b --> n0c
     n12 --> n3
 
     n0b@{ shape: diam}
+    n0c@{ shape: rect}
     n2@{ shape: diam}
+    n4b@{ shape: rect}
     n8@{ shape: diam}
+    n10@{ shape: rect}
     n11@{ shape: diam}
 ```
+
+- [editor mermaid](https://mermaid.ai/app/projects/2754080d-5a23-45b5-857f-8bedf2b56a8e/diagrams/16b86a90-fb27-487a-bb4c-344fc9c7d7b0/share/invite/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb2N1bWVudElEIjoiMTZiODZhOTAtZmIyNy00ODdhLWJiNGMtMzQ0ZmM5YzdkN2IwIiwiYWNjZXNzIjoiVmlldyIsImlhdCI6MTc4NzA3NzUyNn0.t2hhYEe-KFIbSAh6KTP00Mi0RlJHfH3_ZsvSB52fF2U?entryPoint=share-modal)
