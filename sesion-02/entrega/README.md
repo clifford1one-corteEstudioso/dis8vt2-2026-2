@@ -84,7 +84,7 @@ flowchart TB
     style n1 stroke-width:2px,stroke-dasharray: 0
 ```
 
-- [editor mermaid](https://mermaid.ai/app/projects/2754080d-5a23-45b5-857f-8bedf2b56a8e/diagrams/c04bd30d-d449-4ea2-a8c5-1dcb3315e7a4/share/invite/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb2N1bWVudElEIjoiYzA0YmQzMGQtZDQ0OS00ZWEyLWE4YzUtMWRjYjMzMTVlN2E0IiwiYWNjZXNzIjoiVmlldyIsImlhdCI6MTc4NjkyNDc0NH0.yZLcGxkb04tXgjUpW9VpBzJV1bHkOZmyuuE4KwqbPns?entryPoint=share-modal)
+- [VER EN EL EDITOR](https://mermaid.ai/app/projects/2754080d-5a23-45b5-857f-8bedf2b56a8e/diagrams/c04bd30d-d449-4ea2-a8c5-1dcb3315e7a4/share/invite/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb2N1bWVudElEIjoiYzA0YmQzMGQtZDQ0OS00ZWEyLWE4YzUtMWRjYjMzMTVlN2E0IiwiYWNjZXNzIjoiVmlldyIsImlhdCI6MTc4NjkyNDc0NH0.yZLcGxkb04tXgjUpW9VpBzJV1bHkOZmyuuE4KwqbPns?entryPoint=share-modal)
 
 ## mapa-3: Diagrama de Flujo Técnico
 
@@ -133,4 +133,4 @@ flowchart TB
     n11@{ shape: diam}
 ```
 
-- [editor mermaid](https://mermaid.ai/app/projects/2754080d-5a23-45b5-857f-8bedf2b56a8e/diagrams/16b86a90-fb27-487a-bb4c-344fc9c7d7b0/share/invite/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb2N1bWVudElEIjoiMTZiODZhOTAtZmIyNy00ODdhLWJiNGMtMzQ0ZmM5YzdkN2IwIiwiYWNjZXNzIjoiVmlldyIsImlhdCI6MTc4NzA3NzUyNn0.t2hhYEe-KFIbSAh6KTP00Mi0RlJHfH3_ZsvSB52fF2U?entryPoint=share-modal)
+- [VER EN EL EDITOR](https://mermaid.ai/app/projects/2754080d-5a23-45b5-857f-8bedf2b56a8e/diagrams/16b86a90-fb27-487a-bb4c-344fc9c7d7b0/share/invite/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb2N1bWVudElEIjoiMTZiODZhOTAtZmIyNy00ODdhLWJiNGMtMzQ0ZmM5YzdkN2IwIiwiYWNjZXNzIjoiVmlldyIsImlhdCI6MTc4NzA3NzUyNn0.t2hhYEe-KFIbSAh6KTP00Mi0RlJHfH3_ZsvSB52fF2U?entryPoint=share-modal)
