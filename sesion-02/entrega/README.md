@@ -1,9 +1,14 @@
 # proceso
 
 se me ocurre que mi proyecto puede ser una carcasa para celular, que complemente a la IA que analiza el algoritmo. A través de la carcasa se da feedback al usuario. Este puede ser vibración, color de Led, etc. Se me ocurre que puede ser algo que incomode al usuario, de modo que asocie el contenido oscuro a sensaciones desagradables.
-Incluso pueden ser varios a la vez, y ir aumentando con el tiempo. Quizás si llevas 1 minutos viendo un tiktok engañoso, solo led; si llevas 6 minutos, vibra; si llevas 20 minutos te pincha.
+Incluso pueden ser varios a la vez, y ir aumentando con el tiempo. Quizás si llevas 1 minutos viendo un reel engañoso, solo led; si llevas 6 minutos, vibra; si llevas 20 minutos te pincha.
 
 se me ocurre v2: que la primera vez que uses la app te muestre ejemplos y casos que ayuden al usuairo a tomarle peso a la problemática.
+
+ideas:
+
+- oportunidad-advocacy: generar perfiles de los creadores de contenido, de modo que se genere conversación
+- oportunidad - retención: generar insights externos, de modo que si no le está sirviendo al usuario, que sirva como información para propósitos investigativos
 
 ## mapa-1: Viaje del Usuario (User Journey Map)
 
@@ -24,17 +29,20 @@ se me ocurre v2: que la primera vez que uses la app te muestre ejemplos y casos 
    - instalación de la app/APK
    - Determinar niveles de intensidad del feedback.
    - activar permisos de accesibilidad
-4. uso: la APK corre por encima de otras apps, capaz de leer lo que hay en pantalla. Cuando sale un tiktok es capaz de leer el nivel de oscuridad, e indica el nivel mediante feedback
+4. uso: la APK corre por encima de otras apps, capaz de leer lo que hay en pantalla. Cuando sale un reel es capaz de leer el nivel de oscuridad, e indica el nivel mediante feedback
 5. retención: no hay mecanismo que fuerce la atención, el sello está siempre disponible, pero el usuario decide si le presta atención o lo ignora
-6. advocacy: el usuario termina por aprender a reconocer tiktoks oscuros de manera autónoma
+6. advocacy: el usuario termina por aprender a reconocer reels oscuros de manera autónoma
 
 | - | awareness | consideration | onboarding | use | retención | advocacy |
 | - | - | - | - | - | - | - |
-| **acciones** | usuario ve tiktok durante horas | Usa distintas alternativas: apps como Digital Wellbeing, OneSec, Freedom | Descarga APK, activa AccessibilityService e instalación desde fuentes desconocidas | App corre sobre Instagram, lee lo que hay en pantalla, VLM analiza y muestra nivel de oscuridad |  |  |
-| **pensamiento** | "puedo estar todo un día sin ver tiktok, pero una vez empiezo, me cuesta mucho detenerme" | estas alternativas ejercen bloqueos ciegos, no me informan nada sobre qué los hace tomar las decisiones y parecieran no tener criterios más allá de los temporales que yo establecí | tener que activar la instalación me hace pensar que no es seguro | no me había dado cuenta cuánto del contenido que consumo es oscuro |  |  |
-| **emoción** | frustración con sigo mismo | frustración hacia la app(lo hacen de la manera más sencilla y no dedicado al usuario) |  |  |  |  |
-| **dolor** | dejo de invetir tiempo en cosas que me importan |  |  |  |  |  |
-| **oportunidad** |  |  |  |  |  |  |
+| **acciones** | usuario ve Instagram durante horas | Usa distintas alternativas: apps como Digital Wellbeing, OneSec, Freedom | Descarga APK, activa AccessibilityService e instalación desde fuentes desconocidas | App corre sobre Instagram, lee lo que hay en pantalla, VLM analiza y muestra nivel de oscuridad | cuando scrollea, espera ver un análisis del contenido consumido | 1. compartir briefs de la oscuridad del contenido por redes sociales o en conversaciones 2. recomendar a amistades con uso problemático del celular |
+| **pensamiento** | "puedo estar todo un día sin ver Instagram, pero una vez empiezo, me cuesta mucho detenerme" | estas alternativas ejercen bloqueos ciegos, no me informan nada sobre qué los hace tomar las decisiones y parecieran no tener criterios más allá de los temporales que yo establecí | tener que activar permisos de accesibilidad me hace pensar que no es seguro | no me había dado cuenta cuánto del contenido que consumo es oscuro | realmente estoy absorbiendo la info sobre la oscuridad del contenido o solo corre por encima | este filtro te permite ser más consciente de los procesos detrás del contenido que consumes (cuando te están tratando de cagar / hacer weón) |
+| **emoción** | frustración con sigo mismo | frustración hacia la app(lo hacen de la manera más sencilla y no dedicado al usuario) | desconfianza, curiosidad | cuestionar el comportamiento propio anterior, y a los creadores de contenido | neutralidad | frustración, al ver la cantidad de patrones oscuros utilizados por los creadores de contenido que solías estimar |
+| **dolor** | dejo de invertir tiempo en cosas que me importan | mecanismos de bloqueo se activan en momentos donde sí quiero usar Instagram | ceder información personal sobre mi conducta digital y algoritmo | sentir que la responsabilidad finalmente recae en ti y pasarle esa responsabilidad a un tercero solo estira el chicle | ser consciente de lo inútil/insustancial que es aquello en lo que estás invirtiendo tiempo | 1. la decisión final cae en el usuario. 2. riesgo de habituación |
+| **oportunidad** | una intervención que apunte a concientizar sin imponer | una intervención que te ayude a tomar consciencia sobre el contenido que consumes | al inicio mostrar un video del funcionamiento real de la app, y explicar por qué pide esos permisos | mostrar en tiempo real lo que se va analizando y qué hace que se define el nivel de oscuridad | variar la forma en que se presenta la visualidad del análisis para evitar habituación | generar briefs con la info detectada tipo Spotify wrapped |
+
+
+no hay mecanismo que refuerce la atención, pues, es justo en contra de ello donde se trabaja
 
 ## mapa-2: Diagrama de Flujo Funcional
 
@@ -91,4 +99,35 @@ Detalle Requerido:
 
 ### mi versión - m3
 
-to do
+```mermaid
+flowchart TB
+    n0["Inicio: onboarding completo"] --> n0b{"¿SYSTEM_ALERT_WINDOW activo?<br/>canDrawOverlays()"}
+    n0b -->|Sí| n1["App en background, servicio de accesibilidad activo"]
+    n0b -->|No| n0c["Mostrar mensaje:<br/>'Se requiere permiso para mostrar sobre otras apps.<br/>Por favor actívelo.'"]
+    n0c --> n0d["Redirigir vía ACTION_MANAGE_OVERLAY_PERMISSION"]
+    n0d --> n0b
+
+    n1 --> n2{"¿Servicio de accesibilidad conectado?<br/>onServiceConnected()"}
+    n2 -->|Sí| n3["Detecta contenido en pantalla"]
+    n2 -->|No / desconectado| n4["Guardar datos completos del análisis en curso;<br/>descartar datos parciales/incompletos"]
+    n4 --> n4b["Mostrar mensaje:<br/>'Las opciones de accesibilidad han sido desactivadas.<br/>Para continuar con el análisis, por favor enciéndalas.'"]
+    n4b --> n5["Redirigir a Configuración > Accesibilidad"]
+    n5 --> n2
+
+    n3 --> n6["Extrae AccessibilityNodeInfo del contenido"]
+    n6 --> n7["Envía a VLM local (Gemma 3n / MediaPipe LiteRT)"]
+    n7 --> n8{"¿Inferencia completa dentro de tiempo esperado?"}
+    n8 -->|Sí| n9["Retorna nivel de oscuridad"]
+    n8 -->|Timeout / error de inferencia| n10["Mostrar estado 'analizando' o fallback sin bloquear scroll"]
+    n10 --> n3
+
+    n9 --> n11{"¿SYSTEM_ALERT_WINDOW sigue activo?"}
+    n11 -->|Sí| n12["Renderiza indicador (overlay) sobre el contenido"]
+    n11 -->|No, revocado a mitad de sesión| n0c
+    n12 --> n3
+
+    n0b@{ shape: diam}
+    n2@{ shape: diam}
+    n8@{ shape: diam}
+    n11@{ shape: diam}
+```

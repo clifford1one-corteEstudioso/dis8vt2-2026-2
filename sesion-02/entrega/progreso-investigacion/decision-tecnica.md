@@ -3,7 +3,7 @@
 | criterio | kotlin(a través de android studio) | expo.dev | ai studio |
 | - | - | - | - |
 | tipo de dato capturado (código vs pixeles) | código | código (usa kotlin) | código (usa kotlin) |
-| permisos requeridos | activación manual servicios de accesibilidad (deterimnado po OS) | activación manual servicios de accesibilidad (deterimnado por OS) | activación manual servicios de accesibilidad (deterimnado por OS) |
+| permisos requeridos | activación manual: AccessibilityService + SYSTEM_ALERT_WINDOW (determinados por OS) | activación manual servicios de accesibilidad (deterimnado por OS) | activación manual servicios de accesibilidad (deterimnado por OS) |
 | output (APK vs web app) | APK | APK | APK(kotlin) y web app |
 | complejidad estimada | media | baja+media(necesita kotlin) | media + prueba y error |
 | sporte nativo VLM¹ | sí | necesita kotlin | sí |
