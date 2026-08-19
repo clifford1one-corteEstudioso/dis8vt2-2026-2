@@ -98,3 +98,17 @@ coordenada.
 Regla que se repite en todo el mapa y conviene respetar si añades algo: en un rombo, **entra por
 arriba, «sí» sale por donde sigue el flujo, «no» sale hacia la columna de recuperación, y el
 reintento vuelve a entrar por el lado libre**. Es lo que evita que las líneas se crucen.
+
+## conceptos técnicos
+
+1. **SYSTEM_ALERT_WINDOW / canDrawOverlays()**: permiso que permite a la app dibujar contenido encima de otra app (en este caso, el indicador de oscuridad sobre Instagram). `canDrawOverlays()` es la función que consulta al sistema si el permiso está activo en ese momento, devolviendo verdadero o falso.
+
+2. **onServiceConnected()**: función que el sistema operativo llama automáticamente cuando el usuario activa AccessibilityService, avisando que el servicio ya está listo para operar. No se dispara manualmente desde la app.
+
+3. **AccessibilityNodeInfo**: unidad básica de lo que la app "ve" en pantalla vía accesibilidad. No es una imagen, es un objeto de datos: tipo de elemento (texto, botón, imagen), contenido textual, y ubicación. Cada elemento visible en Instagram se representa como uno de estos objetos.
+
+4. **VLM local (Gemma 3n)**: modelo de IA que interpreta contenido visual, corriendo directamente en el procesador del teléfono. Sin dependencia de internet ni costo por uso, a cambio de menor potencia que un modelo en la nube.
+
+5. **Timeout**: límite de tiempo definido por el desarrollador; si la inferencia del VLM tarda más de lo esperado, se activa un plan B en vez de dejar la app esperando indefinidamente.
+
+6. **Overlay**: elemento visual dibujado sobre otra app — el indicador de oscuridad flotando sobre el contenido de Instagram, sin modificar la app original.

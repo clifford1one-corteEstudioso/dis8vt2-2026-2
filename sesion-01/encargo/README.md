@@ -12,7 +12,7 @@ También visitamos el vocabulario de Garret para  un diseñar flujos. Haciendo u
 
 Información sobre el Vocabulario Visual de J.J. Garret:
 
-- original : http://www.jjg.net/ia/visvocab/
+- original: http://www.jjg.net/ia/visvocab/
 - español: http://www.jjg.net/ia/visvocab/spanish.html
 
 Respecto al Mapa del Viaje de Usuario, completo (macro, zoom out): Estas son las etapas  grandes que recorre alguien desde que descubre un problema hasta que evangeliza la solución.: Awareness → Consideration → Adopción → Uso activo → Retención → Advocacy.
