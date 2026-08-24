@@ -49,4 +49,3 @@ dejar en claro lo q quieres levantar, y levantarlo. Salgamos de la caja oscura.
 ### mapa de empatía
 
 ![plantilla mapa de empatía](./files/empathy-map.png)
-
