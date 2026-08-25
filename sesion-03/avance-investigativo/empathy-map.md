@@ -12,3 +12,27 @@
 | ¿qué dice y hace?: | cómo se comporta ante los demás, actitud, medios para expresarse. Lo que dice y cómo lo dice |
 | esfuerzos: | frustraciones, obstáculos y problemas cotidianos. ¿qué le impide cumplir sus sueños? |
 | resultados: | qué es lo que desea lograr, cómo define el éxito, cómo intenta alcanzar el éxito |
+
+### qué dice
+
+- "Me meto inconscientemente cuando estoy buscando hacer otra cosa"
+- "Nada, su diseño está súper bien conectado a su objetivo"
+- "Es como una droga, sé que me hace mal"
+- "Apego ansioso" / "soy dependiente, sobre todo en momentos de estrés"
+
+## qué hace
+
+- Abre en vacíos temporales: espera, pausas de estudio, tiempos muertos
+- Cierra al recordar una obligación externa, no por saciedad
+- Silencia notificaciones y aun así entra a revisar
+
+## qué siente
+
+- Agotamiento mental, culpa, "volver al mundo real"
+- Ausencia de placer reportado post-uso
+
+## qué piensa
+
+pendiente
+
+## qué
