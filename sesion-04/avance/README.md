@@ -14,3 +14,7 @@
 | **3** | Video con cortes contados a mano vs. lo que mide la app | Validez de la medición, no solo que corra | Ajustar umbral; ver cuánto ensucia el movimiento de cámara |
 | **4** | Room y overlay definitivos | Persistencia y sello visual | Lo más mecánico, bajo riesgo |
 | **5** | APK release firmado | Solo si alguien más lo instala | El APK de debug ya te sirve para trabajar |
+
+## investigar
+
+- <https://youtu.be/xT8oP0wy-A0>
