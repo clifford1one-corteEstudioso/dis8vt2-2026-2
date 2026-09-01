@@ -24,7 +24,7 @@ eres un unicornio hermosos, pero encerrado. Quizas decir quecn este proyecto pue
 
 ## tareitas
 
-- investigar organizaciones civiales cuyo apoyo pueda dar confianza a los usuarios(de q no les robare los datos)
+- investigar organizaciones civiles cuyo apoyo pueda dar confianza a los usuarios(de q no les robare los datos)
 
 - darle una identidad comunicacional
 
