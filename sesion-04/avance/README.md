@@ -15,35 +15,20 @@
 | **4** | Room y overlay definitivos | Persistencia y sello visual | Lo más mecánico, bajo riesgo |
 | **5** | APK release firmado | Solo si alguien más lo instala | El APK de debug ya te sirve para trabajar |
 
-## fase 02 — árbol de accesibilidad
-
-Paso **1b**. La 1a quedó cerrada: MediaProjection sí entrega píxeles de un reel, Instagram no marca `FLAG_SECURE`.
-
-### la complicación
-
-`TYPE_VIEW_SCROLLED` se dispara decenas de veces por segundo y cada volcado son cientos de nodos. Logcat es buffer circular: se llena y bota lo viejo — justo los primeros segundos, donde está la transición de feed a perfil.
-
-Segundo costo: recorrer el árbol completo en cada evento consume CPU del sistema y puede enlentecer a Instagram, el comportamiento que después quiero medir limpio.
-
-Si el log se desborda concluyo *"Instagram no expone señal estable"* cuando la verdad es *"no pude leerlo"*. Falso negativo disfrazado de hallazgo. Mismo error que evité con el botón de control en la 1a. Por eso se decide antes y no después.
-
-### opciones
-
-| Opción | Cómo | Ventaja | Desventaja | Falso negativo |
-| --- | --- | --- | --- | --- |
-| **1** Estrangular Logcat | Un volcado cada ~800 ms, descarta el resto | Simple. Feedback en vivo. Poca CPU | Pierdo eventos a propósito; la señal puede estar en uno descartado | Medio |
-| **2** Volcar a archivo | `.txt` junto a los PNG, sale por `adb pull` | No se pierde nada. Se lee con Ctrl+F en el PC. Sirve de anexo | A ciegas hasta el pull. Si el service falla me entero tarde | Bajo |
-| **3** Las dos | Logcat estrangulado + archivo completo | Veo si corre **y** conservo todo | Más código. Hay que borrar los `.txt` viejos | Bajo |
-
-### decisión
-
-**3.** Cada salida responde algo distinto:
-
-- Logcat → *¿esto está corriendo?* Falla más probable: service mal declarado en el manifest, nunca se activa y no avisa.
-- Archivo → *¿hay señal estable que distinga feed / perfil / búsqueda / DM?* Se contesta en el PC comparando volcados, no mirando el celu.
-
-Solo la 1: riesgo de descartar la métrica de origen por un evento estrangulado. Solo la 2: depurar a ciegas un service que quizá ni arrancó.
-
 ## investigar
 
 - <https://youtu.be/xT8oP0wy-A0>
+
+## avance apps
+
+### fase-0
+
+crear una app vacío y que exista en mi celular
+
+### fase-01
+
+1. crear una app capqaz de capturar un png de lo que se ve en pantalla
+
+2. agregar tiempo de esperar antes de guardar la imagen, para alcanzar a abrir los reels
+
+### fase-02
