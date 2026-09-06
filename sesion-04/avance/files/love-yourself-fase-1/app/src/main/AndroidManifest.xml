@@ -31,6 +31,32 @@
             android:name=".lab.ScreenCaptureService"
             android:exported="false"
             android:foregroundServiceType="mediaProjection" />
+
+        <service
+            android:name=".lab.Fase02aService"
+            android:exported="true"
+            android:label="@string/fase02a_label"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/fase02a_config" />
+        </service>
+
+        <service
+            android:name=".lab.Fase02bService"
+            android:exported="true"
+            android:label="@string/fase02b_label"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/fase02b_config" />
+        </service>
     </application>
 
 </manifest>

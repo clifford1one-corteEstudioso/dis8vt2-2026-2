@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">LYS Fase 1</string>
+
+    <string name="fase02a_label">LYS Fase 02a — guardar a archivo</string>
+    <string name="fase02a_desc">Registra en un archivo de texto qué app está en primer plano y cuándo hay scroll, para revisarlo después en el PC. No lee el contenido de la pantalla.</string>
+
+    <string name="fase02b_label">LYS Fase 02b — en vivo</string>
+    <string name="fase02b_desc">Muestra en Logcat, con el celular conectado, qué app está en primer plano y cuándo hay scroll. Sirve para comprobar que el registro funciona. No lee el contenido de la pantalla.</string>
 </resources>

@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.media.projection.MediaProjectionManager
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
@@ -135,6 +136,17 @@ fun PantallaCaptura(modifier: Modifier = Modifier) {
             "Los PNG quedan en Android/data/com.love.yourself.fase1/files/Pictures " +
                 "como frame-control-... y frame-diferido-.... El veredicto sale en " +
                 "Logcat con el tag LYSFase1.",
+            style = MaterialTheme.typography.bodySmall
+        )
+
+        Button(onClick = {
+            context.startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
+        }) {
+            Text("Fase 02: abrir Accesibilidad")
+        }
+        Text(
+            "Activa ahi \"LYS Fase 02a\" (guarda a archivo) y/o \"LYS Fase 02b\" " +
+                "(en vivo por Logcat). Se pueden usar juntas.",
             style = MaterialTheme.typography.bodySmall
         )
     }
