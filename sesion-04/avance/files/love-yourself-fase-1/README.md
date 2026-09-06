@@ -9,14 +9,36 @@ Sin análisis de cortes, sin overlay, sin Room. Si la respuesta es "negro", la
 vía de captura de pantalla no sirve y hay que replantear la métrica antes de
 construir nada encima.
 
+## Los dos botones
+
+La app tiene dos botones que recorren **el mismo código**; lo único que cambia
+es cuándo se monta el `VirtualDisplay`.
+
+| Botón | Retraso | Qué captura | Para qué |
+|---|---|---|---|
+| Control: capturar ahora | 0 s | Esta misma app | Verifica que la cadena permiso → VirtualDisplay → PNG está sana |
+| Instagram: capturar en 5 s | 5 s | Lo que esté en pantalla a los 5 s | Responde la pregunta de `FLAG_SECURE` |
+
+Esa es toda la lógica del experimento: si el **control** sale con color y el
+**diferido** sale negro, la diferencia no puede ser un bug del código —
+es Instagram bloqueando la captura.
+
+Si los dos salen negros, el problema es el código o el dispositivo, no Instagram.
+Por eso el control existe.
+
 ## Cómo correr la prueba
 
 1. Abrir esta carpeta como proyecto en Android Studio (es un proyecto Gradle
    independiente del de `../`).
 2. Instalar en el celular con depuración USB.
 3. Abrir Logcat y filtrar por el tag `LYSFase1`.
-4. En el celular: tocar **Capturar un frame** → aceptar el diálogo del sistema.
-5. Leer el log.
+4. **Control**: tocar *Capturar ahora* → aceptar el diálogo → leer el veredicto.
+5. **Diferido**: tocar *Capturar en 5 s* → aceptar el diálogo → salir a
+   Instagram y llegar a un reel antes de que se acaben los 5 segundos.
+6. Comparar los dos PNG: `frame-control-*.png` y `frame-diferido-*.png`.
+
+El diálogo de consentimiento sale **en cada captura**. No es un bug: desde
+Android 14 el permiso de MediaProjection es de un solo uso, no queda concedido.
 
 ## Qué leer en el log
 
@@ -32,12 +54,15 @@ El PNG queda en la carpeta privada de la app (sin permisos de almacenamiento).
 Se saca con `adb pull` o con Device Explorer de Android Studio. No aparece en la
 galería.
 
-## Limitación conocida de esta versión
+## Ajustar el retraso
 
-La captura es **inmediata** al aceptar el permiso, así que el frame es de esta
-app, no de Instagram. Para apuntar a un reel hay que darse tiempo de cambiar de
-app: en `ScreenCaptureService.kt`, envolver el `createVirtualDisplay` en un
-`postDelayed` de ~5000 ms.
+Son 5 segundos. Si te queda corto para llegar al reel, cambia
+`RETRASO_DIFERIDO_MS` en `MainActivity.kt`.
+
+Nota de implementación: el `MediaProjection` se obtiene de inmediato y solo se
+difiere el `createVirtualDisplay`. El token de consentimiento se consume al
+tiro; lo que se retrasa es el momento de empezar a espejar la pantalla, que es
+lo que define *qué* se captura.
 
 ## Detalles que rompen esto en silencio
 

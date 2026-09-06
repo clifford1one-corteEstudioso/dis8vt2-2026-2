@@ -42,6 +42,7 @@ class ScreenCaptureService : Service() {
     private var virtualDisplay: android.hardware.display.VirtualDisplay? = null
     private var hilo: HandlerThread? = null
     private var yaGuardo = false
+    private var retrasoMs = 0L
     private val mainHandler = Handler(android.os.Looper.getMainLooper())
 
     private val callbackProyeccion = object : MediaProjection.Callback() {
@@ -54,6 +55,8 @@ class ScreenCaptureService : Service() {
     override fun onBind(intent: Intent?): IBinder? = null
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        retrasoMs = intent?.getLongExtra(EXTRA_RETRASO_MS, 0L) ?: 0L
+
         // Paso 1: estar en foreground ANTES de pedir la proyeccion.
         // Desde API 34 invertir este orden lanza SecurityException.
         irAForeground()
@@ -110,16 +113,29 @@ class ScreenCaptureService : Service() {
             }
         }, handler)
 
-        virtualDisplay = proyeccion.createVirtualDisplay(
-            "lys-fase1",
-            ancho,
-            alto,
-            densidad,
-            DisplayManager.VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR,
-            reader.surface,
-            null,
-            handler
-        )
+        // El token de consentimiento se consume ya; solo se difiere el momento
+        // de empezar a espejar la pantalla, que es lo que define QUE se captura.
+        val montarDisplay = Runnable {
+            Log.i(TAG, "montando VirtualDisplay ahora")
+            virtualDisplay = proyeccion.createVirtualDisplay(
+                "lys-fase1",
+                ancho,
+                alto,
+                densidad,
+                DisplayManager.VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR,
+                reader.surface,
+                null,
+                handler
+            )
+        }
+
+        if (retrasoMs > 0L) {
+            Log.i(TAG, "modo diferido: capturando en $retrasoMs ms. Cambia de app AHORA.")
+            handler.postDelayed(montarDisplay, retrasoMs)
+        } else {
+            Log.i(TAG, "modo inmediato (control): capturando esta misma app")
+            montarDisplay.run()
+        }
 
         return START_NOT_STICKY
     }
@@ -133,7 +149,13 @@ class ScreenCaptureService : Service() {
         }
         val notificacion: Notification = androidx.core.app.NotificationCompat.Builder(this, CANAL)
             .setContentTitle("LYS Fase 1")
-            .setContentText("Capturando un frame de pantalla")
+            .setContentText(
+                if (retrasoMs > 0L) {
+                    "Abre Instagram: captura en ${retrasoMs / 1000} s"
+                } else {
+                    "Capturando un frame de pantalla"
+                }
+            )
             .setSmallIcon(android.R.drawable.ic_menu_camera)
             .setOngoing(true)
             .build()
@@ -168,7 +190,8 @@ class ScreenCaptureService : Service() {
         val carpeta = getExternalFilesDir(Environment.DIRECTORY_PICTURES)!!
         carpeta.mkdirs()
         val sello = SimpleDateFormat("yyyyMMdd-HHmmss", Locale.US).format(Date())
-        return File(carpeta, "frame-$sello.png")
+        val modo = if (retrasoMs > 0L) "diferido" else "control"
+        return File(carpeta, "frame-$modo-$sello.png")
     }
 
     private fun detener() {
@@ -199,5 +222,6 @@ class ScreenCaptureService : Service() {
         private const val NOTIF_ID = 1
         const val EXTRA_RESULT_CODE = "resultCode"
         const val EXTRA_RESULT_DATA = "resultData"
+        const val EXTRA_RETRASO_MS = "retrasoMs"
     }
 }
