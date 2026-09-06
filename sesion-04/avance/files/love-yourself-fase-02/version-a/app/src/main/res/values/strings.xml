@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">LYS Fase 02a</string>
+    <string name="servicio_label">LYS Fase 02a — guardar a archivo</string>
+    <string name="servicio_desc">Registra en un archivo de texto qué app está en primer plano y cuándo hay scroll, para revisarlo después en el PC. No lee el contenido de la pantalla.</string>
+</resources>
