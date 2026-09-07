@@ -27,6 +27,7 @@ crear una app vacío y que exista en mi celular
 
 ### fase-01
 
+<<<<<<< Updated upstream
 1. crear una app capqaz de capturar un png de lo que se ve en pantalla
 
 2. agregar tiempo de esperar antes de guardar la imagen, para alcanzar a abrir los reels
@@ -57,3 +58,8 @@ Además esa información se lee con el celular conectado al PC por cable. Medir 
 
 - **En vivo** me dice si el sistema está funcionando.
 - **El archivo** me dice si hay una señal que distinga los cuatro caminos, y me deja usar Instagram desconectado, como lo usaría normalmente.
+=======
+1. crear una app capqaz de capturar un pjng de lo que se ve en pantalla
+
+2. agregar tiempo de esperar antes de guardar la imagen, para alcanzar a abrir los reels
+>>>>>>> Stashed changes
