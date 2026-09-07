@@ -32,3 +32,28 @@ crear una app vacío y que exista en mi celular
 2. agregar tiempo de esperar antes de guardar la imagen, para alcanzar a abrir los reels
 
 ### fase-02
+
+La fase 01 ya confirmó que puedo capturar la imagen de un reel. Ahora quiero saber otra cosa: **por qué camino llegué a él** — feed, perfil, búsqueda o DM.
+
+### el problema
+
+Android sí me deja ver qué hay en pantalla, pero manda esa información tan rápido y en tanta cantidad que se pierde antes de que alcance a leerla.
+
+Si no la leo, voy a creer que Instagram no entrega nada. Y no sería cierto: entregó, pero se me escapó. Es el mismo error que evité en la fase 01 poniendo un botón de control.
+
+Además esa información se lee con el celular conectado al PC por cable. Medir el scroll automático estando enchufado al escritorio no es medir el uso real.
+
+### opciones
+
+| Opción | Qué hace | Problema |
+| --- | --- | --- |
+| **1** Leer en vivo, más lento | Muestra menos datos, pero legibles | Puede botar justo el dato que importa. Obliga a usar cable |
+| **2** Guardar todo en un archivo | No pierde nada. Uso el celular suelto | No sé si funciona hasta revisar el archivo después |
+| **3** Las dos | — | Un poco más de trabajo |
+
+### decisión
+
+**3.** Porque responden preguntas distintas:
+
+- **En vivo** me dice si el sistema está funcionando.
+- **El archivo** me dice si hay una señal que distinga los cuatro caminos, y me deja usar Instagram desconectado, como lo usaría normalmente.
