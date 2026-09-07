@@ -1,0 +1,13 @@
+# Estado local del editor / IDE — no pertenece al repo
+.idea/
+*.iml
+*~lock~
+.DS_Store
+
+# Resultados de compilacion — se regeneran solos
+build/
+.gradle/
+local.properties
+.cxx
+.externalNativeBuild
+/captures
