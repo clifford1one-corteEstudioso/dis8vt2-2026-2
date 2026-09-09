@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Love Yourself</string>
+    <string name="servicio_label">Love Yourself</string>
+    <string name="servicio_desc">Mide cuánto tiempo llevas y a qué ritmo estás deslizando, y te lo muestra encima de la app. No lee el contenido de la pantalla ni guarda nada fuera de tu teléfono.</string>
+</resources>
