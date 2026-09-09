@@ -117,3 +117,76 @@ Puede importar mucho: los cortes miden cuánto me estimula el contenido, los swi
 1. Prueba de 20 minutos. 83 segundos no prueban que aguante.
 2. Grabar un reel con los cortes contados a mano y comparar contra el CSV. Con ese hueco en la distribución, debería salir limpio.
 3. Anotar batería y temperatura antes y después.
+
+### fase-04
+
+La 03 mide; esta además muestra. Caja encima de Instagram con el tiempo de sesión y los cortes por segundo de los últimos 15 s.
+
+Ventana móvil, no acumulado: el promedio de veinte minutos se aplana y deja de decir nada.
+
+**Comprobado** (56 s, 9 sep): el overlay se dibuja (`ty=2038`, 540×77 px) y se quita limpio. Muestreo estable entre 3.0 y 3.6/s en segundo plano.
+
+Los toques la atraviesan. Muestra, no interrumpe.
+
+### fase-05 — la app
+
+Deja de ser una prueba. Se enciende sola, mide sola, y a los quince minutos devuelve la decisión.
+
+#### por qué se parte en dos capas
+
+El permiso de grabar pantalla no se puede dejar concedido: desde Android 14 es de un solo uso, cada medición exige aceptar un diálogo. Así que el conteo de cortes **nunca** podrá arrancar solo.
+
+Y una intervención que hay que encender a mano no sirve: quien se acuerda de abrirla ya está siendo consciente, y es justamente quien no la necesita.
+
+| Capa | Qué mide | ¿Arranca sola? |
+| --- | --- | --- |
+| Accesibilidad | Tiempo de sesión, swipes por minuto | **Sí**, siempre |
+| Captura — modo investigación | Cortes por segundo | No, exige el diálogo |
+
+#### las tres etapas
+
+| | Cuándo | Qué pasa |
+| --- | --- | --- |
+| Espejo | Primer deslizamiento | Caja discreta, semitransparente |
+| Presencia | 5 min | Crece, opaca, con borde |
+| Decisión | 15 min | Pantalla completa: *¿querías estar todo este rato?* |
+
+Ninguna bloquea. En la decisión los dos botones pesan igual — sin cuenta regresiva, sin castigo. Una fricción que castiga se desinstala; una que interrumpe, se piensa.
+
+Los cuatro números (5, 15, 10 de repregunta, 30 s de tolerancia) están en `Config.kt` y **ninguno está validado**. Salen de intuición.
+
+## siguientes pasos de la app
+
+Ordenados por lo que puede invalidar el trabajo, no por comodidad.
+
+### 1. Usarla una semana
+
+Instalar la fase 05 y vivir con ella. Es lo único que responde si los 15 minutos son el momento correcto, si la caja estorba, y si la pantalla de decisión se siente como ayuda o como reto.
+
+Anotar cada vez: qué elegí, y si me arrepentí.
+
+Sin esto, todo lo demás es decorar supuestos.
+
+### 2. Cerrar la validación pendiente
+
+- Sesión de 20 minutos seguidos con el modo investigación. Sigue sin probarse que aguante; lo más largo fue 83 s.
+- Video con los cortes contados a mano contra el CSV, para fijar el umbral de 18.
+- Batería y temperatura antes y después.
+
+### 3. Decidir qué hace "Salir"
+
+Hoy manda al inicio del teléfono. No se puede cerrar Instagram por el usuario, pero mandarlo al inicio se acerca a bloquear — y choca con la idea de no prohibir.
+
+La alternativa es que solo cierre el overlay y lo deje ahí. Es una decisión de diseño, no técnica.
+
+### 4. Separar corte de plano de swipe
+
+Hoy los dos suben la misma columna. Miden cosas distintas: uno cuánto me estimula el contenido, otro cuánto me muevo yo. Con la capa de accesibilidad ya tengo los swipes por separado, así que se puede restar.
+
+### 5. Persistencia
+
+La sesión no sobrevive a un reinicio. No hace falta para la intervención, sí para mostrar historial acumulado o para tener datos de una semana. Ahí entra Room.
+
+### lo que NO haría todavía
+
+Pulir la interfaz de configuración, agregar ajustes para el usuario, o diseñar más etapas de fricción. Todo eso se decide mejor después de la semana de uso, y hacerlo antes es inventar números como inventamos el umbral de cortes.
