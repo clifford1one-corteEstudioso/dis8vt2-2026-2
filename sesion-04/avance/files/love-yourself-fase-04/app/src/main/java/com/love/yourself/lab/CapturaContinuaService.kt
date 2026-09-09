@@ -24,7 +24,7 @@ import android.view.WindowManager
 import androidx.core.app.NotificationCompat
 import androidx.core.app.ServiceCompat
 
-const val TAG = "LYSFase03"
+const val TAG = "LYSFase04"
 
 /**
  * Fase 03 — captura sostenida.
