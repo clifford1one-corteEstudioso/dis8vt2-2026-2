@@ -63,6 +63,10 @@ Verificar: que `SESION INICIA` caiga en el primer scroll real y no antes, y que
 
 ## Casos pendientes
 
+- **Superficies del sistema.** Bajar la barra de notificaciones o abrir el
+  teclado cambia el paquete en primer plano sin que salgas de Instagram. Están
+  filtrados en `RegistroSesion.kt` (`PAQUETES_DE_SISTEMA`). Si en el registro
+  aparece otro paquete cortando sesiones donde no corresponde, agrégalo ahí.
 - **Salir y volver.** Responder un WhatsApp y regresar cuenta como dos sesiones.
   Se arregla con una tolerancia de N segundos; es un número, no arquitectura.
 - **Bloquear pantalla.** No cambia el paquete en primer plano, así que hoy no

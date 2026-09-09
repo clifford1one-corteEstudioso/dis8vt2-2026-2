@@ -34,6 +34,11 @@ class RegistroSesion(private val paquetePropio: String) {
     fun procesar(evento: AccessibilityEvent): List<String> {
         val paquete = evento.packageName?.toString() ?: return emptyList()
         if (paquete == paquetePropio) return emptyList()
+        // La barra de notificaciones y el teclado se dibujan encima sin que el
+        // usuario salga de la app. Si se dejaran pasar, bajar la cortina para ver
+        // la hora cerraria la sesion y la siguiente cuenta como nueva: una sesion
+        // de 40 minutos apareceria partida en pedazos.
+        if (paquete in PAQUETES_DE_SISTEMA) return emptyList()
 
         val ahora = System.currentTimeMillis()
         val hora = reloj.format(Date(ahora))
@@ -71,5 +76,20 @@ class RegistroSesion(private val paquetePropio: String) {
         }
 
         return lineas
+    }
+
+    companion object {
+        /**
+         * Superficies del sistema que aparecen sobre la app sin que el usuario
+         * la abandone. La lista es corta a proposito: si en el registro aparece
+         * otro paquete cortando sesiones, se agrega aca con la evidencia a mano.
+         */
+        private val PAQUETES_DE_SISTEMA = setOf(
+            "com.android.systemui",
+            "com.google.android.inputmethod.latin",
+            "com.android.inputmethod.latin",
+            "com.samsung.android.honeyboard",
+            "com.touchtype.swiftkey"
+        )
     }
 }
