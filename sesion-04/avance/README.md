@@ -155,6 +155,21 @@ Ninguna bloquea. En la decisión los dos botones pesan igual — sin cuenta regr
 
 Los cuatro números (5, 15, 10 de repregunta, 30 s de tolerancia) están en `Config.kt` y **ninguno está validado**. Salen de intuición.
 
+#### se enciende con cualquier scroll
+
+La regla acordada era *primer scroll sobre contenido a pantalla completa*. La segunda mitad **no está implementada**: esa condición sale de los píxeles, y la capa de accesibilidad no los ve. Solo sabe que hubo un scroll.
+
+O sea hoy mide cuánto scrolleo en general, no cuánto caigo en el pozo de reels. Se enciende igual en WhatsApp, la galería o el navegador.
+
+Dos formas de cerrarlo:
+
+| | Cómo | Costo |
+| --- | --- | --- |
+| Lista de apps | Solo cuenta Instagram, TikTok, Shorts | Deja de ser agnóstico. Hay que mantener la lista |
+| Duración mínima | El contador aparece recién tras N minutos de scroll continuo | Sigue agnóstico. Ignora el scroll corto y funcional |
+
+Me inclino por la segunda, y el argumento es de la tesis: **scrollear no es el problema**. Bajar por una conversación buscando algo es scroll con intención. Lo que ataco es el scroll que se estira solo. Un mínimo de duración distingue eso sin nombrar ninguna app, que era lo bueno de la definición original.
+
 ## siguientes pasos de la app
 
 Ordenados por lo que puede invalidar el trabajo, no por comodidad.
@@ -173,17 +188,21 @@ Sin esto, todo lo demás es decorar supuestos.
 - Video con los cortes contados a mano contra el CSV, para fijar el umbral de 18.
 - Batería y temperatura antes y después.
 
-### 3. Decidir qué hace "Salir"
+### 3. Cerrar la condición de pantalla completa
+
+Hoy la app se enciende con cualquier scroll. Decidir entre lista de apps o duración mínima, e implementarlo. Es un número más en `Config.kt` si va la segunda.
+
+### 4. Decidir qué hace "Salir"
 
 Hoy manda al inicio del teléfono. No se puede cerrar Instagram por el usuario, pero mandarlo al inicio se acerca a bloquear — y choca con la idea de no prohibir.
 
 La alternativa es que solo cierre el overlay y lo deje ahí. Es una decisión de diseño, no técnica.
 
-### 4. Separar corte de plano de swipe
+### 5. Separar corte de plano de swipe
 
 Hoy los dos suben la misma columna. Miden cosas distintas: uno cuánto me estimula el contenido, otro cuánto me muevo yo. Con la capa de accesibilidad ya tengo los swipes por separado, así que se puede restar.
 
-### 5. Persistencia
+### 6. Persistencia
 
 La sesión no sobrevive a un reinicio. No hace falta para la intervención, sí para mostrar historial acumulado o para tener datos de una semana. Ahí entra Room.
 
