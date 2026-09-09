@@ -30,7 +30,7 @@ class RegistroCsv(context: Context) {
         val carpeta = File(context.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS), "registros")
         carpeta.mkdirs()
         val sello = SimpleDateFormat("yyyyMMdd-HHmmss", Locale.US).format(Date())
-        archivo = File(carpeta, "fase03-$sello.csv")
+        archivo = File(carpeta, "fase04-$sello.csv")
         escritor = FileWriter(archivo, true)
         escritor.write("ms_desde_inicio,diferencia,sobre_umbral,muestras_perdidas\n")
         escritor.flush()

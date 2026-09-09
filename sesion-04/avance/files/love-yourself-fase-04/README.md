@@ -59,6 +59,16 @@ Cuando hagas la prueba de 20 minutos y la comparación contra un video con los
 cortes contados a mano, **cambias ese número y nada más**. El overlay muestra lo
 que le entregue el analizador.
 
+## Comprobado
+
+Prueba de 56 s, 9 sep 2026:
+
+- El overlay se dibuja (`ty=2038`, TextView de 540×77) y se quita limpio al detener.
+- Muestreo estable entre 3.0 y 3.6/s con la app en segundo plano.
+- Notificación actualizándose cada 10 s.
+
+Sigue sin probarse la sesión de 20 minutos.
+
 ## Pendiente
 
 - Prueba de 20 minutos.
