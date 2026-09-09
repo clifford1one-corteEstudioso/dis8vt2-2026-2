@@ -14,11 +14,17 @@ import java.util.Locale
  * El CSV es el producto de esta fase: se abre en una planilla, se grafica la
  * columna de diferencia contra el tiempo, y se elige el umbral mirando donde
  * caen los cortes que contaste a mano en el video.
+ *
+ * Los metodos van sincronizados porque las filas se escriben desde el hilo de
+ * captura y el cierre llega desde el hilo principal. Sin eso, detener la
+ * medicion mientras entra un frame puede reventar el FileWriter y perder el
+ * final del registro, que es justo donde se ve si el servicio aguanto.
  */
 class RegistroCsv(context: Context) {
 
     val archivo: File
     private val escritor: FileWriter
+    private var cerrado = false
 
     init {
         val carpeta = File(context.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS), "registros")
@@ -30,17 +36,24 @@ class RegistroCsv(context: Context) {
         escritor.flush()
     }
 
+    @Synchronized
     fun fila(msDesdeInicio: Long, diferencia: Double, sobreUmbral: Boolean, perdidas: Int) {
+        if (cerrado) return
         escritor.write("$msDesdeInicio,${"%.2f".format(Locale.US, diferencia)},${if (sobreUmbral) 1 else 0},$perdidas\n")
         // Sin flush por fila: a 4 muestras por segundo durante 20 minutos son
         // 4800 filas y flushear cada una castiga la bateria sin ganar nada.
     }
 
+    @Synchronized
     fun sincronizar() {
+        if (cerrado) return
         escritor.flush()
     }
 
+    @Synchronized
     fun cerrar() {
+        if (cerrado) return
+        cerrado = true
         try {
             escritor.flush()
             escritor.close()
