@@ -18,7 +18,6 @@
 ## investigar
 
 - <https://youtu.be/xT8oP0wy-A0>
-<<<<<<< HEAD
 
 ## avance apps
 
@@ -58,3 +57,63 @@ Además esa información se lee con el celular conectado al PC por cable. Medir 
 
 - **En vivo** me dice si el sistema está funcionando.
 - **El archivo** me dice si hay una señal que distinga los cuatro caminos, y me deja usar Instagram desconectado, como lo usaría normalmente.
+
+### fase-03
+
+Muestrear la pantalla en continuo, con la app en segundo plano, y ver si de ahí sale una señal para contar cortes. Es el último riesgo grande: si no se puede, la métrica central de la tesis no es medible.
+
+Corre 4 veces por segundo. Cada muestra lee 32×32 puntos sueltos y los compara con la muestra anterior. Escribe un CSV, una fila por muestra.
+
+**No decide qué es un corte.** Guarda el número crudo de cuánto cambió la pantalla. El umbral se elige después, mirando los datos.
+
+#### resultado — prueba de 83 s
+
+| | |
+| --- | --- |
+| Ritmo | 3.7 muestras/s, estable |
+| Frames llegando | ~51/s |
+| El servicio | Vivo hasta que lo detuve yo |
+
+La captura sostenida funciona. Falta la prueba de 20 minutos.
+
+#### la señal se separa sola
+
+Distribución de las primeras 49 muestras:
+
+```
+   0-  2  ######################       22
+   2-  5  #########                     9
+   5- 10  ####                          4
+  10- 20  ##                            2
+  20- 40  #####                         5
+  40- 80  #####                         5
+  80-130  ##                            2
+```
+
+Dos poblaciones con un hueco vacío entre medio: **ni un valor entre 17 y 25**. O la pantalla casi no cambia (mediana 2.26) o cambia muchísimo. No hay zona gris.
+
+Por eso el umbral casi no importa:
+
+| Umbral | Eventos |
+| --- | --- |
+| 18 | 12 |
+| 20 | 12 |
+| 25 | 12 |
+
+Se puede mover 40% y da lo mismo. Si la medición fuera frágil, cada valor daría un número distinto y ninguno sería creíble.
+
+Da 0.83 eventos/s — uno cada 1.2 s. Plausible para reels.
+
+#### lo que el dato todavía no distingue
+
+**Corte de plano o swipe al siguiente reel.** Los dos cambian la pantalla entera. Los valores más altos —122.95, 97.50, 67.34— parecen cambios de reel, no cortes dentro de uno.
+
+Puede importar mucho: los cortes miden cuánto me estimula el contenido, los swipes cuánto me muevo yo. Dos historias distintas, hoy mezcladas en la misma columna.
+
+**Cuatro segundos casi muertos** entre los 4.9 y los 8.8 s, valores entre 0.7 y 1.6. ¿Reel pausado, foto, o todavía no llegaba a Instagram? Saberlo dice si el detector ve lo que creo.
+
+#### pendiente
+
+1. Prueba de 20 minutos. 83 segundos no prueban que aguante.
+2. Grabar un reel con los cortes contados a mano y comparar contra el CSV. Con ese hueco en la distribución, debería salir limpio.
+3. Anotar batería y temperatura antes y después.
