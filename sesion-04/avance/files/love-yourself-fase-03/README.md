@@ -29,7 +29,9 @@ Eso corresponde al paso 3 de tu plan original.
 1. Instalar. **Anota el porcentaje de batería.**
 2. Botón **Empezar a medir** → aceptar el permiso.
 3. Salir a Instagram y usarlo normal. Veinte minutos, sin forzar nada.
-4. Tocar **Detener** en la notificación.
+4. Tocar **Detener** en la notificación. Para verla mientras corre hay que
+   **bajar la barra de notificaciones**: el canal es de importancia baja a
+   propósito, así que se actualiza en silencio y nunca salta sobre la pantalla.
 5. Anotar batería final y si el teléfono se calentó.
 6. Sacar el CSV:
    ```
@@ -60,11 +62,17 @@ eso puede sostener veinte minutos sin fundir la batería.
 Ábrelo en una planilla y grafica `diferencia` contra `ms_desde_inicio`. Los
 cortes deberían verse como picos.
 
-### El resumen en Logcat, cada 30 s
+### El resumen en Logcat, cada 10 s
 
 ```
+LYSFase03  pantalla 1080x2340 @ 450dpi, muestreando cada 250 ms
+LYSFase03  CSV: /storage/emulated/0/Android/data/...
+LYSFase03  primera muestra recibida; resumen cada 10s
 LYSFase03  vivo 300s  muestras=1187  ritmo=4.0/s  perdidas=8421  sobre_umbral=143
 ```
+
+Las tres primeras salen en el primer segundo. Si aparecen, el muestreo arrancó
+y no hay que esperar a ciegas para saberlo.
 
 Lo importante de esa línea:
 

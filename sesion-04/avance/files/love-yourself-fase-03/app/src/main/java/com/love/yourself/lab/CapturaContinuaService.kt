@@ -121,6 +121,11 @@ class CapturaContinuaService : Service() {
                 }
                 ultimaMuestraMs = ahora
                 muestras++
+                if (muestras == 1) {
+                    // Sin esta linea habria que esperar al primer resumen para
+                    // saber si el muestreo arranco. Media prueba a ciegas.
+                    Log.i(TAG, "primera muestra recibida; resumen cada ${RESUMEN_MS / 1000}s")
+                }
 
                 val diferencia = detector.diferencia(image)
                 if (diferencia >= 0) {
@@ -256,7 +261,7 @@ class CapturaContinuaService : Service() {
 
         /** 4 muestras por segundo. Suficiente para cortes de reel, barato para 20 min. */
         private const val INTERVALO_MS = 250L
-        private const val RESUMEN_MS = 30_000L
+        private const val RESUMEN_MS = 10_000L
 
         /** Provisorio. El valor real sale de comparar el CSV con un video contado a mano. */
         private const val UMBRAL_PROVISORIO = 18.0
