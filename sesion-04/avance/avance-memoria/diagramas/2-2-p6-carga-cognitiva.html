@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2.2 · P6 — Capacidad de la memoria de trabajo</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body class="a22">
+<div class="envoltura">
+
+<header class="barra">
+  <a href="index.html">← Índice de diagramas</a>
+  <span>2.2 · Biología humana · P6 · Diagrama · Candidata a eliminar</span>
+  <label><input type="checkbox" id="ver-grilla"> grilla</label>
+</header>
+
+<div class="lienzo">
+<svg class="lamina" viewBox="0 0 1188 668" role="img" aria-labelledby="titulo">
+  <title id="titulo">Capacidad de la memoria de trabajo: un recipiente de tamaño fijo donde la carga extrínseca desplaza a la intrínseca</title>
+  <defs>
+    <pattern id="rayado" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="8" class="s-a" stroke-width="2"/>
+    </pattern>
+  </defs>
+
+  <g class="grilla"><rect x="48" y="56" width="255" height="556"/><rect x="327" y="56" width="255" height="556"/><rect x="606" y="56" width="255" height="556"/><rect x="885" y="56" width="255" height="556"/></g>
+
+  <text x="48" y="36" class="cornisa">2.2 · BIOLOGÍA HUMANA</text>
+  <text x="1140" y="36" class="cornisa fin">CARGA COGNITIVA</text>
+  <line x1="48" y1="50" x2="1140" y2="50" class="regla"/>
+
+  <!-- Límite de capacidad -->
+  <line x1="48" y1="200" x2="861" y2="200" class="s-t pt-fino" stroke-width="1"/>
+  <text x="48" y="190" class="mono">CAPACIDAD FIJA</text>
+
+  <!-- ===== Estado A ===== -->
+  <path d="M88,200 V550 H263 V200" fill="none" class="s-t" stroke-width="2"/>
+  <rect x="94" y="503" width="163" height="44" fill="url(#rayado)" class="s-a"/>
+  <g class="c-t"><rect x="94" y="453" width="163" height="44"/><rect x="94" y="403" width="163" height="44"/><rect x="94" y="353" width="163" height="44"/><rect x="94" y="303" width="163" height="44"/></g>
+  <text x="175.5" y="256" class="mono mid">LIBRE</text>
+
+  <!-- ===== Estado B ===== -->
+  <path d="M367,200 V550 H542 V200" fill="none" class="s-t" stroke-width="2"/>
+  <g fill="url(#rayado)" class="s-a"><rect x="373" y="503" width="163" height="44"/><rect x="373" y="453" width="163" height="44"/><rect x="373" y="403" width="163" height="44"/></g>
+  <g class="c-t"><rect x="373" y="353" width="163" height="44"/><rect x="373" y="303" width="163" height="44"/><rect x="373" y="253" width="163" height="44"/><rect x="373" y="203" width="163" height="44"/></g>
+
+  <!-- ===== Estado C ===== -->
+  <path d="M646,200 V550 H821 V200" fill="none" class="s-t" stroke-width="2"/>
+  <g fill="url(#rayado)" class="s-a"><rect x="652" y="503" width="163" height="44"/><rect x="652" y="453" width="163" height="44"/><rect x="652" y="403" width="163" height="44"/><rect x="652" y="353" width="163" height="44"/><rect x="652" y="303" width="163" height="44"/></g>
+  <g class="c-t"><rect x="652" y="253" width="163" height="44"/><rect x="652" y="203" width="163" height="44"/></g>
+  <g class="apagado" fill="none">
+    <rect x="656" y="150" width="163" height="44" class="s-t pt" stroke-width="1.5" transform="rotate(-5 737 172)"/>
+    <rect x="644" y="98" width="163" height="44" class="s-t pt" stroke-width="1.5" transform="rotate(6 725 120)"/>
+  </g>
+  <text x="628" y="132" class="mono fin">DESPLAZADAS</text>
+
+  <!-- Rótulos de estado -->
+  <text x="48" y="580" class="mono">ESTADO A</text>
+  <text x="48" y="600" class="hs">Tarea sin interfaz</text>
+  <text x="327" y="580" class="mono">ESTADO B</text>
+  <text x="327" y="600" class="hs">Tarea + feed</text>
+  <text x="606" y="580" class="mono-a">ESTADO C</text>
+  <text x="606" y="600" class="hs">Tarea + feed + notificaciones</text>
+
+  <!-- Columna 4 -->
+  <rect x="885" y="80" width="180" height="24" fill="none" class="s-a pt"/>
+  <text x="897" y="96" class="mono-a">CANDIDATA A ELIMINAR</text>
+
+  <text x="885" y="146" class="hs">Un recipiente que no crece</text>
+  <text x="885" y="172" class="tx">Cada unidad de carga extrínseca</text>
+  <text x="885" y="190" class="tx">ocupa el lugar de una intrínseca.</text>
+  <text x="885" y="214" class="tx">La tarea no se simplifica:</text>
+  <text x="885" y="232" class="tx">se queda sin espacio.</text>
+
+  <rect x="885" y="300" width="40" height="24" class="c-t"/>
+  <text x="937" y="317" class="tx">Carga intrínseca · la tarea</text>
+  <rect x="885" y="340" width="40" height="24" fill="url(#rayado)" class="s-a"/>
+  <text x="937" y="357" class="tx">Carga extrínseca · la interfaz</text>
+  <rect x="885" y="380" width="40" height="24" fill="none" class="s-t pt apagado"/>
+  <text x="937" y="397" class="tx">Carga desplazada</text>
+
+  <text x="885" y="560" class="tg">Sweller, 1988;</text>
+  <text x="885" y="578" class="tg">Whelan, Islam y Brooks, 2020</text>
+
+  <line x1="48" y1="618" x2="1140" y2="618" class="regla"/>
+  <text x="48" y="644" class="pie">Fig. 2.2.6 · Capacidad de la memoria de trabajo. Unidades ilustrativas.</text>
+  <text x="1140" y="644" class="folio fin">P6</text>
+</svg>
+</div>
+
+<section class="notas">
+  <div>
+    <h2>Pieza</h2>
+    <p>Recipiente de tamaño fijo donde la carga extrínseca desplaza a la intrínseca.</p>
+  </div>
+  <div>
+    <h2>Candidata a eliminar</h2>
+    <p>Es la idea más ilustrable de la sección y la menos propia. Si el capítulo queda saturado de figuras, esta es la primera que sale (decisiones pendientes 2 y 6).</p>
+  </div>
+  <div>
+    <h2>Fragmento</h2>
+    <p>Desde <em>«La exposición continua…»</em> hasta antes de <em>«Es en este punto de vulnerabilidad cognitiva…»</em></p>
+  </div>
+</section>
+
+<nav class="pasos">
+  <a href="2-2-p5-anotacion-instagram.html">← 2.2 · P5 Anotación Instagram</a>
+  <a href="2-2-p7-asimetria-habito.html">2.2 · P7 Asimetría del hábito →</a>
+</nav>
+
+</div>
+</body>
+</html>

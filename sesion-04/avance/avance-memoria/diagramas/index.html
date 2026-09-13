@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Diagramas del marco teórico</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .indice h1 { font: 600 28px var(--sans); letter-spacing: -.01em; margin: 8px 0 4px; }
+  .indice .sub { color: var(--gris); margin: 0 0 32px; }
+  .ambito { margin-bottom: 36px; }
+  .ambito h2 {
+    display: flex; flex-wrap: wrap; gap: 4px 16px; align-items: baseline;
+    font: 600 18px var(--sans); margin: 0 0 12px; padding-bottom: 8px;
+    border-bottom: 1px solid var(--ambito);
+  }
+  .ambito h2 code { font: 500 11px var(--mono); color: var(--ambito); letter-spacing: .08em; }
+  .ambito ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+  .ambito li {
+    display: grid; grid-template-columns: 40px 110px 1fr; gap: 12px; align-items: baseline;
+    padding: 8px 0; border-bottom: 1px solid var(--gris-3);
+  }
+  .ambito li span:first-child { font: 600 12px var(--mono); color: var(--ambito); }
+  .ambito li span:nth-child(2) { font: 500 11px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--gris); }
+  .ambito li.sin { color: var(--gris); }
+  @media (max-width: 520px) {
+    .ambito li { grid-template-columns: 36px 1fr; }
+    .ambito li span:nth-child(2) { grid-column: 2; }
+    .ambito li > :last-child { grid-column: 2; }
+  }
+</style>
+</head>
+<body>
+<div class="envoltura indice">
+
+<header class="barra"><span>Marco teórico · plan de diagramación</span><span>29,7 × 16,71 cm · 4 columnas</span></header>
+
+<h1>Cautiverio Voluntario: Cómo se diseña la libertad</h1>
+<p class="sub">Una lámina HTML por cada página con pieza. Las páginas sin pieza se listan sin enlace.</p>
+
+<section class="ambito a22">
+  <h2>2.2 · Biología humana <code>#8FE84A</code></h2>
+  <ol>
+    <li><span>P1</span><span>Diagrama</span><a href="2-2-p1-gasto-cognitivo.html">Registro de evaluación del gasto cognitivo</a></li>
+    <li><span>P2</span><span>Gráfico</span><a href="2-2-p2-wanting-liking.html">Curvas disociadas: wanting / liking</a></li>
+    <li><span>P3</span><span>Diagrama</span><a href="2-2-p3-desajuste.html">Dos entornos, un mismo mecanismo</a></li>
+    <li><span>P4</span><span>Gráfico</span><a href="2-2-p4-fiorillo-algoritmo.html">Fiorillo con capa algorítmica</a></li>
+    <li><span>P5</span><span>Anotación</span><a href="2-2-p5-anotacion-instagram.html">Capturas de Instagram</a></li>
+    <li><span>P6</span><span>Diagrama</span><a href="2-2-p6-carga-cognitiva.html">Capacidad de la memoria de trabajo</a></li>
+    <li><span>P7</span><span>Diagrama</span><a href="2-2-p7-asimetria-habito.html">Asimetría de esfuerzo</a></li>
+  </ol>
+</section>
+
+<section class="ambito a23">
+  <h2>2.3 · Diseño de interfaces <code>#2BE86A</code></h2>
+  <ol>
+    <li><span>P1</span><span>Diagrama</span><a href="2-3-p1-eje-friccion.html">Un eje, dos direcciones</a></li>
+    <li><span>P2</span><span>Diagrama</span><a href="2-3-p2-puntos-de-pausa.html">Dos flujos comparados</a></li>
+    <li class="sin"><span>P3</span><span>Sin pieza</span><span>Definición de patrones engañosos</span></li>
+    <li><span>P4</span><span>Anotación</span><a href="2-3-p4-tipologia-patrones.html">Tres casos + conteo de pasos</a></li>
+    <li><span>P5</span><span>Diagrama</span><a href="2-3-p5-modelo-fogg.html">Modelo de Fogg</a></li>
+    <li><span>P6</span><span>Diagrama</span><a href="2-3-p6-vector-davis.html">Plano con vector de desplazamiento</a></li>
+    <li class="sin"><span>P7</span><span>Sin pieza</span><span>Eyal — la reversión</span></li>
+  </ol>
+</section>
+
+<section class="ambito a24">
+  <h2>2.4 · Economía de la atención <code>#2BE8C4</code></h2>
+  <ol>
+    <li><span>P1</span><span>Gráfico</span><a href="2-4-p1-curvas-divergentes.html">Dos curvas divergentes</a></li>
+    <li><span>P2</span><span>Diagrama</span><a href="2-4-p2-fabrica-prediccion.html">Cadena de tres etapas</a></li>
+    <li><span>P3</span><span>Diagrama</span><a href="2-4-p3-bucle-economico.html">Bucle económico</a></li>
+    <li><span>P4</span><span>Diagrama</span><a href="2-4-p4-la-carrera.html">La carrera</a></li>
+    <li class="sin"><span>P5</span><span>Sin pieza</span><span>Han y el sujeto de rendimiento</span></li>
+    <li><span>P6</span><span>Diagrama</span><a href="2-4-p6-circuito-refuerzo.html">Circuito de refuerzo entre ámbitos</a></li>
+  </ol>
+</section>
+
+</div>
+</body>
+</html>

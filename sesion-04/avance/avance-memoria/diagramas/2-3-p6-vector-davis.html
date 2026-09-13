@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2.3 · P6 — Vector de Davis</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body class="a23">
+<div class="envoltura">
+
+<header class="barra">
+  <a href="index.html">← Índice de diagramas</a>
+  <span>2.3 · Diseño de interfaces · P6 · Diagrama</span>
+  <label><input type="checkbox" id="ver-grilla"> grilla</label>
+</header>
+
+<div class="lienzo">
+<svg class="lamina" viewBox="0 0 1188 668" role="img" aria-labelledby="titulo">
+  <title id="titulo">Plano utilidad percibida / facilidad de uso con un vector de desplazamiento: la facilidad sube al máximo mientras la utilidad se desacopla y cae</title>
+  <defs>
+    <marker id="fl-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="14" markerHeight="14" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="c-a"/></marker>
+    <marker id="fl-g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="c-g"/></marker>
+  </defs>
+
+  <g class="grilla"><rect x="48" y="56" width="255" height="556"/><rect x="327" y="56" width="255" height="556"/><rect x="606" y="56" width="255" height="556"/><rect x="885" y="56" width="255" height="556"/></g>
+
+  <text x="48" y="36" class="cornisa">2.3 · DISEÑO DE INTERFACES</text>
+  <text x="1140" y="36" class="cornisa fin">DAVIS Y LA HIPERTROFIA DE LA FACILIDAD DE USO</text>
+  <line x1="48" y1="50" x2="1140" y2="50" class="regla"/>
+
+  <!-- Techo -->
+  <line x1="140" y1="120" x2="700" y2="120" class="s-a pt"/>
+  <text x="700" y="110" class="mono-a fin">MÁXIMO · INERCIA ABSOLUTA</text>
+
+  <!-- Ejes -->
+  <line x1="140" y1="540" x2="700" y2="540" class="s-t"/>
+  <line x1="140" y1="120" x2="140" y2="540" class="s-t"/>
+  <text x="700" y="584" class="mono fin">UTILIDAD PERCIBIDA →</text>
+  <text x="100" y="330" class="mono mid" transform="rotate(-90 100 330)">FACILIDAD DE USO PERCIBIDA →</text>
+  <text x="160" y="200" class="mono">FÁCIL E INÚTIL</text>
+
+  <!-- Deltas proyectados sobre los ejes -->
+  <line x1="126" y1="372" x2="126" y2="140" class="s-a" stroke-width="1.5" marker-end="url(#fl-a)"/>
+  <line x1="532" y1="554" x2="314" y2="554" class="s-g" stroke-width="1.5" marker-end="url(#fl-g)"/>
+  <line x1="532" y1="372" x2="532" y2="540" class="s-2 pt-fino"/>
+  <line x1="140" y1="372" x2="532" y2="372" class="s-2 pt-fino"/>
+
+  <!-- Supuesto clásico -->
+  <line x1="532" y1="372" x2="633" y2="280" class="s-g pt" stroke-width="1.5" marker-end="url(#fl-g)"/>
+  <text x="598" y="262" class="tg">supuesto UX clásico</text>
+
+  <!-- Vector real -->
+  <path d="M532,372 C520,250 400,160 318,138" fill="none" class="s-a" stroke-width="3" marker-end="url(#fl-a)"/>
+  <circle cx="490" cy="263" r="3" class="c-a"/>
+  <circle cx="409" cy="183" r="3" class="c-a"/>
+  <circle cx="532" cy="372" r="7" fill="#000" class="s-t" stroke-width="2"/>
+  <text x="546" y="392" class="mono" style="fill:var(--tinta)">T0</text>
+  <text x="300" y="142" class="mono-a fin">T1</text>
+
+  <!-- Lectura -->
+  <text x="760" y="110" class="mono">VECTOR DE DESPLAZAMIENTO</text>
+  <text x="760" y="146" class="h">Un punto no dice nada;</text>
+  <text x="760" y="174" class="h">el vector sí.</text>
+
+  <text x="760" y="240" class="mono-a">FACILIDAD DE USO</text>
+  <text x="1140" y="240" class="mono-a fin">0,40 → 0,97</text>
+  <rect x="760" y="252" width="380" height="10" class="c-3"/>
+  <rect x="760" y="252" width="368.6" height="10" class="c-a"/>
+  <rect x="760" y="252" width="152" height="10" fill="none" class="s-t"/>
+
+  <text x="760" y="310" class="mono">UTILIDAD PERCIBIDA</text>
+  <text x="1140" y="310" class="mono fin">0,70 → 0,30</text>
+  <rect x="760" y="322" width="380" height="10" class="c-3"/>
+  <rect x="760" y="322" width="114" height="10" class="c-g"/>
+  <rect x="760" y="322" width="266" height="10" fill="none" class="s-t"/>
+
+  <rect x="760" y="352" width="14" height="8" fill="none" class="s-t"/><text x="780" y="360" class="mono">ANTES</text>
+  <rect x="840" y="352" width="14" height="8" class="c-a"/><text x="860" y="360" class="mono">DESPUÉS</text>
+
+  <text x="760" y="420" class="tx">La facilidad se hipertrofia hasta</text>
+  <text x="760" y="438" class="tx">rozar la inercia; la utilidad se</text>
+  <text x="760" y="456" class="tx">desacopla y cae.</text>
+  <text x="760" y="490" class="tg">Corrupción del modelo original</text>
+  <text x="760" y="508" class="tg">de aceptación tecnológica.</text>
+  <text x="760" y="578" class="tg">Davis, 1989</text>
+
+  <line x1="48" y1="618" x2="1140" y2="618" class="regla"/>
+  <text x="48" y="644" class="pie">Fig. 2.3.6 · Plano de aceptación tecnológica con vector de desplazamiento. Valores ilustrativos.</text>
+  <text x="1140" y="644" class="folio fin">P6</text>
+</svg>
+</div>
+
+<section class="notas">
+  <div>
+    <h2>Pieza</h2>
+    <p>Ejes: utilidad percibida / facilidad de uso. Lo que importa no es un punto sino el <em>movimiento</em>: facilidad hacia el máximo, utilidad desacoplada.</p>
+  </div>
+  <div>
+    <h2>Lo que sostiene</h2>
+    <p>La corrupción del modelo original. Un punto estático no dice nada; el vector sí.</p>
+  </div>
+  <div>
+    <h2>Fragmento</h2>
+    <p>Desde <em>«En la actualidad las tecnologías y los celulares…»</em> hasta antes de <em>«Esta erosión del autocontrol…»</em></p>
+  </div>
+</section>
+
+<nav class="pasos">
+  <a href="2-3-p5-modelo-fogg.html">← 2.3 · P5 Modelo de Fogg</a>
+  <a href="2-4-p1-curvas-divergentes.html">2.4 · P1 Curvas divergentes →</a>
+</nav>
+
+</div>
+</body>
+</html>

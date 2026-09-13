@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2.3 · P5 — Modelo de Fogg</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body class="a23">
+<div class="envoltura">
+
+<header class="barra">
+  <a href="index.html">← Índice de diagramas</a>
+  <span>2.3 · Diseño de interfaces · P5 · Diagrama</span>
+  <label><input type="checkbox" id="ver-grilla"> grilla</label>
+</header>
+
+<div class="lienzo">
+<svg class="lamina" viewBox="0 0 1188 668" role="img" aria-labelledby="titulo">
+  <title id="titulo">Modelo de Fogg: motivación, capacidad y disparador; la notificación es un disparador que llega desde fuera de la aplicación</title>
+  <defs>
+    <marker id="fl-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="12" markerHeight="12" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="c-a"/></marker>
+  </defs>
+
+  <g class="grilla"><rect x="48" y="56" width="255" height="556"/><rect x="327" y="56" width="255" height="556"/><rect x="606" y="56" width="255" height="556"/><rect x="885" y="56" width="255" height="556"/></g>
+
+  <text x="48" y="36" class="cornisa">2.3 · DISEÑO DE INTERFACES</text>
+  <text x="1140" y="36" class="cornisa fin">ADHERENCIA Y ACTIVADORES</text>
+  <line x1="48" y1="50" x2="1140" y2="50" class="regla"/>
+
+  <!-- Límite de la aplicación -->
+  <rect x="90" y="80" width="760" height="510" fill="none" class="s-2 pt"/>
+  <text x="106" y="102" class="mono">DENTRO DE LA APLICACIÓN</text>
+
+  <!-- Ejes -->
+  <line x1="140" y1="540" x2="820" y2="540" class="s-t"/>
+  <line x1="140" y1="130" x2="140" y2="540" class="s-t"/>
+  <text x="140" y="562" class="mono">DIFÍCIL</text>
+  <text x="820" y="562" class="mono fin">CAPACIDAD → FÁCIL</text>
+  <text x="118" y="335" class="mono mid" transform="rotate(-90 118 335)">MOTIVACIÓN →</text>
+
+  <!-- Línea de acción -->
+  <path d="M160,150 Q190,490 810,510" fill="none" class="s-t" stroke-width="2"/>
+  <text x="200" y="210" class="mono">LÍNEA DE ACCIÓN</text>
+  <text x="480" y="200" class="mono" style="fill:var(--tinta)">ÉXITO DEL DISPARADOR</text>
+  <text x="330" y="500" class="mono">FRACASO DEL DISPARADOR</text>
+
+  <!-- Caso bajo la línea -->
+  <circle cx="240" cy="430" r="7" fill="#000" class="s-g" stroke-width="1.5"/>
+  <text x="254" y="452" class="tg">leer un libro</text>
+
+  <!-- Usuario en el feed -->
+  <circle cx="720" cy="320" r="16" fill="none" class="s-a" stroke-width="1"/>
+  <circle cx="720" cy="320" r="8" class="c-a"/>
+  <text x="696" y="324" class="mono fin" style="fill:var(--tinta)">USUARIO · FEED</text>
+  <text x="696" y="342" class="tg fin">capacidad máxima: un toque</text>
+
+  <!-- Disparador externo -->
+  <text x="885" y="110" class="mono">MODELO DE FOGG</text>
+  <text x="885" y="160" class="num">B = M·A·T</text>
+  <text x="885" y="196" class="tx">Conducta = Motivación ·</text>
+  <text x="885" y="214" class="tx">Capacidad · Disparador</text>
+
+  <text x="905" y="286" class="mono-a">DISPARADOR EXTERNO</text>
+  <rect x="905" y="300" width="215" height="64" rx="12" fill="#0d0d0d" class="s-a" stroke-width="1.5"/>
+  <rect x="919" y="316" width="20" height="20" rx="5" fill="#2a2a2a"/>
+  <text x="949" y="330" class="mono">INSTAGRAM · AHORA</text>
+  <text x="919" y="352" class="tx" style="font-size:12px">tienes 3 notificaciones nuevas</text>
+
+  <path d="M905,332 C870,332 800,322 732,320" fill="none" class="s-a" stroke-width="2" marker-end="url(#fl-a)"/>
+  <circle cx="850" cy="327.5" r="4" fill="#000" class="s-a" stroke-width="1.5"/>
+  <text x="905" y="392" class="mono-a">LLEGA DESDE FUERA</text>
+  <text x="905" y="408" class="mono-a">DE LA APLICACIÓN</text>
+
+  <text x="885" y="470" class="tg">Con capacidad máxima basta una</text>
+  <text x="885" y="488" class="tg">motivación moderada para que</text>
+  <text x="885" y="506" class="tg">el disparador funcione.</text>
+  <text x="885" y="578" class="tg">Fogg, 2003</text>
+
+  <line x1="48" y1="618" x2="1140" y2="618" class="regla"/>
+  <text x="48" y="644" class="pie">Fig. 2.3.5 · Modelo de conducta de Fogg con la notificación como disparador externo. Curva esquemática.</text>
+  <text x="1140" y="644" class="folio fin">P5</text>
+</svg>
+</div>
+
+<section class="notas">
+  <div>
+    <h2>Pieza</h2>
+    <p>Motivación, capacidad, disparador. Marcar las notificaciones como el disparador que llega <em>desde fuera</em> de la aplicación.</p>
+  </div>
+  <div>
+    <h2>Fragmento</h2>
+    <p>Desde <em>«El uso continuo de estas estrategias…»</em> hasta antes de <em>«En la actualidad las tecnologías y los celulares…»</em></p>
+  </div>
+</section>
+
+<nav class="pasos">
+  <a href="2-3-p4-tipologia-patrones.html">← 2.3 · P4 Tipología</a>
+  <a href="2-3-p6-vector-davis.html">2.3 · P6 Vector de Davis →</a>
+</nav>
+
+</div>
+</body>
+</html>

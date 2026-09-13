@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2.4 · P6 — Circuito de refuerzo entre ámbitos</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .gemela { display: none; }
+  body:has(#ver-gemela:checked) .gemela { display: inline; }
+</style>
+</head>
+<body class="a24">
+<div class="envoltura">
+
+<header class="barra">
+  <a href="index.html">← Índice de diagramas</a>
+  <span>2.4 · Economía de la atención · P6 · Diagrama</span>
+  <span>
+    <label><input type="checkbox" id="ver-gemela"> versión gemela (cap. 5)</label>
+    &nbsp;&nbsp;
+    <label><input type="checkbox" id="ver-grilla"> grilla</label>
+  </span>
+</header>
+
+<div class="lienzo">
+<svg class="lamina" viewBox="0 0 1188 668" role="img" aria-labelledby="titulo">
+  <title id="titulo">Circuito de refuerzo entre ámbitos: economía impone el objetivo, UX/UI despliega las tácticas, biología ejecuta; los metadatos vuelven a la economía por fuera</title>
+  <defs>
+    <marker id="fl-t" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="18" markerHeight="18" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="c-t"/></marker>
+    <marker id="fl-ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="12" markerHeight="12" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,0 L10,5 L0,10" fill="none" class="s-a" stroke-width="1.5"/></marker>
+  </defs>
+
+  <g class="grilla"><rect x="48" y="56" width="255" height="556"/><rect x="327" y="56" width="255" height="556"/><rect x="606" y="56" width="255" height="556"/><rect x="885" y="56" width="255" height="556"/></g>
+
+  <text x="48" y="36" class="cornisa">2.4 · ECONOMÍA DE LA ATENCIÓN</text>
+  <text x="1140" y="36" class="cornisa fin">CONCLUSIÓN DEL ÁMBITO</text>
+  <line x1="48" y1="50" x2="1140" y2="50" class="regla"/>
+
+  <!-- Banda del usuario -->
+  <rect x="48" y="398" width="1092" height="108" class="c-a" fill-opacity=".07"/>
+  <line x1="48" y1="398" x2="1140" y2="398" class="s-a pt-fino" stroke-opacity=".5"/>
+  <line x1="48" y1="506" x2="1140" y2="506" class="s-a pt-fino" stroke-opacity=".5"/>
+  <text x="64" y="424" class="mono-a">USUARIO</text>
+  <text x="64" y="446" class="tg">no es un nodo: la banda</text>
+  <text x="64" y="464" class="tg">donde el circuito se ejecuta</text>
+
+  <!-- Orden: descendente -->
+  <line x1="594" y1="174" x2="594" y2="256" class="s-t" stroke-width="5" marker-end="url(#fl-t)"/>
+  <line x1="594" y1="324" x2="594" y2="416" class="s-t" stroke-width="5" marker-end="url(#fl-t)"/>
+  <text x="624" y="220" class="mono">RETENCIÓN COMO OBJETIVO</text>
+  <text x="624" y="374" class="mono">FRICCIÓN CERO · REFUERZO VARIABLE</text>
+
+  <!-- Extracción: ascendente, por fuera -->
+  <path d="M744,452 H900 V142 H752" fill="none" class="s-a pt-fino" stroke-width="1.25" marker-end="url(#fl-ab)"/>
+  <text x="918" y="297" class="mono-a mid" transform="rotate(-90 918 297)">METADATOS · EXTRACCIÓN</text>
+
+  <!-- Nodos -->
+  <rect x="444" y="110" width="300" height="64" fill="#000" class="s-t" stroke-width="2"/>
+  <text x="460" y="134" class="mono">ECONOMÍA</text>
+  <text x="460" y="160" class="hs">impone el objetivo</text>
+
+  <rect x="444" y="260" width="300" height="64" fill="#000" class="s-t" stroke-width="2"/>
+  <text x="460" y="284" class="mono">UX / UI</text>
+  <text x="460" y="310" class="hs">despliega las tácticas</text>
+
+  <rect x="444" y="420" width="300" height="64" fill="#000" class="s-t" stroke-width="2"/>
+  <text x="460" y="444" class="mono">BIOLOGÍA</text>
+  <text x="460" y="470" class="hs">ejecuta</text>
+
+  <!-- Versión gemela: punto de interrupción -->
+  <g class="gemela">
+    <rect x="578" y="354" width="32" height="32" fill="#000"/>
+    <line x1="574" y1="360" x2="614" y2="360" class="s-a" stroke-width="3"/>
+    <line x1="574" y1="380" x2="614" y2="380" class="s-a" stroke-width="3"/>
+    <text x="560" y="374" class="mono-a fin">PUNTO DE INTERRUPCIÓN</text>
+  </g>
+
+  <!-- Leyenda -->
+  <text x="960" y="110" class="mono">ASIMETRÍA</text>
+  <line x1="960" y1="150" x2="1020" y2="150" class="s-t" stroke-width="5" marker-end="url(#fl-t)"/>
+  <text x="960" y="180" class="mono" style="fill:var(--tinta)">ORDEN · DESCENDENTE</text>
+  <text x="960" y="198" class="tg">sólida, gruesa, punta rellena</text>
+  <line x1="960" y1="240" x2="1020" y2="240" class="s-a pt-fino" stroke-width="1.25" marker-end="url(#fl-ab)"/>
+  <text x="960" y="270" class="mono-a">EXTRACCIÓN · ASCENDENTE</text>
+  <text x="960" y="288" class="tg">fina, punteada, punta abierta,</text>
+  <text x="960" y="306" class="tg">por fuera de la columna</text>
+
+  <text x="48" y="560" class="tg">Economía impone el objetivo → UX/UI despliega las tácticas → biología ejecuta.</text>
+  <text x="48" y="580" class="tg">Los metadatos vuelven a la economía por fuera de la columna.</text>
+
+  <line x1="48" y1="618" x2="1140" y2="618" class="regla"/>
+  <text x="48" y="644" class="pie">Fig. 2.4.6 · Circuito de refuerzo entre ámbitos.</text>
+  <text x="1140" y="644" class="folio fin">P6</text>
+</svg>
+</div>
+
+<section class="notas">
+  <div>
+    <h2>Pieza</h2>
+    <p>Tres nodos en cadena descendente: economía impone objetivo → UX/UI despliega tácticas → biología ejecuta. Flujo de retorno por fuera: los metadatos vuelven a la economía.</p>
+  </div>
+  <div>
+    <h2>La asimetría es el argumento</h2>
+    <p>Lo descendente es orden: línea sólida, gruesa, punta rellena. Lo ascendente es extracción: fina, punteada, punta abierta, por fuera de la columna. El usuario no es un nodo sino la banda donde el circuito se ejecuta.</p>
+  </div>
+  <div>
+    <h2>Versión gemela · capítulo 5</h2>
+    <p>La misma figura con un punto de interrupción marcado (activar arriba). Repetir una forma con una diferencia dice más que dos figuras distintas.</p>
+  </div>
+  <div>
+    <h2>Fragmento</h2>
+    <p>Desde <em>«En síntesis, este ámbito demuestra…»</em> hasta el final.</p>
+  </div>
+</section>
+
+<nav class="pasos">
+  <a href="2-4-p4-la-carrera.html">← 2.4 · P4 La carrera</a>
+  <a href="index.html">Índice →</a>
+</nav>
+
+</div>
+</body>
+</html>
