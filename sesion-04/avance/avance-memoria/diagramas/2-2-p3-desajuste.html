@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2.2 · P3 — El desajuste</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body class="a22">
+<div class="envoltura">
+
+<header class="barra">
+  <a href="index.html">← Índice de diagramas</a>
+  <span>2.2 · Biología humana · P3 · Diagrama · Pivote</span>
+  <label><input type="checkbox" id="ver-grilla"> grilla</label>
+</header>
+
+<div class="lienzo">
+<svg class="lamina" viewBox="0 0 1188 668" role="img" aria-labelledby="titulo">
+  <title id="titulo">Dos entornos, un mismo mecanismo: recompensas escasas y costosas frente a recompensas infinitas y de costo cero, evaluadas por el mismo mecanismo</title>
+  <defs>
+    <marker id="fl-t" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="c-t"/></marker>
+    <marker id="fl-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="c-a"/></marker>
+    <pattern id="densidad" x="623" y="115" width="34" height="30" patternUnits="userSpaceOnUse">
+      <circle cx="17" cy="15" r="4.5" class="c-a"/>
+    </pattern>
+  </defs>
+
+  <g class="grilla"><rect x="48" y="56" width="255" height="556"/><rect x="327" y="56" width="255" height="556"/><rect x="606" y="56" width="255" height="556"/><rect x="885" y="56" width="255" height="556"/></g>
+
+  <text x="48" y="36" class="cornisa">2.2 · BIOLOGÍA HUMANA</text>
+  <text x="1140" y="36" class="cornisa fin">EL DESAJUSTE</text>
+  <line x1="48" y1="50" x2="1140" y2="50" class="regla"/>
+
+  <line x1="594" y1="70" x2="594" y2="600" class="s-3"/>
+
+  <!-- A · Entorno natural -->
+  <text x="48" y="90" class="mono">A · ENTORNO NATURAL</text>
+  <g>
+    <circle cx="120" cy="170" r="34" fill="none" class="s-2 pt"/><circle cx="120" cy="170" r="4.5" class="c-t"/>
+    <circle cx="300" cy="250" r="28" fill="none" class="s-2 pt"/><circle cx="300" cy="250" r="4.5" class="c-t"/>
+    <circle cx="470" cy="150" r="40" fill="none" class="s-2 pt"/><circle cx="470" cy="150" r="4.5" class="c-t"/>
+    <circle cx="180" cy="285" r="30" fill="none" class="s-2 pt"/><circle cx="180" cy="285" r="4.5" class="c-t"/>
+    <circle cx="410" cy="298" r="30" fill="none" class="s-2 pt"/><circle cx="410" cy="298" r="4.5" class="c-t"/>
+    <circle cx="530" cy="250" r="26" fill="none" class="s-2 pt"/><circle cx="530" cy="250" r="4.5" class="c-t"/>
+  </g>
+  <text x="315" y="362" class="mono mid">ESCASAS · DISPERSAS · COSTOSAS</text>
+  <text x="315" y="382" class="tg mid">anillo = costo de obtenerla</text>
+
+  <!-- B · Entorno digital -->
+  <text x="606" y="90" class="mono-a">B · ENTORNO DIGITAL</text>
+  <rect x="623" y="115" width="510" height="210" fill="url(#densidad)"/>
+  <text x="873" y="362" class="mono-a mid">INFINITAS · INMEDIATAS · COSTO CERO</text>
+  <text x="873" y="382" class="tg mid">sin anillo: no hay costo que evaluar</text>
+
+  <!-- Entradas al evaluador -->
+  <line x1="315" y1="396" x2="315" y2="430" class="s-t" stroke-width="1.5" marker-end="url(#fl-t)"/>
+  <line x1="873" y1="396" x2="873" y2="430" class="s-a" stroke-width="1.5" marker-end="url(#fl-a)"/>
+
+  <!-- Evaluadores idénticos -->
+  <rect x="205" y="432" width="220" height="70" fill="#000" class="s-t" stroke-width="1.5"/>
+  <text x="315" y="458" class="mono mid">EVALUADOR</text>
+  <text x="315" y="486" class="hs mid">¿recompensa &gt; costo?</text>
+
+  <rect x="763" y="432" width="220" height="70" fill="#000" class="s-t" stroke-width="1.5"/>
+  <text x="873" y="458" class="mono mid">EVALUADOR</text>
+  <text x="873" y="486" class="hs mid">¿recompensa &gt; costo?</text>
+
+  <line x1="425" y1="467" x2="763" y2="467" class="s-t pt" stroke-width="1"/>
+  <rect x="514" y="455" width="160" height="24" fill="#000"/>
+  <text x="594" y="471" class="mono mid" style="fill:var(--tinta)">= MISMO MECANISMO</text>
+
+  <!-- Salidas -->
+  <line x1="315" y1="504" x2="315" y2="532" class="s-t" stroke-width="1.5" marker-end="url(#fl-t)"/>
+  <line x1="873" y1="504" x2="873" y2="532" class="s-a" stroke-width="1.5" marker-end="url(#fl-a)"/>
+  <text x="315" y="558" class="hs mid">Búsqueda selectiva</text>
+  <text x="315" y="578" class="tg mid">solo se invierte energía si compensa</text>
+  <text x="873" y="558" class="hs c-a mid">Consumo</text>
+  <text x="873" y="578" class="tg mid">la opción se vuelve evidente</text>
+
+  <line x1="48" y1="618" x2="1140" y2="618" class="regla"/>
+  <text x="48" y="644" class="pie">Fig. 2.2.3 · Dos entornos, un mismo mecanismo. La biología deja de ser antecedente y pasa a explicar el problema.</text>
+  <text x="1140" y="644" class="folio fin">P3</text>
+</svg>
+</div>
+
+<section class="notas">
+  <div>
+    <h2>Pieza</h2>
+    <p>Página plena. Comparación entre recompensas escasas, dispersas y costosas frente a recompensas infinitas, inmediatas y de costo cero. El mecanismo evaluador es idéntico en ambos.</p>
+  </div>
+  <div>
+    <h2>Lo que sostiene</h2>
+    <p>El punto donde la biología deja de ser antecedente y pasa a explicar el problema. <em>Candidata a doble página</em> (decisión pendiente 1).</p>
+  </div>
+  <div>
+    <h2>Fragmento</h2>
+    <p>Desde <em>«Este sistema neurobiológico…»</em> hasta antes de <em>«Otro de los mecanismos psicológicos…»</em></p>
+  </div>
+</section>
+
+<nav class="pasos">
+  <a href="2-2-p2-wanting-liking.html">← 2.2 · P2 Wanting / liking</a>
+  <a href="2-2-p4-fiorillo-algoritmo.html">2.2 · P4 Fiorillo + algoritmo →</a>
+</nav>
+
+</div>
+</body>
+</html>

@@ -3,6 +3,8 @@
 **Cautiverio Voluntario: Cómo se diseña la libertad**
 Formato 29,7 × 16,71 cm (16:9) · Grilla de 4 columnas · Fondo `#000000`
 
+📐 **[Índice de diagramas HTML](diagramas/index.html)** — una lámina por cada página con pieza, en [diagramas/](diagramas/)
+
 ## 2.2 · Biología humana `#8FE84A`
 
 **7 páginas de contenido + 1 de transición**
@@ -20,6 +22,8 @@ Cuatro fichas en las cuatro columnas: deslizar el feed, responder un mensaje, le
 
 *Lo que sostiene:* el veredicto es aritmético, no una preferencia. Lo que separa las fichas es la latencia, no la magnitud.
 
+→ [Ver diagrama · Registro de evaluación del gasto cognitivo](diagramas/2-2-p1-gasto-cognitivo.html)
+
 ---
 
 ### P2 · Dopamina y la distinción wanting / liking
@@ -29,6 +33,8 @@ Cuatro fichas en las cuatro columnas: deslizar el feed, responder un mensaje, le
 Dos series: *wanting* se dispara antes del consumo y se sostiene; *liking* aparece durante y decae. Sombrear la zona donde wanting persiste sin liking.
 
 *Lo que sostiene:* la categoría *Insatisfacción*. Es la figura que justifica intervenir sobre la anticipación y no sobre el contenido.
+
+→ [Ver gráfico · Curvas disociadas en el tiempo](diagramas/2-2-p2-wanting-liking.html)
 
 ---
 
@@ -40,6 +46,8 @@ Página plena. Comparación entre recompensas escasas, dispersas y costosas fren
 
 *Lo que sostiene:* el punto donde la biología deja de ser antecedente y pasa a explicar el problema. Candidata a doble página.
 
+→ [Ver diagrama · Dos entornos, un mismo mecanismo](diagramas/2-2-p3-desajuste.html)
+
 ---
 
 ### P4 · Refuerzo variable y su personalización algorítmica
@@ -50,6 +58,8 @@ Curva base: liberación dopaminérgica contra probabilidad de recompensa, con el
 
 *Lo que sostiene:* la superposición **es** el argumento. Aquí aparece por primera vez la distinción arrastre / dirigido.
 
+→ [Ver gráfico · Fiorillo con capa algorítmica](diagramas/2-2-p4-fiorillo-algoritmo.html)
+
 ---
 
 ### P5 · Manifestación en la interfaz
@@ -57,6 +67,8 @@ Curva base: liberación dopaminérgica contra probabilidad de recompensa, con el
 
 **ANOTACIÓN · Capturas de Instagram**
 Notificaciones, indicadores sobre iconos, pull-to-refresh, stories. Cajas con marcas de esquina, etiqueta con valor de confianza, líneas guía a notas al margen. Único lugar del capítulo donde entran `#0095F6` y `#FF3040`.
+
+→ [Ver anotación · Capturas de Instagram](diagramas/2-2-p5-anotacion-instagram.html)
 
 ---
 
@@ -68,6 +80,8 @@ Recipiente de tamaño fijo donde la carga extrínseca desplaza a la intrínseca.
 
 > **Candidata a eliminar.** Es la idea más ilustrable de la sección y la menos propia. Si el capítulo queda saturado de figuras, esta es la primera que sale.
 
+→ [Ver diagrama · Capacidad de la memoria de trabajo](diagramas/2-2-p6-carga-cognitiva.html)
+
 ---
 
 ### P7 · Bucle del hábito y automatización
@@ -77,6 +91,8 @@ Recipiente de tamaño fijo donde la carga extrínseca desplaza a la intrínseca.
 El bucle señal → rutina → recompensa como estructura de soporte, pero el énfasis va en la asimetría: continuar cuesta un gesto, interrumpir cuesta deliberación.
 
 *Advertencia:* el bucle por sí solo es material de manual. El aporte está en la asimetría — que sea eso lo que domine la composición.
+
+→ [Ver diagrama · Asimetría de esfuerzo](diagramas/2-2-p7-asimetria-habito.html)
 
 ---
 
@@ -98,6 +114,8 @@ Eje único de fricción con dos flechas opuestas: eliminarla para sostener el fl
 
 **Nota de edición:** el giro *«Sin embargo, la fricción no opera exclusivamente…»* debería ser párrafo propio en el texto, no solo un corte visual.
 
+→ [Ver diagrama · Un eje, dos direcciones](diagramas/2-3-p1-eje-friccion.html)
+
 ---
 
 ### P2 · Supresión de los puntos de pausa
@@ -105,6 +123,8 @@ Eje único de fricción con dos flechas opuestas: eliminarla para sostener el fl
 
 **DIAGRAMA · Dos flujos comparados**
 Navegación paginada con puntos de decisión explícitos frente a scroll continuo sin ninguno. Los puntos ausentes son la figura.
+
+→ [Ver diagrama · Dos flujos comparados](diagramas/2-3-p2-puntos-de-pausa.html)
 
 ---
 
@@ -125,6 +145,8 @@ Roach motel, misdirection, confirmshaming sobre capturas reales.
 
 **Pieza adicional para roach motel:** conteo de pasos de entrada frente a pasos de salida. Convierte el adjetivo «asimétrico» en un dato verificable.
 
+→ [Ver anotación · Tres casos + conteo de pasos](diagramas/2-3-p4-tipologia-patrones.html)
+
 ---
 
 ### P5 · Adherencia y activadores
@@ -132,6 +154,8 @@ Roach motel, misdirection, confirmshaming sobre capturas reales.
 
 **DIAGRAMA · Modelo de Fogg**
 Motivación, capacidad, disparador. Marcar las notificaciones como el disparador que llega desde fuera de la aplicación.
+
+→ [Ver diagrama · Modelo de Fogg](diagramas/2-3-p5-modelo-fogg.html)
 
 ---
 
@@ -142,6 +166,8 @@ Motivación, capacidad, disparador. Marcar las notificaciones como el disparador
 Ejes: utilidad percibida / facilidad de uso. Lo que importa no es un punto sino el **movimiento**: facilidad hacia el máximo, utilidad desacoplada.
 
 *Lo que sostiene:* la corrupción del modelo original. Un punto estático no dice nada; el vector sí.
+
+→ [Ver diagrama · Plano con vector de desplazamiento](diagramas/2-3-p6-vector-davis.html)
 
 ---
 
@@ -170,6 +196,8 @@ Capacidad de producción y distribución de contenido frente a capacidad atencio
 
 *Lo que sostiene:* la planitud es el argumento de Simon. La brecha entre ambas curvas es la escasez que da origen al mercado.
 
+→ [Ver gráfico · Dos curvas divergentes](diagramas/2-4-p1-curvas-divergentes.html)
+
 ---
 
 ### P2 · Metadatos y fábricas de predicción
@@ -179,6 +207,8 @@ Capacidad de producción y distribución de contenido frente a capacidad atencio
 Conducta observable → metadatos → producto de predicción.
 
 *Crítico:* aquí debe quedar establecido que la plataforma **anticipa**. Es el fundamento de la asimetría con el sistema propuesto, que solo **constata**. Si esa frase no está en el texto, esta es la página donde debe aparecer.
+
+→ [Ver diagrama · Cadena de tres etapas](diagramas/2-4-p2-fabrica-prediccion.html)
 
 ---
 
@@ -190,6 +220,8 @@ Tiempo de permanencia → metadatos → precisión predictiva → valor publicit
 
 *Lo que sostiene:* el mecanismo concreto por el que más tiempo equivale a más dinero. Suele ser lo primero que la comisión pide explicar.
 
+→ [Ver diagrama · Bucle económico](diagramas/2-4-p3-bucle-economico.html)
+
 ---
 
 ### P4 · Presión competitiva
@@ -199,6 +231,8 @@ Tiempo de permanencia → metadatos → precisión predictiva → valor publicit
 Varias plataformas, una misma métrica, imposibilidad estructural de no participar.
 
 *Lo que sostiene:* el argumento contra la salida regulatoria y contra responsabilizar a una empresa en particular.
+
+→ [Ver diagrama · La carrera](diagramas/2-4-p4-la-carrera.html)
 
 ---
 
@@ -218,6 +252,8 @@ Tres nodos en cadena descendente: economía impone objetivo → UX/UI despliega 
 **La asimetría es el argumento.** Lo descendente es orden: línea sólida, gruesa, punta rellena. Lo ascendente es extracción: fina, punteada, punta abierta, por fuera de la columna. El usuario no es un nodo sino la banda donde el circuito se ejecuta.
 
 *Versión gemela en el capítulo 5:* la misma figura con un punto de interrupción marcado. Repetir una forma con una diferencia dice más que dos figuras distintas.
+
+→ [Ver diagrama · Circuito de refuerzo entre ámbitos](diagramas/2-4-p6-circuito-refuerzo.html) (incluye interruptor para la versión gemela)
 
 ---
 

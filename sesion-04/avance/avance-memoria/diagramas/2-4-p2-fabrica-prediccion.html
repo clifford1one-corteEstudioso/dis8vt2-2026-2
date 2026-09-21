@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2.4 · P2 — Fábrica de predicción</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body class="a24">
+<div class="envoltura">
+
+<header class="barra">
+  <a href="index.html">← Índice de diagramas</a>
+  <span>2.4 · Economía de la atención · P2 · Diagrama</span>
+  <label><input type="checkbox" id="ver-grilla"> grilla</label>
+</header>
+
+<div class="lienzo">
+<svg class="lamina" viewBox="0 0 1188 668" role="img" aria-labelledby="titulo">
+  <title id="titulo">Cadena de tres etapas: conducta observable, metadatos y producto de predicción. La plataforma anticipa; el sistema propuesto solo constata</title>
+  <defs>
+    <marker id="fl-t" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="12" markerHeight="12" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="c-t"/></marker>
+    <marker id="fl-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="12" markerHeight="12" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="c-a"/></marker>
+  </defs>
+
+  <g class="grilla"><rect x="48" y="56" width="255" height="556"/><rect x="327" y="56" width="255" height="556"/><rect x="606" y="56" width="255" height="556"/><rect x="885" y="56" width="255" height="556"/></g>
+
+  <text x="48" y="36" class="cornisa">2.4 · ECONOMÍA DE LA ATENCIÓN</text>
+  <text x="1140" y="36" class="cornisa fin">METADATOS Y FÁBRICAS DE PREDICCIÓN</text>
+  <line x1="48" y1="50" x2="1140" y2="50" class="regla"/>
+
+  <!-- 01 · Conducta observable -->
+  <rect x="48" y="110" width="255" height="200" fill="none" class="s-t" stroke-width="1.5"/>
+  <text x="64" y="138" class="mono">01</text>
+  <text x="64" y="170" class="hs">Conducta observable</text>
+  <text x="64" y="200" class="tg">scroll · pausas · toques</text>
+  <text x="64" y="218" class="tg">horarios · recorridos</text>
+
+  <!-- 02 · Metadatos -->
+  <rect x="466.5" y="110" width="255" height="200" fill="none" class="s-t" stroke-width="1.5"/>
+  <text x="482.5" y="138" class="mono">02</text>
+  <text x="482.5" y="170" class="hs">Metadatos</text>
+  <text x="482.5" y="200" class="tg">velocidad de desplazamiento</text>
+  <text x="482.5" y="218" class="tg">pausas milimétricas ante imágenes</text>
+  <text x="482.5" y="236" class="tg">horarios exactos de actividad</text>
+
+  <!-- 03 · Producto de predicción -->
+  <rect x="885" y="110" width="255" height="200" class="c-a" fill-opacity=".08"/>
+  <rect x="885" y="110" width="255" height="200" fill="none" class="s-a" stroke-width="1.5"/>
+  <text x="901" y="138" class="mono-a">03</text>
+  <text x="901" y="170" class="hs">Producto de predicción</text>
+  <text x="901" y="200" class="tg">lo que harás, sentirás</text>
+  <text x="901" y="218" class="tg">o comprarás a continuación</text>
+  <text x="901" y="288" class="mono-a">ANTICIPA</text>
+
+  <!-- Flechas de la cadena -->
+  <text x="384.75" y="198" class="mono mid">EXTRACCIÓN</text>
+  <line x1="303" y1="210" x2="464" y2="210" class="s-t" stroke-width="2" marker-end="url(#fl-t)"/>
+  <text x="803" y="198" class="mono-a mid">MODELADO</text>
+  <line x1="721.5" y1="210" x2="883" y2="210" class="s-a" stroke-width="2" marker-end="url(#fl-a)"/>
+
+  <!-- Proyección al tiempo -->
+  <g class="s-2 pt-fino">
+    <line x1="175.5" y1="310" x2="175.5" y2="432"/><line x1="594" y1="310" x2="594" y2="432"/><line x1="1012.5" y1="310" x2="1012.5" y2="432"/>
+  </g>
+  <line x1="48" y1="432" x2="1140" y2="432" class="s-2"/>
+  <text x="48" y="420" class="mono">← PASADO</text>
+  <text x="1140" y="420" class="mono fin">FUTURO →</text>
+
+  <line x1="803" y1="400" x2="803" y2="590" class="s-t pt"/>
+  <text x="803" y="392" class="mono mid" style="fill:var(--tinta)">AHORA</text>
+
+  <!-- Plataforma: anticipa -->
+  <text x="60" y="478" class="mono">PLATAFORMA</text>
+  <line x1="60" y1="490" x2="1128" y2="490" class="s-a" stroke-width="3" marker-end="url(#fl-a)"/>
+  <text x="820" y="476" class="h c-a">ANTICIPA</text>
+  <text x="820" y="512" class="tg">proyecta lo que harás</text>
+
+  <!-- Sistema propuesto: constata -->
+  <text x="60" y="548" class="mono">SISTEMA PROPUESTO</text>
+  <line x1="60" y1="560" x2="800" y2="560" class="s-t" stroke-width="2"/>
+  <line x1="800" y1="550" x2="800" y2="570" class="s-t" stroke-width="3"/>
+  <text x="820" y="566" class="h">CONSTATA</text>
+  <text x="820" y="586" class="tg">registra lo ocurrido, no proyecta</text>
+
+  <line x1="48" y1="618" x2="1140" y2="618" class="regla"/>
+  <text x="48" y="644" class="pie">Fig. 2.4.2 · De la conducta al producto de predicción (Zuboff, 2019).</text>
+  <text x="1140" y="644" class="folio fin">P2</text>
+</svg>
+</div>
+
+<section class="notas">
+  <div>
+    <h2>Pieza</h2>
+    <p>Cadena de tres etapas: conducta observable → metadatos → producto de predicción.</p>
+  </div>
+  <div>
+    <h2>Crítico</h2>
+    <p>Aquí debe quedar establecido que la plataforma <em>anticipa</em>. Es el fundamento de la asimetría con el sistema propuesto, que solo <em>constata</em>. Si esa frase no está en el texto, esta es la página donde debe aparecer (decisión pendiente 4).</p>
+  </div>
+  <div>
+    <h2>Fragmento</h2>
+    <p>Desde <em>«Este concepto del sistema económico global…»</em> hasta antes de <em>«La manera en que logran establecer una relación influencial…»</em></p>
+  </div>
+</section>
+
+<nav class="pasos">
+  <a href="2-4-p1-curvas-divergentes.html">← 2.4 · P1 Curvas divergentes</a>
+  <a href="2-4-p3-bucle-economico.html">2.4 · P3 Bucle económico →</a>
+</nav>
+
+</div>
+</body>
+</html>

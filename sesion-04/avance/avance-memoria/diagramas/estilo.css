@@ -1,0 +1,131 @@
+/* Diagramas del marco teórico — lámina 29,7 × 16,71 cm (16:9), grilla de 4 columnas, fondo #000 */
+
+:root {
+  --fondo: #000000;
+  --tinta: #f2f2f2;
+  --gris: #8c8c8c;
+  --gris-2: #4a4a4a;
+  --gris-3: #1f1f1f;
+  --ambito: #8FE84A;
+  --sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Consolas, "Courier New", monospace;
+}
+
+/* Color de ámbito */
+.a22 { --ambito: #8FE84A; }
+.a23 { --ambito: #2BE86A; }
+.a24 { --ambito: #2BE8C4; }
+
+* { box-sizing: border-box; }
+
+html, body { background: var(--fondo); color: var(--tinta); }
+
+body {
+  margin: 0;
+  font: 14px/1.55 var(--sans);
+  padding-block: 24px 48px;
+  padding-inline: 16px;
+}
+
+a { color: var(--tinta); text-decoration: none; border-bottom: 1px solid var(--gris-2); }
+a:hover { color: var(--ambito); border-color: var(--ambito); }
+
+.envoltura { max-width: 1320px; margin: 0 auto; }
+
+/* Barra superior */
+.barra {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 12px;
+  font: 500 11px var(--mono);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--gris);
+}
+.barra label { cursor: pointer; display: inline-flex; gap: 6px; align-items: center; }
+.barra input { accent-color: var(--ambito); margin: 0; }
+
+/* Lámina */
+.lienzo { overflow-x: auto; border: 1px solid var(--gris-3); background: var(--fondo); }
+.lienzo svg { display: block; width: 100%; min-width: 880px; height: auto; }
+
+/* Notas bajo la lámina */
+.notas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+  margin-top: 28px;
+}
+.notas h2 {
+  margin: 0 0 6px;
+  font: 500 11px var(--mono);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ambito);
+}
+.notas p { margin: 0 0 8px; color: #cfcfcf; max-width: 60ch; }
+.notas em { color: var(--tinta); }
+
+.pasos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 32px;
+  padding-top: 16px;
+  border-top: 1px solid var(--gris-3);
+  font: 500 12px var(--mono);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+/* ---------- SVG ---------- */
+
+.grilla rect { fill: var(--ambito); fill-opacity: 0; }
+body:has(#ver-grilla:checked) .grilla rect { fill-opacity: .07; }
+
+.cornisa { font: 500 10px var(--mono); letter-spacing: .14em; fill: var(--gris); }
+.pie     { font: 12px var(--sans); fill: var(--gris); }
+.folio   { font: 600 12px var(--mono); letter-spacing: .08em; fill: var(--ambito); }
+.regla   { stroke: var(--gris-3); stroke-width: 1; }
+
+/* Tipografía */
+.h      { font: 600 22px var(--sans); letter-spacing: -.01em; fill: var(--tinta); }
+.hs     { font: 600 15px var(--sans); fill: var(--tinta); }
+.tx     { font: 13px var(--sans); fill: var(--tinta); }
+.tg     { font: 12.5px var(--sans); fill: var(--gris); }
+.mono   { font: 500 10.5px var(--mono); letter-spacing: .08em; fill: var(--gris); }
+.mono-a { font: 500 10.5px var(--mono); letter-spacing: .08em; fill: var(--ambito); }
+.num    { font: 600 30px var(--mono); fill: var(--tinta); }
+
+/* Colores de relleno (declarados después de la tipografía para poder sobrescribirla) */
+.c-a { fill: var(--ambito); }
+.c-t { fill: var(--tinta); }
+.c-n { fill: #000; }
+.c-g { fill: var(--gris); }
+.c-2 { fill: var(--gris-2); }
+.c-3 { fill: var(--gris-3); }
+
+/* Trazos */
+.s-a { stroke: var(--ambito); }
+.s-t { stroke: var(--tinta); }
+.s-g { stroke: var(--gris); }
+.s-2 { stroke: var(--gris-2); }
+.s-3 { stroke: var(--gris-3); }
+
+.pt     { stroke-dasharray: 5 4; }
+.pt-fino{ stroke-dasharray: 2 4; }
+.apagado { opacity: .42; }
+
+.mid { text-anchor: middle; }
+.fin { text-anchor: end; }
+
+/* Anotación: cajas con marcas de esquina y etiqueta */
+.caja     { fill: none; stroke: var(--ambito); stroke-width: 1; stroke-opacity: .45; }
+.esquinas { fill: none; stroke: var(--ambito); stroke-width: 2.2; }
+.guia     { stroke: var(--ambito); stroke-width: 1; }
+.etiqueta { fill: var(--ambito); }
+.etiqueta-tx { font: 600 9.5px var(--mono); letter-spacing: .06em; fill: #000; }

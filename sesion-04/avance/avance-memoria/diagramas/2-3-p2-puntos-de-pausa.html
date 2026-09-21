@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2.3 · P2 — Supresión de los puntos de pausa</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body class="a23">
+<div class="envoltura">
+
+<header class="barra">
+  <a href="index.html">← Índice de diagramas</a>
+  <span>2.3 · Diseño de interfaces · P2 · Diagrama</span>
+  <label><input type="checkbox" id="ver-grilla"> grilla</label>
+</header>
+
+<div class="lienzo">
+<svg class="lamina" viewBox="0 0 1188 668" role="img" aria-labelledby="titulo">
+  <title id="titulo">Dos flujos comparados: navegación paginada con cuatro puntos de decisión frente a scroll continuo sin ninguno</title>
+  <defs>
+    <marker id="fl-g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="c-g"/></marker>
+  </defs>
+
+  <g class="grilla"><rect x="48" y="56" width="255" height="556"/><rect x="327" y="56" width="255" height="556"/><rect x="606" y="56" width="255" height="556"/><rect x="885" y="56" width="255" height="556"/></g>
+
+  <text x="48" y="36" class="cornisa">2.3 · DISEÑO DE INTERFACES</text>
+  <text x="1140" y="36" class="cornisa fin">SUPRESIÓN DE LOS PUNTOS DE PAUSA</text>
+  <line x1="48" y1="50" x2="1140" y2="50" class="regla"/>
+
+  <!-- ===== A · Navegación paginada ===== -->
+  <text x="54" y="150" class="mono">A · NAVEGACIÓN PAGINADA</text>
+  <text x="1134" y="150" class="mono fin">4 PUNTOS DE DECISIÓN</text>
+
+  <g fill="none" class="s-t" stroke-width="1.5">
+    <rect x="54" y="180" width="160" height="90"/><rect x="284" y="180" width="160" height="90"/><rect x="514" y="180" width="160" height="90"/><rect x="744" y="180" width="160" height="90"/><rect x="974" y="180" width="160" height="90"/>
+  </g>
+  <text x="66" y="202" class="mono">PÁG. 1</text><text x="296" y="202" class="mono">PÁG. 2</text><text x="526" y="202" class="mono">PÁG. 3</text><text x="756" y="202" class="mono">PÁG. 4</text><text x="986" y="202" class="mono">PÁG. 5</text>
+  <g class="c-2">
+    <rect x="66" y="218" width="136" height="5"/><rect x="66" y="232" width="110" height="5"/><rect x="66" y="246" width="124" height="5"/>
+    <rect x="296" y="218" width="136" height="5"/><rect x="296" y="232" width="110" height="5"/><rect x="296" y="246" width="124" height="5"/>
+    <rect x="526" y="218" width="136" height="5"/><rect x="526" y="232" width="110" height="5"/><rect x="526" y="246" width="124" height="5"/>
+    <rect x="756" y="218" width="136" height="5"/><rect x="756" y="232" width="110" height="5"/><rect x="756" y="246" width="124" height="5"/>
+    <rect x="986" y="218" width="136" height="5"/><rect x="986" y="232" width="110" height="5"/><rect x="986" y="246" width="124" height="5"/>
+  </g>
+
+  <g class="s-t" stroke-width="1.5">
+    <line x1="214" y1="225" x2="231" y2="225"/><line x1="267" y1="225" x2="284" y2="225"/>
+    <line x1="444" y1="225" x2="461" y2="225"/><line x1="497" y1="225" x2="514" y2="225"/>
+    <line x1="674" y1="225" x2="691" y2="225"/><line x1="727" y1="225" x2="744" y2="225"/>
+    <line x1="904" y1="225" x2="921" y2="225"/><line x1="957" y1="225" x2="974" y2="225"/>
+  </g>
+
+  <g fill="#000" class="s-t" stroke-width="1.5">
+    <path d="M249,207 L267,225 L249,243 L231,225 Z"/>
+    <path d="M479,207 L497,225 L479,243 L461,225 Z"/>
+    <path d="M709,207 L727,225 L709,243 L691,225 Z"/>
+    <path d="M939,207 L957,225 L939,243 L921,225 Z"/>
+  </g>
+  <text x="249" y="229" class="mono mid" style="fill:var(--tinta)">?</text>
+  <text x="479" y="229" class="mono mid" style="fill:var(--tinta)">?</text>
+  <text x="709" y="229" class="mono mid" style="fill:var(--tinta)">?</text>
+  <text x="939" y="229" class="mono mid" style="fill:var(--tinta)">?</text>
+
+  <g class="s-g" stroke-width="1.5">
+    <line x1="249" y1="243" x2="249" y2="292" marker-end="url(#fl-g)"/>
+    <line x1="479" y1="243" x2="479" y2="292" marker-end="url(#fl-g)"/>
+    <line x1="709" y1="243" x2="709" y2="292" marker-end="url(#fl-g)"/>
+    <line x1="939" y1="243" x2="939" y2="292" marker-end="url(#fl-g)"/>
+  </g>
+  <text x="249" y="312" class="mono mid">salir</text>
+  <text x="479" y="312" class="mono mid">salir</text>
+  <text x="709" y="312" class="mono mid">salir</text>
+  <text x="939" y="312" class="mono mid">salir</text>
+
+  <!-- Guías hacia los puntos ausentes -->
+  <g class="s-2 pt-fino">
+    <line x1="249" y1="330" x2="249" y2="445"/><line x1="479" y1="330" x2="479" y2="445"/><line x1="709" y1="330" x2="709" y2="445"/><line x1="939" y1="330" x2="939" y2="445"/>
+  </g>
+
+  <!-- ===== B · Scroll continuo ===== -->
+  <text x="54" y="390" class="mono">B · SCROLL CONTINUO</text>
+  <text x="1134" y="390" class="mono-a fin">0 PUNTOS DE DECISIÓN</text>
+
+  <path d="M1134,420 H54 V510 H1134" fill="none" class="s-t" stroke-width="1.5"/>
+  <g class="s-2">
+    <line x1="162" y1="420" x2="162" y2="510"/><line x1="270" y1="420" x2="270" y2="510"/><line x1="378" y1="420" x2="378" y2="510"/><line x1="486" y1="420" x2="486" y2="510"/><line x1="594" y1="420" x2="594" y2="510"/>
+    <line x1="702" y1="420" x2="702" y2="510"/><line x1="810" y1="420" x2="810" y2="510"/><line x1="918" y1="420" x2="918" y2="510"/><line x1="1026" y1="420" x2="1026" y2="510"/>
+  </g>
+
+  <g fill="#000" class="s-a" stroke-width="1.5" stroke-dasharray="3 3">
+    <path d="M249,447 L267,465 L249,483 L231,465 Z"/>
+    <path d="M479,447 L497,465 L479,483 L461,465 Z"/>
+    <path d="M709,447 L727,465 L709,483 L691,465 Z"/>
+    <path d="M939,447 L957,465 L939,483 L921,465 Z"/>
+  </g>
+  <text x="249" y="540" class="mono-a mid">SIN PAUSA</text>
+  <text x="479" y="540" class="mono-a mid">SIN PAUSA</text>
+  <text x="709" y="540" class="mono-a mid">SIN PAUSA</text>
+  <text x="939" y="540" class="mono-a mid">SIN PAUSA</text>
+  <text x="1134" y="540" class="mono fin">→ SIN FIN · AUTOPLAY</text>
+
+  <text x="54" y="598" class="tg">Los puntos ausentes son la figura: nada en el flujo pregunta si se quiere continuar.</text>
+
+  <line x1="48" y1="618" x2="1140" y2="618" class="regla"/>
+  <text x="48" y="644" class="pie">Fig. 2.3.2 · Dos flujos comparados (Kahneman, 2011).</text>
+  <text x="1140" y="644" class="folio fin">P2</text>
+</svg>
+</div>
+
+<section class="notas">
+  <div>
+    <h2>Pieza</h2>
+    <p>Navegación paginada con puntos de decisión explícitos frente a scroll continuo sin ninguno. <em>Los puntos ausentes son la figura.</em></p>
+  </div>
+  <div>
+    <h2>Fragmento</h2>
+    <p>Desde <em>«En consecuencia, la industria tecnológica…»</em> hasta antes de <em>«Si bien de esto puede desprenderse…»</em></p>
+  </div>
+</section>
+
+<nav class="pasos">
+  <a href="2-3-p1-eje-friccion.html">← 2.3 · P1 Eje de fricción</a>
+  <a href="2-3-p4-tipologia-patrones.html">2.3 · P4 Tipología →</a>
+</nav>
+
+</div>
+</body>
+</html>

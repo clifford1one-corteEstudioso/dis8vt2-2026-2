@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2.2 · P4 — Fiorillo con capa algorítmica</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body class="a22">
+<div class="envoltura">
+
+<header class="barra">
+  <a href="index.html">← Índice de diagramas</a>
+  <span>2.2 · Biología humana · P4 · Gráfico</span>
+  <label><input type="checkbox" id="ver-grilla"> grilla</label>
+</header>
+
+<div class="lienzo">
+<svg class="lamina" viewBox="0 0 1188 668" role="img" aria-labelledby="titulo">
+  <title id="titulo">Liberación dopaminérgica contra probabilidad de recompensa, con pico en p = 0,50, y una capa algorítmica que se desplaza para mantenerse en ese pico</title>
+  <defs>
+    <marker id="fl-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="c-a"/></marker>
+  </defs>
+
+  <g class="grilla"><rect x="48" y="56" width="255" height="556"/><rect x="327" y="56" width="255" height="556"/><rect x="606" y="56" width="255" height="556"/><rect x="885" y="56" width="255" height="556"/></g>
+
+  <text x="48" y="36" class="cornisa">2.2 · BIOLOGÍA HUMANA</text>
+  <text x="1140" y="36" class="cornisa fin">REFUERZO VARIABLE Y SU PERSONALIZACIÓN ALGORÍTMICA</text>
+  <line x1="48" y1="50" x2="1140" y2="50" class="regla"/>
+
+  <!-- Banda sostenida por el sistema -->
+  <rect x="437" y="110" width="66" height="410" class="c-a" fill-opacity=".12"/>
+  <text x="470" y="102" class="mono-a mid">p = 0,50</text>
+  <text x="470" y="478" class="mono-a mid">ZONA</text>
+  <text x="470" y="494" class="mono-a mid">SOSTENIDA</text>
+
+  <!-- Ejes -->
+  <line x1="140" y1="520" x2="800" y2="520" class="s-t"/>
+  <line x1="140" y1="110" x2="140" y2="520" class="s-t"/>
+  <line x1="140" y1="520" x2="140" y2="526" class="s-t"/><text x="140" y="542" class="mono mid">0</text>
+  <line x1="305" y1="520" x2="305" y2="526" class="s-t"/><text x="305" y="542" class="mono mid">0,25</text>
+  <line x1="470" y1="520" x2="470" y2="526" class="s-a"/><text x="470" y="542" class="mono-a mid">0,50</text>
+  <line x1="635" y1="520" x2="635" y2="526" class="s-t"/><text x="635" y="542" class="mono mid">0,75</text>
+  <line x1="800" y1="520" x2="800" y2="526" class="s-t"/><text x="800" y="542" class="mono mid">1</text>
+  <text x="470" y="572" class="mono mid">PROBABILIDAD DE RECOMPENSA</text>
+  <text x="112" y="315" class="mono mid" transform="rotate(-90 112 315)">LIBERACIÓN DOPAMINÉRGICA</text>
+
+  <!-- Curva base (Fiorillo) -->
+  <path d="M140,500 Q470,-100 800,500" fill="none" class="s-t" stroke-width="2"/>
+
+  <!-- Azar: resultados dispersos -->
+  <circle cx="206" cy="392" r="6" fill="#000" class="s-g" stroke-width="1.5"/>
+  <circle cx="305" cy="275" r="6" fill="#000" class="s-g" stroke-width="1.5"/>
+  <circle cx="602" cy="248" r="6" fill="#000" class="s-g" stroke-width="1.5"/>
+  <circle cx="734" cy="392" r="6" fill="#000" class="s-g" stroke-width="1.5"/>
+
+  <!-- Capa algorítmica: desplazamiento hacia el pico -->
+  <path d="M214,372 Q300,190 438,184" fill="none" class="s-a pt" stroke-width="1.5" marker-end="url(#fl-a)"/>
+  <path d="M726,372 Q640,190 502,184" fill="none" class="s-a pt" stroke-width="1.5" marker-end="url(#fl-a)"/>
+  <circle cx="470" cy="200" r="14" fill="none" class="s-a" stroke-width="1.5"/>
+  <circle cx="470" cy="200" r="7" class="c-a"/>
+
+  <!-- Leyenda -->
+  <line x1="160" y1="128" x2="190" y2="128" class="s-t" stroke-width="2"/>
+  <text x="200" y="132" class="tx">Curva base · azar (Fiorillo, 2003)</text>
+  <line x1="160" y1="152" x2="190" y2="152" class="s-a pt" stroke-width="2"/>
+  <text x="200" y="156" class="tx">Capa algorítmica · calibrada</text>
+
+  <!-- Arrastre / dirigido -->
+  <text x="885" y="104" class="mono">PRIMERA APARICIÓN</text>
+  <text x="885" y="132" class="hs">Arrastre / dirigido</text>
+
+  <rect x="885" y="160" width="255" height="180" fill="none" class="s-a" stroke-width="1.5"/>
+  <text x="901" y="188" class="mono-a">USO DE ARRASTRE</text>
+  <text x="901" y="216" class="tx">El sistema elige el estímulo.</text>
+  <text x="901" y="236" class="tx">La incertidumbre se calibra</text>
+  <text x="901" y="256" class="tx">con tu historial.</text>
+  <text x="901" y="308" class="num c-a">p ≈ 0,50</text>
+  <text x="901" y="328" class="mono">SOSTENIDA POR EL SISTEMA</text>
+
+  <rect x="885" y="370" width="255" height="180" fill="none" class="s-t pt"/>
+  <text x="901" y="398" class="mono">USO DIRIGIDO</text>
+  <text x="901" y="426" class="tx">El usuario define el estímulo,</text>
+  <text x="901" y="446" class="tx">sin mediación algorítmica.</text>
+  <text x="901" y="518" class="num c-g">p = ?</text>
+  <text x="901" y="538" class="mono">NO CALIBRADA</text>
+
+  <text x="48" y="598" class="tg">La superposición es el argumento: el sistema no espera al azar, se desplaza para mantenerse en el pico.</text>
+
+  <line x1="48" y1="618" x2="1140" y2="618" class="regla"/>
+  <text x="48" y="644" class="pie">Fig. 2.2.4 · Fiorillo con capa algorítmica (Fiorillo, Tobler y Schultz, 2003; Milano, Taddeo y Floridi, 2020). Curva esquemática.</text>
+  <text x="1140" y="644" class="folio fin">P4</text>
+</svg>
+</div>
+
+<section class="notas">
+  <div>
+    <h2>Pieza</h2>
+    <p>Curva base: liberación dopaminérgica contra probabilidad de recompensa, con el pico en <em>p = 0.50</em>. Superpuesta, una segunda capa: el sistema de recomendación no espera al azar, se desplaza para mantenerse en ese pico.</p>
+  </div>
+  <div>
+    <h2>Lo que sostiene</h2>
+    <p>La superposición <em>es</em> el argumento. Aquí aparece por primera vez la distinción arrastre / dirigido.</p>
+  </div>
+  <div>
+    <h2>Fragmento</h2>
+    <p>Desde <em>«Otro de los mecanismos psicológicos…»</em> hasta antes de <em>«Este patrón es replicado por las plataformas digitales.»</em></p>
+  </div>
+</section>
+
+<nav class="pasos">
+  <a href="2-2-p3-desajuste.html">← 2.2 · P3 El desajuste</a>
+  <a href="2-2-p5-anotacion-instagram.html">2.2 · P5 Anotación Instagram →</a>
+</nav>
+
+</div>
+</body>
+</html>
