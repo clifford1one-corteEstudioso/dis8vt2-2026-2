@@ -170,6 +170,23 @@ Dos formas de cerrarlo:
 
 Me inclino por la segunda, y el argumento es de la tesis: **scrollear no es el problema**. Bajar por una conversación buscando algo es scroll con intención. Lo que ataco es el scroll que se estira solo. Un mínimo de duración distingue eso sin nombrar ninguna app, que era lo bueno de la definición original.
 
+### fase-06 — el resumen al salir
+
+El WF3 hecho app, más los bordes de sesión de la corrección de la sesión 05.
+
+| Cómo se sale | Qué pasa |
+| --- | --- |
+| Inicio o apps recientes | Resumen |
+| Bloquear | Pausa. Más de 3 min → resumen |
+| "Salir" en la decisión | Resumen |
+| Otra app | 30 s de tolerancia, después se cierra en silencio |
+
+Todo el resumen sale sin grabar pantalla, salvo *oscuridad*, que se muestra `—` hasta que exista la definición. *recuerdas* queda como `?`: es una pregunta, no un dato.
+
+**Quedó fuera** la línea *3h 40 en [actividad que te gusta]*: la app no tiene cómo saber cuánto tiempo se dedicó a esa actividad.
+
+Primera fase compilada y probada antes de llegar al celular: 12 pruebas con los casos de uso de la sesión 05.
+
 ## siguientes pasos de la app
 
 Ordenados por lo que puede invalidar el trabajo, no por comodidad.
