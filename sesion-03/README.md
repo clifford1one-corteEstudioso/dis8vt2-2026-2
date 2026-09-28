@@ -8,19 +8,19 @@ mostrar metas.
 
 estrategia de comunicacion de pryecto: FREE THE UNICORN
 
-eres un unicornio hermosos, pero encerrado. Quizas decir quecn este proyecto puede liberrar tus alas y ser libre.
+eres un unicornio hermosos, pero encerrado. Quizas decir quecn este proyecto puede liberrar tus alas y ser libre. quizas tipo redbull te da alas
 
-- referente comunicacional mas fixa.
+- encontrar un referente comunicacional/marketing mas potente.
 
-- buscar apoyon de organizaciones civiles(no del gobierno). Para que la gente no tenga miedo de q me den sus datos.
+- buscar apoyo de organizaciones civiles(no del gobierno). Para que la gente no tenga miedo de q me den sus datos.
 
-- conseguir respaldo de pq la gente va quere ser espiada.(para validar eso quizas una encuesta)
+- conseguir respaldo de pq la gente aceptaría ser espiada por esta app.(para validar eso quizas una encuesta)
 
-- hacer entrevista a carolina stevens.
+- hacer entrevista a carolina stephens.
 
 - en la etapa de validacion darme cuenta de que cosas hacen que la gete confie mas o menos en dar sus datos. Qué elemetnos, en relacion a la vigilancia de datos consentida.
 
-- asegurar tbn q vive dentro de tu cleu y no etan sienod utilizados para entrenar ias o weas.
+- asegurar tbn q vive dentro de tu celu y no estan siendo utilizados para entrenar modelos de ia u otros.
 
 ## tareitas
 

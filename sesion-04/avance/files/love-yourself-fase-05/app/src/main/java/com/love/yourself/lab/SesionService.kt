@@ -80,6 +80,8 @@ class SesionService : AccessibilityService() {
         val ahora = System.currentTimeMillis()
 
         if (!estado.activa) {
+            val progreso = segundos / (Config.MIN_DECISION * 60f)
+            ov.mostrarCielo(progreso * 0.7f)
             ov.mostrarCaja(OverlayFriccion.Etapa.OCULTO, 0, 0.0)
             return
         }

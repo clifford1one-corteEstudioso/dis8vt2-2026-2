@@ -32,6 +32,38 @@ class OverlayFriccion(private val context: Context) {
     private var etapaActual = Etapa.OCULTO
     private var pantallaDecision: LinearLayout? = null
 
+    private var cielo: CieloView? = null
+    private var paramsCielo: WindowManager.LayoutParams? = null
+
+    // ---- cielo ----
+
+    fun mostrarCielo(opacidad: Float) {
+        if (cielo == null) {
+            val p = WindowManager.LayoutParams(
+                WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.MATCH_PARENT,
+                tipoVentana,
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
+                        WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE or
+                        WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                android.graphics.PixelFormat.TRANSLUCENT
+            ).apply { alpha = 0f }
+            val v = CieloView(context)
+            wm.addView(v, p)
+            cielo = v
+            paramsCielo = p
+        }
+        val p = paramsCielo ?: return
+        // Tope 0.7: desde Android 12, sobre 0.8 el sistema bloquea los toques.
+        p.alpha = opacidad.coerceIn(0f, 0.7f)
+        wm.updateViewLayout(cielo, p)
+    }
+
+    private fun quitarCielo() {
+        cielo?.let { runCatching { wm.removeView(it) } }
+        cielo = null
+        paramsCielo = null
+    }
     private val tipoVentana = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
     } else {
@@ -43,6 +75,7 @@ class OverlayFriccion(private val context: Context) {
 
     fun mostrarCaja(etapa: Etapa, segundos: Long, swipesPorMinuto: Double) {
         if (etapa == Etapa.OCULTO) {
+            quitarCielo()
             quitarCaja()
             return
         }
@@ -188,6 +221,7 @@ class OverlayFriccion(private val context: Context) {
 
     fun ocultarTodo() {
         quitarCaja()
+        quitarCielo()
         quitarDecision()
     }
 }
