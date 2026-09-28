@@ -80,14 +80,18 @@ class SesionService : AccessibilityService() {
         val ahora = System.currentTimeMillis()
 
         if (!estado.activa) {
-            val progreso = segundos / (Config.MIN_DECISION * 60f)
-            ov.mostrarCielo(progreso * 0.7f)
-            ov.mostrarCaja(OverlayFriccion.Etapa.OCULTO, 0, 0.0)
+            ov.mostrarCaja(EtapaCaja.OCULTO, 0, 0.0)
             return
         }
 
         val segundos = estado.segundos(ahora)
         val minutos = segundos / 60
+
+        // El cielo se va haciendo visible con el tiempo de sesion y llega al
+        // maximo justo cuando aparece la decision. Va antes que la caja: la
+        // ventana que se agrega despues queda encima.
+        val progreso = segundos / (Config.MIN_DECISION * 60f)
+        ov.mostrarCielo(progreso * Config.OPACIDAD_MAX_CIELO)
 
         if (proximaDecisionMs > 0L && ahora >= proximaDecisionMs && !ov.decisionVisible()) {
             ov.mostrarDecision(
@@ -115,9 +119,9 @@ class SesionService : AccessibilityService() {
         }
 
         val etapa = if (minutos >= Config.MIN_PRESENCIA) {
-            OverlayFriccion.Etapa.PRESENCIA
+            EtapaCaja.PRESENCIA
         } else {
-            OverlayFriccion.Etapa.ESPEJO
+            EtapaCaja.ESPEJO
         }
         ov.mostrarCaja(etapa, segundos, estado.ritmoPorMinuto(ahora))
     }

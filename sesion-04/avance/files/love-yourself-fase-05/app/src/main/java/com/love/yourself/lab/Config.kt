@@ -24,6 +24,13 @@ object Config {
      */
     const val MIN_REPREGUNTA = 10
 
+    /**
+     * Opacidad maxima del cielo, a la que llega a los MIN_DECISION minutos.
+     * No puede pasar de 0.8: desde Android 12, una capa de otra app mas opaca
+     * que eso bloquea los toques, e Instagram dejaria de responder.
+     */
+    const val OPACIDAD_MAX_CIELO = 0.7f
+
     /** Ventana movil para el ritmo de swipes, en segundos. */
     const val VENTANA_RITMO_S = 60
 

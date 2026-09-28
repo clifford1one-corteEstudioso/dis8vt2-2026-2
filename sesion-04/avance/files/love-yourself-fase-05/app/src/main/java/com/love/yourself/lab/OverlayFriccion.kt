@@ -1,69 +1,33 @@
 package com.love.yourself.lab
 
 import android.content.Context
-import android.graphics.Color
-import android.graphics.Typeface
-import android.graphics.drawable.GradientDrawable
+import android.graphics.PixelFormat
 import android.os.Build
-import android.util.TypedValue
 import android.view.Gravity
+import android.view.View
 import android.view.WindowManager
-import android.widget.Button
-import android.widget.LinearLayout
 import android.widget.TextView
 
 /**
- * Las tres etapas de friccion. Ninguna bloquea Instagram.
+ * Pone la friccion encima de las otras apps. Solo maneja ventanas: como se ve
+ * cada cosa esta en VistasFriccion.kt y CieloView.kt.
  *
- *   ESPEJO     discreto, informa
- *   PRESENCIA  mas grande, cuesta ignorarlo
+ *   ESPEJO     caja discreta, informa
+ *   PRESENCIA  caja mas grande, cuesta ignorarla
+ *   CIELO      se va haciendo visible a medida que pasa el tiempo
  *   DECISION   pantalla completa, obliga a elegir
  *
- * La tercera es el corazon del proyecto: no prohibe, devuelve la decision.
- * Por eso "Seguir" siempre esta disponible y no cuesta mas que "Salir".
- * Una friccion que castiga se desinstala; una que interrumpe, se piensa.
+ * Ninguna bloquea Instagram.
  */
 class OverlayFriccion(private val context: Context) {
 
-    enum class Etapa { OCULTO, ESPEJO, PRESENCIA }
-
     private val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
     private var caja: TextView? = null
-    private var etapaActual = Etapa.OCULTO
-    private var pantallaDecision: LinearLayout? = null
-
+    private var etapaActual = EtapaCaja.OCULTO
+    private var pantallaDecision: View? = null
     private var cielo: CieloView? = null
     private var paramsCielo: WindowManager.LayoutParams? = null
 
-    // ---- cielo ----
-
-    fun mostrarCielo(opacidad: Float) {
-        if (cielo == null) {
-            val p = WindowManager.LayoutParams(
-                WindowManager.LayoutParams.MATCH_PARENT,
-                WindowManager.LayoutParams.MATCH_PARENT,
-                tipoVentana,
-                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
-                        WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE or
-                        WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-                android.graphics.PixelFormat.TRANSLUCENT
-            ).apply { alpha = 0f }
-            val v = CieloView(context)
-            wm.addView(v, p)
-            cielo = v
-            paramsCielo = p
-        }
-        val p = paramsCielo ?: return
-        // Tope 0.7: desde Android 12, sobre 0.8 el sistema bloquea los toques.
-        p.alpha = opacidad.coerceIn(0f, 0.7f)
-        wm.updateViewLayout(cielo, p)
-    }
-
-    private fun quitarCielo() {
-        cielo?.let { runCatching { wm.removeView(it) } }
-        cielo = null
-        paramsCielo = null
-    }
     private val tipoVentana = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
     } else {
@@ -71,78 +35,79 @@ class OverlayFriccion(private val context: Context) {
         WindowManager.LayoutParams.TYPE_PHONE
     }
 
+    /** Ventana que deja pasar los toques: Instagram se sigue usando igual. */
+    private fun paramsAtravesables(ancho: Int, alto: Int) = WindowManager.LayoutParams(
+        ancho,
+        alto,
+        tipoVentana,
+        WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE or
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+        PixelFormat.TRANSLUCENT
+    )
+
+    // ---- cielo ----
+
+    /**
+     * Hay que llamarla antes que mostrarCaja: la ventana que se agrega despues
+     * queda encima, y el cielo taparia la caja.
+     */
+    fun mostrarCielo(opacidad: Float) {
+        val p = paramsCielo ?: paramsAtravesables(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.MATCH_PARENT
+        ).also { nuevos ->
+            nuevos.alpha = 0f
+            val v = CieloView(context)
+            wm.addView(v, nuevos)
+            cielo = v
+            paramsCielo = nuevos
+        }
+        val v = cielo ?: return
+        p.alpha = opacidad.coerceIn(0f, Config.OPACIDAD_MAX_CIELO)
+        wm.updateViewLayout(v, p)
+    }
+
+    private fun quitarCielo() {
+        cielo?.let { runCatching { wm.removeView(it) } }
+        cielo = null
+        paramsCielo = null
+    }
+
     // ---- caja de datos ----
 
-    fun mostrarCaja(etapa: Etapa, segundos: Long, swipesPorMinuto: Double) {
-        if (etapa == Etapa.OCULTO) {
+    fun mostrarCaja(etapa: EtapaCaja, segundos: Long, swipesPorMinuto: Double) {
+        if (etapa == EtapaCaja.OCULTO) {
             quitarCielo()
             quitarCaja()
             return
         }
         val v = caja ?: crearCaja().also { caja = it }
         if (etapa != etapaActual) {
-            aplicarEtapa(v, etapa)
+            VistasFriccion.aplicarEtapa(v, etapa)
             etapaActual = etapa
         }
-        val mm = segundos / 60
-        val ss = segundos % 60
-        v.text = "%02d:%02d   ·   %.0f swipes/min".format(mm, ss, swipesPorMinuto)
+        v.text = VistasFriccion.texto(segundos, swipesPorMinuto)
     }
 
     private fun crearCaja(): TextView {
-        val v = TextView(context).apply {
-            setTextColor(Color.WHITE)
-            typeface = Typeface.MONOSPACE
-            gravity = Gravity.CENTER
-        }
-        val params = WindowManager.LayoutParams(
+        val v = VistasFriccion.caja(context)
+        val params = paramsAtravesables(
             WindowManager.LayoutParams.WRAP_CONTENT,
-            WindowManager.LayoutParams.WRAP_CONTENT,
-            tipoVentana,
-            // NOT_TOUCHABLE: los toques la atraviesan. Instagram se usa igual.
-            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
-                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE or
-                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-            android.graphics.PixelFormat.TRANSLUCENT
+            WindowManager.LayoutParams.WRAP_CONTENT
         ).apply {
             gravity = Gravity.TOP or Gravity.CENTER_HORIZONTAL
-            y = 120
+            y = VistasFriccion.MARGEN_SUPERIOR_CAJA_PX
         }
         wm.addView(v, params)
-        aplicarEtapa(v, Etapa.ESPEJO)
+        etapaActual = EtapaCaja.ESPEJO
         return v
-    }
-
-    /** La escalada es de peso visual, no de texto. El dato es el mismo. */
-    private fun aplicarEtapa(v: TextView, etapa: Etapa) {
-        when (etapa) {
-            Etapa.ESPEJO -> {
-                v.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
-                v.setPadding(26, 12, 26, 12)
-                v.alpha = 0.75f
-                v.background = GradientDrawable().apply {
-                    cornerRadius = 24f
-                    setColor(Color.argb(170, 0, 0, 0))
-                }
-            }
-            Etapa.PRESENCIA -> {
-                v.setTextSize(TypedValue.COMPLEX_UNIT_SP, 17f)
-                v.setPadding(44, 26, 44, 26)
-                v.alpha = 1f
-                v.background = GradientDrawable().apply {
-                    cornerRadius = 28f
-                    setColor(Color.argb(232, 0, 0, 0))
-                    setStroke(3, Color.argb(220, 255, 255, 255))
-                }
-            }
-            Etapa.OCULTO -> {}
-        }
     }
 
     private fun quitarCaja() {
         caja?.let { runCatching { wm.removeView(it) } }
         caja = null
-        etapaActual = Etapa.OCULTO
+        etapaActual = EtapaCaja.OCULTO
     }
 
     // ---- momento de decision ----
@@ -151,67 +116,28 @@ class OverlayFriccion(private val context: Context) {
 
     fun mostrarDecision(minutos: Long, alSeguir: () -> Unit, alSalir: () -> Unit) {
         if (pantallaDecision != null) return
-
-        val fondo = LinearLayout(context).apply {
-            orientation = LinearLayout.VERTICAL
-            gravity = Gravity.CENTER
-            setBackgroundColor(Color.argb(242, 8, 8, 10))
-            setPadding(80, 0, 80, 0)
-        }
-
-        fondo.addView(TextView(context).apply {
-            text = "Llevas $minutos minutos aquí."
-            setTextColor(Color.WHITE)
-            setTextSize(TypedValue.COMPLEX_UNIT_SP, 26f)
-            gravity = Gravity.CENTER
-        })
-
-        fondo.addView(TextView(context).apply {
-            text = "\n¿Querías estar todo este rato?\n"
-            setTextColor(Color.argb(170, 255, 255, 255))
-            setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
-            gravity = Gravity.CENTER
-            setPadding(0, 24, 0, 56)
-        })
-
-        // Los dos botones pesan lo mismo a proposito. El proyecto devuelve la
-        // decision; no la toma por el usuario ni lo empuja hacia un lado.
-        fondo.addView(boton("Seguir") {
-            quitarDecision()
-            alSeguir()
-        })
-        fondo.addView(boton("Salir") {
-            quitarDecision()
-            alSalir()
-        })
-
+        val vista = VistasFriccion.decision(
+            context,
+            minutos,
+            alSeguir = {
+                quitarDecision()
+                alSeguir()
+            },
+            alSalir = {
+                quitarDecision()
+                alSalir()
+            }
+        )
         val params = WindowManager.LayoutParams(
             WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.MATCH_PARENT,
             tipoVentana,
             // Esta si recibe toques: hay que poder elegir.
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-            android.graphics.PixelFormat.TRANSLUCENT
+            PixelFormat.TRANSLUCENT
         )
-        wm.addView(fondo, params)
-        pantallaDecision = fondo
-    }
-
-    private fun boton(texto: String, alTocar: () -> Unit) = Button(context).apply {
-        text = texto
-        setTextColor(Color.WHITE)
-        setTextSize(TypedValue.COMPLEX_UNIT_SP, 17f)
-        setPadding(0, 34, 0, 34)
-        background = GradientDrawable().apply {
-            cornerRadius = 18f
-            setColor(Color.TRANSPARENT)
-            setStroke(3, Color.argb(200, 255, 255, 255))
-        }
-        layoutParams = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT
-        ).apply { setMargins(0, 18, 0, 18) }
-        setOnClickListener { alTocar() }
+        wm.addView(vista, params)
+        pantallaDecision = vista
     }
 
     private fun quitarDecision() {
