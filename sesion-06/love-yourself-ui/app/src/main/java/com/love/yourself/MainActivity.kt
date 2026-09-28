@@ -16,24 +16,29 @@ import android.widget.SeekBar
 import android.widget.TextView
 import com.love.yourself.lab.CieloView
 import com.love.yourself.lab.Config
+import com.love.yourself.lab.DatosBrief
+import com.love.yourself.lab.EstadoMascota
 import com.love.yourself.lab.EtapaCaja
+import com.love.yourself.lab.MascotaView
+import com.love.yourself.lab.VistaBrief
 import com.love.yourself.lab.VistasFriccion
 
 /**
  * App solo de diseno. Muestra las mismas vistas que la app real, pero dentro
  * de una pantalla normal: sin permisos, sin accesibilidad, sin Instagram.
  *
- * Se mueve el tiempo de sesion con un deslizador y se ve como reaccionan la
- * caja y el cielo. Lo que se ajuste en VistasFriccion.kt o CieloView.kt se
+ * Se mueve el tiempo de arrastre con un deslizador y se ve como reaccionan la
+ * mascota, la caja y el cielo. Lo que se ajuste en los archivos de lab/ se
  * copia entero a la app real.
  *
  * Capas, de abajo hacia arriba, en el mismo orden que en el celular:
- *   reel de mentira -> cielo -> caja -> decision -> panel de control
+ *   reel de mentira -> cielo -> caja -> mascota -> decision / resumen -> panel
  */
 class MainActivity : Activity() {
 
     private lateinit var cielo: CieloView
     private lateinit var caja: TextView
+    private lateinit var mascota: MascotaView
     private lateinit var raiz: FrameLayout
     private lateinit var panel: LinearLayout
     private lateinit var estado: TextView
@@ -42,6 +47,10 @@ class MainActivity : Activity() {
     private var swipesPorMinuto = 12.0
     private var etapaActual = EtapaCaja.OCULTO
     private var decision: View? = null
+    private var resumen: View? = null
+
+    /** null = la mascota sigue al deslizador, como en el celular. */
+    private var mascotaForzada: EstadoMascota? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,15 +62,27 @@ class MainActivity : Activity() {
         cielo = CieloView(this).apply { alpha = 0f }
         raiz.addView(cielo, completo())
 
-        // Misma posicion que en el celular: arriba al centro, a 120 px del borde.
+        // Misma posicion que en el celular: la dicen las constantes de VistasFriccion.
         caja = VistasFriccion.caja(this)
         raiz.addView(
             caja,
             FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT,
-                Gravity.TOP or Gravity.CENTER_HORIZONTAL
+                VistasFriccion.GRAVEDAD_CAJA
             ).apply { topMargin = VistasFriccion.MARGEN_SUPERIOR_CAJA_PX }
+        )
+
+        mascota = MascotaView(this)
+        val lado = dp(VistasFriccion.MASCOTA_LADO_DP)
+        raiz.addView(
+            mascota,
+            FrameLayout.LayoutParams(lado, lado, VistasFriccion.GRAVEDAD_MASCOTA).apply {
+                leftMargin = dp(VistasFriccion.MASCOTA_MARGEN_X_DP)
+                rightMargin = dp(VistasFriccion.MASCOTA_MARGEN_X_DP)
+                topMargin = dp(VistasFriccion.MASCOTA_MARGEN_Y_DP)
+                bottomMargin = dp(VistasFriccion.MASCOTA_MARGEN_Y_DP)
+            }
         )
 
         panel = panelDeControl()
@@ -103,11 +124,46 @@ class MainActivity : Activity() {
         }
         etapaActual = etapa
 
-        estado.text = when (etapa) {
-            EtapaCaja.OCULTO -> "antes del primer swipe"
-            EtapaCaja.ESPEJO -> "espejo · cielo %.2f".format(cielo.alpha)
-            EtapaCaja.PRESENCIA -> "presencia · cielo %.2f".format(cielo.alpha)
+        // Misma regla que el servicio, suponiendo que el arrastre fue seguido.
+        val auto = when {
+            segundos == 0L -> EstadoMascota.TRANQUILA
+            segundos < Config.LIMITE_ARRASTRE_S -> EstadoMascota.ALERTA
+            else -> EstadoMascota.DETENIDA
         }
+        val estadoMascota = mascotaForzada ?: auto
+        mascota.estado = estadoMascota
+        mascota.visibility = if (estadoMascota == EstadoMascota.OCULTA) View.GONE else View.VISIBLE
+
+        val nombreMascota = estadoMascota.name.lowercase() + if (mascotaForzada != null) " (fija)" else ""
+        estado.text = when (etapa) {
+            EtapaCaja.OCULTO -> "antes del primer swipe · $nombreMascota"
+            EtapaCaja.ESPEJO -> "espejo · cielo %.2f · %s".format(cielo.alpha, nombreMascota)
+            EtapaCaja.PRESENCIA -> "presencia · cielo %.2f · %s".format(cielo.alpha, nombreMascota)
+        }
+    }
+
+    /** El resumen de salida, con los numeros del deslizador (o los del wireframe, en 0). */
+    private fun mostrarResumen() {
+        if (resumen != null) return
+        val ahora = System.currentTimeMillis()
+        val datos = if (segundos == 0L) {
+            DatosBrief.ejemplo(ahora)
+        } else {
+            DatosBrief(
+                cierreMs = ahora,
+                totalMs = (segundos + BUSCADO_DE_MENTIRA_S) * 1000L,
+                arrastradoMs = segundos * 1000L,
+                videos = (segundos / 15).toInt(),
+                semanaArrastreMs = (14 * 60 + 20) * 60_000L,
+                etiqueta = "diseño"
+            )
+        }
+        val vista = VistaBrief(this).crear(datos, alCerrar = {
+            resumen?.let { raiz.removeView(it) }
+            resumen = null
+        })
+        raiz.addView(vista, raiz.indexOfChild(panel), completo())
+        resumen = vista
     }
 
     private fun mostrarDecision() {
@@ -139,10 +195,10 @@ class MainActivity : Activity() {
     private fun panelDeControl(): LinearLayout {
         estado = texto("", 12f).apply { alpha = 0.7f }
 
-        val etiquetaTiempo = texto("tiempo de sesión", 13f)
+        val etiquetaTiempo = texto("tiempo de arrastre", 13f)
         val tiempo = deslizador(TIEMPO_MAX_S) { valor ->
             segundos = valor.toLong()
-            etiquetaTiempo.text = "tiempo de sesión · %d:%02d".format(segundos / 60, segundos % 60)
+            etiquetaTiempo.text = "tiempo de arrastre · %d:%02d".format(segundos / 60, segundos % 60)
             actualizar()
         }
         deslizadorTiempo = tiempo
@@ -162,6 +218,16 @@ class MainActivity : Activity() {
             addView(boton("${Config.MIN_PRESENCIA} min") { tiempo.progress = Config.MIN_PRESENCIA * 60 }, peso())
             addView(boton("${Config.MIN_DECISION} min") { tiempo.progress = Config.MIN_DECISION * 60 }, peso())
             addView(boton("Decisión") { mostrarDecision() }, peso())
+            addView(boton("Resumen") { mostrarResumen() }, peso())
+        }
+
+        // Fijar la mascota en un estado, o devolverla al deslizador (auto).
+        val estadosMascota = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            addView(boton("auto") { mascotaForzada = null; actualizar() }, peso())
+            for (e in EstadoMascota.values()) {
+                addView(boton(e.name.lowercase()) { mascotaForzada = e; actualizar() }, peso())
+            }
         }
 
         return LinearLayout(this).apply {
@@ -174,6 +240,8 @@ class MainActivity : Activity() {
             addView(etiquetaRitmo, conMargen(dp(4)))
             addView(ritmo)
             addView(atajos, conMargen(dp(8)))
+            addView(texto("mascota", 13f), conMargen(dp(8)))
+            addView(estadosMascota)
         }
     }
 
@@ -247,5 +315,8 @@ class MainActivity : Activity() {
     private companion object {
         /** Un poco mas que la decision, para ver que pasa despues. */
         const val TIEMPO_MAX_S = 20 * 60
+
+        /** El resumen necesita algo de tiempo buscado; en el celular sale de la sesion real. */
+        const val BUSCADO_DE_MENTIRA_S = 150L
     }
 }

@@ -42,7 +42,7 @@ archivos de Affinity:
 
 | Fase | Qué prueba | |
 | --- | --- | --- |
-| 06 | Resumen al salir y bordes de sesión | [rama fase-06](https://github.com/clifford1one-corteEstudioso/dis8vt2-2026-2/tree/fase-06/sesion-04/avance/files/love-yourself-fase-06) *(sin mergear)* |
+| 06 | v6: arrastre vs intención, mascota, resumen al salir, modo dev | [README](sesion-04/avance/files/love-yourself-fase-06/README.md) |
 | **05** | **La app completa: caja, cielo y decisión. La que está en el celular** | [README](sesion-04/avance/files/love-yourself-fase-05/README.md) |
 | 04 | Overlay con tiempo y ritmo de cortes | [README](sesion-04/avance/files/love-yourself-fase-04/README.md) |
 | 03 | Captura sostenida y señal de cortes | [README](sesion-04/avance/files/love-yourself-fase-03/README.md) · [CSV](sesion-04/avance/files/love-yourself-fase-03/files/) |

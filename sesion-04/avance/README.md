@@ -170,6 +170,17 @@ Dos formas de cerrarlo:
 
 Me inclino por la segunda, y el argumento es de la tesis: **scrollear no es el problema**. Bajar por una conversación buscando algo es scroll con intención. Lo que ataco es el scroll que se estira solo. Un mínimo de duración distingue eso sin nombrar ninguna app, que era lo bueno de la definición original.
 
+## v6 — arrastre vs intención, mascota, resumen, modo dev
+
+Rama `version-6`. [README](files/love-yourself-fase-06/README.md)
+
+- Cierra el paso 3: solo apps marcadas (lista editable) **y** solo scroll a pantalla completa. Accesibilidad mide cuánto ocupa la zona que se desliza, no qué muestra.
+- Todo responde al tiempo **arrastrado**, no al tiempo en la app.
+- Mascota: lee → levanta la vista → deja el libro al minuto. No juzga.
+- Resumen al salir (WF3).
+- Modo dev: reloj x10/x60 y forzar pantallas.
+- Pendiente: calibrar el 85 % en el celular.
+
 ## siguientes pasos de la app
 
 Ordenados por lo que puede invalidar el trabajo, no por comodidad.
@@ -188,9 +199,9 @@ Sin esto, todo lo demás es decorar supuestos.
 - Video con los cortes contados a mano contra el CSV, para fijar el umbral de 18.
 - Batería y temperatura antes y después.
 
-### 3. Cerrar la condición de pantalla completa
+### 3. ~~Cerrar la condición de pantalla completa~~
 
-Hoy la app se enciende con cualquier scroll. Decidir entre lista de apps o duración mínima, e implementarlo. Es un número más en `Config.kt` si va la segunda.
+Hecho en v6: lista de apps + tamaño de la zona que se desliza. Falta calibrar el umbral.
 
 ### 4. Decidir qué hace "Salir"
 
