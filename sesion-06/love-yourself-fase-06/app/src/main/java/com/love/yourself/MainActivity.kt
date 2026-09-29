@@ -13,10 +13,12 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.util.TypedValue
+import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
+import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
@@ -26,8 +28,8 @@ import com.love.yourself.lab.Ajustes
 import com.love.yourself.lab.CapturaContinuaService
 import com.love.yourself.lab.Config
 import com.love.yourself.lab.DatosBrief
-import com.love.yourself.lab.EstadoMascota
-import com.love.yourself.lab.MascotaView
+import com.love.yourself.lab.BurbujaView
+import com.love.yourself.lab.Momento
 import com.love.yourself.lab.OverlayBrief
 import com.love.yourself.lab.OverlayFriccion
 import com.love.yourself.lab.Reloj
@@ -100,7 +102,7 @@ class MainActivity : Activity() {
         // ---- permisos ----
         separador()
         titulo(if (puedeDibujar) "✓  1. Dibujar sobre otras apps" else "1. Dibujar sobre otras apps")
-        parrafo("Para mostrar la mascota y el tiempo encima de la app.")
+        parrafo("Para mostrar la burbuja y el tiempo encima de la app.")
         if (!puedeDibujar) boton("Conceder") {
             startActivity(Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:$packageName")))
         }
@@ -128,10 +130,9 @@ class MainActivity : Activity() {
         separador()
         titulo("Cómo se comporta")
         parrafo(
-            "· En una app marcada: la mascota lee.\n" +
-                "· Primer deslizamiento a pantalla completa: levanta la vista, y aparece la caja con el tiempo.\n" +
-                "· ${Config.LIMITE_ARRASTRE_S} s de arrastre seguido: deja el libro.\n" +
-                "· A los ${Config.MIN_PRESENCIA} min de arrastre: la caja crece, y el cielo se va asomando.\n" +
+            "· En una app marcada: arriba, una burbuja con el tiempo y el ritmo.\n" +
+                "· Primer deslizamiento a pantalla completa: la burbuja se agranda y aparece la mascota.\n" +
+                "· Con el arrastre, el cielo se va asomando.\n" +
                 "· A los ${Config.MIN_DECISION} min de arrastre: pantalla completa, seguir o salir.\n" +
                 "· Al salir al inicio: el resumen.\n" +
                 "Nunca bloquea. Solo devuelve la decisión."
@@ -235,12 +236,17 @@ class MainActivity : Activity() {
             }
         ))
 
-        titulo("Mascota")
-        val mascota = MascotaView(this)
-        raiz.addView(mascota, LinearLayout.LayoutParams(dp(140), dp(140)).apply { topMargin = dp(8) })
-        fila(listOf(EstadoMascota.TRANQUILA, EstadoMascota.ALERTA, EstadoMascota.DETENIDA).map { e ->
-            e.name.lowercase() to { mascota.estado = e }
-        })
+        titulo("Burbuja")
+        val burbuja = BurbujaView(this).apply { mostrarDatos("2:23", "18") }
+        raiz.addView(FrameLayout(this).apply {
+            setBackgroundColor(Color.rgb(186, 186, 186))
+            addView(burbuja, FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                Gravity.CENTER_HORIZONTAL
+            ))
+        }, margenArriba(dp(8)))
+        fila(Momento.values().map { m -> m.name.lowercase().replace('_', ' ') to { burbuja.expandir(m) } })
 
         botonSecundario("Borrar la semana dev") {
             getSharedPreferences(AcumuladoSemanal.ARCHIVO_DEV, Context.MODE_PRIVATE).edit().clear().apply()

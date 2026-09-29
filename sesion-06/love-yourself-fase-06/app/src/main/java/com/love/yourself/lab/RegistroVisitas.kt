@@ -1,5 +1,20 @@
 package com.love.yourself.lab
 
+/** Lo que esta haciendo la mascota. */
+enum class EstadoMascota {
+    /** No hay app vigilada adelante: no se muestra. */
+    OCULTA,
+
+    /** En una app vigilada, sin arrastre: hace lo suyo (lee). */
+    TRANQUILA,
+
+    /** Empezo el scroll a pantalla completa: levanta la vista. Todavia no deja nada. */
+    ALERTA,
+
+    /** Un minuto de arrastre seguido: deja el libro. No se pone triste, solo no puede seguir. */
+    DETENIDA
+}
+
 /**
  * Una estadia en una app vigilada, desde que se abre hasta que se cierra.
  *

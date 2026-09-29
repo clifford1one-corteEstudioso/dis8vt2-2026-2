@@ -23,8 +23,8 @@ import android.view.accessibility.AccessibilityEvent
  * feed a pantalla completa) del uso con intencion (mensajes, busqueda).
  *
  * Capas de friccion, de menos a mas:
- *  - siempre en una app vigilada: la mascota, leyendo
- *  - desde el primer swipe: la caja (espejo, y presencia a los 5 min) y el cielo
+ *  - siempre en una app vigilada: la burbuja con tiempo y ritmo
+ *  - primer swipe: la burbuja se agranda y aparece la mascota. Empieza el cielo
  *  - a los 15 min de arrastre: la pantalla de decision
  *  - al salir: el resumen
  */
@@ -121,6 +121,7 @@ class SesionService : AccessibilityService() {
                 val completa = esPantallaCompleta(e, paquete)
                 if (registro.scroll(paquete, completa, ahora)) {
                     Log.i(TAG, "sesion inicia en $paquete")
+                    friccion?.expandirBurbuja(Momento.PRIMER_SWIPE)
                 }
             }
         }
@@ -209,19 +210,21 @@ class SesionService : AccessibilityService() {
         }
         if (ov.decisionVisible()) return
 
-        ov.mostrarMascota(registro.mascota())
-
-        val dev = ajustes.modoDev
-        if (!v.sesionIniciada) {
-            ov.quitarCielo()
-            // En modo dev la caja aparece antes, para ver que mide cada scroll.
-            if (dev) ov.mostrarCaja(EtapaCaja.ESPEJO, lineaDev(v)) else ov.mostrarCaja(EtapaCaja.OCULTO, "")
-            return
-        }
-
         // Todo responde al tiempo arrastrado, no al tiempo en la app.
         val segundos = v.arrastradoMs / 1000
         val minutos = segundos / 60
+
+        // La burbuja esta siempre que haya una app vigilada adelante.
+        ov.mostrarBurbuja(FormatoBrief.reloj(v.arrastradoMs), "%.0f".format(registro.ritmoPorMinuto(ahora)))
+
+        // En modo dev, debajo, una caja con lo que mide cada scroll.
+        val dev = ajustes.modoDev
+        if (dev) ov.mostrarCaja(EtapaCaja.ESPEJO, lineaDev(v)) else ov.mostrarCaja(EtapaCaja.OCULTO, "")
+
+        if (!v.sesionIniciada) {
+            ov.quitarCielo()
+            return
+        }
 
         if (v.arrastradoMs >= v.proximaDecisionMs) {
             ov.mostrarDecision(
@@ -251,11 +254,6 @@ class SesionService : AccessibilityService() {
         // El cielo llega a su maximo justo cuando aparece la decision.
         val progreso = v.arrastradoMs / (Config.MIN_DECISION * 60_000f)
         ov.mostrarCielo(progreso * Config.OPACIDAD_MAX_CIELO)
-
-        val etapa = if (minutos >= Config.MIN_PRESENCIA) EtapaCaja.PRESENCIA else EtapaCaja.ESPEJO
-        var texto = VistasFriccion.texto(segundos, registro.ritmoPorMinuto(ahora))
-        if (dev) texto += "\n" + lineaDev(v)
-        ov.mostrarCaja(etapa, texto)
     }
 
     private fun lineaDev(v: Visita): String {
