@@ -27,6 +27,7 @@ import com.love.yourself.lab.AcumuladoSemanal
 import com.love.yourself.lab.Ajustes
 import com.love.yourself.lab.CapturaContinuaService
 import com.love.yourself.lab.Config
+import com.love.yourself.lab.DiarioDev
 import com.love.yourself.lab.DatosBrief
 import com.love.yourself.lab.BurbujaView
 import com.love.yourself.lab.Momento
@@ -247,6 +248,19 @@ class MainActivity : Activity() {
             ))
         }, margenArriba(dp(8)))
         fila(Momento.values().map { m -> m.name.lowercase().replace('_', ' ') to { burbuja.expandir(m) } })
+
+        titulo("Diario")
+        parrafo("Lo que el servicio vio, lo más nuevo arriba. Prueba en Instagram, vuelve acá y saca una captura.")
+        raiz.addView(TextView(this).apply {
+            text = DiarioDev.texto()
+            typeface = Typeface.MONOSPACE
+            setTextSize(TypedValue.COMPLEX_UNIT_SP, 11f)
+            setTextIsSelectable(true)
+        }, margenArriba(dp(6)))
+        fila(listOf(
+            "Actualizar" to { dibujar() },
+            "Borrar diario" to { DiarioDev.borrar(); dibujar() }
+        ))
 
         botonSecundario("Borrar la semana dev") {
             getSharedPreferences(AcumuladoSemanal.ARCHIVO_DEV, Context.MODE_PRIVATE).edit().clear().apply()

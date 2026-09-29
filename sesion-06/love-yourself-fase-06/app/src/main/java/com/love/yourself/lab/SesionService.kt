@@ -53,11 +53,18 @@ class SesionService : AccessibilityService() {
 
     private val tic = object : Runnable {
         override fun run() {
-            val ahora = ahora()
-            revisarAdelante(ahora)
-            atender(registro.tic(ahora))
-            refrescar(ahora)
-            handler.postDelayed(this, 1000L)
+            // Si algo falla adentro, el reloj igual sigue: sin tic no se cierra
+            // ninguna sesion ni se actualiza nada.
+            try {
+                val ahora = ahora()
+                revisarAdelante(ahora)
+                atender(registro.tic(ahora))
+                refrescar(ahora)
+            } catch (e: Exception) {
+                DiarioDev.anotar("error en el tic: $e")
+            } finally {
+                handler.postDelayed(this, 1000L)
+            }
         }
     }
 
@@ -107,7 +114,7 @@ class SesionService : AccessibilityService() {
         }
 
         handler.post(tic)
-        Log.i(TAG, "activo. Inicio: $launchers. Vigiladas: ${ajustes.appsVigiladas}")
+        DiarioDev.anotar("servicio activo · inicio = $launchers")
     }
 
     override fun onAccessibilityEvent(evento: AccessibilityEvent?) {
@@ -117,7 +124,9 @@ class SesionService : AccessibilityService() {
 
         when (e.eventType) {
             AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED -> {
-                Log.d(TAG, "ventana: $paquete" + if (esInicio(paquete)) " (inicio)" else "")
+                if (paquete != ultimoAdelante && paquete != packageName) {
+                    DiarioDev.anotar("ventana: $paquete" + if (esInicio(paquete)) " (inicio)" else "")
+                }
                 if (esInicio(paquete)) llegoAlInicioMs = SystemClock.uptimeMillis()
                 if (paquete != packageName && paquete !in Config.PAQUETES_DE_SISTEMA) ultimoAdelante = paquete
                 if (registro.actual?.app != paquete) indices.clear()
@@ -138,7 +147,7 @@ class SesionService : AccessibilityService() {
                 }
                 val completa = esPantallaCompleta(e, paquete) && cambioDeElemento(e)
                 if (registro.scroll(paquete, completa, ahora)) {
-                    Log.i(TAG, "sesion inicia en $paquete")
+                    DiarioDev.anotar("sesión inicia en $paquete")
                     friccion?.expandirBurbuja(Momento.PRIMER_SWIPE)
                 }
             }
@@ -240,7 +249,7 @@ class SesionService : AccessibilityService() {
         if (paquete in Config.PAQUETES_DE_SISTEMA) return
         if (esInicio(paquete)) llegoAlInicioMs = SystemClock.uptimeMillis()
         if (registro.actual?.app == paquete) return
-        Log.d(TAG, "adelante (revision): $paquete")
+        DiarioDev.anotar("adelante (revisión): $paquete" + if (esInicio(paquete)) " (inicio)" else "")
         atender(registro.enPrimerPlano(paquete, esInicio(paquete), paquete in ajustes.appsVigiladas, ahora))
     }
 
@@ -266,10 +275,9 @@ class SesionService : AccessibilityService() {
             // Las fechas van en hora real aunque el reloj este acelerado.
             val real = System.currentTimeMillis()
             acumulado.sumar(v.arrastradoMs, real)
-            Log.i(
-                TAG,
-                "cierra ${v.app} por ${c.motivo}: total ${v.totalMs / 1000}s, " +
-                    "arrastre ${v.arrastradoMs / 1000}s, ${v.videos} videos"
+            DiarioDev.anotar(
+                "cierra ${v.app} por ${c.motivo} · arrastre ${v.arrastradoMs / 1000}s · " +
+                    "iniciada ${v.sesionIniciada} · resumen ${c.muestraBrief}"
             )
             if (ajustes.modoDev) avisoDev(c)
             if (c.muestraBrief) {
@@ -284,6 +292,7 @@ class SesionService : AccessibilityService() {
                 )
                 runCatching { brief?.mostrar(datos) }.onFailure {
                     Log.e(TAG, "no se pudo mostrar el resumen", it)
+                    DiarioDev.anotar("resumen FALLÓ: ${it.message}")
                     if (ajustes.modoDev) Toast.makeText(this, "resumen falló: ${it.message}", Toast.LENGTH_LONG).show()
                 }
             }
