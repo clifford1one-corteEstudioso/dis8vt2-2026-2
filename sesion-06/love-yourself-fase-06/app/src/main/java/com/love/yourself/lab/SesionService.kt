@@ -11,9 +11,11 @@ import android.graphics.Rect
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
+import android.os.SystemClock
 import android.util.Log
 import android.view.WindowManager
 import android.view.accessibility.AccessibilityEvent
+import android.widget.Toast
 import kotlin.math.abs
 
 /**
@@ -44,6 +46,7 @@ class SesionService : AccessibilityService() {
     private var ultimoSalto = -1f
     private var ultimaClase = "—"
     private var eventosScroll = 0
+    private var llegoAlInicioMs = 0L
 
     private val tic = object : Runnable {
         override fun run() {
@@ -109,17 +112,22 @@ class SesionService : AccessibilityService() {
         val ahora = ahora()
 
         when (e.eventType) {
-            AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED -> atender(
-                registro.enPrimerPlano(paquete, paquete in launchers, paquete in ajustes.appsVigiladas, ahora)
-            )
+            AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED -> {
+                Log.d(TAG, "ventana: $paquete" + if (esInicio(paquete)) " (inicio)" else "")
+                if (esInicio(paquete)) llegoAlInicioMs = SystemClock.uptimeMillis()
+                atender(registro.enPrimerPlano(paquete, esInicio(paquete), paquete in ajustes.appsVigiladas, ahora))
+            }
 
             AccessibilityEvent.TYPE_VIEW_SCROLLED -> {
-                if (paquete in launchers) return
+                if (esInicio(paquete)) return
                 val vigilada = paquete in ajustes.appsVigiladas
                 if (!vigilada) return
                 // Un scroll implica que esa app esta adelante, aunque no haya
                 // llegado el evento de ventana.
                 if (registro.actual?.app != paquete) {
+                    // Al volver al inicio, la app que se cierra a veces manda un
+                    // ultimo scroll. No es que haya vuelto: se ignora.
+                    if (SystemClock.uptimeMillis() - llegoAlInicioMs < 1500L) return
                     atender(registro.enPrimerPlano(paquete, false, true, ahora))
                 }
                 val completa = esPantallaCompleta(e, paquete)
@@ -219,20 +227,42 @@ class SesionService : AccessibilityService() {
                 "cierra ${v.app} por ${c.motivo}: total ${v.totalMs / 1000}s, " +
                     "arrastre ${v.arrastradoMs / 1000}s, ${v.videos} videos"
             )
+            if (ajustes.modoDev) avisoDev(c)
             if (c.muestraBrief) {
                 friccion?.ocultarTodo()
-                brief?.mostrar(
-                    DatosBrief(
-                        cierreMs = real,
-                        totalMs = v.totalMs,
-                        arrastradoMs = v.arrastradoMs,
-                        videos = v.videos,
-                        semanaArrastreMs = acumulado.estaSemana(real),
-                        etiqueta = if (dev) "dev ×${Reloj.factor}" else ""
-                    )
+                val datos = DatosBrief(
+                    cierreMs = real,
+                    totalMs = v.totalMs,
+                    arrastradoMs = v.arrastradoMs,
+                    videos = v.videos,
+                    semanaArrastreMs = acumulado.estaSemana(real),
+                    etiqueta = if (dev) "dev ×${Reloj.factor}" else ""
                 )
+                runCatching { brief?.mostrar(datos) }.onFailure {
+                    Log.e(TAG, "no se pudo mostrar el resumen", it)
+                    if (ajustes.modoDev) Toast.makeText(this, "resumen falló: ${it.message}", Toast.LENGTH_LONG).show()
+                }
             }
         }
+    }
+
+    /**
+     * Modo dev: cada vez que se cierra una visita, dice por que y si hubo
+     * resumen. Asi se diagnostica en el celular, sin Logcat.
+     */
+    private fun avisoDev(c: Cierre) {
+        val v = c.visita
+        val porQueNo = when {
+            c.muestraBrief -> "resumen: sí"
+            c.motivo == Motivo.OTRA_APP -> "sin resumen: saliste a otra app (inicio reconocido: $launchers)"
+            !v.sesionIniciada -> "sin resumen: no hubo swipe a pantalla completa"
+            else -> "sin resumen: menos de ${Config.MIN_ARRASTRE_BRIEF_S} s de arrastre"
+        }
+        Toast.makeText(
+            this,
+            "cierra por ${c.motivo} · arrastre ${FormatoBrief.reloj(v.arrastradoMs)}\n$porQueNo",
+            Toast.LENGTH_LONG
+        ).show()
     }
 
     /** Un tic por segundo: quedarse quieto mirando un reel tambien es estar ahi. */
@@ -306,20 +336,27 @@ class SesionService : AccessibilityService() {
      * recientes, que en la mayoria de los telefonos vive en el mismo launcher)
      * cierra la sesion.
      *
-     * Se usa la de por defecto y no todas las que declaran ser inicio: Ajustes
-     * suele declarar una de respaldo, y abrir Ajustes no es salir.
+     * Todas las que declaran ser inicio, menos Ajustes: suele declarar una de
+     * respaldo, y abrir Ajustes no es salir.
      */
     private fun paquetesDeInicio(): Set<String> {
         val inicio = Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME)
         val porDefecto = packageManager
             .resolveActivity(inicio, PackageManager.MATCH_DEFAULT_ONLY)
             ?.activityInfo?.packageName
-        if (porDefecto != null && porDefecto != "android") return setOf(porDefecto)
-        return packageManager.queryIntentActivities(inicio, PackageManager.MATCH_DEFAULT_ONLY)
-            .map { it.activityInfo.packageName }
-            .filter { it != "com.android.settings" }
+        val todas = packageManager.queryIntentActivities(inicio, 0).map { it.activityInfo.packageName }
+        return (todas + listOfNotNull(porDefecto))
+            .filter { it != "android" && it != "com.android.settings" }
             .toSet()
     }
+
+    /**
+     * Si el paquete es la pantalla de inicio. Ademas de lo que declara el
+     * sistema, por nombre: algunos telefonos no dejan preguntarlo, y confundir
+     * el inicio con otra app hace que la sesion se cierre sin resumen.
+     */
+    private fun esInicio(paquete: String) =
+        paquete in launchers || "launcher" in paquete || paquete.endsWith(".home")
 
     override fun onInterrupt() {}
 

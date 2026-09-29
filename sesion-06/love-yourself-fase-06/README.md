@@ -44,6 +44,12 @@ También queda en Logcat, filtro `LoveYourself` (formato; los valores reales est
 scroll com.instagram.android fraccion=0.xx clase=<tipo de vista> id=<nombre interno>
 ```
 
+## salir
+
+La app reconoce la pantalla de inicio por lo que declara el sistema y, por si acaso, por nombre (`launcher`, `.home`). Si no la reconoce, el inicio cuenta como "otra app" y la sesión se cierra 30 s después sin resumen.
+
+En modo dev, cada cierre muestra un aviso: por qué se cerró, cuánto arrastre hubo y si hubo resumen (y si no, por qué).
+
 ## modo dev
 
 Casilla en la pantalla de la app, antes del modo investigación.
