@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.FrameLayout
+import android.widget.HorizontalScrollView
 import android.widget.LinearLayout
 import android.widget.SeekBar
 import android.widget.TextView
@@ -153,7 +154,10 @@ class MainActivity : Activity() {
                 videos = (segundos / 15).toInt(),
                 semanaArrastreMs = (14 * 60 + 20) * 60_000L,
                 etiqueta = "diseño",
-                actividad = actividadDeMentira.ifEmpty { "hacer música" }
+                actividad = actividadDeMentira.ifEmpty { "hacer música" },
+                // Antes de los 10 min, aliviado; despues, frito. Igual que en el celular.
+                mascota = if (segundos < Config.MIN_CIELO * 60) R.drawable.brain_relief else R.drawable.brain_f,
+                fraseMascota = if (segundos < Config.MIN_CIELO * 60) "uf, gracias" else "quedé frito"
             )
         }
         val vista = VistaBrief(this).crear(datos, alCerrar = {
@@ -241,11 +245,14 @@ class MainActivity : Activity() {
         }
 
         // Cada momento que agranda la burbuja.
-        val momentos = LinearLayout(this).apply {
-            orientation = LinearLayout.HORIZONTAL
-            for (m in Momento.values()) {
-                addView(boton(m.name.lowercase().replace('_', ' ')) { burbuja.expandir(m) }, peso())
-            }
+        // Son varios: en una fila que se desliza de lado.
+        val momentos = HorizontalScrollView(this).apply {
+            addView(LinearLayout(this@MainActivity).apply {
+                orientation = LinearLayout.HORIZONTAL
+                for (m in Momento.values()) {
+                    addView(boton(m.name.lowercase().replace('_', ' ')) { burbuja.expandir(m) })
+                }
+            })
         }
 
         return LinearLayout(this).apply {

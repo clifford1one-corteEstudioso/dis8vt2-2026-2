@@ -69,6 +69,25 @@ Casilla en la pantalla de la app, antes del modo investigación.
 - **Burbuja**: un botón por momento, para ver la animación sin esperar.
 - Debajo de la burbuja, una caja con: velocidad, arrastrado, buscado y fracción del último scroll.
 
+## la mascota
+
+Es tu cerebro: no te reta, muestra lo que el arrastre le hace. Habla agrandando la burbuja.
+
+| Momento | Cuándo | Cara |
+| --- | --- | --- |
+| primer swipe | empieza el arrastre | sus → sad |
+| arrastre seguido | 1 min sin parar | pfff |
+| ritmo alto | ≥ 20 swipes/min durante 30 s | pfff → f |
+| 5 min | 5 min en la app | drowzy |
+| volviste | reabrir antes de 5 min de haber cerrado | sus |
+| antes del cielo | 1 min antes | serio → f |
+| tras seguir | eligió "Seguir" en el cielo | sad |
+| resumen | salió antes del cielo / después | relief / f |
+
+Reglas (`Guion.kt`): cada momento una vez por sesión, y al menos 2 min entre dos (salvo "tras seguir", que responde al tiro). Cada momento tiene 3 frases y se elige una al azar: un estímulo fijo se vuelve invisible.
+
+Frases y caras: `enum Momento`, al inicio de `BurbujaView.kt`. Tiempos: `Config.kt`.
+
 ## burbuja
 
 Sale del frame *animacion burbuja oficial* de Figma. Tiempos copiados del prototipo:

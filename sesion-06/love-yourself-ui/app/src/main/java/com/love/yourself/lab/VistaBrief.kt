@@ -8,6 +8,7 @@ import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import java.text.SimpleDateFormat
@@ -24,7 +25,10 @@ data class DatosBrief(
     /** Va antes de "sesión cerrada": "ejemplo", "dev ×10". Vacio en uso normal. */
     val etiqueta: String = "",
     /** Lo que declaro en la bienvenida ("hacer música"). Vacio si la omitio. */
-    val actividad: String = ""
+    val actividad: String = "",
+    /** La cara del cerebro al cierre (un drawable) y lo que dice. 0 = sin mascota. */
+    val mascota: Int = 0,
+    val fraseMascota: String = ""
 ) {
     val buscadoMs get() = (totalMs - arrastradoMs).coerceAtLeast(0L)
 
@@ -37,7 +41,9 @@ data class DatosBrief(
             videos = 71,
             semanaArrastreMs = (14 * 60 + 20) * 60_000L,
             etiqueta = "ejemplo",
-            actividad = "hacer música"
+            actividad = "hacer música",
+            mascota = com.love.yourself.R.drawable.brain_f,
+            fraseMascota = "la próxima salimos antes"
         )
     }
 }
@@ -65,7 +71,10 @@ class VistaBrief(private val context: Context) {
             }
             setPadding(dp(14), dp(19), dp(14), dp(19))
         }
-        tarjeta.addView(cabecera(datos))
+        if (datos.mascota != 0) tarjeta.addView(mascota(datos))
+        tarjeta.addView(cabecera(datos), if (datos.mascota != 0) separado() else LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
+        ))
         tarjeta.addView(origen(datos), separado())
         tarjeta.addView(semana(datos), separado())
         tarjeta.addView(acciones(alCerrar), separado())
@@ -86,6 +95,19 @@ class VistaBrief(private val context: Context) {
     }
 
     // ---- secciones ----
+
+    /** El cerebro al cierre: aliviado si saliste antes del cielo, frito si no. */
+    private fun mascota(d: DatosBrief): View = LinearLayout(context).apply {
+        orientation = LinearLayout.HORIZONTAL
+        gravity = Gravity.CENTER_VERTICAL
+        addView(ImageView(context).apply {
+            setImageResource(d.mascota)
+            adjustViewBounds = true
+        }, LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, dp(56)))
+        addView(texto(d.fraseMascota, 18f), LinearLayout.LayoutParams(
+            0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f
+        ).apply { marginStart = dp(12) })
+    }
 
     private fun cabecera(d: DatosBrief): View {
         val hora = SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date(d.cierreMs))

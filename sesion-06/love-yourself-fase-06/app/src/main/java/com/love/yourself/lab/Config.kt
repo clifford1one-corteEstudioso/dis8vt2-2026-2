@@ -58,6 +58,26 @@ object Config {
     /** Segundos de arrastre seguido hasta que la mascota deja su actividad. */
     const val LIMITE_ARRASTRE_S = 60
 
+    // ---- cuando habla la mascota ----
+
+    /**
+     * Minimo entre dos expansiones de la burbuja, en segundos reales. Si salta
+     * seguido deja de verse, como las notificaciones.
+     */
+    const val PAUSA_ENTRE_MOMENTOS_S = 120
+
+    /** Swipes por minuto que cuentan como ritmo alto... */
+    const val RITMO_ALTO = 20
+
+    /** ...sostenido por esta cantidad de segundos reales. */
+    const val RITMO_ALTO_S = 30
+
+    /** Minutos en la app para el momento "llevamos 5 min". */
+    const val MIN_SUENO = 5
+
+    /** Volver a abrir la app antes de esto (minutos) es "¿otra vez?". */
+    const val MIN_VOLVISTE = 5
+
     // ---- el cielo ----
 
     /**

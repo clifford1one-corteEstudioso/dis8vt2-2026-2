@@ -20,14 +20,34 @@ import kotlin.math.PI
 import kotlin.math.cos
 
 /**
- * Los momentos que agrandan la burbuja. Cada uno: lo que dice la mascota y
- * como cambia su cara (de -> a). Para agregar uno, una linea aca y una
- * llamada a expandir() donde ocurre.
+ * Los momentos que agrandan la burbuja. Cada uno: lo que puede decir la
+ * mascota (se elige una frase al azar, para que no se vuelva invisible) y
+ * como cambia su cara (de -> a). Cuando ocurre cada uno lo decide el servicio.
  *
+ * La mascota es tu cerebro: no te reta, muestra lo que el arrastre le hace.
  * Los textos son provisorios: el tono esta por decidirse.
  */
-enum class Momento(val texto: String, val desde: Int, val hasta: Int?) {
-    PRIMER_SWIPE("¿ya?", R.drawable.brain_sus, R.drawable.brain_sad)
+enum class Momento(val frases: List<String>, val desde: Int, val hasta: Int?) {
+    /** Primer swipe a pantalla completa. */
+    PRIMER_SWIPE(listOf("¿ya?", "¿empezamos?", "mmm…"), R.drawable.brain_sus, R.drawable.brain_sad),
+
+    /** Un minuto de arrastre sin parar. */
+    ARRASTRE_SEGUIDO(listOf("otro más…", "¿y este?", "sigue, sigue…"), R.drawable.brain_pfff, null),
+
+    /** Muchos swipes por minuto durante un rato. */
+    RITMO_ALTO(listOf("más lento, porfa", "no alcanzo a ver nada", "¿viste alguno?"), R.drawable.brain_pfff, R.drawable.brain_f),
+
+    /** Cinco minutos en la app. */
+    CINCO_MIN(listOf("llevamos 5 min", "me está dando sueño", "5 minutos ya"), R.drawable.brain_drowzy, null),
+
+    /** Volver a la app poco despues de haberla cerrado. */
+    VOLVISTE(listOf("¿otra vez?", "¿se te olvidó algo?", "hola de nuevo"), R.drawable.brain_sus, null),
+
+    /** Un minuto antes del cielo. */
+    ANTES_DEL_CIELO(listOf("necesito aire", "¿salimos un rato?", "ya casi…"), R.drawable.brain_serio, R.drawable.brain_f),
+
+    /** Justo despues de elegir "Seguir" en el cielo. */
+    TRAS_SEGUIR(listOf("ok…", "bueno, sigamos", "ahí vamos"), R.drawable.brain_sad, null)
 }
 
 /**
@@ -80,6 +100,7 @@ class BurbujaView @JvmOverloads constructor(
     private var momento: Momento? = null
     private var inicioMs = 0L
     private var textoDialogo: StaticLayout? = null
+    private var frase = ""
 
     fun mostrarDatos(tiempo: String, ritmo: String) {
         if (tiempo == this.tiempo && ritmo == this.ritmo) return
@@ -90,6 +111,7 @@ class BurbujaView @JvmOverloads constructor(
 
     fun expandir(m: Momento) {
         momento = m
+        frase = m.frases.random()
         inicioMs = SystemClock.uptimeMillis()
         textoDialogo = null
         invalidate()
@@ -150,17 +172,16 @@ class BurbujaView @JvmOverloads constructor(
         c.save()
         c.clipRect(pildora)
 
-        // Cerebro: 93 x 60 dp, como en Figma, a 23 dp del borde derecho.
-        val der = pildora.right - 23f * d
-        destino.set(der - 93f * d, pildora.top + 14f * d, der, pildora.top + 74f * d)
+        // Cerebro: 93 dp de ancho como en Figma, a 23 dp del borde derecho. El
+        // alto sale de la proporcion de cada imagen, centrado en la burbuja.
         val cambio = if (m.hasta == null) 0f else tramo(t.toFloat(), CAMBIO_CARA_MS, CAMBIO_CARA_MS + 300f)
         dibujar(c, m.desde, alfa * (1f - cambio))
         m.hasta?.let { dibujar(c, it, alfa * cambio) }
 
         // Dialogo: lo que queda a la izquierda del cerebro.
-        val anchoTexto = (destino.left - pildora.left - 32f * d).toInt().coerceAtLeast(1)
+        val anchoTexto = (pildora.width() - 23f * d - 93f * d - 32f * d).toInt().coerceAtLeast(1)
         val capa = textoDialogo?.takeIf { it.width == anchoTexto }
-            ?: StaticLayout.Builder.obtain(m.texto, 0, m.texto.length, dialogo, anchoTexto)
+            ?: StaticLayout.Builder.obtain(frase, 0, frase.length, dialogo, anchoTexto)
                 .setAlignment(Layout.Alignment.ALIGN_NORMAL)
                 .build()
                 .also { textoDialogo = it }
@@ -174,6 +195,10 @@ class BurbujaView @JvmOverloads constructor(
     private fun dibujar(c: Canvas, id: Int, alfa: Float) {
         if (alfa <= 0f) return
         val b = imagenes.getOrPut(id) { BitmapFactory.decodeResource(resources, id) } ?: return
+        val ancho = 93f * d
+        val alto = (ancho * b.height / b.width).coerceAtMost(pildora.height() - 8f * d)
+        val der = pildora.right - 23f * d
+        destino.set(der - alto * b.width / b.height, pildora.centerY() - alto / 2f, der, pildora.centerY() + alto / 2f)
         imagen.alpha = (alfa * 255).toInt()
         c.drawBitmap(b, null, destino, imagen)
     }

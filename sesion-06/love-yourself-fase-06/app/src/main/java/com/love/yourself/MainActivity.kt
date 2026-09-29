@@ -254,7 +254,10 @@ class MainActivity : Activity() {
                 Gravity.CENTER_HORIZONTAL
             ))
         }, margenArriba(dp(8)))
-        fila(Momento.values().map { m -> m.name.lowercase().replace('_', ' ') to { burbuja.expandir(m) } })
+        // De a tres por fila: son varios momentos.
+        Momento.values().toList().chunked(3).forEach { grupo ->
+            fila(grupo.map { m -> m.name.lowercase().replace('_', ' ') to { burbuja.expandir(m) } })
+        }
 
         titulo("Diario")
         parrafo("Lo que el servicio vio, lo más nuevo arriba. Prueba en Instagram, vuelve acá y saca una captura.")

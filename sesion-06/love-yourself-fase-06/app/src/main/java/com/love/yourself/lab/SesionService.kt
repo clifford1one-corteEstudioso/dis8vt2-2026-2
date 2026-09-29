@@ -16,6 +16,7 @@ import android.util.Log
 import android.view.WindowManager
 import android.view.accessibility.AccessibilityEvent
 import android.widget.Toast
+import com.love.yourself.R
 import kotlin.math.abs
 
 /**
@@ -48,6 +49,13 @@ class SesionService : AccessibilityService() {
     private var eventosScroll = 0
     private var llegoAlInicioMs = 0L
     private var appQueSeFue: String? = null
+
+    // ---- la mascota: que momentos ya dijo en esta visita ----
+    private var guion = Guion<Momento>(0)
+    private var visitaDelGuion: Visita? = null
+    private val ultimoCierre = mutableMapOf<String, Long>()
+    private var ritmoAltoDesde = -1L
+    private var eligioSeguir = false
     private var ultimoAdelante: String? = null
     private val indices = mutableMapOf<String, Int>()
     private var ultimoIndice = -1
@@ -154,7 +162,7 @@ class SesionService : AccessibilityService() {
                 val completa = esPantallaCompleta(e, paquete) && cambioDeElemento(e)
                 if (registro.scroll(paquete, completa, ahora)) {
                     DiarioDev.anotar("sesión inicia en $paquete · reloj x${Reloj.factor}")
-                    friccion?.expandirBurbuja(Momento.PRIMER_SWIPE)
+                    registro.actual?.let { momento(it, Momento.PRIMER_SWIPE, ahora) }
                 }
             }
         }
@@ -290,6 +298,7 @@ class SesionService : AccessibilityService() {
                 "cierra ${v.app} por ${c.motivo} · x${Reloj.factor} · arrastre ${v.arrastradoMs / 1000}s · " +
                     "iniciada ${v.sesionIniciada} · resumen ${c.muestraBrief}"
             )
+            if (v.sesionIniciada) ultimoCierre[v.app] = c.cierreMs
             if (ajustes.modoDev) avisoDev(c)
             if (c.muestraBrief) {
                 friccion?.ocultarTodo()
@@ -300,7 +309,10 @@ class SesionService : AccessibilityService() {
                     videos = v.videos,
                     semanaArrastreMs = acumulado.estaSemana(real),
                     etiqueta = if (dev) "dev ×${Reloj.factor}" else "",
-                    actividad = ajustes.actividad
+                    actividad = ajustes.actividad,
+                    // Aliviado si salio antes del cielo; frito si llego a verlo.
+                    mascota = if (vioElCielo(c)) R.drawable.brain_f else R.drawable.brain_relief,
+                    fraseMascota = if (vioElCielo(c)) FRASES_FRITO.random() else FRASES_ALIVIO.random()
                 )
                 runCatching { brief?.mostrar(datos) }.onFailure {
                     Log.e(TAG, "no se pudo mostrar el resumen", it)
@@ -347,6 +359,8 @@ class SesionService : AccessibilityService() {
         // En modo dev, debajo, una caja con lo que mide cada scroll.
         if (ajustes.modoDev) ov.mostrarCaja(EtapaCaja.ESPEJO, lineaDev(v)) else ov.mostrarCaja(EtapaCaja.OCULTO, "")
 
+        hablaLaMascota(v, ahora)
+
         // El cielo cuenta tiempo en la app, pero solo si hubo arrastre.
         if (!v.sesionIniciada || v.totalMs < v.proximoCieloMs) return
         val minutos = v.totalMs / 60_000
@@ -357,6 +371,7 @@ class SesionService : AccessibilityService() {
                 // No castiga la eleccion: solo aplaza. Preguntar de nuevo al
                 // tiro convertiria la friccion en hostigamiento.
                 v.proximoCieloMs = v.totalMs + Config.MIN_REPREGUNTA * 60_000L
+                eligioSeguir = true
                 DiarioDev.anotar("eligió seguir a los $minutos min")
             },
             alSalir = {
@@ -373,6 +388,63 @@ class SesionService : AccessibilityService() {
             }
         )
     }
+
+    // ---- la mascota ----
+
+    /** El guion de esta visita. Una visita nueva empieza uno nuevo. */
+    private fun guionDe(v: Visita, ahora: Long): Guion<Momento> {
+        if (v === visitaDelGuion) return guion
+        visitaDelGuion = v
+        guion = Guion(Config.PAUSA_ENTRE_MOMENTOS_S * 1000L * Reloj.factor)
+        ritmoAltoDesde = -1L
+        eligioSeguir = false
+        // Volver a abrir la app al poco rato de haberla cerrado.
+        val antes = ultimoCierre[v.app]
+        if (antes != null && ahora - antes < Config.MIN_VOLVISTE * 60_000L * Reloj.factor) {
+            momento(v, Momento.VOLVISTE, ahora)
+        }
+        return guion
+    }
+
+    private fun momento(v: Visita, m: Momento, ahora: Long, sinPausa: Boolean = false) {
+        if (!guionDe(v, ahora).pedir(m, ahora, sinPausa)) return
+        friccion?.expandirBurbuja(m)
+        DiarioDev.anotar("mascota: ${m.name.lowercase()}")
+    }
+
+    /**
+     * Cada tic, si corresponde algun momento. El guion se encarga de que cada
+     * uno salga una sola vez y con pausa entre ellos.
+     */
+    private fun hablaLaMascota(v: Visita, ahora: Long) {
+        guionDe(v, ahora)
+        if (eligioSeguir) {
+            eligioSeguir = false
+            momento(v, Momento.TRAS_SEGUIR, ahora, sinPausa = true)
+            return
+        }
+        if (!v.sesionIniciada) return
+
+        // Ritmo alto sostenido: cuenta desde que empezo a estar alto.
+        if (registro.ritmoPorMinuto(ahora) >= Config.RITMO_ALTO) {
+            if (ritmoAltoDesde < 0) ritmoAltoDesde = ahora
+        } else {
+            ritmoAltoDesde = -1L
+        }
+        val ritmoAlto = ritmoAltoDesde >= 0 && ahora - ritmoAltoDesde >= Config.RITMO_ALTO_S * 1000L * Reloj.factor
+        val primerCielo = v.proximoCieloMs == Config.MIN_CIELO * 60_000L
+
+        when {
+            primerCielo && v.totalMs >= v.proximoCieloMs - 60_000L -> momento(v, Momento.ANTES_DEL_CIELO, ahora)
+            ritmoAlto -> momento(v, Momento.RITMO_ALTO, ahora)
+            registro.mascota() == EstadoMascota.DETENIDA -> momento(v, Momento.ARRASTRE_SEGUIDO, ahora)
+            v.totalMs >= Config.MIN_SUENO * 60_000L -> momento(v, Momento.CINCO_MIN, ahora)
+        }
+    }
+
+    /** Si la visita llego al cielo: eligio seguir alguna vez, o salio desde el. */
+    private fun vioElCielo(c: Cierre) =
+        c.motivo == Motivo.SALIR || c.visita.proximoCieloMs > Config.MIN_CIELO * 60_000L
 
     private fun lineaDev(v: Visita): String {
         val fraccion = if (ultimaFraccion < 0f) "—" else "%.2f".format(ultimaFraccion)
@@ -419,5 +491,10 @@ class SesionService : AccessibilityService() {
         brief?.ocultar()
         friccion = null
         brief = null
+    }
+
+    private companion object {
+        val FRASES_ALIVIO = listOf("uf, gracias", "qué alivio", "aire, por fin")
+        val FRASES_FRITO = listOf("la próxima salimos antes", "quedé frito", "necesito descansar")
     }
 }
