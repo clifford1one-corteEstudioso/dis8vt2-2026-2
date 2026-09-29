@@ -84,7 +84,19 @@ Es tu cerebro: no te reta, muestra lo que el arrastre le hace. Habla agrandando 
 | tras seguir | eligió "Seguir" en el cielo | sad |
 | resumen | salió antes del cielo / después | relief / f |
 
-Reglas (`Guion.kt`): cada momento una vez por sesión, y al menos 2 min entre dos (salvo "tras seguir", que responde al tiro). Cada momento tiene 3 frases y se elige una al azar: un estímulo fijo se vuelve invisible.
+Además, **la píldora lleva siempre un cerebro chico que se va gastando** (`CaraProgresiva`, en `BurbujaView.kt`):
+
+| Tiempo en la app | Cara |
+| --- | --- |
+| antes del primer swipe | relief |
+| 0–1 min | sus |
+| 1–3 | pfff |
+| 3–5 | serio |
+| 5–7 | drowzy |
+| 7–10 | sad |
+| cielo en adelante | f |
+
+Reglas (`Guion.kt`): cada momento una vez por sesión, y al menos 2 min entre dos (salvo "tras seguir", que responde al tiro). La pausa se acelera con el reloj dev: a x60 son 2 s, para ver todos en una prueba corta. Cada momento tiene 3 frases y se elige una al azar: un estímulo fijo se vuelve invisible.
 
 Frases y caras: `enum Momento`, al inicio de `BurbujaView.kt`. Tiempos: `Config.kt`.
 

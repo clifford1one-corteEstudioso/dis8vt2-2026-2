@@ -51,6 +51,26 @@ enum class Momento(val frases: List<String>, val desde: Int, val hasta: Int?) {
 }
 
 /**
+ * La cara que lleva la pildora todo el rato: el cerebro se va deteriorando
+ * con el tiempo en la app. Tranquilo antes de arrastrar, frito al llegar al
+ * cielo. Cambiar los minutos o el orden aca.
+ */
+object CaraProgresiva {
+    fun para(sesionIniciada: Boolean, totalMs: Long): Int {
+        if (!sesionIniciada) return R.drawable.brain_relief
+        val min = totalMs / 60_000.0
+        return when {
+            min < 1 -> R.drawable.brain_sus
+            min < 3 -> R.drawable.brain_pfff
+            min < 5 -> R.drawable.brain_serio
+            min < 7 -> R.drawable.brain_drowzy
+            min < Config.MIN_CIELO -> R.drawable.brain_sad
+            else -> R.drawable.brain_f
+        }
+    }
+}
+
+/**
  * La burbuja de arriba (Figma: "animacion burbuja oficial").
  *
  * Recogida es una pildora con dos datos: tiempo arrastrado y swipes por
@@ -70,7 +90,9 @@ class BurbujaView @JvmOverloads constructor(
     private fun sp(valor: Float) = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, valor, resources.displayMetrics)
 
     // ---- medidas, en dp, sacadas del frame de Figma (402 de ancho) ----
-    private val anchoRecogida = 153f * d
+    private val anchoSinCara = 153f * d
+    /** Con la cara chica adentro, la pildora crece lo justo para que quepa. */
+    private val anchoRecogida get() = if (cara == 0) anchoSinCara else anchoSinCara + 44f * d
     private val altoRecogida = 32f * d
     private val anchoExpandida = 361f * d
     private val altoExpandida = 88f * d
@@ -81,6 +103,7 @@ class BurbujaView @JvmOverloads constructor(
     // ---- lo que muestra recogida ----
     private var tiempo = "0:00"
     private var ritmo = "0"
+    private var cara = 0
 
     private val fondo = Paint(Paint.ANTI_ALIAS_FLAG).apply { color = Color.BLACK }
     private val negrita = TextPaint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -102,10 +125,12 @@ class BurbujaView @JvmOverloads constructor(
     private var textoDialogo: StaticLayout? = null
     private var frase = ""
 
-    fun mostrarDatos(tiempo: String, ritmo: String) {
-        if (tiempo == this.tiempo && ritmo == this.ritmo) return
+    /** @param cara el cerebro chico de la pildora (ver CaraProgresiva). 0 = sin cara. */
+    fun mostrarDatos(tiempo: String, ritmo: String, cara: Int = 0) {
+        if (tiempo == this.tiempo && ritmo == this.ritmo && cara == this.cara) return
         this.tiempo = tiempo
         this.ritmo = ritmo
+        this.cara = cara
         invalidate()
     }
 
@@ -147,17 +172,28 @@ class BurbujaView @JvmOverloads constructor(
         if (momento != null) postInvalidateOnAnimation()
     }
 
-    /** Los dos datos, centrados en la pildora. */
+    /** La cara chica a la izquierda y los dos datos, centrados en lo que queda. */
     private fun datos(c: Canvas, alfa: Float) {
         val a = (alfa * 255).toInt()
         negrita.alpha = a
         normal.alpha = a
+        var izquierda = pildora.left
+        if (cara != 0) {
+            imagenes.getOrPut(cara) { BitmapFactory.decodeResource(resources, cara) }?.let { b ->
+                val alto = 24f * d
+                val ancho = alto * b.width / b.height
+                destino.set(pildora.left + 10f * d, pildora.centerY() - alto / 2f, pildora.left + 10f * d + ancho, pildora.centerY() + alto / 2f)
+                imagen.alpha = a
+                c.drawBitmap(b, null, destino, imagen)
+                izquierda = destino.right
+            }
+        }
         val separacion = 22f * d
         val anchoTiempo = negrita.measureText(tiempo)
         val anchoRitmo = negrita.measureText(ritmo)
         val anchoUnidad = normal.measureText(UNIDAD_RITMO)
         val total = anchoTiempo + separacion + anchoRitmo + anchoUnidad
-        var x = pildora.centerX() - total / 2f
+        var x = (izquierda + pildora.right) / 2f - total / 2f
         val base = pildora.centerY() - (negrita.descent() + negrita.ascent()) / 2f
         c.drawText(tiempo, x, base, negrita)
         x += anchoTiempo + separacion

@@ -30,6 +30,7 @@ import com.love.yourself.lab.Config
 import com.love.yourself.lab.DiarioDev
 import com.love.yourself.lab.DatosBrief
 import com.love.yourself.lab.BurbujaView
+import com.love.yourself.lab.CaraProgresiva
 import com.love.yourself.lab.Momento
 import com.love.yourself.lab.OverlayBrief
 import com.love.yourself.lab.OverlayFriccion
@@ -245,7 +246,7 @@ class MainActivity : Activity() {
         ))
 
         titulo("Burbuja")
-        val burbuja = BurbujaView(this).apply { mostrarDatos("2:23", "18") }
+        val burbuja = BurbujaView(this).apply { mostrarDatos("2:23", "18", CaraProgresiva.para(true, 143_000L)) }
         raiz.addView(FrameLayout(this).apply {
             setBackgroundColor(Color.rgb(186, 186, 186))
             addView(burbuja, FrameLayout.LayoutParams(

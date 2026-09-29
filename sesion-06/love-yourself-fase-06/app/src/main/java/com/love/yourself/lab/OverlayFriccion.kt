@@ -111,7 +111,7 @@ class OverlayFriccion(private val context: Context) {
         return capas.getValue(Capa.BURBUJA).first as BurbujaView
     }
 
-    fun mostrarBurbuja(tiempo: String, ritmo: String) = burbuja().mostrarDatos(tiempo, ritmo)
+    fun mostrarBurbuja(tiempo: String, ritmo: String, cara: Int) = burbuja().mostrarDatos(tiempo, ritmo, cara)
 
     fun expandirBurbuja(momento: Momento) = burbuja().expandir(momento)
 

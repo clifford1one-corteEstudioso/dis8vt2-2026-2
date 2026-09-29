@@ -20,6 +20,7 @@ import android.widget.TextView
 import com.love.yourself.lab.Config
 import com.love.yourself.lab.DatosBrief
 import com.love.yourself.lab.BurbujaView
+import com.love.yourself.lab.CaraProgresiva
 import com.love.yourself.lab.FormatoBrief
 import com.love.yourself.lab.Momento
 import com.love.yourself.lab.VistaBrief
@@ -90,7 +91,12 @@ class MainActivity : Activity() {
 
     /** Aplica el estado actual a la burbuja y al cielo, con las mismas reglas del servicio. */
     private fun actualizar() {
-        burbuja.mostrarDatos(FormatoBrief.reloj(segundos * 1000), "%.0f".format(swipesPorMinuto))
+        // En 0 todavia no hay arrastre: cerebro tranquilo. Despues se va gastando.
+        burbuja.mostrarDatos(
+            FormatoBrief.reloj(segundos * 1000),
+            "%.0f".format(swipesPorMinuto),
+            CaraProgresiva.para(segundos > 0, segundos * 1000)
+        )
         // Igual que en el celular: el cielo aparece solo al llegar a MIN_CIELO.
         val limite = Config.MIN_CIELO * 60L
         if (segundos >= limite && !cieloYaSalio) {

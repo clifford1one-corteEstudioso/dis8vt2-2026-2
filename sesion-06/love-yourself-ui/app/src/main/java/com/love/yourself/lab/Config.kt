@@ -61,8 +61,9 @@ object Config {
     // ---- cuando habla la mascota ----
 
     /**
-     * Minimo entre dos expansiones de la burbuja, en segundos reales. Si salta
-     * seguido deja de verse, como las notificaciones.
+     * Minimo entre dos expansiones de la burbuja, en segundos. Si salta seguido
+     * deja de verse, como las notificaciones. Con el reloj dev acelerado
+     * tambien se acorta (a x60, 2 s).
      */
     const val PAUSA_ENTRE_MOMENTOS_S = 120
 

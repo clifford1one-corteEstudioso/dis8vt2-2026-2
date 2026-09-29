@@ -354,7 +354,11 @@ class SesionService : AccessibilityService() {
 
         // La burbuja esta siempre que haya una app vigilada adelante: tiempo en
         // la app y ritmo. El arrastrado queda para el resumen.
-        ov.mostrarBurbuja(FormatoBrief.reloj(v.totalMs), "%.0f".format(registro.ritmoPorMinuto(ahora)))
+        ov.mostrarBurbuja(
+            FormatoBrief.reloj(v.totalMs),
+            "%.0f".format(registro.ritmoPorMinuto(ahora)),
+            CaraProgresiva.para(v.sesionIniciada, v.totalMs)
+        )
 
         // En modo dev, debajo, una caja con lo que mide cada scroll.
         if (ajustes.modoDev) ov.mostrarCaja(EtapaCaja.ESPEJO, lineaDev(v)) else ov.mostrarCaja(EtapaCaja.OCULTO, "")
@@ -395,7 +399,9 @@ class SesionService : AccessibilityService() {
     private fun guionDe(v: Visita, ahora: Long): Guion<Momento> {
         if (v === visitaDelGuion) return guion
         visitaDelGuion = v
-        guion = Guion(Config.PAUSA_ENTRE_MOMENTOS_S * 1000L * Reloj.factor)
+        // La pausa va en tiempo del reloj: con el reloj acelerado tambien se
+        // acorta, para poder ver todos los momentos en una prueba corta.
+        guion = Guion(Config.PAUSA_ENTRE_MOMENTOS_S * 1000L)
         ritmoAltoDesde = -1L
         eligioSeguir = false
         // Volver a abrir la app al poco rato de haberla cerrado.
