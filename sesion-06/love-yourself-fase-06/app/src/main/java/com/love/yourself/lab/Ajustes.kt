@@ -28,8 +28,14 @@ class Ajustes(context: Context) {
         get() = prefs.getBoolean(CLAVE_DEV, false)
         set(valor) = prefs.edit().putBoolean(CLAVE_DEV, valor).apply()
 
+    /** Velocidad del reloj elegida en modo dev (1, 10 o 60). Se guarda para no perderla al reinstalar. */
+    var factorReloj: Int
+        get() = prefs.getInt(CLAVE_FACTOR, 1)
+        set(valor) = prefs.edit().putInt(CLAVE_FACTOR, valor).apply()
+
     private companion object {
         const val CLAVE_APPS = "apps_vigiladas"
         const val CLAVE_DEV = "modo_dev"
+        const val CLAVE_FACTOR = "factor_reloj"
     }
 }

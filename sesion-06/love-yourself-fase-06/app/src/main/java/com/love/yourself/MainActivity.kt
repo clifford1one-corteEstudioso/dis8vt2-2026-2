@@ -60,6 +60,7 @@ class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ajustes = Ajustes(this)
+        Reloj.cambiarFactor(if (ajustes.modoDev) ajustes.factorReloj else 1)
         raiz = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
             setPadding(dp(24), dp(24), dp(24), dp(48))
@@ -143,7 +144,7 @@ class MainActivity : Activity() {
         separador()
         casilla("Modo dev", ajustes.modoDev) { si ->
             ajustes.modoDev = si
-            if (!si) Reloj.cambiarFactor(1)
+            Reloj.cambiarFactor(if (si) ajustes.factorReloj else 1)
             dibujar()
         }
         if (ajustes.modoDev) modoDev(puedeDibujar)
@@ -212,6 +213,7 @@ class MainActivity : Activity() {
         fila(listOf(1, 10, 60).map { f ->
             (if (Reloj.factor == f) "● x$f" else "x$f") to {
                 Reloj.cambiarFactor(f)
+                ajustes.factorReloj = f
                 dibujar()
             }
         })

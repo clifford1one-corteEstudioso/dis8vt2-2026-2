@@ -47,6 +47,7 @@ class SesionService : AccessibilityService() {
     private var ultimaClase = "—"
     private var eventosScroll = 0
     private var llegoAlInicioMs = 0L
+    private var appQueSeFue: String? = null
     private var ultimoAdelante: String? = null
     private val indices = mutableMapOf<String, Int>()
     private var ultimoIndice = -1
@@ -98,6 +99,8 @@ class SesionService : AccessibilityService() {
         super.onServiceConnected()
         registro = RegistroVisitas(packageName)
         ajustes = Ajustes(this)
+        // La velocidad del reloj sobrevive a reinstalar la app (modo dev).
+        Reloj.cambiarFactor(if (ajustes.modoDev) ajustes.factorReloj else 1)
         friccion = OverlayFriccion(this)
         brief = OverlayBrief(this)
         launchers = paquetesDeInicio()
@@ -124,10 +127,13 @@ class SesionService : AccessibilityService() {
 
         when (e.eventType) {
             AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED -> {
+                // Al volver al inicio, la app que se cierra a veces avisa una vez
+                // mas. No es que haya vuelto: abriria una visita fantasma.
+                if (paquete == appQueSeFue && SystemClock.uptimeMillis() - llegoAlInicioMs < 1500L) return
                 if (paquete != ultimoAdelante && paquete != packageName) {
                     DiarioDev.anotar("ventana: $paquete" + if (esInicio(paquete)) " (inicio)" else "")
                 }
-                if (esInicio(paquete)) llegoAlInicioMs = SystemClock.uptimeMillis()
+                if (esInicio(paquete)) alLlegarAlInicio()
                 if (paquete != packageName && paquete !in Config.PAQUETES_DE_SISTEMA) ultimoAdelante = paquete
                 if (registro.actual?.app != paquete) indices.clear()
                 atender(registro.enPrimerPlano(paquete, esInicio(paquete), paquete in ajustes.appsVigiladas, ahora))
@@ -147,7 +153,7 @@ class SesionService : AccessibilityService() {
                 }
                 val completa = esPantallaCompleta(e, paquete) && cambioDeElemento(e)
                 if (registro.scroll(paquete, completa, ahora)) {
-                    DiarioDev.anotar("sesión inicia en $paquete")
+                    DiarioDev.anotar("sesión inicia en $paquete · reloj x${Reloj.factor}")
                     friccion?.expandirBurbuja(Momento.PRIMER_SWIPE)
                 }
             }
@@ -233,6 +239,11 @@ class SesionService : AccessibilityService() {
         return anterior != null && anterior != indice
     }
 
+    private fun alLlegarAlInicio() {
+        llegoAlInicioMs = SystemClock.uptimeMillis()
+        registro.actual?.app?.let { appQueSeFue = it }
+    }
+
     /**
      * Respaldo por si Android no avisa el cambio de app (pasa con el gesto de
      * inicio en algunos telefonos): cada segundo se mira que app esta adelante.
@@ -247,7 +258,7 @@ class SesionService : AccessibilityService() {
         if (paquete == null || paquete == ultimoAdelante || paquete == packageName) return
         ultimoAdelante = paquete
         if (paquete in Config.PAQUETES_DE_SISTEMA) return
-        if (esInicio(paquete)) llegoAlInicioMs = SystemClock.uptimeMillis()
+        if (esInicio(paquete)) alLlegarAlInicio()
         if (registro.actual?.app == paquete) return
         DiarioDev.anotar("adelante (revisión): $paquete" + if (esInicio(paquete)) " (inicio)" else "")
         atender(registro.enPrimerPlano(paquete, esInicio(paquete), paquete in ajustes.appsVigiladas, ahora))
@@ -276,7 +287,7 @@ class SesionService : AccessibilityService() {
             val real = System.currentTimeMillis()
             acumulado.sumar(v.arrastradoMs, real)
             DiarioDev.anotar(
-                "cierra ${v.app} por ${c.motivo} · arrastre ${v.arrastradoMs / 1000}s · " +
+                "cierra ${v.app} por ${c.motivo} · x${Reloj.factor} · arrastre ${v.arrastradoMs / 1000}s · " +
                     "iniciada ${v.sesionIniciada} · resumen ${c.muestraBrief}"
             )
             if (ajustes.modoDev) avisoDev(c)
