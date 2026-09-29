@@ -36,10 +36,6 @@ class VistaCielo(private val context: Context) {
             LinearLayout(context).apply {
                 orientation = LinearLayout.VERTICAL
                 addView(texto(Config.TEXTO_CIELO, 70f, negrita = false))
-                addView(texto("Llevas $minutos minutos aquí.", 38f, negrita = false).apply { alpha = 0.7f },
-                    LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT).apply {
-                        topMargin = y(40f)
-                    })
             },
             FrameLayout.LayoutParams(x(620f), ViewGroup.LayoutParams.WRAP_CONTENT).apply {
                 leftMargin = x(123f)
