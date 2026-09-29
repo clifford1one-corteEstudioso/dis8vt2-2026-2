@@ -222,6 +222,20 @@ class RegistroVisitasTest {
     }
 
     @Test
+    fun otraAppQueAvisaVariasVecesNoCortaLaTolerancia() {
+        abrir(IG)
+        swipe()
+        esperar(10)
+        abrir(WA, vigilada = false)
+        esperar(5)
+        // WhatsApp abre un chat: otro aviso de la misma app.
+        assertTrue(abrir(WA, vigilada = false).isEmpty())
+        esperar(5)
+        assertTrue(abrir(IG).isEmpty())
+        assertTrue(r.actual!!.sesionIniciada)
+    }
+
+    @Test
     fun irseAOtraAppMasDeLaToleranciaCierraEnSilencio() {
         abrir(IG)
         repeat(5) {

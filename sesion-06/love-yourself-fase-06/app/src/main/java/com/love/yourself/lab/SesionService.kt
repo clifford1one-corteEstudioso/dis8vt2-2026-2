@@ -47,10 +47,14 @@ class SesionService : AccessibilityService() {
     private var ultimaClase = "—"
     private var eventosScroll = 0
     private var llegoAlInicioMs = 0L
+    private var ultimoAdelante: String? = null
+    private val indices = mutableMapOf<String, Int>()
+    private var ultimoIndice = -1
 
     private val tic = object : Runnable {
         override fun run() {
             val ahora = ahora()
+            revisarAdelante(ahora)
             atender(registro.tic(ahora))
             refrescar(ahora)
             handler.postDelayed(this, 1000L)
@@ -115,6 +119,8 @@ class SesionService : AccessibilityService() {
             AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED -> {
                 Log.d(TAG, "ventana: $paquete" + if (esInicio(paquete)) " (inicio)" else "")
                 if (esInicio(paquete)) llegoAlInicioMs = SystemClock.uptimeMillis()
+                if (paquete != packageName && paquete !in Config.PAQUETES_DE_SISTEMA) ultimoAdelante = paquete
+                if (registro.actual?.app != paquete) indices.clear()
                 atender(registro.enPrimerPlano(paquete, esInicio(paquete), paquete in ajustes.appsVigiladas, ahora))
             }
 
@@ -130,7 +136,7 @@ class SesionService : AccessibilityService() {
                     if (SystemClock.uptimeMillis() - llegoAlInicioMs < 1500L) return
                     atender(registro.enPrimerPlano(paquete, false, true, ahora))
                 }
-                val completa = esPantallaCompleta(e, paquete)
+                val completa = esPantallaCompleta(e, paquete) && cambioDeElemento(e)
                 if (registro.scroll(paquete, completa, ahora)) {
                     Log.i(TAG, "sesion inicia en $paquete")
                     friccion?.expandirBurbuja(Momento.PRIMER_SWIPE)
@@ -198,6 +204,44 @@ class SesionService : AccessibilityService() {
             "scroll $paquete fraccion=%.2f salto=%.2f clase=%s id=%s".format(fraccion, ultimoSalto, ultimaClase, id)
         )
         return fraccion >= Config.FRACCION_PANTALLA_COMPLETA || porSalto
+    }
+
+    /**
+     * Un swipe es pasar a otro reel (u otro post), no cualquier movimiento: dentro
+     * de un reel tambien se deslizan textos y listas. Si Android dice que
+     * elemento quedo arriba (fromIndex), se cuenta solo cuando cambia. Si no lo
+     * dice, se cuenta como antes: cada gesto.
+     */
+    private fun cambioDeElemento(e: AccessibilityEvent): Boolean {
+        val indice = e.fromIndex
+        ultimoIndice = indice
+        if (indice < 0) return true
+        val clave = e.className?.toString() ?: "?"
+        val anterior = indices.put(clave, indice)
+        // Un salto de pagina entera tambien es un swipe, cambie o no el indice.
+        if (ultimoSalto >= Config.FRACCION_SALTO_PAGINA) return true
+        // El primer aviso de una lista solo dice donde esta: todavia no hubo swipe.
+        return anterior != null && anterior != indice
+    }
+
+    /**
+     * Respaldo por si Android no avisa el cambio de app (pasa con el gesto de
+     * inicio en algunos telefonos): cada segundo se mira que app esta adelante.
+     */
+    private fun revisarAdelante(ahora: Long) {
+        val raiz = runCatching { rootInActiveWindow }.getOrNull() ?: return
+        val paquete = raiz.packageName?.toString()
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+            @Suppress("DEPRECATION")
+            raiz.recycle()
+        }
+        if (paquete == null || paquete == ultimoAdelante || paquete == packageName) return
+        ultimoAdelante = paquete
+        if (paquete in Config.PAQUETES_DE_SISTEMA) return
+        if (esInicio(paquete)) llegoAlInicioMs = SystemClock.uptimeMillis()
+        if (registro.actual?.app == paquete) return
+        Log.d(TAG, "adelante (revision): $paquete")
+        atender(registro.enPrimerPlano(paquete, esInicio(paquete), paquete in ajustes.appsVigiladas, ahora))
     }
 
     private fun altoPantalla(): Float {
@@ -328,7 +372,7 @@ class SesionService : AccessibilityService() {
         val salto = if (ultimoSalto < 0f) "—" else "%.2f".format(ultimoSalto)
         return "x${Reloj.factor} · arr ${FormatoBrief.reloj(v.arrastradoMs)} · " +
             "bus ${FormatoBrief.reloj(v.buscadoMs)} · ${v.videos} videos\n" +
-            "scroll $fraccion · salto $salto · $ultimaClase · ev $eventosScroll"
+            "scroll $fraccion · salto $salto · idx $ultimoIndice · $ultimaClase · ev $eventosScroll"
     }
 
     /**

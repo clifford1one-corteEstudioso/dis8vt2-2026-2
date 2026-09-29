@@ -89,6 +89,9 @@ class RegistroVisitas(private val paquetePropio: String) {
     var actual: Visita? = null
         private set
     private var enEspera: Visita? = null
+
+    /** La ultima app que paso adelante. Una misma app avisa varias veces. */
+    private var adelante: String? = null
     private var ultimoTicMs = 0L
 
     /**
@@ -133,6 +136,10 @@ class RegistroVisitas(private val paquetePropio: String) {
     fun enPrimerPlano(paquete: String, esLauncher: Boolean, vigilada: Boolean, ahora: Long): List<Cierre> {
         if (ignorado(paquete)) return emptyList()
         acumular(ahora)
+        // La misma app ajena avisando de nuevo (un dialogo, otra pantalla suya)
+        // no es "irse a otra app" otra vez: no debe cerrar la visita en espera.
+        if (!esLauncher && paquete == adelante && actual?.app != paquete) return emptyList()
+        adelante = paquete
         val cierres = mutableListOf<Cierre>()
 
         if (esLauncher) {
