@@ -19,7 +19,7 @@ No mide nada. El tiempo de arrastre y los swipes se mueven a mano.
 | **tiempo de sesión** | De 0 a 20 min. Lo muestra la burbuja |
 | **▶** | El tiempo corre solo, un segundo por segundo. ⏸ lo detiene |
 | **swipes por minuto** | El número que muestra la caja |
-| **0:00 / 5 min / 15 min** | Saltos a los momentos donde cambia algo |
+| **0:00 / 10 min** | Saltos a los momentos donde cambia algo |
 | **Cielo** | Abre el cielo de los 10 minutos (también sale solo al llegar a 10 min) |
 | **Resumen** | Abre el resumen de salida con el tiempo del deslizador (en 0, los números del wireframe) |
 | **burbuja** | Un botón por momento: agranda la burbuja con la mascota |
