@@ -1,0 +1,498 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Love Yourself · revisión cruzada</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Heebo:wght@200;300;400;500;700&display=swap" rel="stylesheet">
+<!--
+  CÓMO EDITAR
+  - Cada diapositiva es un <section class="slide">. Copia una entera para agregar otra.
+  - Textos: cámbialos directo acá en VS Code. O en el navegador: tecla E activa la
+    edición, y Ctrl+S descarga el HTML editado (reemplaza este archivo con ese).
+  - Colores y tipografías: en :root, abajo. Son los del examen del semestre pasado.
+  - Navegar: ← → o clic. Tecla F: pantalla completa. Imprimir a PDF: Ctrl+P (una por hoja).
+  - Las imágenes se leen del repo con rutas relativas: no muevas esta carpeta.
+-->
+<style>
+  :root {
+    --fondo: #0B0E13;
+    --texto: #E9E7E2;
+    --gris: #778398;
+    --linea: #2A303B;
+    --acento: #E9C46A;
+    --titulo: "Space Grotesk", system-ui, sans-serif;
+    --cuerpo: "Heebo", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; background: #000; overflow: hidden; }
+  body { font-family: var(--cuerpo); color: var(--texto); }
+
+  /* Lienzo fijo de 1280 x 720, escalado a la ventana. */
+  #escenario { position: absolute; left: 50%; top: 50%; width: 1280px; height: 720px; transform-origin: center; }
+  .slide {
+    position: absolute; inset: 0; background: var(--fondo); padding: 64px 80px;
+    display: none; flex-direction: column; overflow: hidden;
+  }
+  .slide.activa { display: flex; }
+  .fecha { position: absolute; top: 28px; right: 40px; font-size: 13px; font-weight: 300; }
+  .num { position: absolute; bottom: 24px; right: 40px; font: 400 12px var(--titulo); color: var(--gris); }
+  .seccion-tag { position: absolute; bottom: 24px; left: 80px; font: 400 12px var(--titulo); color: var(--gris); letter-spacing: .08em; text-transform: uppercase; }
+
+  h1 { font: 700 64px/1.05 var(--titulo); }
+  h2 { font: 700 40px/1.1 var(--titulo); color: var(--gris); margin-bottom: 36px; }
+  h3 { font: 700 22px var(--titulo); color: var(--gris); margin-bottom: 12px; }
+  p, li { font-size: 22px; font-weight: 300; line-height: 1.45; }
+  b, strong { font-weight: 700; }
+  .fino { font-weight: 200; }
+  .gris { color: var(--gris); }
+  .chico { font-size: 15px; }
+  .cita { font-size: 13px; color: var(--gris); font-weight: 300; }
+  .centro { margin: auto; text-align: center; }
+  .fila { display: flex; gap: 48px; align-items: center; }
+  .col { flex: 1; }
+  ul { list-style: none; }
+  ul li { padding-left: 22px; position: relative; margin-bottom: 10px; }
+  ul li::before { content: "—"; position: absolute; left: 0; color: var(--gris); }
+  table { border-collapse: collapse; font-size: 18px; font-weight: 300; }
+  td, th { padding: 10px 18px; border-bottom: 1px solid var(--linea); text-align: left; }
+  th { font: 500 14px var(--titulo); color: var(--gris); text-transform: uppercase; letter-spacing: .05em; }
+
+  /* ---- mockups de la app ---- */
+  .telefono { width: 250px; height: 540px; border-radius: 30px; border: 6px solid #22262e; position: relative; overflow: hidden; background: linear-gradient(160deg, #603e78, #24465c); flex: none; }
+  .reel-ui i { position: absolute; background: rgba(255,255,255,.55); border-radius: 6px; }
+  .pildora { position: absolute; top: 14px; left: 50%; transform: translateX(-50%); background: #000; color: #fff; border-radius: 16px; height: 30px; width: 140px; display: flex; align-items: center; justify-content: center; gap: 18px; font: 12px var(--cuerpo); }
+  .burbuja-grande { position: absolute; top: 14px; left: 10px; right: 10px; height: 76px; background: #000; border-radius: 16px; display: flex; align-items: center; justify-content: space-between; padding: 0 14px 0 18px; font: 700 18px var(--cuerpo); color: #fff; }
+  .burbuja-grande img { height: 52px; }
+  .cielo { background: linear-gradient(#497FFF 1%, #82E3F0 35%); }
+  .cielo .sol { position: absolute; width: 170px; height: 170px; right: -10px; top: 40px; border-radius: 50%; background: radial-gradient(#FFF6CC 35%, rgba(255,246,204,.35) 60%, transparent 70%); }
+  .cielo .nube { position: absolute; }
+  .cielo .msg { position: absolute; left: 22px; top: 60px; width: 130px; color: #010101; font: 400 18px var(--cuerpo); }
+  .cielo .clima { position: absolute; right: 14px; top: 250px; width: 88px; padding: 8px; border-radius: 12px; background: rgba(255,255,255,.31); color: #010101; text-align: center; font-size: 10px; }
+  .cielo .clima div { width: 30px; height: 30px; border-radius: 50%; background: #FFF6CC; margin: 0 auto 4px; }
+  .cielo .botones { position: absolute; left: 20px; right: 20px; bottom: 60px; display: flex; gap: 10px; }
+  .cielo .botones span { flex: 1; text-align: center; padding: 10px 0; border-radius: 12px; border: 1px solid rgba(1,1,1,.6); background: rgba(255,255,255,.31); color: #010101; font-size: 13px; }
+  .brief { background: rgba(0,0,0,.45); display: flex; align-items: center; justify-content: center; }
+  .brief .tarjeta { width: 210px; background: #414141; border-radius: 12px; padding: 10px; font-size: 10px; }
+  .brief .sec { background: #545454; padding: 8px; margin-top: 8px; }
+  .brief .met { display: flex; gap: 5px; margin-top: 6px; }
+  .brief .met div { flex: 1; background: #636363; text-align: center; padding: 4px 0; }
+  .brief .met b { display: block; font-size: 18px; }
+  .brief .barra { height: 8px; margin: 6px 0; background: linear-gradient(90deg, #D9D9D9 70%, #737373 90%); }
+
+  /* ---- gráficos ---- */
+  .histo div { display: flex; align-items: center; gap: 14px; font: 14px var(--titulo); color: var(--gris); margin-bottom: 7px; }
+  .histo span.b { height: 20px; background: var(--texto); }
+  .histo span.b.alto { background: var(--acento); }
+  .linea-tiempo { display: flex; gap: 0; margin-top: 12px; }
+  .linea-tiempo > div { flex: 1; border-top: 2px solid var(--gris); padding: 18px 16px 0 0; position: relative; }
+  .linea-tiempo > div::before { content: ""; position: absolute; top: -7px; left: 0; width: 12px; height: 12px; border-radius: 50%; background: var(--texto); }
+  .linea-tiempo h4 { font: 500 15px var(--titulo); color: var(--gris); margin-bottom: 8px; }
+  .linea-tiempo p { font-size: 18px; }
+  .caja { border: 1px solid var(--linea); border-radius: 14px; padding: 24px 28px; }
+
+  #ayuda { position: fixed; bottom: 10px; left: 12px; font: 11px var(--titulo); color: #555; }
+  body.editando .slide { outline: 2px dashed var(--acento); outline-offset: -8px; }
+
+  @media print {
+    html, body { overflow: visible; background: var(--fondo); }
+    #escenario { position: static; transform: none !important; width: auto; height: auto; }
+    .slide { display: flex !important; position: relative; width: 1280px; height: 720px; page-break-after: always; }
+    #ayuda { display: none; }
+    @page { size: 1280px 720px; margin: 0; }
+  }
+</style>
+</head>
+<body>
+<div id="escenario">
+
+<!-- 1 · PORTADA -->
+<section class="slide" style="justify-content:flex-end;padding-bottom:90px">
+  <div class="fecha">2026-09-29, martes</div>
+  <h1>Love Yourself</h1>
+  <p class="fino" style="font-size:34px;margin-top:6px">Cautiverio Voluntario: cómo se diseña la libertad</p>
+  <div style="border-top:1px solid var(--gris);margin:28px 0 20px"></div>
+  <div class="fila" style="justify-content:space-between">
+    <p style="font-weight:500;font-size:16px">Santiago Gaete Fernández</p>
+    <p class="chico">Seminario de Título · Diseño Industrial · UDP · revisión cruzada</p>
+  </div>
+</section>
+
+<!-- 2 · DONDE QUEDAMOS -->
+<section class="slide">
+  <div class="fecha">2026-09-29, martes</div>
+  <div class="centro" style="text-align:left">
+    <p style="font:500 150px/1 var(--titulo)">34<span class="gris">h</span> <span style="font-size:40px;text-decoration:line-through">perdidas</span></p>
+    <p class="cita" style="margin-top:8px">Al mes, por usuario, solo en TikTok · Kemp, 2024</p>
+    <p style="margin-top:60px;text-align:right;font-style:italic">nadie sabe cuántas decidió</p>
+  </div>
+  <div class="seccion-tag">dónde quedamos</div>
+</section>
+
+<!-- 3 · HIPOTESIS -->
+<section class="slide" style="justify-content:center">
+  <div class="fecha">2026-09-29, martes</div>
+  <h2>Hipótesis</h2>
+  <p>"El diseño de una intervención que introduzca <b>momentos de decisión consciente</b> en el flujo de uso automático del smartphone mediante <b>fricción adaptativa</b> permitirá <b>restituir la capacidad de decisión</b> sobre el comportamiento tecnológico propio del usuario, reduciendo el <b>uso no intencional</b> de forma duradera."</p>
+  <div class="seccion-tag">dónde quedamos</div>
+</section>
+
+<!-- 4 · PRINCIPIO -->
+<section class="slide" style="justify-content:center">
+  <div class="fecha">2026-09-29, martes</div>
+  <h2 style="color:var(--gris)">Actúa sobre el arrastre.<br>Deja pasar la intención.</h2>
+  <p style="font-weight:700;font-size:20px">no bloquea · respeta tus decisiones · te ayuda a cobrar conciencia</p>
+  <p style="margin-top:60px" class="gris">La intención no es medible.<br><span style="color:var(--texto)">El origen del contenido sí lo es.</span></p>
+  <div class="seccion-tag">dónde quedamos</div>
+</section>
+
+<!-- 5 · QUE CAMBIO -->
+<section class="slide">
+  <div class="fecha">2026-09-29, martes</div>
+  <h2>Del prototipo a una app</h2>
+  <div class="fila" style="align-items:flex-start">
+    <div class="col caja">
+      <h3>Semestre pasado</h3>
+      <ul><li>Prototipos en pantalla</li><li>Fricción al entrar (secuencias de opciones)</li><li>Sin medir el uso real</li></ul>
+    </div>
+    <div class="col caja">
+      <h3>Ahora</h3>
+      <ul><li>App Android instalada en mi celular</li><li>Mide sola, sin que la encienda</li><li>Interviene <b>durante</b> el consumo, no antes</li></ul>
+    </div>
+  </div>
+  <p class="cita" style="margin-top:36px">La conciencia anticipada no suprime el deseo (Berridge y Robinson, 1998): por eso la intervención ocurre mientras se scrollea.</p>
+</section>
+
+<!-- 6 · SECCION: IMAGE RECOGNITION -->
+<section class="slide" style="justify-content:center">
+  <div class="fecha">2026-09-29, martes</div>
+  <p class="gris" style="font:500 18px var(--titulo);letter-spacing:.1em">PARTE 1</p>
+  <h1 style="margin-top:14px">¿Puede el celular<br>ver lo que yo veo?</h1>
+  <p class="fino" style="margin-top:24px">image recognition sobre Instagram</p>
+</section>
+
+<!-- 7 · FASE 1 -->
+<section class="slide">
+  <div class="fecha">2026-09-29, martes</div>
+  <div class="fila" style="height:100%">
+    <div class="col">
+      <h2>Fase 1 · capturar un frame</h2>
+      <p>La app pide permiso para grabar la pantalla (MediaProjection) y guarda una imagen de lo que se ve.</p>
+      <p style="margin-top:24px"><b>Instagram no bloquea la captura.</b> Sin eso, no hay reconocimiento de imagen posible.</p>
+      <p class="cita" style="margin-top:24px">Captura difuminada: contenido de terceros.</p>
+    </div>
+    <div class="telefono" style="background:#000">
+      <img src="../../sesion-04/avance/files/love-yourself-fase-1/img/frame-diferido-20260906-125809.png" alt="captura de un reel" style="width:100%;height:100%;object-fit:cover;filter:blur(7px)">
+    </div>
+  </div>
+  <div class="seccion-tag">image recognition</div>
+</section>
+
+<!-- 8 · FASE 3: LA SEÑAL -->
+<section class="slide">
+  <div class="fecha">2026-09-29, martes</div>
+  <h2>Fase 3 · una huella de 32×32</h2>
+  <div class="fila" style="align-items:flex-start">
+    <div class="col">
+      <p>4 veces por segundo, la app lee <b>32×32 puntos</b> de la pantalla y compara con la muestra anterior.</p>
+      <p style="margin-top:16px">No guarda imágenes: guarda <b>cuánto cambió</b>.</p>
+      <table style="margin-top:28px">
+        <tr><td>ritmo</td><td><b>3.7</b> muestras/s, estable</td></tr>
+        <tr><td>prueba</td><td>83 s en segundo plano</td></tr>
+        <tr><td>eventos</td><td><b>0.83</b>/s · uno cada 1.2 s</td></tr>
+      </table>
+    </div>
+    <div class="col histo">
+      <h3>cambio entre muestras</h3>
+      <div><span style="width:70px">0–2</span><span class="b" style="width:264px"></span>22</div>
+      <div><span style="width:70px">2–5</span><span class="b" style="width:108px"></span>9</div>
+      <div><span style="width:70px">5–10</span><span class="b" style="width:48px"></span>4</div>
+      <div><span style="width:70px">10–20</span><span class="b" style="width:24px"></span>2</div>
+      <div><span style="width:70px">20–40</span><span class="b alto" style="width:60px"></span>5</div>
+      <div><span style="width:70px">40–80</span><span class="b alto" style="width:60px"></span>5</div>
+      <div><span style="width:70px">80–130</span><span class="b alto" style="width:24px"></span>2</div>
+      <p class="chico" style="margin-top:16px">Dos poblaciones. <b>Ni un valor entre 17 y 25.</b></p>
+    </div>
+  </div>
+  <div class="seccion-tag">image recognition</div>
+</section>
+
+<!-- 9 · LA SEÑAL ES ROBUSTA -->
+<section class="slide" style="justify-content:center">
+  <div class="fecha">2026-09-29, martes</div>
+  <h2>La señal se separa sola</h2>
+  <div class="fila">
+    <table>
+      <tr><th>umbral</th><th>eventos</th></tr>
+      <tr><td>18</td><td>12</td></tr>
+      <tr><td>20</td><td>12</td></tr>
+      <tr><td>25</td><td>12</td></tr>
+    </table>
+    <div class="col">
+      <p>El umbral se puede mover un 40 % y el resultado no cambia.</p>
+      <p style="margin-top:18px">O la pantalla casi no cambia, o cambia entera. <b>No hay zona gris.</b></p>
+      <p class="gris" style="margin-top:18px">Pendiente: distinguir <b>corte de plano</b> (cuánto me estimula el contenido) de <b>swipe</b> (cuánto me muevo yo). Hoy suben la misma columna.</p>
+    </div>
+  </div>
+  <div class="seccion-tag">image recognition</div>
+</section>
+
+<!-- 10 · EL LIMITE -->
+<section class="slide">
+  <div class="fecha">2026-09-29, martes</div>
+  <h2>El límite: el permiso se pide cada vez</h2>
+  <p>Desde Android 14, grabar la pantalla exige aceptar un diálogo <b>en cada sesión</b>. El reconocimiento de imagen nunca podrá encenderse solo.</p>
+  <p style="margin-top:14px" class="gris">Y una intervención que hay que encender a mano no sirve: quien se acuerda de abrirla ya está siendo consciente.</p>
+  <table style="margin-top:34px">
+    <tr><th>capa</th><th>qué mide</th><th>¿arranca sola?</th></tr>
+    <tr><td><b>Accesibilidad</b></td><td>qué app está adelante, cuánto ocupa lo que se desliza, tiempo, swipes</td><td><b>sí, siempre</b></td></tr>
+    <tr><td><b>Captura</b> · modo investigación</td><td>cortes de plano por segundo</td><td>no, exige el diálogo</td></tr>
+  </table>
+  <div class="seccion-tag">image recognition</div>
+</section>
+
+<!-- 11 · HACIA DONDE -->
+<section class="slide">
+  <div class="fecha">2026-09-29, martes</div>
+  <h2>Hacia dónde va</h2>
+  <div class="fila" style="align-items:flex-start">
+    <div class="col">
+      <h3>ya medible</h3>
+      <ul><li>ritmo de cortes del contenido</li><li>cuándo cambia de reel</li></ul>
+      <h3 style="margin-top:28px">por definir</h3>
+      <ul><li>"patrón oscuro": qué rasgo visual lo delata</li><li>"oscuridad" en el resumen hoy aparece como <b>—</b></li></ul>
+    </div>
+    <div class="col caja">
+      <p class="gris chico">wireframe WF2</p>
+      <p style="font:700 28px var(--titulo);margin-top:10px">PATRÓN OSCURO</p>
+      <p class="gris" style="font:500 16px var(--titulo)">78% MATCH</p>
+      <p class="chico" style="margin-top:18px">Señalar sin bloquear ni calificar el contenido: la conclusión la saca la persona.</p>
+    </div>
+  </div>
+  <div class="seccion-tag">image recognition</div>
+</section>
+
+<!-- 12 · SECCION: LA APP -->
+<section class="slide" style="justify-content:center">
+  <div class="fecha">2026-09-29, martes</div>
+  <p class="gris" style="font:500 18px var(--titulo);letter-spacing:.1em">PARTE 2</p>
+  <h1 style="margin-top:14px">Love Yourself · v6</h1>
+  <p class="fino" style="margin-top:24px">instalada y funcionando en mi celular</p>
+</section>
+
+<!-- 13 · ARRASTRE VS INTENCION -->
+<section class="slide">
+  <div class="fecha">2026-09-29, martes</div>
+  <h2>Qué cuenta como arrastre</h2>
+  <div class="fila" style="align-items:flex-start">
+    <div class="col caja">
+      <h3>cuenta</h3>
+      <ul><li>apps marcadas: Instagram, TikTok, YouTube, Facebook, X (editable)</li><li>scroll de contenido a <b>pantalla completa</b>: reels, feed</li></ul>
+    </div>
+    <div class="col caja">
+      <h3>no cuenta</h3>
+      <ul><li>responder un mensaje</li><li>buscar algo</li><li>cualquier otra app</li></ul>
+    </div>
+  </div>
+  <p style="margin-top:30px">La app mira <b>la forma</b> de la pantalla, no lo que muestra: cuánto mide la zona que se desliza y cuánto salta.</p>
+  <p class="cita" style="margin-top:14px">Diferencia con Focus Friend y similares: no hay que apretar "iniciar", y no trata igual cualquier uso del teléfono.</p>
+  <div class="seccion-tag">la app</div>
+</section>
+
+<!-- 14 · RECORRIDO -->
+<section class="slide">
+  <div class="fecha">2026-09-29, martes</div>
+  <h2>Una sesión</h2>
+  <div class="linea-tiempo">
+    <div><h4>abro Instagram</h4><p>Arriba, una burbuja con tiempo y ritmo.</p></div>
+    <div><h4>primer swipe</h4><p>La burbuja se agranda: la mascota dice <b>"¿ya?"</b></p></div>
+    <div><h4>10 min</h4><p>El <b>cielo</b> a pantalla completa. Seguir o salir.</p></div>
+    <div><h4>salgo</h4><p>El <b>resumen</b>: arrastrado vs buscado, y la semana.</p></div>
+  </div>
+  <p class="gris" style="margin-top:50px">Irse a otra app no corta la sesión: hay 30 s para volver. Bloquear la pausa; más de 3 min, la cierra.</p>
+  <div class="seccion-tag">la app</div>
+</section>
+
+<!-- 15 · BURBUJA -->
+<section class="slide">
+  <div class="fecha">2026-09-29, martes</div>
+  <div class="fila" style="height:100%">
+    <div class="col">
+      <h2>La burbuja</h2>
+      <p>Siempre arriba, con dos datos: <b>tiempo en la app</b> y <b>swipes por minuto</b>.</p>
+      <p style="margin-top:16px">En ciertos momentos da un salto, se agranda y aparece la mascota con una acción o un diálogo. A los 4 s se recoge.</p>
+      <p class="gris" style="margin-top:16px">No recibe toques: Instagram se sigue usando por debajo.</p>
+    </div>
+    <div class="telefono reel-ui"><div class="pildora"><b>2:23</b><span><b>18</b>s/m</span></div><i style="right:12px;top:220px;width:22px;height:20px"></i><i style="right:12px;top:260px;width:22px;height:20px"></i><i style="right:12px;top:300px;width:22px;height:20px"></i><i style="left:14px;bottom:70px;width:150px;height:10px"></i></div>
+    <div class="telefono reel-ui"><div class="burbuja-grande"><span>¿ya?</span><img src="../avance/brains-ilust/brain-sad.png" alt="cerebro"></div><i style="right:12px;top:220px;width:22px;height:20px"></i><i style="right:12px;top:260px;width:22px;height:20px"></i><i style="left:14px;bottom:70px;width:150px;height:10px"></i></div>
+  </div>
+  <div class="seccion-tag">la app</div>
+</section>
+
+<!-- 16 · MASCOTA Y TONO -->
+<section class="slide">
+  <div class="fecha">2026-09-29, martes</div>
+  <h2>¿Quién habla?</h2>
+  <div class="fila" style="gap:18px;justify-content:space-between">
+    <img src="../avance/brains-ilust/brain-sus.png" alt="sus" style="width:180px">
+    <img src="../avance/brains-ilust/brain-serio.png" alt="serio" style="width:180px">
+    <img src="../avance/brains-ilust/brain-pfff.png" alt="pfff" style="width:180px">
+    <img src="../avance/brains-ilust/brain-f.png" alt="f" style="width:180px">
+    <img src="../avance/brains-ilust/brain-sad.png" alt="sad" style="width:180px">
+  </div>
+  <table style="margin-top:34px;width:100%">
+    <tr><th>tono</th><th>ejemplo</th></tr>
+    <tr><td>tierno-cercano</td><td>"¿ya?"</td></tr>
+    <tr><td>frío</td><td>los datos, sin comentario</td></tr>
+    <tr><td>reflexivo-incriminatorio</td><td>"¿querías pasar todo ese tiempo en ig?"</td></tr>
+    <tr><td>sarcástico</td><td>la mascota es Meta y te agradece el tiempo</td></tr>
+  </table>
+  <div class="seccion-tag">la app</div>
+</section>
+
+<!-- 17 · CIELO -->
+<section class="slide">
+  <div class="fecha">2026-09-29, martes</div>
+  <div class="fila" style="height:100%">
+    <div class="col">
+      <h2>El cielo</h2>
+      <p>A los <b>10 minutos</b> aparece de golpe, a pantalla completa.</p>
+      <p style="margin-top:16px">No dice cuánto llevas: recuerda <b>lo que hay afuera</b>.</p>
+      <p style="margin-top:16px">"Seguir" y "Salir" pesan lo mismo. Seguir lo aplaza 10 min; salir lleva al inicio.</p>
+      <p class="cita" style="margin-top:20px">El clima todavía es fijo. Pregunta abierta: ¿dato real o invitación que vale a cualquier hora?</p>
+    </div>
+    <div class="telefono cielo">
+      <div class="sol"></div>
+      <img class="nube" src="../love-yourself-fase-06/app/src/main/res/drawable-nodpi/nube.png" alt="" style="width:170px;left:110px;top:95px">
+      <img class="nube" src="../love-yourself-fase-06/app/src/main/res/drawable-nodpi/nube.png" alt="" style="width:170px;left:-60px;top:150px">
+      <div class="msg">Hay un hermoso día afuera!</div>
+      <div class="clima"><div></div><b style="font-size:14px">26°C</b><br>Santiago</div>
+      <div class="botones"><span>Seguir</span><span>Salir</span></div>
+    </div>
+  </div>
+  <div class="seccion-tag">la app</div>
+</section>
+
+<!-- 18 · RESUMEN -->
+<section class="slide">
+  <div class="fecha">2026-09-29, martes</div>
+  <div class="fila" style="height:100%">
+    <div class="col">
+      <h2>El resumen</h2>
+      <p>Aparece al salir, no durante el uso. Es la única pantalla que pide ser leída: no se cierra sola.</p>
+      <p style="margin-top:16px">Divide la sesión por origen: <b>arrastrado</b> (me lo pusieron) vs <b>buscado</b> (lo elegí), y lo contrasta con la semana.</p>
+      <p class="gris" style="margin-top:16px">El costo del uso no se percibe por episodio, sino por agregado.</p>
+    </div>
+    <div class="telefono brief" style="background:linear-gradient(160deg,#603e78,#24465c)">
+      <div class="tarjeta">
+        <div class="sec">sesión cerrada · 18:42<br><b style="font-size:14px">Estuviste 22 minutos</b>
+          <div class="met"><div>videos<b>71</b></div><div>recuerdas<b>?</b></div><div>oscuridad<b>—</b></div></div></div>
+        <div class="sec">de esos 22 minutos<div class="barra"></div>19:45 arrastrado · 2:15 buscado</div>
+        <div class="sec">Esta semana<br><b style="font-size:18px">14h 20</b> en arrastre</div>
+        <div class="sec" style="display:flex;justify-content:space-between"><span style="opacity:.4">ver detalle</span><span>Cerrar</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="seccion-tag">la app</div>
+</section>
+
+<!-- 19 · LO QUE ENSEÑO PROBAR -->
+<section class="slide">
+  <div class="fecha">2026-09-29, martes</div>
+  <h2>Lo que enseñó probarla</h2>
+  <table style="width:100%">
+    <tr><th>supuesto</th><th>en el celular</th></tr>
+    <tr><td>"el scroll de reels se reconoce solo"</td><td>no se reconocía: Instagram avisa desde vistas chicas → medir también el contenedor y el salto</td></tr>
+    <tr><td>"el resumen sale al volver al inicio"</td><td>la sesión sí se cerraba: el reloj de prueba estaba en x1 y faltaba arrastre. Un <b>diario de eventos</b> lo mostró</td></tr>
+    <tr><td>"un swipe = un evento"</td><td>cada swipe manda varios avisos → contar por cambio de reel</td></tr>
+    <tr><td>"volver al inicio cierra la sesión"</td><td>Instagram avisa una vez más al cerrarse → visita fantasma, corregida</td></tr>
+  </table>
+  <p class="cita" style="margin-top:24px">Modo dev: reloj acelerado (x10, x60) para probar en segundos lo que dura minutos.</p>
+</section>
+
+<!-- 20 · PREGUNTAS ABIERTAS -->
+<section class="slide">
+  <div class="fecha">2026-09-29, martes</div>
+  <h2>Preguntas abiertas</h2>
+  <div class="fila" style="align-items:flex-start">
+    <ul class="col">
+      <li>¿Cuánto arrastre justifica un resumen? Hoy: 1 minuto.</li>
+      <li>¿Qué hace "Salir"? Mandar al inicio se acerca a bloquear.</li>
+      <li>El cerebro <i>sad</i> contradice "no juzgar". ¿Cansado o triste?</li>
+    </ul>
+    <ul class="col">
+      <li>¿Qué es "oscuridad" en términos medibles?</li>
+      <li>¿El cielo muestra el clima real?</li>
+      <li>Validar con usuarios: <b>objetivo específico 3</b>, evaluar la reducción del arrastre con métricas de uso.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 21 · CIERRE -->
+<section class="slide" style="justify-content:flex-end;padding-bottom:90px">
+  <div class="fecha">2026-09-29, martes</div>
+  <h1>Love Yourself</h1>
+  <p class="fino" style="font-size:34px;margin-top:6px">no bloquea · devuelve la decisión</p>
+  <div style="border-top:1px solid var(--gris);margin:28px 0 20px"></div>
+  <p style="font-weight:500;font-size:16px">Santiago Gaete Fernández</p>
+</section>
+
+</div>
+<div id="ayuda">← → navegar · F pantalla completa · E editar · Ctrl+S guardar edición</div>
+
+<script>
+  const slides = [...document.querySelectorAll('.slide')];
+  const escenario = document.getElementById('escenario');
+  let i = Math.max(0, Math.min(slides.length - 1, (parseInt(location.hash.slice(1)) || 1) - 1));
+
+  // Número de diapositiva en cada una.
+  slides.forEach((s, n) => s.insertAdjacentHTML('beforeend', `<div class="num">${n + 1} / ${slides.length}</div>`));
+
+  function mostrar(n) {
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach((s, k) => s.classList.toggle('activa', k === i));
+    history.replaceState(null, '', '#' + (i + 1));
+  }
+  function escalar() {
+    const e = Math.min(innerWidth / 1280, innerHeight / 720);
+    escenario.style.transform = `translate(-50%, -50%) scale(${e})`;
+  }
+  addEventListener('resize', escalar);
+  addEventListener('keydown', ev => {
+    if (document.body.classList.contains('editando') && ev.key !== 'Escape' && !(ev.ctrlKey || ev.metaKey)) return;
+    if (['ArrowRight', 'PageDown', ' '].includes(ev.key)) { ev.preventDefault(); mostrar(i + 1); }
+    if (['ArrowLeft', 'PageUp'].includes(ev.key)) { ev.preventDefault(); mostrar(i - 1); }
+    if (ev.key === 'f' || ev.key === 'F') document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
+    if (ev.key === 'e' || ev.key === 'E' || ev.key === 'Escape') editar(ev.key !== 'Escape' && !document.body.classList.contains('editando'));
+    if ((ev.ctrlKey || ev.metaKey) && ev.key === 's') { ev.preventDefault(); guardar(); }
+  });
+  escenario.addEventListener('click', ev => {
+    if (document.body.classList.contains('editando')) return;
+    mostrar(ev.clientX > innerWidth / 2 ? i + 1 : i - 1);
+  });
+
+  // Edición en el navegador: E activa/desactiva, Ctrl+S descarga el archivo editado.
+  function editar(si) {
+    document.body.classList.toggle('editando', si);
+    slides.forEach(s => s.contentEditable = si);
+  }
+  function guardar() {
+    editar(false);
+    const copia = document.documentElement.cloneNode(true);
+    copia.querySelectorAll('.num').forEach(n => n.remove());
+    copia.querySelectorAll('.slide').forEach(s => { s.classList.remove('activa'); s.removeAttribute('contenteditable'); });
+    copia.querySelector('body').classList.remove('editando');
+    copia.querySelector('#escenario').removeAttribute('style');
+    const html = '<!doctype html>\n' + copia.outerHTML;
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([html], { type: 'text/html' }));
+    a.download = 'index.html';
+    a.click();
+  }
+
+  escalar();
+  mostrar(i);
+</script>
+</body>
+</html>
