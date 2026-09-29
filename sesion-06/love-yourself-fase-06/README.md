@@ -17,6 +17,17 @@ Se instala al lado de la fase 05 (`com.love.yourself.fase06`, se llama **Love Yo
 
 Apps marcadas de fábrica: Instagram, TikTok, YouTube, Facebook, X. Se editan en la app.
 
+## bienvenida
+
+La primera vez que se abre (o si falta un permiso):
+
+1. Permiso para dibujar encima (WF1a).
+2. Permiso de accesibilidad (WF1a). "¿Por qué requerimos este permiso?" despliega la explicación.
+3. ¿A qué quieres que le pongamos ojo? Elegir apps.
+4. ¿Qué te gustaría hacer más y no alcanzas? (WF1b). Aparece en el resumen como **"? en [actividad]"**: la app no puede medir ese tiempo, así que va como pregunta, igual que "recuerdas ?".
+
+Los permisos se saltan si ya están dados. "Volver a la bienvenida" en la pantalla de la app la repite.
+
 ## capas
 
 | Cuándo | Qué |
@@ -94,7 +105,7 @@ lab/
 ├── AcumuladoSemanal.kt  arrastre por día
 │
 │  idénticos en la app de diseño (sesion-06/love-yourself-ui):
-├── Config.kt  VistasFriccion.kt  CieloView.kt  BurbujaView.kt
+├── Config.kt  VistasFriccion.kt  CieloView.kt  BurbujaView.kt  VistasOnboarding.kt
 ├── VistaBrief.kt  BarraOrigen.kt  ColoresBrief.kt  FormatoBrief.kt
 │
 └── CapturaContinuaService.kt, DetectorCortes.kt, RegistroCsv.kt   modo investigación (igual que fase 05)

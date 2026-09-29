@@ -40,6 +40,12 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".OnboardingActivity"
+            android:exported="false"
+            android:theme="@style/Theme.LoveYourself"
+            android:windowSoftInputMode="adjustResize" />
+
         <service
             android:name=".lab.CapturaContinuaService"
             android:exported="false"

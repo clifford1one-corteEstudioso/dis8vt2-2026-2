@@ -22,7 +22,9 @@ data class DatosBrief(
     val videos: Int,
     val semanaArrastreMs: Long,
     /** Va antes de "sesión cerrada": "ejemplo", "dev ×10". Vacio en uso normal. */
-    val etiqueta: String = ""
+    val etiqueta: String = "",
+    /** Lo que declaro en la bienvenida ("hacer música"). Vacio si la omitio. */
+    val actividad: String = ""
 ) {
     val buscadoMs get() = (totalMs - arrastradoMs).coerceAtLeast(0L)
 
@@ -34,7 +36,8 @@ data class DatosBrief(
             arrastradoMs = (19 * 60 + 45) * 1000L,
             videos = 71,
             semanaArrastreMs = (14 * 60 + 20) * 60_000L,
-            etiqueta = "ejemplo"
+            etiqueta = "ejemplo",
+            actividad = "hacer música"
         )
     }
 }
@@ -154,12 +157,28 @@ class VistaBrief(private val context: Context) {
                 ).apply { marginStart = dp(8) }
             )
         }
-        // La segunda linea del wireframe ("3h 40 en [actividad]") queda fuera:
-        // la app no tiene como saber cuanto tiempo se dedico a esa actividad.
-        return seccion(dp(17), dp(13)).apply {
+        val seccion = seccion(dp(17), dp(13)).apply {
             addView(texto("Esta semana", 16f))
             addView(fila, conMargenArriba(dp(16)))
         }
+        // La segunda linea del wireframe ("3h 40 en [actividad]"): la app no
+        // puede medir ese tiempo, asi que va como pregunta, igual que "recuerdas ?".
+        if (d.actividad.isNotEmpty()) {
+            val otra = LinearLayout(context).apply {
+                orientation = LinearLayout.HORIZONTAL
+                isBaselineAligned = true
+                addView(texto("?", 34f).apply { setTypeface(typeface, Typeface.BOLD) })
+                addView(
+                    texto("en ${d.actividad}", 18f),
+                    LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT
+                    ).apply { marginStart = dp(8) }
+                )
+            }
+            seccion.addView(otra, conMargenArriba(dp(12)))
+        }
+        return seccion
     }
 
     private fun acciones(alCerrar: () -> Unit): View = LinearLayout(context).apply {

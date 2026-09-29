@@ -22,7 +22,9 @@ import com.love.yourself.lab.BurbujaView
 import com.love.yourself.lab.FormatoBrief
 import com.love.yourself.lab.Momento
 import com.love.yourself.lab.VistaBrief
+import com.love.yourself.lab.AppInstalada
 import com.love.yourself.lab.VistaCielo
+import com.love.yourself.lab.VistasOnboarding
 
 /**
  * App solo de diseno. Muestra las mismas vistas que la app real, pero dentro
@@ -98,6 +100,45 @@ class MainActivity : Activity() {
         estado.text = if (segundos < limite) "cielo en %d:%02d".format((limite - segundos) / 60, (limite - segundos) % 60) else "después del cielo"
     }
 
+    // ---- bienvenida: las cuatro pantallas, sin permisos de verdad ----
+
+    private var bienvenida: View? = null
+    private val appsDeMentira = listOf(
+        AppInstalada("com.instagram.android", "Instagram"),
+        AppInstalada("com.zhiliaoapp.musically", "TikTok"),
+        AppInstalada("com.google.android.youtube", "YouTube"),
+        AppInstalada("com.whatsapp", "WhatsApp"),
+        AppInstalada("com.spotify.music", "Spotify")
+    )
+    private val appsMarcadas = mutableSetOf("com.instagram.android", "com.zhiliaoapp.musically", "com.google.android.youtube")
+    private var actividadDeMentira = ""
+
+    /** Paso 0 y 1: permisos. 2: apps. 3: actividad. Los botones avanzan. */
+    private fun mostrarBienvenida(paso: Int) {
+        bienvenida?.let { raiz.removeView(it) }
+        bienvenida = null
+        val v = VistasOnboarding(this)
+        val siguiente = { mostrarBienvenida(paso + 1) }
+        val cerrar = { bienvenida?.let { raiz.removeView(it) }; bienvenida = null }
+        val vista = when (paso) {
+            0 -> v.permiso(
+                "Para mostrarte la burbuja encima de Instagram, Love Yourself necesita dibujar sobre otras apps.",
+                "La burbuja y el cielo aparecen encima de la app que estás usando. Sin este permiso, Android no deja mostrarlos.",
+                alSalir = cerrar, alActivar = siguiente
+            )
+            1 -> v.permiso(
+                "Para saber cuándo empiezas a scrollear, Love Yourself necesita el permiso de accesibilidad. Busca \"Love Yourself · v6\" y actívalo.",
+                "Mira qué app tienes adelante y cuánto de la pantalla ocupa lo que deslizas. No lee lo que ves ni guarda nada fuera de tu teléfono.",
+                alSalir = cerrar, alActivar = siguiente
+            )
+            2 -> v.apps(appsDeMentira, appsMarcadas, alCambiar = { p, si -> if (si) appsMarcadas += p else appsMarcadas -= p }, alContinuar = siguiente)
+            3 -> v.declaracion(actividadDeMentira, alOmitir = cerrar, alContinuar = { actividadDeMentira = it; cerrar() })
+            else -> return
+        }
+        raiz.addView(vista, raiz.indexOfChild(panel), completo())
+        bienvenida = vista
+    }
+
     /** El resumen de salida, con los numeros del deslizador (o los del wireframe, en 0). */
     private fun mostrarResumen() {
         if (resumen != null) return
@@ -111,7 +152,8 @@ class MainActivity : Activity() {
                 arrastradoMs = segundos * 1000L,
                 videos = (segundos / 15).toInt(),
                 semanaArrastreMs = (14 * 60 + 20) * 60_000L,
-                etiqueta = "diseño"
+                etiqueta = "diseño",
+                actividad = actividadDeMentira.ifEmpty { "hacer música" }
             )
         }
         val vista = VistaBrief(this).crear(datos, alCerrar = {
@@ -195,6 +237,7 @@ class MainActivity : Activity() {
             addView(boton("${Config.MIN_CIELO} min") { tiempo.progress = Config.MIN_CIELO * 60 }, peso())
             addView(boton("Cielo") { mostrarCielo() }, peso())
             addView(boton("Resumen") { mostrarResumen() }, peso())
+            addView(boton("Bienvenida") { mostrarBienvenida(0) }, peso())
         }
 
         // Cada momento que agranda la burbuja.

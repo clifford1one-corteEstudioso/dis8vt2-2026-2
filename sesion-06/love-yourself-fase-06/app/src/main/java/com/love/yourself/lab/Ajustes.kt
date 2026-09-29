@@ -1,6 +1,7 @@
 package com.love.yourself.lab
 
 import android.content.Context
+import android.content.Intent
 
 /**
  * Lo que la persona elige en la pantalla de configuracion. Lo lee el servicio
@@ -33,9 +34,36 @@ class Ajustes(context: Context) {
         get() = prefs.getInt(CLAVE_FACTOR, 1)
         set(valor) = prefs.edit().putInt(CLAVE_FACTOR, valor).apply()
 
-    private companion object {
-        const val CLAVE_APPS = "apps_vigiladas"
-        const val CLAVE_DEV = "modo_dev"
-        const val CLAVE_FACTOR = "factor_reloj"
+    /** Si ya se paso por la bienvenida (permisos, apps, actividad). */
+    var onboardingHecho: Boolean
+        get() = prefs.getBoolean(CLAVE_ONBOARDING, false)
+        set(valor) = prefs.edit().putBoolean(CLAVE_ONBOARDING, valor).apply()
+
+    /** "¿Que te gustaria hacer mas y no alcanzas?". Vacio si la omitio. */
+    var actividad: String
+        get() = prefs.getString(CLAVE_ACTIVIDAD, "") ?: ""
+        set(valor) = prefs.edit().putString(CLAVE_ACTIVIDAD, valor).apply()
+
+    companion object {
+        /**
+         * Las apps con icono en el telefono: primero las sugeridas y las ya
+         * marcadas, despues el resto por nombre.
+         */
+        fun appsInstaladas(context: Context, marcadas: Set<String>): List<AppInstalada> {
+            val pm = context.packageManager
+            val todas = pm.queryIntentActivities(Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER), 0)
+                .map { AppInstalada(it.activityInfo.packageName, it.loadLabel(pm).toString()) }
+                .filter { it.paquete != context.packageName }
+                .distinctBy { it.paquete }
+                .sortedBy { it.nombre.lowercase() }
+            val (destacadas, otras) = todas.partition { it.paquete in Config.APPS_SUGERIDAS || it.paquete in marcadas }
+            return destacadas + otras
+        }
+
+        private const val CLAVE_ONBOARDING = "onboarding_hecho"
+        private const val CLAVE_ACTIVIDAD = "actividad"
+        private const val CLAVE_APPS = "apps_vigiladas"
+        private const val CLAVE_DEV = "modo_dev"
+        private const val CLAVE_FACTOR = "factor_reloj"
     }
 }

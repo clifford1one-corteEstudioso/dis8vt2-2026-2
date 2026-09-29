@@ -299,7 +299,8 @@ class SesionService : AccessibilityService() {
                     arrastradoMs = v.arrastradoMs,
                     videos = v.videos,
                     semanaArrastreMs = acumulado.estaSemana(real),
-                    etiqueta = if (dev) "dev ×${Reloj.factor}" else ""
+                    etiqueta = if (dev) "dev ×${Reloj.factor}" else "",
+                    actividad = ajustes.actividad
                 )
                 runCatching { brief?.mostrar(datos) }.onFailure {
                     Log.e(TAG, "no se pudo mostrar el resumen", it)

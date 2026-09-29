@@ -34,7 +34,6 @@ import com.love.yourself.lab.Momento
 import com.love.yourself.lab.OverlayBrief
 import com.love.yourself.lab.OverlayFriccion
 import com.love.yourself.lab.Reloj
-import com.love.yourself.lab.SesionService
 
 /**
  * Pantalla de configuracion. Una vez dados los dos permisos, la app trabaja
@@ -77,6 +76,13 @@ class MainActivity : Activity() {
      */
     override fun onResume() {
         super.onResume()
+        // La primera vez, o si se quitaron los permisos: la bienvenida.
+        val sinPermisos = !Settings.canDrawOverlays(this) || !servicioDeAccesibilidadActivo()
+        if (!ajustes.onboardingHecho || sinPermisos) {
+            startActivity(Intent(this, OnboardingActivity::class.java))
+            finish()
+            return
+        }
         dibujar()
     }
 
@@ -168,30 +174,30 @@ class MainActivity : Activity() {
     // ---- lista de apps ----
 
     private fun listaDeApps() {
-        val lanzables = packageManager.queryIntentActivities(
-            Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER), 0
-        )
-            .map { it.activityInfo.packageName to it.loadLabel(packageManager).toString() }
-            .filter { it.first != packageName }
-            .distinctBy { it.first }
         val vigiladas = ajustes.appsVigiladas
-
+        val todas = Ajustes.appsInstaladas(this, vigiladas)
         // Primero las marcadas y las sugeridas instaladas; el resto, a pedido.
-        val destacadas = lanzables
-            .filter { it.first in vigiladas || it.first in Config.APPS_SUGERIDAS }
-            .sortedBy { it.second.lowercase() }
-        val otras = lanzables.filter { it !in destacadas }.sortedBy { it.second.lowercase() }
+        val destacadas = todas.filter { it.paquete in vigiladas || it.paquete in Config.APPS_SUGERIDAS }
+        val otras = todas - destacadas.toSet()
 
-        for ((paquete, nombre) in destacadas) casillaApp(paquete, nombre, paquete in vigiladas)
+        for (app in destacadas) casillaApp(app.paquete, app.nombre, app.paquete in vigiladas)
         if (destacadas.isEmpty()) parrafo("(Ninguna de las apps sugeridas está instalada.)")
 
         if (mostrarTodasLasApps) {
-            for ((paquete, nombre) in otras) casillaApp(paquete, nombre, false)
+            for (app in otras) casillaApp(app.paquete, app.nombre, false)
         } else if (otras.isNotEmpty()) {
             botonSecundario("Agregar otra app (${otras.size})") {
                 mostrarTodasLasApps = true
                 dibujar()
             }
+        }
+
+        titulo("Lo que te gustaría hacer más")
+        parrafo(if (ajustes.actividad.isEmpty()) "(sin respuesta)" else ajustes.actividad)
+        botonSecundario("Volver a la bienvenida") {
+            ajustes.onboardingHecho = false
+            startActivity(Intent(this, OnboardingActivity::class.java))
+            finish()
         }
     }
 
@@ -310,12 +316,7 @@ class MainActivity : Activity() {
      * No hay API para preguntarle al sistema si un service propio esta activo,
      * asi que se lee el ajuste donde Android guarda la lista.
      */
-    private fun servicioDeAccesibilidadActivo(): Boolean {
-        val activos = Settings.Secure.getString(contentResolver, Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES)
-            ?: return false
-        val propio = "$packageName/${SesionService::class.java.name}"
-        return activos.split(':').any { it.equals(propio, ignoreCase = true) }
-    }
+    private fun servicioDeAccesibilidadActivo() = OnboardingActivity.servicioActivo(this)
 
     // ---- piezas de la pantalla ----
 

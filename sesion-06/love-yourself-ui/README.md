@@ -21,6 +21,7 @@ No mide nada. El tiempo de arrastre y los swipes se mueven a mano.
 | **swipes por minuto** | El número que muestra la caja |
 | **0:00 / 10 min** | Saltos a los momentos donde cambia algo |
 | **Cielo** | Abre el cielo de los 10 minutos (también sale solo al llegar a 10 min) |
+| **Bienvenida** | Las cuatro pantallas del onboarding, en orden. Los botones avanzan |
 | **Resumen** | Abre el resumen de salida con el tiempo del deslizador (en 0, los números del wireframe) |
 | **burbuja** | Un botón por momento: agranda la burbuja con la mascota |
 | **⚙** | Esconde el panel, para ver la pantalla limpia o sacar una captura |
@@ -39,6 +40,7 @@ app/src/main/java/com/love/yourself/lab/
 ├── VistaCielo.kt       la pantalla del cielo: mensaje, clima, Seguir / Salir
 ├── BurbujaView.kt      la burbuja de arriba, su animación y los momentos
 ├── VistaBrief.kt       el resumen de salida
+├── VistasOnboarding.kt la bienvenida: permisos, apps, actividad
 ├── BarraOrigen.kt      la barra arrastrado / buscado
 ├── ColoresBrief.kt     los grises del resumen
 ├── FormatoBrief.kt     los textos del resumen
