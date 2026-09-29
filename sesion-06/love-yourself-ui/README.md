@@ -16,12 +16,12 @@ No mide nada. El tiempo de arrastre y los swipes se mueven a mano.
 
 | | |
 |---|---|
-| **tiempo de arrastre** | De 0 a 20 min. En 0 no hay sesión: solo la mascota leyendo |
+| **tiempo de arrastre** | De 0 a 20 min. Lo muestra la burbuja |
 | **swipes por minuto** | El número que muestra la caja |
 | **0:00 / 5 min / 15 min** | Saltos a los momentos donde cambia algo |
 | **Decisión** | Abre la pantalla de los 15 minutos |
 | **Resumen** | Abre el resumen de salida con el tiempo del deslizador (en 0, los números del wireframe) |
-| **mascota** | *auto* la deja seguir al deslizador; los otros la fijan en un estado |
+| **burbuja** | Un botón por momento: agranda la burbuja con la mascota |
 | **⚙** | Esconde el panel, para ver la pantalla limpia o sacar una captura |
 
 Detrás hay un reel de mentira con las posiciones del wireframe WF2, para ver
@@ -33,9 +33,9 @@ Estos archivos son **idénticos** en las dos apps:
 
 ```
 app/src/main/java/com/love/yourself/lab/
-├── VistasFriccion.kt   caja, decisión, y dónde van caja y mascota
+├── VistasFriccion.kt   la pantalla de decisión (y la caja del modo dev)
 ├── CieloView.kt        el cielo
-├── MascotaView.kt      la mascota (colores arriba del archivo)
+├── BurbujaView.kt      la burbuja de arriba, su animación y los momentos
 ├── VistaBrief.kt       el resumen de salida
 ├── BarraOrigen.kt      la barra arrastrado / buscado
 ├── ColoresBrief.kt     los grises del resumen
@@ -46,8 +46,10 @@ app/src/main/java/com/love/yourself/lab/
 Lo que ajustes acá, lo copias **entero** a:
 
 ```
-sesion-04/avance/files/love-yourself-fase-06/app/src/main/java/com/love/yourself/lab/
+sesion-06/love-yourself-fase-06/app/src/main/java/com/love/yourself/lab/
 ```
+
+Y las imágenes de `res/drawable-nodpi/` (los cerebros).
 
 Siempre el archivo completo, nunca pedazos: así no hay que mezclar nada.
 

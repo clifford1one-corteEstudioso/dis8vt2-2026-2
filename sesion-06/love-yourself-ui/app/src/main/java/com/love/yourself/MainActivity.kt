@@ -17,9 +17,9 @@ import android.widget.TextView
 import com.love.yourself.lab.CieloView
 import com.love.yourself.lab.Config
 import com.love.yourself.lab.DatosBrief
-import com.love.yourself.lab.EstadoMascota
-import com.love.yourself.lab.EtapaCaja
-import com.love.yourself.lab.MascotaView
+import com.love.yourself.lab.BurbujaView
+import com.love.yourself.lab.FormatoBrief
+import com.love.yourself.lab.Momento
 import com.love.yourself.lab.VistaBrief
 import com.love.yourself.lab.VistasFriccion
 
@@ -28,29 +28,24 @@ import com.love.yourself.lab.VistasFriccion
  * de una pantalla normal: sin permisos, sin accesibilidad, sin Instagram.
  *
  * Se mueve el tiempo de arrastre con un deslizador y se ve como reaccionan la
- * mascota, la caja y el cielo. Lo que se ajuste en los archivos de lab/ se
+ * burbuja y el cielo. Lo que se ajuste en los archivos de lab/ se
  * copia entero a la app real.
  *
  * Capas, de abajo hacia arriba, en el mismo orden que en el celular:
- *   reel de mentira -> cielo -> caja -> mascota -> decision / resumen -> panel
+ *   reel de mentira -> cielo -> burbuja -> decision / resumen -> panel
  */
 class MainActivity : Activity() {
 
     private lateinit var cielo: CieloView
-    private lateinit var caja: TextView
-    private lateinit var mascota: MascotaView
+    private lateinit var burbuja: BurbujaView
     private lateinit var raiz: FrameLayout
     private lateinit var panel: LinearLayout
     private lateinit var estado: TextView
 
     private var segundos = 0L
     private var swipesPorMinuto = 12.0
-    private var etapaActual = EtapaCaja.OCULTO
     private var decision: View? = null
     private var resumen: View? = null
-
-    /** null = la mascota sigue al deslizador, como en el celular. */
-    private var mascotaForzada: EstadoMascota? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,27 +57,15 @@ class MainActivity : Activity() {
         cielo = CieloView(this).apply { alpha = 0f }
         raiz.addView(cielo, completo())
 
-        // Misma posicion que en el celular: la dicen las constantes de VistasFriccion.
-        caja = VistasFriccion.caja(this)
+        // Misma posicion que en el celular: arriba al centro.
+        burbuja = BurbujaView(this)
         raiz.addView(
-            caja,
+            burbuja,
             FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT,
-                VistasFriccion.GRAVEDAD_CAJA
-            ).apply { topMargin = VistasFriccion.MARGEN_SUPERIOR_CAJA_PX }
-        )
-
-        mascota = MascotaView(this)
-        val lado = dp(VistasFriccion.MASCOTA_LADO_DP)
-        raiz.addView(
-            mascota,
-            FrameLayout.LayoutParams(lado, lado, VistasFriccion.GRAVEDAD_MASCOTA).apply {
-                leftMargin = dp(VistasFriccion.MASCOTA_MARGEN_X_DP)
-                rightMargin = dp(VistasFriccion.MASCOTA_MARGEN_X_DP)
-                topMargin = dp(VistasFriccion.MASCOTA_MARGEN_Y_DP)
-                bottomMargin = dp(VistasFriccion.MASCOTA_MARGEN_Y_DP)
-            }
+                Gravity.TOP or Gravity.CENTER_HORIZONTAL
+            )
         )
 
         panel = panelDeControl()
@@ -94,8 +77,9 @@ class MainActivity : Activity() {
                 Gravity.BOTTOM
             )
         )
+        // Debajo de la burbuja expandida, para no taparla.
         raiz.addView(botonPanel(), FrameLayout.LayoutParams(dp(44), dp(44), Gravity.TOP or Gravity.END).apply {
-            topMargin = dp(36)
+            topMargin = dp(120)
             marginEnd = dp(12)
         })
 
@@ -103,43 +87,12 @@ class MainActivity : Activity() {
         actualizar()
     }
 
-    /** Aplica el estado actual a la caja y al cielo, con las mismas reglas del servicio. */
+    /** Aplica el estado actual a la burbuja y al cielo, con las mismas reglas del servicio. */
     private fun actualizar() {
-        val minutos = segundos / 60
-        val etapa = when {
-            segundos == 0L -> EtapaCaja.OCULTO
-            minutos >= Config.MIN_PRESENCIA -> EtapaCaja.PRESENCIA
-            else -> EtapaCaja.ESPEJO
-        }
-
-        if (etapa == EtapaCaja.OCULTO) {
-            caja.visibility = View.GONE
-            cielo.alpha = 0f
-        } else {
-            caja.visibility = View.VISIBLE
-            if (etapa != etapaActual) VistasFriccion.aplicarEtapa(caja, etapa)
-            caja.text = VistasFriccion.texto(segundos, swipesPorMinuto)
-            val progreso = segundos / (Config.MIN_DECISION * 60f)
-            cielo.alpha = (progreso * Config.OPACIDAD_MAX_CIELO).coerceIn(0f, Config.OPACIDAD_MAX_CIELO)
-        }
-        etapaActual = etapa
-
-        // Misma regla que el servicio, suponiendo que el arrastre fue seguido.
-        val auto = when {
-            segundos == 0L -> EstadoMascota.TRANQUILA
-            segundos < Config.LIMITE_ARRASTRE_S -> EstadoMascota.ALERTA
-            else -> EstadoMascota.DETENIDA
-        }
-        val estadoMascota = mascotaForzada ?: auto
-        mascota.estado = estadoMascota
-        mascota.visibility = if (estadoMascota == EstadoMascota.OCULTA) View.GONE else View.VISIBLE
-
-        val nombreMascota = estadoMascota.name.lowercase() + if (mascotaForzada != null) " (fija)" else ""
-        estado.text = when (etapa) {
-            EtapaCaja.OCULTO -> "antes del primer swipe · $nombreMascota"
-            EtapaCaja.ESPEJO -> "espejo · cielo %.2f · %s".format(cielo.alpha, nombreMascota)
-            EtapaCaja.PRESENCIA -> "presencia · cielo %.2f · %s".format(cielo.alpha, nombreMascota)
-        }
+        burbuja.mostrarDatos(FormatoBrief.reloj(segundos * 1000), "%.0f".format(swipesPorMinuto))
+        val progreso = segundos / (Config.MIN_DECISION * 60f)
+        cielo.alpha = (progreso * Config.OPACIDAD_MAX_CIELO).coerceIn(0f, Config.OPACIDAD_MAX_CIELO)
+        estado.text = if (segundos == 0L) "antes del primer swipe" else "cielo %.2f".format(cielo.alpha)
     }
 
     /** El resumen de salida, con los numeros del deslizador (o los del wireframe, en 0). */
@@ -221,12 +174,11 @@ class MainActivity : Activity() {
             addView(boton("Resumen") { mostrarResumen() }, peso())
         }
 
-        // Fijar la mascota en un estado, o devolverla al deslizador (auto).
-        val estadosMascota = LinearLayout(this).apply {
+        // Cada momento que agranda la burbuja.
+        val momentos = LinearLayout(this).apply {
             orientation = LinearLayout.HORIZONTAL
-            addView(boton("auto") { mascotaForzada = null; actualizar() }, peso())
-            for (e in EstadoMascota.values()) {
-                addView(boton(e.name.lowercase()) { mascotaForzada = e; actualizar() }, peso())
+            for (m in Momento.values()) {
+                addView(boton(m.name.lowercase().replace('_', ' ')) { burbuja.expandir(m) }, peso())
             }
         }
 
@@ -240,8 +192,8 @@ class MainActivity : Activity() {
             addView(etiquetaRitmo, conMargen(dp(4)))
             addView(ritmo)
             addView(atajos, conMargen(dp(8)))
-            addView(texto("mascota", 13f), conMargen(dp(8)))
-            addView(estadosMascota)
+            addView(texto("burbuja", 13f), conMargen(dp(8)))
+            addView(momentos)
         }
     }
 
@@ -297,7 +249,7 @@ class MainActivity : Activity() {
     private fun dp(valor: Int) = (valor * resources.displayMetrics.density).toInt()
 
     /**
-     * En el celular la caja se mide desde el borde de arriba de la pantalla.
+     * En el celular la burbuja se mide desde el borde de arriba de la pantalla.
      * Para que caiga en el mismo lugar, esta pantalla tambien se dibuja detras
      * de la barra de estado.
      */

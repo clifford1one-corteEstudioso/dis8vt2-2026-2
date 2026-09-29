@@ -10,7 +10,7 @@ Se instala al lado de la fase 05 (`com.love.yourself.fase06`, se llama **Love Yo
 | --- | --- | --- |
 | Dónde mide | cualquier scroll, cualquier app | solo apps marcadas, solo scroll a **pantalla completa** |
 | Qué cuenta el reloj | tiempo desde el primer scroll | tiempo **arrastrado**. Mensajes y búsqueda no suman |
-| Mascota | — | lee; levanta la vista con el primer swipe; deja el libro al minuto de arrastre |
+| Arriba | caja de texto | burbuja con 2 datos; se agranda con la mascota en ciertos momentos |
 | Al salir | nada | resumen (WF3): arrastrado vs buscado + semana |
 | Pausas | contaban | bloquear o ir a otra app no suma |
 | Modo dev | — | reloj acelerado y forzar pantallas |
@@ -21,10 +21,9 @@ Apps marcadas de fábrica: Instagram, TikTok, YouTube, Facebook, X. Se editan en
 
 | Cuándo | Qué |
 | --- | --- |
-| Abres una app marcada | Mascota leyendo |
-| Primer swipe a pantalla completa | Levanta la vista. Aparece la caja |
-| 1 min de arrastre seguido | Deja el libro. No se pone triste: solo no puede seguir |
-| 5 min de arrastre | Caja grande. El cielo se va asomando |
+| Abres una app marcada | Burbuja: tiempo arrastrado · swipes por minuto |
+| Primer swipe a pantalla completa | La burbuja salta, se agranda, y el cerebro pasa de *sus* a *sad* con un diálogo. A los 4 s se recoge |
+| Con el arrastre | El cielo se va asomando |
 | 15 min de arrastre | Decisión: seguir o salir |
 | Inicio / recientes / bloqueo > 3 min / "Salir" | Resumen (si hubo ≥ 1 min de arrastre) |
 | Otra app > 30 s | Cierra en silencio |
@@ -47,8 +46,25 @@ Casilla en la pantalla de la app, antes del modo investigación.
 
 - **Reloj acelerado** x1 / x10 / x60. Acelera los contadores, no a ti: mirar un reel, responder un mensaje o bloquear se siguen midiendo en segundos reales. A x10 la decisión llega a los 90 s. Lo medido acelerado va a una semana aparte (`dev ×10` en el resumen).
 - **Forzar** decisión y resumen, sin sesión.
-- **Mascota** en sus tres estados.
-- La caja aparece desde que abres la app marcada, con: velocidad, estado de la mascota, arrastrado, buscado y fracción del último scroll.
+- **Burbuja**: un botón por momento, para ver la animación sin esperar.
+- Debajo de la burbuja, una caja con: velocidad, arrastrado, buscado y fracción del último scroll.
+
+## burbuja
+
+Sale del frame *animacion burbuja oficial* de Figma. Tiempos copiados del prototipo:
+
+| ms | qué pasa |
+| --- | --- |
+| 190–475 | se apagan los datos |
+| 595–800 | saltito de 17 dp |
+| 800–1000 | crece en alto (32 → 88) |
+| 1000–1190 | crece en ancho (153 → 361) |
+| 1190–1400 | aparece la mascota y el diálogo |
+| +4 s | se recoge: lo mismo al revés, sin salto |
+
+Alto expandido 88 como en el frame con los cerebros (el prototipo llega a 60).
+
+**Cerebros:** `res/drawable-nodpi/brain_sus.png` y `brain_sad.png`, sacados de Figma a 93×60 px, se ven borrosos. Reemplázalos por los de `sesion-06/avance/brains-ilust` con el mismo nombre (en minúscula, con `_`), en las dos apps.
 
 ## probado
 
@@ -67,7 +83,7 @@ lab/
 ├── AcumuladoSemanal.kt  arrastre por día
 │
 │  idénticos en la app de diseño (sesion-06/love-yourself-ui):
-├── Config.kt  VistasFriccion.kt  CieloView.kt  MascotaView.kt
+├── Config.kt  VistasFriccion.kt  CieloView.kt  BurbujaView.kt
 ├── VistaBrief.kt  BarraOrigen.kt  ColoresBrief.kt  FormatoBrief.kt
 │
 └── CapturaContinuaService.kt, DetectorCortes.kt, RegistroCsv.kt   modo investigación (igual que fase 05)
@@ -79,4 +95,6 @@ La pantalla de la app ya no usa Compose: vistas simples, igual que las capas.
 
 - Qué hace "Salir" (hoy: manda al inicio).
 - "Oscuridad" en el resumen sigue en `—`.
-- Dónde va la mascota: arriba a la izquierda es provisorio (`VistasFriccion.kt`).
+- Qué otros momentos agrandan la burbuja. Se agregan en `Momento`, al inicio de `BurbujaView.kt`.
+- El cerebro *sad* es provisorio: contradice que la mascota no juzga.
+- La burbuja a 21 dp del borde puede quedar bajo la barra de estado de Android (`MARGEN_SUPERIOR_DP`).

@@ -172,7 +172,7 @@ Me inclino por la segunda, y el argumento es de la tesis: **scrollear no es el p
 
 ## v6 — arrastre vs intención, mascota, resumen, modo dev
 
-Rama `version-6`. [README](files/love-yourself-fase-06/README.md)
+Movida a `sesion-06/`. [README](../../sesion-06/love-yourself-fase-06/README.md)
 
 - Cierra el paso 3: solo apps marcadas (lista editable) **y** solo scroll a pantalla completa. Accesibilidad mide cuánto ocupa la zona que se desliza, no qué muestra.
 - Todo responde al tiempo **arrastrado**, no al tiempo en la app.

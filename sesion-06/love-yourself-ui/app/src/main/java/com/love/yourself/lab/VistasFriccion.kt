@@ -26,15 +26,6 @@ object VistasFriccion {
     const val GRAVEDAD_CAJA = Gravity.TOP or Gravity.CENTER_HORIZONTAL
     const val MARGEN_SUPERIOR_CAJA_PX = 120
 
-    /**
-     * Donde va la mascota. Provisorio: cualquier lugar tapa algo de Instagram
-     * (arriba el titulo, a la derecha los botones, abajo el texto del reel).
-     * Los toques pasan de largo igual.
-     */
-    const val GRAVEDAD_MASCOTA = Gravity.TOP or Gravity.START
-    const val MASCOTA_LADO_DP = 76
-    const val MASCOTA_MARGEN_X_DP = 8
-    const val MASCOTA_MARGEN_Y_DP = 96
 
     fun caja(context: Context): TextView = TextView(context).apply {
         setTextColor(Color.WHITE)

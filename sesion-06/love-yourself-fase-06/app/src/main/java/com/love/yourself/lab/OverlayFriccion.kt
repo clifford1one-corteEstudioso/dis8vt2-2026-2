@@ -3,19 +3,19 @@ package com.love.yourself.lab
 import android.content.Context
 import android.graphics.PixelFormat
 import android.os.Build
+import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
 import android.widget.TextView
 
 /**
  * Pone la friccion encima de las otras apps. Solo maneja ventanas: como se ve
- * cada cosa esta en VistasFriccion.kt, CieloView.kt y MascotaView.kt.
+ * cada cosa esta en BurbujaView.kt, VistasFriccion.kt y CieloView.kt.
  *
- *   MASCOTA    lee mientras la app se usa con intencion; deja el libro con el arrastre
- *   ESPEJO     caja discreta, informa
- *   PRESENCIA  caja mas grande, cuesta ignorarla
+ *   BURBUJA    arriba, siempre: tiempo y ritmo. Se agranda con la mascota en ciertos momentos
  *   CIELO      se va haciendo visible a medida que pasa el tiempo
  *   DECISION   pantalla completa, obliga a elegir
+ *   CAJA       solo en modo dev: datos para calibrar
  *
  * Ninguna bloquea la app de abajo.
  */
@@ -24,9 +24,9 @@ class OverlayFriccion(private val context: Context) {
     /**
      * El orden de las capas, de abajo hacia arriba. Android pone encima la
      * ultima ventana agregada, asi que agregar una capa obliga a volver a subir
-     * las que van sobre ella. Si no, el cielo taparia a la mascota.
+     * las que van sobre ella. Si no, el cielo taparia la burbuja.
      */
-    private enum class Capa { CIELO, CAJA, MASCOTA, DECISION }
+    private enum class Capa { CIELO, CAJA, BURBUJA, DECISION }
 
     private val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
     private val densidad = context.resources.displayMetrics.density
@@ -86,7 +86,7 @@ class OverlayFriccion(private val context: Context) {
 
     fun quitarCielo() = quitar(Capa.CIELO)
 
-    // ---- caja de datos ----
+    // ---- caja de datos (modo dev) ----
 
     fun mostrarCaja(etapa: EtapaCaja, texto: String) {
         if (etapa == EtapaCaja.OCULTO) {
@@ -99,7 +99,8 @@ class OverlayFriccion(private val context: Context) {
                 WindowManager.LayoutParams.WRAP_CONTENT
             ).apply {
                 gravity = VistasFriccion.GRAVEDAD_CAJA
-                y = VistasFriccion.MARGEN_SUPERIOR_CAJA_PX
+                // Debajo de la burbuja expandida.
+                y = dp(BurbujaView.MARGEN_SUPERIOR_DP.toInt() + 96)
             }
             agregar(Capa.CAJA, VistasFriccion.caja(context), p)
             etapaActual = EtapaCaja.ESPEJO
@@ -117,24 +118,24 @@ class OverlayFriccion(private val context: Context) {
         etapaActual = EtapaCaja.OCULTO
     }
 
-    // ---- mascota ----
+    // ---- burbuja ----
 
-    fun mostrarMascota(estado: EstadoMascota) {
-        if (estado == EstadoMascota.OCULTA) {
-            quitar(Capa.MASCOTA)
-            return
+    private fun burbuja(): BurbujaView {
+        if (Capa.BURBUJA !in capas) {
+            val p = paramsAtravesables(
+                WindowManager.LayoutParams.WRAP_CONTENT,
+                WindowManager.LayoutParams.WRAP_CONTENT
+            ).apply { gravity = Gravity.TOP or Gravity.CENTER_HORIZONTAL }
+            agregar(Capa.BURBUJA, BurbujaView(context), p)
         }
-        if (Capa.MASCOTA !in capas) {
-            val lado = dp(VistasFriccion.MASCOTA_LADO_DP)
-            val p = paramsAtravesables(lado, lado).apply {
-                gravity = VistasFriccion.GRAVEDAD_MASCOTA
-                x = dp(VistasFriccion.MASCOTA_MARGEN_X_DP)
-                y = dp(VistasFriccion.MASCOTA_MARGEN_Y_DP)
-            }
-            agregar(Capa.MASCOTA, MascotaView(context), p)
-        }
-        (capas.getValue(Capa.MASCOTA).first as MascotaView).estado = estado
+        return capas.getValue(Capa.BURBUJA).first as BurbujaView
     }
+
+    fun mostrarBurbuja(tiempo: String, ritmo: String) = burbuja().mostrarDatos(tiempo, ritmo)
+
+    fun expandirBurbuja(momento: Momento) = burbuja().expandir(momento)
+
+    fun quitarBurbuja() = quitar(Capa.BURBUJA)
 
     // ---- momento de decision ----
 
