@@ -117,15 +117,19 @@ class OverlayFriccion(private val context: Context) {
 
     fun quitarBurbuja() = quitar(Capa.BURBUJA)
 
+    /** Si la burbuja esta agrandada, hablando. */
+    fun burbujaExpandida(): Boolean = (capas[Capa.BURBUJA]?.first as? BurbujaView)?.expandida() == true
+
     // ---- cielo ----
 
     fun cieloVisible(): Boolean = Capa.CIELO in capas
 
     /** El cielo a pantalla completa. Recibe toques: hay que poder elegir. */
-    fun mostrarCielo(minutos: Long, alSeguir: () -> Unit, alSalir: () -> Unit) {
+    fun mostrarCielo(minutos: Long, cara: Int, alSeguir: () -> Unit, alSalir: () -> Unit) {
         if (cieloVisible()) return
         val vista = VistaCielo(context).crear(
             minutos,
+            cara,
             alSeguir = {
                 quitar(Capa.CIELO)
                 alSeguir()

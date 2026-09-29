@@ -34,7 +34,7 @@ Los permisos se saltan si ya están dados. "Volver a la bienvenida" en la pantal
 | --- | --- |
 | Abres una app marcada | Burbuja: tiempo en la app · swipes por minuto |
 | Primer swipe a pantalla completa | La burbuja salta, se agranda, y el cerebro pasa de *sus* a *sad* con un diálogo. A los 4 s se recoge |
-| 10 min en la app (si hubo arrastre) | El cielo (Figma *sky*) a pantalla completa: mensaje, clima fijo, Seguir / Salir. Seguir lo aplaza 10 min |
+| 10 min en la app (si hubo arrastre) | El cielo (Figma *sky*) a pantalla completa: mensaje, clima fijo, el cerebro sentado en una nube, Seguir / Salir. Seguir lo aplaza 10 min. Si la mascota está hablando, el cielo espera a que termine |
 | Inicio / recientes / bloqueo > 3 min / "Salir" | Resumen (si hubo ≥ 1 min de arrastre) |
 | Otra app > 30 s | Cierra en silencio |
 

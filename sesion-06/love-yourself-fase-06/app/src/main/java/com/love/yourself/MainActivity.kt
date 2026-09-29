@@ -230,7 +230,7 @@ class MainActivity : Activity() {
             "Cielo" to {
                 if (!puedeDibujar) sinPermiso() else {
                     val f = friccionDePrueba ?: OverlayFriccion(this).also { friccionDePrueba = it }
-                    f.mostrarCielo(Config.MIN_CIELO.toLong(), alSeguir = {}, alSalir = {})
+                    f.mostrarCielo(Config.MIN_CIELO.toLong(), CaraProgresiva.para(true, Config.MIN_CIELO * 60_000L), alSeguir = {}, alSalir = {})
                 }
             },
             "Resumen" to {

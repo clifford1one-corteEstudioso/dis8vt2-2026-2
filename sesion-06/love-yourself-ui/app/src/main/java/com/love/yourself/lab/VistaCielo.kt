@@ -9,6 +9,7 @@ import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 
@@ -27,9 +28,24 @@ class VistaCielo(private val context: Context) {
     private fun x(v: Float) = (v / 1440f * ancho).toInt()
     private fun y(v: Float) = (v / 3120f * alto).toInt()
 
-    fun crear(minutos: Long, alSeguir: () -> Unit, alSalir: () -> Unit): FrameLayout {
+    /** @param cara el cerebro que se sienta en la nube (un drawable). 0 = sin cerebro. */
+    fun crear(minutos: Long, cara: Int, alSeguir: () -> Unit, alSalir: () -> Unit): FrameLayout {
         val raiz = FrameLayout(context).apply { isClickable = true }
         raiz.addView(CieloView(context), completo())
+
+        // El cerebro, sentado sobre la nube de la izquierda, mirando el cielo.
+        if (cara != 0) {
+            raiz.addView(
+                ImageView(context).apply {
+                    setImageResource(cara)
+                    adjustViewBounds = true
+                },
+                FrameLayout.LayoutParams(x(360f), ViewGroup.LayoutParams.WRAP_CONTENT).apply {
+                    leftMargin = x(120f)
+                    topMargin = y(880f)
+                }
+            )
+        }
 
         // Mensaje, arriba a la izquierda.
         raiz.addView(

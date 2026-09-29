@@ -178,6 +178,7 @@ class MainActivity : Activity() {
         if (cieloPantalla != null) return
         val vista = VistaCielo(this).crear(
             segundos / 60,
+            CaraProgresiva.para(true, maxOf(segundos, Config.MIN_CIELO * 60L) * 1000),
             alSeguir = { quitarCielo() },
             alSalir = {
                 // En el celular, salir cierra la sesion. Aca vuelve a cero.

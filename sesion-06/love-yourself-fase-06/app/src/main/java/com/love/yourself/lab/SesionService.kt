@@ -363,14 +363,21 @@ class SesionService : AccessibilityService() {
         // En modo dev, debajo, una caja con lo que mide cada scroll.
         if (ajustes.modoDev) ov.mostrarCaja(EtapaCaja.ESPEJO, lineaDev(v)) else ov.mostrarCaja(EtapaCaja.OCULTO, "")
 
-        hablaLaMascota(v, ahora)
-
         // El cielo cuenta tiempo en la app, pero solo si hubo arrastre.
-        if (!v.sesionIniciada || v.totalMs < v.proximoCieloMs) return
+        val tocaCielo = v.sesionIniciada && v.totalMs >= v.proximoCieloMs
+        if (!tocaCielo) {
+            hablaLaMascota(v, ahora)
+            return
+        }
+        // Si la mascota esta hablando, el cielo espera a que termine: no la
+        // tapa a mitad de frase. Mientras tanto no empieza ningun momento nuevo.
+        if (ov.burbujaExpandida()) return
+
         val minutos = v.totalMs / 60_000
         DiarioDev.anotar("cielo a los $minutos min")
         ov.mostrarCielo(
             minutos = minutos,
+            cara = CaraProgresiva.para(true, v.totalMs),
             alSeguir = {
                 // No castiga la eleccion: solo aplaza. Preguntar de nuevo al
                 // tiro convertiria la friccion en hostigamiento.
