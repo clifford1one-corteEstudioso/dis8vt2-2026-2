@@ -6,8 +6,6 @@ import android.graphics.Typeface
 import android.graphics.drawable.GradientDrawable
 import android.util.TypedValue
 import android.view.Gravity
-import android.widget.Button
-import android.widget.LinearLayout
 import android.widget.TextView
 
 enum class EtapaCaja { OCULTO, ESPEJO, PRESENCIA }
@@ -64,61 +62,5 @@ object VistasFriccion {
             }
             EtapaCaja.OCULTO -> {}
         }
-    }
-
-    /**
-     * La pantalla de decision. No prohibe, devuelve la decision: por eso
-     * "Seguir" siempre esta disponible y no cuesta mas que "Salir".
-     */
-    fun decision(
-        context: Context,
-        minutos: Long,
-        alSeguir: () -> Unit,
-        alSalir: () -> Unit
-    ): LinearLayout {
-        val fondo = LinearLayout(context).apply {
-            orientation = LinearLayout.VERTICAL
-            gravity = Gravity.CENTER
-            setBackgroundColor(Color.argb(242, 8, 8, 10))
-            setPadding(80, 0, 80, 0)
-        }
-
-        fondo.addView(TextView(context).apply {
-            text = "Llevas $minutos minutos aquí."
-            setTextColor(Color.WHITE)
-            setTextSize(TypedValue.COMPLEX_UNIT_SP, 26f)
-            gravity = Gravity.CENTER
-        })
-
-        fondo.addView(TextView(context).apply {
-            text = "\n¿Querías estar todo este rato?\n"
-            setTextColor(Color.argb(170, 255, 255, 255))
-            setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
-            gravity = Gravity.CENTER
-            setPadding(0, 24, 0, 56)
-        })
-
-        // Los dos botones pesan lo mismo a proposito. El proyecto devuelve la
-        // decision; no la toma por el usuario ni lo empuja hacia un lado.
-        fondo.addView(boton(context, "Seguir", alSeguir))
-        fondo.addView(boton(context, "Salir", alSalir))
-        return fondo
-    }
-
-    private fun boton(context: Context, texto: String, alTocar: () -> Unit) = Button(context).apply {
-        text = texto
-        setTextColor(Color.WHITE)
-        setTextSize(TypedValue.COMPLEX_UNIT_SP, 17f)
-        setPadding(0, 34, 0, 34)
-        background = GradientDrawable().apply {
-            cornerRadius = 18f
-            setColor(Color.TRANSPARENT)
-            setStroke(3, Color.argb(200, 255, 255, 255))
-        }
-        layoutParams = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT
-        ).apply { setMargins(0, 18, 0, 18) }
-        setOnClickListener { alTocar() }
     }
 }

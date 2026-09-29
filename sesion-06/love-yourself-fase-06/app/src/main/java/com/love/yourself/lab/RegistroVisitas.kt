@@ -31,11 +31,8 @@ class Visita(val app: String, val entradaMs: Long) {
     var sesionIniciada = false
         internal set
 
-    /**
-     * En tiempo arrastrado, no de reloj: la decision responde al arrastre, no
-     * al uso con intencion. Quien pasa 15 min respondiendo mensajes no la ve.
-     */
-    var proximaDecisionMs = Config.MIN_DECISION * 60_000L
+    /** Cuando aparece el cielo, en tiempo en la app (totalMs). */
+    var proximoCieloMs = Config.MIN_CIELO * 60_000L
 
     /**
      * Cuando empezo el arrastre actual, en tiempo acumulado. -1 si no hay

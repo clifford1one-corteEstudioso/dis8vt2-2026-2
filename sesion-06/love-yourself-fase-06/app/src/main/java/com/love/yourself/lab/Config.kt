@@ -58,27 +58,26 @@ object Config {
     /** Segundos de arrastre seguido hasta que la mascota deja su actividad. */
     const val LIMITE_ARRASTRE_S = 60
 
-    // ---- la caja, el cielo y la decision ----
-
-    /** Minutos hasta que la caja pasa de espejo discreto a presencia. */
-    const val MIN_PRESENCIA = 5
-
-    /** Minutos hasta el momento de decision a pantalla completa. */
-    const val MIN_DECISION = 15
+    // ---- el cielo ----
 
     /**
-     * Si el usuario elige seguir, cuantos minutos hasta volver a preguntar.
+     * Minutos en la app hasta que aparece el cielo a pantalla completa, con
+     * "seguir" o "salir". Cuenta desde que se abre la app, pero solo si hubo
+     * arrastre: diez minutos respondiendo mensajes no lo muestran.
+     */
+    const val MIN_CIELO = 10
+
+    /**
+     * Si el usuario elige seguir, cuantos minutos hasta volver a mostrarlo.
      * Preguntar muy seguido convierte la friccion en hostigamiento y termina
      * en desinstalar la app.
      */
     const val MIN_REPREGUNTA = 10
 
-    /**
-     * Opacidad maxima del cielo, a la que llega a los MIN_DECISION minutos.
-     * No puede pasar de 0.8: desde Android 12, una capa de otra app mas opaca
-     * que eso bloquea los toques, e Instagram dejaria de responder.
-     */
-    const val OPACIDAD_MAX_CIELO = 0.7f
+    /** Lo que dice el cielo. Provisorio, igual que el clima: todavia es fijo. */
+    const val TEXTO_CIELO = "Hay un hermoso día afuera!"
+    const val CLIMA_TEMPERATURA = "26°C"
+    const val CLIMA_LUGAR = "Santiago"
 
     /** Ventana movil para el ritmo de swipes, en segundos. */
     const val VENTANA_RITMO_S = 60

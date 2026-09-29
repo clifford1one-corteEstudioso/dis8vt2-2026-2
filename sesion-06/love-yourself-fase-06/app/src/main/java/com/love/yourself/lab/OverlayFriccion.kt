@@ -10,23 +10,22 @@ import android.widget.TextView
 
 /**
  * Pone la friccion encima de las otras apps. Solo maneja ventanas: como se ve
- * cada cosa esta en BurbujaView.kt, VistasFriccion.kt y CieloView.kt.
+ * cada cosa esta en BurbujaView.kt, VistaCielo.kt y VistasFriccion.kt.
  *
- *   BURBUJA    arriba, siempre: tiempo y ritmo. Se agranda con la mascota en ciertos momentos
- *   CIELO      se va haciendo visible a medida que pasa el tiempo
- *   DECISION   pantalla completa, obliga a elegir
  *   CAJA       solo en modo dev: datos para calibrar
+ *   BURBUJA    arriba, siempre: tiempo y ritmo. Se agranda con la mascota en ciertos momentos
+ *   CIELO      a los MIN_CIELO minutos, pantalla completa: seguir o salir
  *
- * Ninguna bloquea la app de abajo.
+ * Solo el cielo recibe toques; lo demas deja usar la app de abajo.
  */
 class OverlayFriccion(private val context: Context) {
 
     /**
      * El orden de las capas, de abajo hacia arriba. Android pone encima la
      * ultima ventana agregada, asi que agregar una capa obliga a volver a subir
-     * las que van sobre ella. Si no, el cielo taparia la burbuja.
+     * las que van sobre ella. Si no, la caja dev taparia la burbuja.
      */
-    private enum class Capa { CIELO, CAJA, BURBUJA, DECISION }
+    private enum class Capa { CAJA, BURBUJA, CIELO }
 
     private val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
     private val densidad = context.resources.displayMetrics.density
@@ -66,25 +65,6 @@ class OverlayFriccion(private val context: Context) {
     }
 
     private fun dp(valor: Int) = (valor * densidad).toInt()
-
-    // ---- cielo ----
-
-    fun mostrarCielo(opacidad: Float) {
-        if (Capa.CIELO !in capas) {
-            val p = paramsAtravesables(
-                WindowManager.LayoutParams.MATCH_PARENT,
-                WindowManager.LayoutParams.MATCH_PARENT
-            ).apply { alpha = 0f }
-            agregar(Capa.CIELO, CieloView(context), p)
-        }
-        val (v, p) = capas.getValue(Capa.CIELO)
-        val nueva = opacidad.coerceIn(0f, Config.OPACIDAD_MAX_CIELO)
-        if (nueva == p.alpha) return
-        p.alpha = nueva
-        wm.updateViewLayout(v, p)
-    }
-
-    fun quitarCielo() = quitar(Capa.CIELO)
 
     // ---- caja de datos (modo dev) ----
 
@@ -137,21 +117,21 @@ class OverlayFriccion(private val context: Context) {
 
     fun quitarBurbuja() = quitar(Capa.BURBUJA)
 
-    // ---- momento de decision ----
+    // ---- cielo ----
 
-    fun decisionVisible(): Boolean = Capa.DECISION in capas
+    fun cieloVisible(): Boolean = Capa.CIELO in capas
 
-    fun mostrarDecision(minutos: Long, alSeguir: () -> Unit, alSalir: () -> Unit) {
-        if (decisionVisible()) return
-        val vista = VistasFriccion.decision(
-            context,
+    /** El cielo a pantalla completa. Recibe toques: hay que poder elegir. */
+    fun mostrarCielo(minutos: Long, alSeguir: () -> Unit, alSalir: () -> Unit) {
+        if (cieloVisible()) return
+        val vista = VistaCielo(context).crear(
             minutos,
             alSeguir = {
-                quitar(Capa.DECISION)
+                quitar(Capa.CIELO)
                 alSeguir()
             },
             alSalir = {
-                quitar(Capa.DECISION)
+                quitar(Capa.CIELO)
                 alSalir()
             }
         )
@@ -159,11 +139,10 @@ class OverlayFriccion(private val context: Context) {
             WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.MATCH_PARENT,
             tipoVentana,
-            // Esta si recibe toques: hay que poder elegir.
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
             PixelFormat.TRANSLUCENT
         )
-        agregar(Capa.DECISION, vista, params)
+        agregar(Capa.CIELO, vista, params)
     }
 
     fun ocultarTodo() {

@@ -16,14 +16,13 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.SeekBar
 import android.widget.TextView
-import com.love.yourself.lab.CieloView
 import com.love.yourself.lab.Config
 import com.love.yourself.lab.DatosBrief
 import com.love.yourself.lab.BurbujaView
 import com.love.yourself.lab.FormatoBrief
 import com.love.yourself.lab.Momento
 import com.love.yourself.lab.VistaBrief
-import com.love.yourself.lab.VistasFriccion
+import com.love.yourself.lab.VistaCielo
 
 /**
  * App solo de diseno. Muestra las mismas vistas que la app real, pero dentro
@@ -34,11 +33,10 @@ import com.love.yourself.lab.VistasFriccion
  * copia entero a la app real.
  *
  * Capas, de abajo hacia arriba, en el mismo orden que en el celular:
- *   reel de mentira -> cielo -> burbuja -> decision / resumen -> panel
+ *   reel de mentira -> burbuja -> cielo / resumen -> panel
  */
 class MainActivity : Activity() {
 
-    private lateinit var cielo: CieloView
     private lateinit var burbuja: BurbujaView
     private lateinit var raiz: FrameLayout
     private lateinit var panel: LinearLayout
@@ -46,7 +44,8 @@ class MainActivity : Activity() {
 
     private var segundos = 0L
     private var swipesPorMinuto = 12.0
-    private var decision: View? = null
+    private var cieloPantalla: View? = null
+    private var cieloYaSalio = false
     private var resumen: View? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,9 +54,6 @@ class MainActivity : Activity() {
 
         raiz = FrameLayout(this)
         raiz.addView(FondoReel(this), completo())
-
-        cielo = CieloView(this).apply { alpha = 0f }
-        raiz.addView(cielo, completo())
 
         // Misma posicion que en el celular: arriba al centro.
         burbuja = BurbujaView(this)
@@ -92,9 +88,14 @@ class MainActivity : Activity() {
     /** Aplica el estado actual a la burbuja y al cielo, con las mismas reglas del servicio. */
     private fun actualizar() {
         burbuja.mostrarDatos(FormatoBrief.reloj(segundos * 1000), "%.0f".format(swipesPorMinuto))
-        val progreso = segundos / (Config.MIN_DECISION * 60f)
-        cielo.alpha = (progreso * Config.OPACIDAD_MAX_CIELO).coerceIn(0f, Config.OPACIDAD_MAX_CIELO)
-        estado.text = if (segundos == 0L) "antes del primer swipe" else "cielo %.2f".format(cielo.alpha)
+        // Igual que en el celular: el cielo aparece solo al llegar a MIN_CIELO.
+        val limite = Config.MIN_CIELO * 60L
+        if (segundos >= limite && !cieloYaSalio) {
+            cieloYaSalio = true
+            mostrarCielo()
+        }
+        if (segundos < limite) cieloYaSalio = false
+        estado.text = if (segundos < limite) "cielo en %d:%02d".format((limite - segundos) / 60, (limite - segundos) % 60) else "después del cielo"
     }
 
     /** El resumen de salida, con los numeros del deslizador (o los del wireframe, en 0). */
@@ -121,26 +122,25 @@ class MainActivity : Activity() {
         resumen = vista
     }
 
-    private fun mostrarDecision() {
-        if (decision != null) return
-        val vista = VistasFriccion.decision(
-            this,
+    private fun mostrarCielo() {
+        if (cieloPantalla != null) return
+        val vista = VistaCielo(this).crear(
             segundos / 60,
-            alSeguir = { quitarDecision() },
+            alSeguir = { quitarCielo() },
             alSalir = {
                 // En el celular, salir cierra la sesion. Aca vuelve a cero.
-                quitarDecision()
+                quitarCielo()
                 deslizadorTiempo?.progress = 0
             }
         )
         // Se agrega debajo del panel, igual que en el celular queda sobre todo lo demas.
         raiz.addView(vista, raiz.indexOfChild(panel), completo())
-        decision = vista
+        cieloPantalla = vista
     }
 
-    private fun quitarDecision() {
-        decision?.let { raiz.removeView(it) }
-        decision = null
+    private fun quitarCielo() {
+        cieloPantalla?.let { raiz.removeView(it) }
+        cieloPantalla = null
     }
 
     // ---- panel de control ----
@@ -192,9 +192,8 @@ class MainActivity : Activity() {
                 if (corriendo) reloj.postDelayed(tic, 1000L)
             }, peso())
             addView(boton("0:00") { tiempo.progress = 0 }, peso())
-            addView(boton("${Config.MIN_PRESENCIA} min") { tiempo.progress = Config.MIN_PRESENCIA * 60 }, peso())
-            addView(boton("${Config.MIN_DECISION} min") { tiempo.progress = Config.MIN_DECISION * 60 }, peso())
-            addView(boton("Decisión") { mostrarDecision() }, peso())
+            addView(boton("${Config.MIN_CIELO} min") { tiempo.progress = Config.MIN_CIELO * 60 }, peso())
+            addView(boton("Cielo") { mostrarCielo() }, peso())
             addView(boton("Resumen") { mostrarResumen() }, peso())
         }
 
@@ -289,7 +288,7 @@ class MainActivity : Activity() {
     }
 
     private companion object {
-        /** Un poco mas que la decision, para ver que pasa despues. */
+        /** Un poco mas que el cielo, para ver que pasa despues. */
         const val TIEMPO_MAX_S = 20 * 60
 
         /** El resumen necesita algo de tiempo buscado; en el celular sale de la sesion real. */

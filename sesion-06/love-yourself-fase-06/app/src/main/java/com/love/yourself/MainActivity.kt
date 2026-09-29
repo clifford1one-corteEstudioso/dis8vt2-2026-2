@@ -134,8 +134,7 @@ class MainActivity : Activity() {
         parrafo(
             "· En una app marcada: arriba, una burbuja con el tiempo y el ritmo.\n" +
                 "· Primer deslizamiento a pantalla completa: la burbuja se agranda y aparece la mascota.\n" +
-                "· Con el arrastre, el cielo se va asomando.\n" +
-                "· A los ${Config.MIN_DECISION} min de arrastre: pantalla completa, seguir o salir.\n" +
+                "· A los ${Config.MIN_CIELO} min en la app (si hubo arrastre): el cielo a pantalla completa, seguir o salir.\n" +
                 "· Al salir al inicio: el resumen.\n" +
                 "Nunca bloquea. Solo devuelve la decisión."
         )
@@ -207,7 +206,7 @@ class MainActivity : Activity() {
         parrafo(
             "Acelera los contadores, no a ti: tus gestos y pausas (mirar un reel, " +
                 "responder un mensaje, bloquear) se siguen midiendo en segundos reales. " +
-                "A x10 la decisión llega a los 90 s de arrastre. Lo que midas así va a " +
+                "A x10 el cielo llega al minuto. Lo que midas así va a " +
                 "una semana aparte y el resumen dice \"dev\"."
         )
         fila(listOf(1, 10, 60).map { f ->
@@ -221,10 +220,10 @@ class MainActivity : Activity() {
         titulo("Forzar pantallas")
         val sinPermiso = { Toast.makeText(this, "Falta el permiso 1.", Toast.LENGTH_SHORT).show() }
         fila(listOf(
-            "Decisión" to {
+            "Cielo" to {
                 if (!puedeDibujar) sinPermiso() else {
                     val f = friccionDePrueba ?: OverlayFriccion(this).also { friccionDePrueba = it }
-                    f.mostrarDecision(Config.MIN_DECISION.toLong(), alSeguir = {}, alSalir = {})
+                    f.mostrarCielo(Config.MIN_CIELO.toLong(), alSeguir = {}, alSalir = {})
                 }
             },
             "Resumen" to {

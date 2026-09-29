@@ -27,8 +27,8 @@ import kotlin.math.abs
  *
  * Capas de friccion, de menos a mas:
  *  - siempre en una app vigilada: la burbuja con tiempo y ritmo
- *  - primer swipe: la burbuja se agranda y aparece la mascota. Empieza el cielo
- *  - a los 15 min de arrastre: la pantalla de decision
+ *  - primer swipe: la burbuja se agranda y aparece la mascota
+ *  - a los 10 min en la app: el cielo a pantalla completa, seguir o salir
  *  - al salir: el resumen
  */
 class SesionService : AccessibilityService() {
@@ -337,54 +337,40 @@ class SesionService : AccessibilityService() {
             ov.ocultarTodo()
             return
         }
-        if (ov.decisionVisible()) return
+        if (ov.cieloVisible()) return
 
-        // Todo responde al tiempo arrastrado, no al tiempo en la app.
-        val segundos = v.arrastradoMs / 1000
-        val minutos = segundos / 60
-
-        // La burbuja esta siempre que haya una app vigilada adelante. Muestra el
-        // tiempo en la app (corre siempre); el arrastrado queda para el cielo,
-        // la decision y el resumen.
+        // La burbuja esta siempre que haya una app vigilada adelante: tiempo en
+        // la app y ritmo. El arrastrado queda para el resumen.
         ov.mostrarBurbuja(FormatoBrief.reloj(v.totalMs), "%.0f".format(registro.ritmoPorMinuto(ahora)))
 
         // En modo dev, debajo, una caja con lo que mide cada scroll.
-        val dev = ajustes.modoDev
-        if (dev) ov.mostrarCaja(EtapaCaja.ESPEJO, lineaDev(v)) else ov.mostrarCaja(EtapaCaja.OCULTO, "")
+        if (ajustes.modoDev) ov.mostrarCaja(EtapaCaja.ESPEJO, lineaDev(v)) else ov.mostrarCaja(EtapaCaja.OCULTO, "")
 
-        if (!v.sesionIniciada) {
-            ov.quitarCielo()
-            return
-        }
-
-        if (v.arrastradoMs >= v.proximaDecisionMs) {
-            ov.mostrarDecision(
-                minutos = minutos,
-                alSeguir = {
-                    // No castiga la eleccion: solo aplaza. Preguntar de nuevo al
-                    // tiro convertiria la friccion en hostigamiento.
-                    v.proximaDecisionMs = v.arrastradoMs + Config.MIN_REPREGUNTA * 60_000L
-                    Log.i(TAG, "eligio seguir a los $minutos min")
-                },
-                alSalir = {
-                    Log.i(TAG, "eligio salir a los $minutos min")
-                    atender(registro.cerrarActual(Motivo.SALIR, ahora()))
-                    // No se puede cerrar Instagram por el usuario; se lo lleva
-                    // al inicio, donde queda el resumen esperandolo.
-                    startActivity(
-                        Intent(Intent.ACTION_MAIN).apply {
-                            addCategory(Intent.CATEGORY_HOME)
-                            flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                        }
-                    )
-                }
-            )
-            return
-        }
-
-        // El cielo llega a su maximo justo cuando aparece la decision.
-        val progreso = v.arrastradoMs / (Config.MIN_DECISION * 60_000f)
-        ov.mostrarCielo(progreso * Config.OPACIDAD_MAX_CIELO)
+        // El cielo cuenta tiempo en la app, pero solo si hubo arrastre.
+        if (!v.sesionIniciada || v.totalMs < v.proximoCieloMs) return
+        val minutos = v.totalMs / 60_000
+        DiarioDev.anotar("cielo a los $minutos min")
+        ov.mostrarCielo(
+            minutos = minutos,
+            alSeguir = {
+                // No castiga la eleccion: solo aplaza. Preguntar de nuevo al
+                // tiro convertiria la friccion en hostigamiento.
+                v.proximoCieloMs = v.totalMs + Config.MIN_REPREGUNTA * 60_000L
+                DiarioDev.anotar("eligió seguir a los $minutos min")
+            },
+            alSalir = {
+                DiarioDev.anotar("eligió salir a los $minutos min")
+                atender(registro.cerrarActual(Motivo.SALIR, ahora()))
+                // No se puede cerrar Instagram por el usuario; se lo lleva al
+                // inicio, donde queda el resumen esperandolo.
+                startActivity(
+                    Intent(Intent.ACTION_MAIN).apply {
+                        addCategory(Intent.CATEGORY_HOME)
+                        flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                    }
+                )
+            }
+        )
     }
 
     private fun lineaDev(v: Visita): String {
