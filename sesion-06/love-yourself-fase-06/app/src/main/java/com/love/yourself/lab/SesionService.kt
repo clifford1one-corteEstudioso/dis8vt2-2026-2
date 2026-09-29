@@ -214,8 +214,10 @@ class SesionService : AccessibilityService() {
         val segundos = v.arrastradoMs / 1000
         val minutos = segundos / 60
 
-        // La burbuja esta siempre que haya una app vigilada adelante.
-        ov.mostrarBurbuja(FormatoBrief.reloj(v.arrastradoMs), "%.0f".format(registro.ritmoPorMinuto(ahora)))
+        // La burbuja esta siempre que haya una app vigilada adelante. Muestra el
+        // tiempo en la app (corre siempre); el arrastrado queda para el cielo,
+        // la decision y el resumen.
+        ov.mostrarBurbuja(FormatoBrief.reloj(v.totalMs), "%.0f".format(registro.ritmoPorMinuto(ahora)))
 
         // En modo dev, debajo, una caja con lo que mide cada scroll.
         val dev = ajustes.modoDev

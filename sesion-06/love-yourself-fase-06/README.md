@@ -21,7 +21,7 @@ Apps marcadas de fábrica: Instagram, TikTok, YouTube, Facebook, X. Se editan en
 
 | Cuándo | Qué |
 | --- | --- |
-| Abres una app marcada | Burbuja: tiempo arrastrado · swipes por minuto |
+| Abres una app marcada | Burbuja: tiempo en la app · swipes por minuto |
 | Primer swipe a pantalla completa | La burbuja salta, se agranda, y el cerebro pasa de *sus* a *sad* con un diálogo. A los 4 s se recoge |
 | Con el arrastre | El cielo se va asomando |
 | 15 min de arrastre | Decisión: seguir o salir |
@@ -64,7 +64,9 @@ Sale del frame *animacion burbuja oficial* de Figma. Tiempos copiados del protot
 
 Alto expandido 88 como en el frame con los cerebros (el prototipo llega a 60).
 
-**Cerebros:** `res/drawable-nodpi/brain_sus.png` y `brain_sad.png`, sacados de Figma a 93×60 px, se ven borrosos. Reemplázalos por los de `sesion-06/avance/brains-ilust` con el mismo nombre (en minúscula, con `_`), en las dos apps.
+**Cerebros:** los de `sesion-06/avance/brains-ilust`, copiados a `res/drawable-nodpi/` de las dos apps como `brain_f`, `brain_pfff`, `brain_sad`, `brain_serio`, `brain_sus` (Android no acepta `-` en el nombre). Para usar otro en un momento, cámbialo en `enum Momento`.
+
+**Datos de la píldora:** tiempo en la app (corre siempre desde que la abres) y swipes por minuto. El tiempo arrastrado sigue mandando en el cielo, la decisión y el resumen.
 
 ## probado
 

@@ -5,6 +5,8 @@ import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
@@ -145,13 +147,29 @@ class MainActivity : Activity() {
 
     private var deslizadorTiempo: SeekBar? = null
 
+    /** ▶ hace correr el tiempo solo, un segundo por segundo, como en el celular. */
+    private val reloj = Handler(Looper.getMainLooper())
+    private var corriendo = false
+    private val tic = object : Runnable {
+        override fun run() {
+            val d = deslizadorTiempo ?: return
+            if (d.progress < d.max) d.progress = d.progress + 1
+            reloj.postDelayed(this, 1000L)
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        reloj.removeCallbacks(tic)
+    }
+
     private fun panelDeControl(): LinearLayout {
         estado = texto("", 12f).apply { alpha = 0.7f }
 
-        val etiquetaTiempo = texto("tiempo de arrastre", 13f)
+        val etiquetaTiempo = texto("tiempo de sesión", 13f)
         val tiempo = deslizador(TIEMPO_MAX_S) { valor ->
             segundos = valor.toLong()
-            etiquetaTiempo.text = "tiempo de arrastre · %d:%02d".format(segundos / 60, segundos % 60)
+            etiquetaTiempo.text = "tiempo de sesión · %d:%02d".format(segundos / 60, segundos % 60)
             actualizar()
         }
         deslizadorTiempo = tiempo
@@ -167,6 +185,12 @@ class MainActivity : Activity() {
 
         val atajos = LinearLayout(this).apply {
             orientation = LinearLayout.HORIZONTAL
+            addView(boton("▶") {
+                corriendo = !corriendo
+                (this@apply.getChildAt(0) as Button).text = if (corriendo) "⏸" else "▶"
+                reloj.removeCallbacks(tic)
+                if (corriendo) reloj.postDelayed(tic, 1000L)
+            }, peso())
             addView(boton("0:00") { tiempo.progress = 0 }, peso())
             addView(boton("${Config.MIN_PRESENCIA} min") { tiempo.progress = Config.MIN_PRESENCIA * 60 }, peso())
             addView(boton("${Config.MIN_DECISION} min") { tiempo.progress = Config.MIN_DECISION * 60 }, peso())

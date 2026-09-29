@@ -16,7 +16,8 @@ No mide nada. El tiempo de arrastre y los swipes se mueven a mano.
 
 | | |
 |---|---|
-| **tiempo de arrastre** | De 0 a 20 min. Lo muestra la burbuja |
+| **tiempo de sesión** | De 0 a 20 min. Lo muestra la burbuja |
+| **▶** | El tiempo corre solo, un segundo por segundo. ⏸ lo detiene |
 | **swipes por minuto** | El número que muestra la caja |
 | **0:00 / 5 min / 15 min** | Saltos a los momentos donde cambia algo |
 | **Decisión** | Abre la pantalla de los 15 minutos |
