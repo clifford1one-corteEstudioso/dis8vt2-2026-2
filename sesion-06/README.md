@@ -51,4 +51,5 @@ hay distintos tonos que me gustaría explorar
 3. pregunta reflexiva-incriminatoria: ¿querías pasar todo ese tiempo en ig?
 
 4. tono mascota tierna-cercana: ¿ya?
- 
+
+### detonadores
