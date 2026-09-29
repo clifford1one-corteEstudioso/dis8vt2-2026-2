@@ -32,6 +32,10 @@ Apps marcadas de fábrica: Instagram, TikTok, YouTube, Facebook, X. Se editan en
 
 Accesibilidad dice **qué zona se deslizó y cuánto mide**, no qué muestra. Si ocupa ≥ 85 % del alto → arrastre. El feed tiene barra arriba y abajo, así que puede quedar bajo el 85 %.
 
+Segunda señal: si el salto del scroll es de más de media pantalla (`FRACCION_SALTO_PAGINA`), también cuenta. Pasar de un reel al siguiente mueve una página entera. Y si la vista que avisa es chica, se revisan los contenedores deslizables que la envuelven.
+
+La caja del modo dev muestra: `scroll` (fracción), `salto`, la clase de la vista y `ev` (eventos de scroll recibidos). Si `ev` se queda en 0, Instagram no está avisando los scrolls.
+
 **Hay que calibrarlo.** Con modo dev activo, la caja muestra `scroll 0.xx` = lo que midió el último scroll. Anotar el número en reels, feed, mensajes y búsqueda, y ajustar `FRACCION_PANTALLA_COMPLETA` en `Config.kt`.
 
 También queda en Logcat, filtro `LoveYourself` (formato; los valores reales están por verse):

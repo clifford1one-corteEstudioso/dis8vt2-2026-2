@@ -14,6 +14,7 @@ import android.os.Looper
 import android.util.Log
 import android.view.WindowManager
 import android.view.accessibility.AccessibilityEvent
+import kotlin.math.abs
 
 /**
  * El corazon de la app. Vive encendido una vez activado en Ajustes.
@@ -40,6 +41,9 @@ class SesionService : AccessibilityService() {
 
     /** Lo ultimo que midio un scroll, para la caja del modo dev. */
     private var ultimaFraccion = -1f
+    private var ultimoSalto = -1f
+    private var ultimaClase = "—"
+    private var eventosScroll = 0
 
     private val tic = object : Runnable {
         override fun run() {
@@ -128,33 +132,64 @@ class SesionService : AccessibilityService() {
     }
 
     /**
-     * Si lo que se deslizo ocupa casi todo el alto de la pantalla: reels, feed.
+     * Si el swipe fue sobre contenido a pantalla completa: reels, feed.
      * Mensajes y busqueda ocupan menos (cabecera, teclado).
      *
-     * Solo mira el tamano de la zona, no lo que muestra. Cada medicion queda en
-     * Logcat (filtro "LoveYourself") para calibrar FRACCION_PANTALLA_COMPLETA.
+     * Solo mira tamanos, no lo que se muestra. Dos senales, basta una:
+     *  - la zona que se desliza (o un contenedor deslizable que la envuelve)
+     *    ocupa casi todo el alto. Instagram a veces avisa desde una vista
+     *    interna chica, por eso se revisan los contenedores.
+     *  - el salto del scroll es de mas de media pantalla: pasar de un reel al
+     *    siguiente mueve una pagina entera.
+     *
+     * Cada medicion queda en Logcat (filtro "LoveYourself") y en la caja del
+     * modo dev, para calibrar FRACCION_PANTALLA_COMPLETA.
      */
     private fun esPantallaCompleta(e: AccessibilityEvent, paquete: String): Boolean {
+        eventosScroll++
+        val alto = altoPantalla()
+        ultimoSalto = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) abs(e.scrollDeltaY) / alto else -1f
+        val porSalto = ultimoSalto >= Config.FRACCION_SALTO_PAGINA
+
         val nodo = e.source
         if (nodo == null) {
-            Log.d(TAG, "scroll $paquete sin nodo: no cuenta")
             ultimaFraccion = -1f
-            return false
+            ultimaClase = "sin nodo"
+            Log.d(TAG, "scroll $paquete sin nodo, salto=%.2f".format(ultimoSalto))
+            return porSalto
         }
         nodo.getBoundsInScreen(bordes)
-        val fraccion = bordes.height().toFloat() / altoPantalla()
-        Log.d(
-            TAG,
-            "scroll $paquete fraccion=%.2f clase=%s id=%s".format(
-                fraccion, nodo.className, nodo.viewIdResourceName
-            )
-        )
+        var fraccion = bordes.height() / alto
+        ultimaClase = nodo.className?.toString()?.substringAfterLast('.') ?: "?"
+        val id = nodo.viewIdResourceName
+
+        // Subir por los contenedores deslizables, hasta 6 niveles.
+        var actual = nodo.parent
+        var niveles = 0
+        while (actual != null && niveles < 6) {
+            if (actual.isScrollable) {
+                actual.getBoundsInScreen(bordes)
+                fraccion = maxOf(fraccion, bordes.height() / alto)
+            }
+            val siguiente = actual.parent
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+                @Suppress("DEPRECATION")
+                actual.recycle()
+            }
+            actual = siguiente
+            niveles++
+        }
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
             @Suppress("DEPRECATION")
             nodo.recycle()
         }
+
         ultimaFraccion = fraccion
-        return fraccion >= Config.FRACCION_PANTALLA_COMPLETA
+        Log.d(
+            TAG,
+            "scroll $paquete fraccion=%.2f salto=%.2f clase=%s id=%s".format(fraccion, ultimoSalto, ultimaClase, id)
+        )
+        return fraccion >= Config.FRACCION_PANTALLA_COMPLETA || porSalto
     }
 
     private fun altoPantalla(): Float {
@@ -260,9 +295,10 @@ class SesionService : AccessibilityService() {
 
     private fun lineaDev(v: Visita): String {
         val fraccion = if (ultimaFraccion < 0f) "—" else "%.2f".format(ultimaFraccion)
-        return "x${Reloj.factor} · ${registro.mascota().name.lowercase()} · " +
-            "arr ${FormatoBrief.reloj(v.arrastradoMs)} · bus ${FormatoBrief.reloj(v.buscadoMs)} · " +
-            "scroll $fraccion"
+        val salto = if (ultimoSalto < 0f) "—" else "%.2f".format(ultimoSalto)
+        return "x${Reloj.factor} · arr ${FormatoBrief.reloj(v.arrastradoMs)} · " +
+            "bus ${FormatoBrief.reloj(v.buscadoMs)} · ${v.videos} videos\n" +
+            "scroll $fraccion · salto $salto · $ultimaClase · ev $eventosScroll"
     }
 
     /**

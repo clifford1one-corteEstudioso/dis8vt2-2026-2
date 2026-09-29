@@ -36,6 +36,13 @@ object Config {
      */
     const val FRACCION_PANTALLA_COMPLETA = 0.85f
 
+    /**
+     * Un scroll que mueve mas que esto (en fraccion del alto de pantalla)
+     * tambien cuenta como pantalla completa: pasar de un reel al siguiente
+     * mueve una pagina entera, y en mensajes los saltos son chicos.
+     */
+    const val FRACCION_SALTO_PAGINA = 0.5f
+
     /** Un swipe dispara varios eventos seguidos; mas juntos que esto son el mismo gesto. */
     const val DEBOUNCE_SWIPE_MS = 350L
 
