@@ -227,17 +227,29 @@
 <section class="slide" style="justify-content:center">
   <div class="fecha">2026-09-30, miércoles</div>
   <h2>La señal se separa sola</h2>
-  <div class="fila">
-    <table>
-      <tr><th>umbral</th><th>eventos</th></tr>
-      <tr><td>18</td><td>12</td></tr>
-      <tr><td>20</td><td>12</td></tr>
-      <tr><td>25</td><td>12</td></tr>
-    </table>
+  <p>Cada punto es un brillo de 0 a 255. Se compara con la muestra anterior y se promedia cuánto cambió.</p>
+  <div class="fila" style="align-items:flex-start;margin-top:30px">
     <div class="col">
-      <p>El umbral se puede mover un 40 % y el resultado no cambia.</p>
-      <p style="margin-top:18px">O la pantalla casi no cambia, o cambia entera. <b>No hay zona gris.</b></p>
-      <p class="gris" style="margin-top:18px">Pendiente: distinguir <b>corte de plano</b> (cuánto me estimula el contenido) de <b>swipe</b> (cuánto me muevo yo). Hoy suben la misma columna.</p>
+      <h3>mismo plano</h3>
+      <table style="width:100%">
+        <tr><th>punto</th><th>antes</th><th>ahora</th><th>cambio</th></tr>
+        <tr><td>1</td><td>200</td><td>198</td><td>2</td></tr>
+        <tr><td>2</td><td>50</td><td>52</td><td>2</td></tr>
+        <tr><td>3</td><td>120</td><td>119</td><td>1</td></tr>
+        <tr><td>4</td><td>90</td><td>90</td><td>0</td></tr>
+        <tr><td colspan="3"><b>promedio</b></td><td><b>1,25</b></td></tr>
+      </table>
+    </div>
+    <div class="col">
+      <h3>otra escena</h3>
+      <table style="width:100%">
+        <tr><th>punto</th><th>cambio</th></tr>
+        <tr><td>1</td><td>150</td></tr>
+        <tr><td>2</td><td>30</td></tr>
+        <tr><td>3</td><td>80</td></tr>
+        <tr><td>4</td><td>110</td></tr>
+        <tr><td><b>promedio</b></td><td><b style="color:var(--acento)">92,5</b></td></tr>
+      </table>
     </div>
   </div>
   <div class="seccion-tag">image recognition</div>
