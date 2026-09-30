@@ -63,6 +63,11 @@
   .telefono { width: 250px; height: 540px; border-radius: 30px; border: 6px solid #22262e; position: relative; overflow: hidden; background: linear-gradient(160deg, #603e78, #24465c); flex: none; }
   .reel-ui i { position: absolute; background: rgba(255,255,255,.55); border-radius: 6px; }
   .pildora { position: absolute; top: 14px; left: 50%; transform: translateX(-50%); background: #000; color: #fff; border-radius: 16px; height: 30px; width: 140px; display: flex; align-items: center; justify-content: center; gap: 18px; font: 12px var(--cuerpo); }
+  .pildora { width: 176px; }
+  .pildora img { height: 20px; margin-right: -8px; }
+  .progresion { display: flex; align-items: flex-end; gap: 6px; }
+  .progresion div { flex: 1; text-align: center; font: 13px var(--titulo); color: var(--gris); }
+  .progresion img { width: 100%; display: block; margin-bottom: 8px; }
   .burbuja-grande { position: absolute; top: 14px; left: 10px; right: 10px; height: 76px; background: #000; border-radius: 16px; display: flex; align-items: center; justify-content: space-between; padding: 0 14px 0 18px; font: 700 18px var(--cuerpo); color: #fff; }
   .burbuja-grande img { height: 52px; }
   .cielo { background: linear-gradient(#497FFF 1%, #82E3F0 35%); }
@@ -305,6 +310,7 @@
   <div class="fecha">2026-09-30, miércoles</div>
   <h2>Una sesión</h2>
   <div class="linea-tiempo">
+    <div><h4>la primera vez</h4><p>Bienvenida: permisos, qué apps mirar y <b>qué te gustaría hacer más</b>.</p></div>
     <div><h4>abro Instagram</h4><p>Arriba, una burbuja con tiempo y ritmo.</p></div>
     <div><h4>primer swipe</h4><p>La burbuja se agranda: la mascota dice <b>"¿ya?"</b></p></div>
     <div><h4>10 min</h4><p>El <b>cielo</b> a pantalla completa. Seguir o salir.</p></div>
@@ -320,38 +326,65 @@
   <div class="fila" style="height:100%">
     <div class="col">
       <h2>La burbuja</h2>
-      <p>Siempre arriba, con dos datos: <b>tiempo en la app</b> y <b>swipes por minuto</b>.</p>
+      <p>Siempre arriba, con dos datos: <b>tiempo en la app</b> y <b>swipes por minuto</b>, y un cerebro chico que <b>se va gastando</b> con el tiempo.</p>
       <p style="margin-top:16px">En ciertos momentos da un salto, se agranda y aparece la mascota con una acción o un diálogo. A los 4 s se recoge.</p>
       <p class="gris" style="margin-top:16px">No recibe toques: Instagram se sigue usando por debajo.</p>
     </div>
-    <div class="telefono reel-ui"><div class="pildora"><b>2:23</b><span><b>18</b>s/m</span></div><i style="right:12px;top:220px;width:22px;height:20px"></i><i style="right:12px;top:260px;width:22px;height:20px"></i><i style="right:12px;top:300px;width:22px;height:20px"></i><i style="left:14px;bottom:70px;width:150px;height:10px"></i></div>
-    <div class="telefono reel-ui"><div class="burbuja-grande"><span>¿ya?</span><img src="../avance/brains-ilust/brain-sad.png" alt="cerebro"></div><i style="right:12px;top:220px;width:22px;height:20px"></i><i style="right:12px;top:260px;width:22px;height:20px"></i><i style="left:14px;bottom:70px;width:150px;height:10px"></i></div>
+    <div class="telefono reel-ui"><div class="pildora"><img src="../avance/brains-ilust/brain-pfff.png" alt=""><b>2:23</b><span><b>18</b>s/m</span></div><i style="right:12px;top:220px;width:22px;height:20px"></i><i style="right:12px;top:260px;width:22px;height:20px"></i><i style="right:12px;top:300px;width:22px;height:20px"></i><i style="left:14px;bottom:70px;width:150px;height:10px"></i></div>
+    <div class="telefono reel-ui"><div class="burbuja-grande"><span>¿ya?</span><img src="../avance/brains-ilust/brain-sus.png" alt="cerebro"></div><i style="right:12px;top:220px;width:22px;height:20px"></i><i style="right:12px;top:260px;width:22px;height:20px"></i><i style="left:14px;bottom:70px;width:150px;height:10px"></i></div>
   </div>
   <div class="seccion-tag">la app</div>
 </section>
 
-<!-- 16 · MASCOTA Y TONO -->
+<!-- 16 · LA MASCOTA -->
 <section class="slide">
   <div class="fecha">2026-09-30, miércoles</div>
-  <h2>¿Quién habla?</h2>
-  <div class="fila" style="gap:18px;justify-content:space-between">
-    <img src="../avance/brains-ilust/brain-sus.png" alt="sus" style="width:180px">
-    <img src="../avance/brains-ilust/brain-serio.png" alt="serio" style="width:180px">
-    <img src="../avance/brains-ilust/brain-pfff.png" alt="pfff" style="width:180px">
-    <img src="../avance/brains-ilust/brain-f.png" alt="f" style="width:180px">
-    <img src="../avance/brains-ilust/brain-sad.png" alt="sad" style="width:180px">
+  <h2>Es tu cerebro, no un juez</h2>
+  <div class="progresion">
+    <div><img src="../avance/brains-ilust/brain-relief.png" alt="">relief</div>
+    <div><img src="../avance/brains-ilust/brain-sus.png" alt="">sus</div>
+    <div><img src="../avance/brains-ilust/brain-pfff.png" alt="">pfff</div>
+    <div><img src="../avance/brains-ilust/brain-serio.png" alt="">serio</div>
+    <div><img src="../avance/brains-ilust/brain-drowzy.png" alt="">drowzy</div>
+    <div><img src="../avance/brains-ilust/brain-sad.png" alt="">sad</div>
+    <div><img src="../avance/brains-ilust/brain-f.png" alt="">f</div>
   </div>
-  <table style="margin-top:34px;width:100%">
-    <tr><th>tono</th><th>ejemplo</th></tr>
+  <p style="margin-top:34px">No reta ni castiga: muestra <b>lo que el arrastre le hace</b>. Se va gastando con el tiempo en la app: tranquilo antes de scrollear, frito al llegar al cielo.</p>
+  <p class="gris" style="margin-top:14px">Y hay una sola cara buena, <b>relief</b>: la recompensa por salir antes.</p>
+  <table style="margin-top:24px;width:100%">
+    <tr><th>tono que explorar</th><th>ejemplo</th></tr>
     <tr><td>tierno-cercano</td><td>"¿ya?"</td></tr>
-    <tr><td>frío</td><td>los datos, sin comentario</td></tr>
     <tr><td>reflexivo-incriminatorio</td><td>"¿querías pasar todo ese tiempo en ig?"</td></tr>
     <tr><td>sarcástico</td><td>la mascota es Meta y te agradece el tiempo</td></tr>
   </table>
   <div class="seccion-tag">la app</div>
 </section>
 
-<!-- 17 · CIELO -->
+<!-- 17 · CUANDO HABLA -->
+<section class="slide">
+  <div class="fecha">2026-09-30, miércoles</div>
+  <h2>Cuándo habla</h2>
+  <div class="fila" style="align-items:flex-start">
+    <table class="col" style="font-size:16px">
+      <tr><th>momento</th><th>cuándo</th><th>cara</th></tr>
+      <tr><td>primer swipe</td><td>empieza el arrastre</td><td>sus → sad</td></tr>
+      <tr><td>arrastre seguido</td><td>1 min sin parar</td><td>pfff</td></tr>
+      <tr><td>ritmo alto</td><td>≥ 20 swipes/min por 30 s</td><td>pfff → f</td></tr>
+      <tr><td>5 min</td><td>5 min en la app</td><td>drowzy</td></tr>
+      <tr><td>volviste</td><td>reabrir antes de 5 min</td><td>sus</td></tr>
+      <tr><td>antes del cielo</td><td>1 min antes</td><td>serio → f</td></tr>
+      <tr><td>tras seguir</td><td>eligió "Seguir"</td><td>sad</td></tr>
+    </table>
+    <div class="col caja" style="flex:.8">
+      <h3>el guion</h3>
+      <ul><li>cada momento, <b>una vez</b> por sesión</li><li>al menos <b>2 min</b> entre dos</li><li><b>3 frases</b> por momento, al azar</li></ul>
+      <p class="cita" style="margin-top:16px">Un estímulo fijo se vuelve invisible. El variable resiste mejor la extinción (Ferster y Skinner, 1957): el mismo principio que te engancha, usado para que la señal no se habitúe.</p>
+    </div>
+  </div>
+  <div class="seccion-tag">la app</div>
+</section>
+
+<!-- 18 · CIELO -->
 <section class="slide">
   <div class="fecha">2026-09-30, miércoles</div>
   <div class="fila" style="height:100%">
@@ -360,12 +393,14 @@
       <p>A los <b>10 minutos</b> aparece de golpe, a pantalla completa.</p>
       <p style="margin-top:16px">No dice cuánto llevas: recuerda <b>lo que hay afuera</b>.</p>
       <p style="margin-top:16px">"Seguir" y "Salir" pesan lo mismo. Seguir lo aplaza 10 min; salir lleva al inicio.</p>
+      <p style="margin-top:16px">El cerebro mira el cielo desde una nube. Si estaba hablando, el cielo <b>espera a que termine</b>.</p>
       <p class="cita" style="margin-top:20px">El clima todavía es fijo. Pregunta abierta: ¿dato real o invitación que vale a cualquier hora?</p>
     </div>
     <div class="telefono cielo">
       <div class="sol"></div>
       <img class="nube" src="../love-yourself-fase-06/app/src/main/res/drawable-nodpi/nube.png" alt="" style="width:170px;left:110px;top:95px">
       <img class="nube" src="../love-yourself-fase-06/app/src/main/res/drawable-nodpi/nube.png" alt="" style="width:170px;left:-60px;top:150px">
+      <img src="../avance/brains-ilust/brain-f.png" alt="" style="position:absolute;width:62px;left:22px;top:150px">
       <div class="msg">Hay un hermoso día afuera!</div>
       <div class="clima"><div></div><b style="font-size:14px">26°C</b><br>Santiago</div>
       <div class="botones"><span>Seguir</span><span>Salir</span></div>
@@ -374,7 +409,7 @@
   <div class="seccion-tag">la app</div>
 </section>
 
-<!-- 18 · RESUMEN -->
+<!-- 19 · RESUMEN -->
 <section class="slide">
   <div class="fecha">2026-09-30, miércoles</div>
   <div class="fila" style="height:100%">
@@ -382,14 +417,16 @@
       <h2>El resumen</h2>
       <p>Aparece al salir, no durante el uso. Es la única pantalla que pide ser leída: no se cierra sola.</p>
       <p style="margin-top:16px">Divide la sesión por origen: <b>arrastrado</b> (me lo pusieron) vs <b>buscado</b> (lo elegí), y lo contrasta con la semana.</p>
+      <p style="margin-top:16px">Arriba, el cerebro: <b>relief</b> si saliste antes del cielo, <b>f</b> si no. Abajo, lo que dijiste querer hacer más, como pregunta: la app no puede medirlo, la cuenta la haces tú.</p>
       <p class="gris" style="margin-top:16px">El costo del uso no se percibe por episodio, sino por agregado.</p>
     </div>
     <div class="telefono brief" style="background:linear-gradient(160deg,#603e78,#24465c)">
       <div class="tarjeta">
+        <div style="display:flex;align-items:center;gap:8px;padding:4px 2px"><img src="../avance/brains-ilust/brain-relief.png" alt="" style="height:30px"><b style="font-size:12px">uf, gracias</b></div>
         <div class="sec">sesión cerrada · 18:42<br><b style="font-size:14px">Estuviste 22 minutos</b>
           <div class="met"><div>videos<b>71</b></div><div>recuerdas<b>?</b></div><div>oscuridad<b>—</b></div></div></div>
         <div class="sec">de esos 22 minutos<div class="barra"></div>19:45 arrastrado · 2:15 buscado</div>
-        <div class="sec">Esta semana<br><b style="font-size:18px">14h 20</b> en arrastre</div>
+        <div class="sec">Esta semana<br><b style="font-size:18px">14h 20</b> en arrastre<br><b style="font-size:18px">?</b> en hacer música</div>
         <div class="sec" style="display:flex;justify-content:space-between"><span style="opacity:.4">ver detalle</span><span>Cerrar</span></div>
       </div>
     </div>
@@ -397,7 +434,7 @@
   <div class="seccion-tag">la app</div>
 </section>
 
-<!-- 19 · LO QUE ENSEÑO PROBAR -->
+<!-- 20 · LO QUE ENSEÑO PROBAR -->
 <section class="slide">
   <div class="fecha">2026-09-30, miércoles</div>
   <h2>Lo que enseñó probarla</h2>
@@ -411,7 +448,7 @@
   <p class="cita" style="margin-top:24px">Modo dev: reloj acelerado (x10, x60) para probar en segundos lo que dura minutos.</p>
 </section>
 
-<!-- 20 · PREGUNTAS ABIERTAS -->
+<!-- 21 · PREGUNTAS ABIERTAS -->
 <section class="slide">
   <div class="fecha">2026-09-30, miércoles</div>
   <h2>Preguntas abiertas</h2>
@@ -419,7 +456,8 @@
     <ul class="col">
       <li>¿Cuánto arrastre justifica un resumen? Hoy: 1 minuto.</li>
       <li>¿Qué hace "Salir"? Mandar al inicio se acerca a bloquear.</li>
-      <li>El cerebro <i>sad</i> contradice "no juzgar". ¿Cansado o triste?</li>
+      <li>En el cielo, ¿cara cansada (la verdad) o <i>relief</i> (la promesa)?</li>
+      <li>¿Siete momentos, o bastan tres y el resto lo cuenta la cara?</li>
     </ul>
     <ul class="col">
       <li>¿Qué es "oscuridad" en términos medibles?</li>
@@ -429,7 +467,7 @@
   </div>
 </section>
 
-<!-- 21 · CIERRE -->
+<!-- 22 · CIERRE -->
 <section class="slide" style="justify-content:flex-end;padding-bottom:90px">
   <div class="fecha">2026-09-30, miércoles</div>
   <h1>Love Yourself</h1>
