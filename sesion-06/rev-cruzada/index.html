@@ -97,14 +97,12 @@
   .linea-tiempo p { font-size: 18px; }
   .caja { border: 1px solid var(--linea); border-radius: 14px; padding: 24px 28px; }
 
-  #ayuda { position: fixed; bottom: 10px; left: 12px; font: 11px var(--titulo); color: #555; }
   body.editando .slide { outline: 2px dashed var(--acento); outline-offset: -8px; }
 
   @media print {
     html, body { overflow: visible; background: var(--fondo); }
     #escenario { position: static; transform: none !important; width: auto; height: auto; }
     .slide { display: flex !important; position: relative; width: 1280px; height: 720px; page-break-after: always; }
-    #ayuda { display: none; }
     @page { size: 1280px 720px; margin: 0; }
   }
 </style>
@@ -506,7 +504,6 @@
 </section>
 
 </div>
-<div id="ayuda">← → navegar · F pantalla completa · E editar · Ctrl+S guardar edición</div>
 
 <script>
   const slides = [...document.querySelectorAll('.slide')];
