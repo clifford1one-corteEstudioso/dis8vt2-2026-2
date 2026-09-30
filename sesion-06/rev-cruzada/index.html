@@ -290,7 +290,24 @@
   <div class="seccion-tag">image recognition</div>
 </section>
 
-<!-- 12 · SECCION: LA APP -->
+<!-- 12 · DEMO -->
+<section class="slide">
+  <div class="fecha">2026-09-30, miércoles</div>
+  <div class="fila" style="height:100%">
+    <div class="col">
+      <h2>Así se vería</h2>
+      <p>Demo del reconocimiento de imagen sobre un reel: la app marca lo que detecta, sin bloquear ni calificar el contenido.</p>
+      <p style="margin-top:28px"><a href="https://youtube.com/shorts/HvG0XeTFUXc" target="_blank" rel="noopener" style="color:var(--texto);border:1px solid var(--gris);border-radius:12px;padding:12px 20px;text-decoration:none;display:inline-block">▶ ver el video en YouTube</a></p>
+      <p class="cita" style="margin-top:20px">Si el video no carga acá (sin internet o al imprimir): youtube.com/shorts/HvG0XeTFUXc</p>
+    </div>
+    <div style="width:290px;height:516px;border-radius:30px;border:6px solid #22262e;overflow:hidden;background:#000;flex:none">
+      <iframe src="https://www.youtube.com/embed/HvG0XeTFUXc?rel=0" title="Demo image recognition" loading="lazy" style="width:100%;height:100%;border:0" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>
+    </div>
+  </div>
+  <div class="seccion-tag">image recognition</div>
+</section>
+
+<!-- 13 · SECCION: LA APP -->
 <section class="slide" style="justify-content:center">
   <div class="fecha">2026-09-30, miércoles</div>
   <p class="gris" style="font:500 18px var(--titulo);letter-spacing:.1em">PARTE 2</p>
@@ -298,7 +315,7 @@
   <p class="fino" style="margin-top:24px">instalada y funcionando en mi celular</p>
 </section>
 
-<!-- 13 · ARRASTRE VS INTENCION -->
+<!-- 14 · ARRASTRE VS INTENCION -->
 <section class="slide">
   <div class="fecha">2026-09-30, miércoles</div>
   <h2>Qué cuenta como arrastre</h2>
@@ -317,7 +334,7 @@
   <div class="seccion-tag">la app</div>
 </section>
 
-<!-- 14 · RECORRIDO -->
+<!-- 15 · RECORRIDO -->
 <section class="slide">
   <div class="fecha">2026-09-30, miércoles</div>
   <h2>Una sesión</h2>
@@ -332,7 +349,7 @@
   <div class="seccion-tag">la app</div>
 </section>
 
-<!-- 15 · BURBUJA -->
+<!-- 16 · BURBUJA -->
 <section class="slide">
   <div class="fecha">2026-09-30, miércoles</div>
   <div class="fila" style="height:100%">
@@ -348,7 +365,7 @@
   <div class="seccion-tag">la app</div>
 </section>
 
-<!-- 16 · LA MASCOTA -->
+<!-- 17 · LA MASCOTA -->
 <section class="slide">
   <div class="fecha">2026-09-30, miércoles</div>
   <h2>Es tu cerebro, no un juez</h2>
@@ -372,7 +389,7 @@
   <div class="seccion-tag">la app</div>
 </section>
 
-<!-- 17 · CUANDO HABLA -->
+<!-- 18 · CUANDO HABLA -->
 <section class="slide">
   <div class="fecha">2026-09-30, miércoles</div>
   <h2>Cuándo habla</h2>
@@ -396,7 +413,7 @@
   <div class="seccion-tag">la app</div>
 </section>
 
-<!-- 18 · CIELO -->
+<!-- 19 · CIELO -->
 <section class="slide">
   <div class="fecha">2026-09-30, miércoles</div>
   <div class="fila" style="height:100%">
@@ -421,7 +438,7 @@
   <div class="seccion-tag">la app</div>
 </section>
 
-<!-- 19 · RESUMEN -->
+<!-- 20 · RESUMEN -->
 <section class="slide">
   <div class="fecha">2026-09-30, miércoles</div>
   <div class="fila" style="height:100%">
@@ -446,7 +463,7 @@
   <div class="seccion-tag">la app</div>
 </section>
 
-<!-- 20 · LO QUE ENSEÑO PROBAR -->
+<!-- 21 · LO QUE ENSEÑO PROBAR -->
 <section class="slide">
   <div class="fecha">2026-09-30, miércoles</div>
   <h2>Lo que enseñó probarla</h2>
@@ -460,7 +477,7 @@
   <p class="cita" style="margin-top:24px">Modo dev: reloj acelerado (x10, x60) para probar en segundos lo que dura minutos.</p>
 </section>
 
-<!-- 21 · PREGUNTAS ABIERTAS -->
+<!-- 22 · PREGUNTAS ABIERTAS -->
 <section class="slide">
   <div class="fecha">2026-09-30, miércoles</div>
   <h2>Preguntas abiertas</h2>
@@ -479,7 +496,7 @@
   </div>
 </section>
 
-<!-- 22 · CIERRE -->
+<!-- 23 · CIERRE -->
 <section class="slide" style="justify-content:flex-end;padding-bottom:90px">
   <div class="fecha">2026-09-30, miércoles</div>
   <h1>Love Yourself</h1>
@@ -519,6 +536,7 @@
   });
   escenario.addEventListener('click', ev => {
     if (document.body.classList.contains('editando')) return;
+    if (ev.target.closest('a, iframe')) return;
     mostrar(ev.clientX > innerWidth / 2 ? i + 1 : i - 1);
   });
 
