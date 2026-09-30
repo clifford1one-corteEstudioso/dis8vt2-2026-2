@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Love Yourself · 5 minutos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Heebo:wght@200;300;400;500;700&display=swap" rel="stylesheet">
+<!--
+  CÓMO EDITAR
+  - VERSIÓN DE 5 MINUTOS: 8 diapositivas, ~35 s cada una. Tecla N muestra las notas
+    (qué decir y cuánto dura cada una). La versión completa está en index.html.
+  - Cada diapositiva es un <section class="slide">. Copia una entera para agregar otra.
+  - Textos: cámbialos directo acá en VS Code. O en el navegador: tecla E activa la
+    edición, y Ctrl+S descarga el HTML editado (reemplaza este archivo con ese).
+  - Colores y tipografías: en :root, abajo. Son los del examen del semestre pasado.
+  - Navegar: ← → o clic. Tecla F: pantalla completa. Imprimir a PDF: Ctrl+P (una por hoja).
+  - Las imágenes se leen del repo con rutas relativas: no muevas esta carpeta.
+-->
+<style>
+  :root {
+    --fondo: #0B0E13;
+    --texto: #E9E7E2;
+    --gris: #778398;
+    --linea: #2A303B;
+    --acento: #E9C46A;
+    --titulo: "Space Grotesk", system-ui, sans-serif;
+    --cuerpo: "Heebo", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; background: #000; overflow: hidden; }
+  body { font-family: var(--cuerpo); color: var(--texto); }
+
+  /* Lienzo fijo de 1280 x 720, escalado a la ventana. */
+  #escenario { position: absolute; left: 50%; top: 50%; width: 1280px; height: 720px; transform-origin: center; }
+  .slide {
+    position: absolute; inset: 0; background: var(--fondo); padding: 64px 80px;
+    display: none; flex-direction: column; overflow: hidden;
+  }
+  .slide.activa { display: flex; }
+  .fecha { position: absolute; top: 28px; right: 40px; font-size: 13px; font-weight: 300; }
+  .num { position: absolute; bottom: 24px; right: 40px; font: 400 12px var(--titulo); color: var(--gris); }
+  .seccion-tag { position: absolute; bottom: 24px; left: 80px; font: 400 12px var(--titulo); color: var(--gris); letter-spacing: .08em; text-transform: uppercase; }
+
+  h1 { font: 700 64px/1.05 var(--titulo); }
+  h2 { font: 700 40px/1.1 var(--titulo); color: var(--gris); margin-bottom: 36px; }
+  h3 { font: 700 22px var(--titulo); color: var(--gris); margin-bottom: 12px; }
+  p, li { font-size: 22px; font-weight: 300; line-height: 1.45; }
+  b, strong { font-weight: 700; }
+  .fino { font-weight: 200; }
+  .gris { color: var(--gris); }
+  .chico { font-size: 15px; }
+  .cita { font-size: 13px; color: var(--gris); font-weight: 300; }
+  .centro { margin: auto; text-align: center; }
+  .fila { display: flex; gap: 48px; align-items: center; }
+  .col { flex: 1; }
+  ul { list-style: none; }
+  ul li { padding-left: 22px; position: relative; margin-bottom: 10px; }
+  ul li::before { content: "—"; position: absolute; left: 0; color: var(--gris); }
+  table { border-collapse: collapse; font-size: 18px; font-weight: 300; }
+  td, th { padding: 10px 18px; border-bottom: 1px solid var(--linea); text-align: left; }
+  th { font: 500 14px var(--titulo); color: var(--gris); text-transform: uppercase; letter-spacing: .05em; }
+
+  /* ---- mockups de la app ---- */
+  .telefono { width: 250px; height: 540px; border-radius: 30px; border: 6px solid #22262e; position: relative; overflow: hidden; background: linear-gradient(160deg, #603e78, #24465c); flex: none; }
+  .reel-ui i { position: absolute; background: rgba(255,255,255,.55); border-radius: 6px; }
+  .pildora { position: absolute; top: 14px; left: 50%; transform: translateX(-50%); background: #000; color: #fff; border-radius: 16px; height: 30px; width: 140px; display: flex; align-items: center; justify-content: center; gap: 18px; font: 12px var(--cuerpo); }
+  .pildora { width: 176px; }
+  .pildora img { height: 20px; margin-right: -8px; }
+  .progresion { display: flex; align-items: flex-end; gap: 6px; }
+  .progresion div { flex: 1; text-align: center; font: 13px var(--titulo); color: var(--gris); }
+  .progresion img { width: 100%; display: block; margin-bottom: 8px; }
+  .burbuja-grande { position: absolute; top: 14px; left: 10px; right: 10px; height: 76px; background: #000; border-radius: 16px; display: flex; align-items: center; justify-content: space-between; padding: 0 14px 0 18px; font: 700 18px var(--cuerpo); color: #fff; }
+  .burbuja-grande img { height: 52px; }
+  .cielo { background: linear-gradient(#497FFF 1%, #82E3F0 35%); }
+  .cielo .sol { position: absolute; width: 170px; height: 170px; right: -10px; top: 40px; border-radius: 50%; background: radial-gradient(#FFF6CC 35%, rgba(255,246,204,.35) 60%, transparent 70%); }
+  .cielo .nube { position: absolute; }
+  .cielo .msg { position: absolute; left: 22px; top: 60px; width: 130px; color: #010101; font: 400 18px var(--cuerpo); }
+  .cielo .clima { position: absolute; right: 14px; top: 250px; width: 88px; padding: 8px; border-radius: 12px; background: rgba(255,255,255,.31); color: #010101; text-align: center; font-size: 10px; }
+  .cielo .clima div { width: 30px; height: 30px; border-radius: 50%; background: #FFF6CC; margin: 0 auto 4px; }
+  .cielo .botones { position: absolute; left: 20px; right: 20px; bottom: 60px; display: flex; gap: 10px; }
+  .cielo .botones span { flex: 1; text-align: center; padding: 10px 0; border-radius: 12px; border: 1px solid rgba(1,1,1,.6); background: rgba(255,255,255,.31); color: #010101; font-size: 13px; }
+  .brief { background: rgba(0,0,0,.45); display: flex; align-items: center; justify-content: center; }
+  .brief .tarjeta { width: 210px; background: #414141; border-radius: 12px; padding: 10px; font-size: 10px; }
+  .brief .sec { background: #545454; padding: 8px; margin-top: 8px; }
+  .brief .met { display: flex; gap: 5px; margin-top: 6px; }
+  .brief .met div { flex: 1; background: #636363; text-align: center; padding: 4px 0; }
+  .brief .met b { display: block; font-size: 18px; }
+  .brief .barra { height: 8px; margin: 6px 0; background: linear-gradient(90deg, #D9D9D9 70%, #737373 90%); }
+
+  /* ---- gráficos ---- */
+  .histo div { display: flex; align-items: center; gap: 14px; font: 14px var(--titulo); color: var(--gris); margin-bottom: 7px; }
+  .histo span.b { height: 20px; background: var(--texto); }
+  .histo span.b.alto { background: var(--acento); }
+  .linea-tiempo { display: flex; gap: 0; margin-top: 12px; }
+  .linea-tiempo > div { flex: 1; border-top: 2px solid var(--gris); padding: 18px 16px 0 0; position: relative; }
+  .linea-tiempo > div::before { content: ""; position: absolute; top: -7px; left: 0; width: 12px; height: 12px; border-radius: 50%; background: var(--texto); }
+  .linea-tiempo h4 { font: 500 15px var(--titulo); color: var(--gris); margin-bottom: 8px; }
+  .linea-tiempo p { font-size: 18px; }
+  .caja { border: 1px solid var(--linea); border-radius: 14px; padding: 24px 28px; }
+
+  /* Notas del presentador: tecla N. No se imprimen. */
+  .notas { display: none; position: absolute; left: 80px; right: 80px; bottom: 50px; padding: 12px 16px; border-radius: 10px; background: #1c2230; color: var(--texto); font: 300 16px var(--cuerpo); }
+  body.con-notas .notas { display: block; }
+  #ayuda { position: fixed; bottom: 10px; left: 12px; font: 11px var(--titulo); color: #555; }
+  body.editando .slide { outline: 2px dashed var(--acento); outline-offset: -8px; }
+
+  @media print {
+    html, body { overflow: visible; background: var(--fondo); }
+    #escenario { position: static; transform: none !important; width: auto; height: auto; }
+    .slide { display: flex !important; position: relative; width: 1280px; height: 720px; page-break-after: always; }
+    #ayuda, .notas { display: none !important; }
+    @page { size: 1280px 720px; margin: 0; }
+  }
+</style>
+</head>
+<body>
+<div id="escenario">
+
+<!-- 1 · PORTADA -->
+<section class="slide" style="justify-content:flex-end;padding-bottom:90px">
+  <div class="fecha">2026-09-30, miércoles</div>
+  <h1>Love Yourself</h1>
+  <p class="fino" style="font-size:34px;margin-top:6px">Cautiverio Voluntario: cómo se diseña la libertad</p>
+  <div style="border-top:1px solid var(--gris);margin:28px 0 20px"></div>
+  <div class="fila" style="justify-content:space-between">
+    <p style="font-weight:500;font-size:16px">Santiago Gaete Fernández</p>
+    <p class="chico">Seminario de Título · Diseño Industrial · UDP · revisión cruzada</p>
+  </div>
+  <aside class="notas"><b>~15 s</b> · Me presento y digo el nombre del proyecto. Nada más: la siguiente abre el problema.</aside>
+</section>
+
+<!-- 2 · PROBLEMA -->
+<section class="slide">
+  <div class="fecha">2026-09-30, miércoles</div>
+  <div class="centro" style="text-align:left">
+    <p style="font:500 150px/1 var(--titulo)">34<span class="gris">h</span> <span style="font-size:40px;text-decoration:line-through">perdidas</span></p>
+    <p class="cita" style="margin-top:8px">Al mes, por usuario, solo en TikTok · Kemp, 2024</p>
+    <p style="margin-top:60px;text-align:right;font-style:italic">nadie sabe cuántas decidió</p>
+  </div>
+  <aside class="notas"><b>~30 s</b> · El problema no es usar el celular: es no haberlo decidido. No se trata de prohibir, sino de devolver la decisión.</aside>
+</section>
+
+<!-- 3 · PRINCIPIO -->
+<section class="slide" style="justify-content:center">
+  <div class="fecha">2026-09-30, miércoles</div>
+  <h2>Actúa sobre el arrastre.<br>Deja pasar la intención.</h2>
+  <div class="fila" style="align-items:flex-start">
+    <div class="col caja"><h3>cuenta</h3><ul><li>Instagram, TikTok, YouTube…</li><li>scroll de reels o feed a <b>pantalla completa</b></li></ul></div>
+    <div class="col caja"><h3>no cuenta</h3><ul><li>responder un mensaje</li><li>buscar algo</li></ul></div>
+  </div>
+  <p style="margin-top:30px">La intención no es medible. <b>La forma de la pantalla sí.</b></p>
+  <aside class="notas"><b>~40 s</b> · La app no lee lo que ves: mide cuánto ocupa lo que se desliza. Así distingue el pozo de reels del uso con intención.</aside>
+</section>
+
+<!-- 4 · IMAGE RECOGNITION -->
+<section class="slide">
+  <div class="fecha">2026-09-30, miércoles</div>
+  <h2>¿Puede el celular ver lo que yo veo?</h2>
+  <div class="linea-tiempo">
+    <div><h4>fase 1</h4><p>Instagram <b>deja capturar</b> la pantalla.</p></div>
+    <div><h4>fase 3</h4><p>Una huella de <b>32×32</b> puntos, 4 veces por segundo.</p></div>
+    <div><h4>resultado</h4><p>La señal se separa sola: <b>ni un valor entre 17 y 25</b>.</p></div>
+    <div><h4>límite</h4><p>Android pide permiso <b>en cada sesión</b>.</p></div>
+  </div>
+  <p class="gris" style="margin-top:44px">Por eso la app vive de accesibilidad, que arranca sola. El reconocimiento de imagen queda como instrumento para medir, no como parte de la app.</p>
+  <aside class="notas"><b>~45 s</b> · Sí se puede medir el ritmo de cortes, y la señal es robusta. Pero no puede encenderse sola: por eso la intervención usa otra capa.</aside>
+  <div class="seccion-tag">image recognition</div>
+</section>
+
+<!-- 5 · UNA SESION -->
+<section class="slide">
+  <div class="fecha">2026-09-30, miércoles</div>
+  <h2>Una sesión</h2>
+  <div class="fila" style="gap:26px;justify-content:space-between">
+    <div style="text-align:center"><div class="telefono reel-ui" style="width:190px;height:410px"><div class="pildora" style="width:150px"><img src="../avance/brains-ilust/brain-sus.png" alt=""><b>0:40</b><span><b>12</b>s/m</span></div><i style="right:12px;top:220px;width:22px;height:20px"></i><i style="right:12px;top:260px;width:22px;height:20px"></i><i style="left:14px;bottom:70px;width:150px;height:10px"></i></div><p class="chico" style="margin-top:10px">abro Instagram</p></div>
+    <div style="text-align:center"><div class="telefono reel-ui" style="width:190px;height:410px"><div class="burbuja-grande" style="height:60px;font-size:15px"><span>¿ya?</span><img src="../avance/brains-ilust/brain-sus.png" alt="" style="height:40px"></div><i style="right:12px;top:220px;width:22px;height:20px"></i><i style="right:12px;top:260px;width:22px;height:20px"></i><i style="left:14px;bottom:70px;width:150px;height:10px"></i></div><p class="chico" style="margin-top:10px">primer swipe</p></div>
+    <div style="text-align:center"><div class="telefono cielo" style="width:190px;height:410px"><div class="sol" style="width:120px;height:120px;top:30px"></div><img class="nube" src="../love-yourself-fase-06/app/src/main/res/drawable-nodpi/nube.png" alt="" style="width:130px;left:80px;top:70px"><img class="nube" src="../love-yourself-fase-06/app/src/main/res/drawable-nodpi/nube.png" alt="" style="width:130px;left:-50px;top:115px"><img src="../avance/brains-ilust/brain-f.png" alt="" style="position:absolute;width:48px;left:16px;top:112px"><div class="msg" style="font-size:14px;top:40px;left:16px;width:100px">Hay un hermoso día afuera!</div><div class="botones" style="bottom:40px"><span>Seguir</span><span>Salir</span></div></div><p class="chico" style="margin-top:10px">10 min</p></div>
+    <div style="text-align:center"><div class="telefono brief" style="width:190px;height:410px;background:linear-gradient(160deg,#603e78,#24465c)"><div class="tarjeta" style="width:165px;font-size:8px"><div style="display:flex;align-items:center;gap:6px"><img src="../avance/brains-ilust/brain-relief.png" alt="" style="height:24px"><b>uf, gracias</b></div><div class="sec"><b style="font-size:11px">Estuviste 8 minutos</b></div><div class="sec">de esos 8 minutos<div class="barra"></div>6:10 arrastrado</div><div class="sec">Esta semana <b>4h 20</b><br><b>?</b> en hacer música</div></div></div><p class="chico" style="margin-top:10px">salgo</p></div>
+  </div>
+  <aside class="notas"><b>~60 s</b> · Recorrer las cuatro: la burbuja siempre arriba; al primer swipe la mascota habla; a los 10 min el cielo, seguir o salir con el mismo peso; al salir, el resumen: arrastrado vs buscado y la semana.</aside>
+  <div class="seccion-tag">la app</div>
+</section>
+
+<!-- 6 · LA MASCOTA -->
+<section class="slide">
+  <div class="fecha">2026-09-30, miércoles</div>
+  <h2>Es tu cerebro, no un juez</h2>
+  <div class="progresion">
+    <div><img src="../avance/brains-ilust/brain-relief.png" alt="">relief</div>
+    <div><img src="../avance/brains-ilust/brain-sus.png" alt="">sus</div>
+    <div><img src="../avance/brains-ilust/brain-pfff.png" alt="">pfff</div>
+    <div><img src="../avance/brains-ilust/brain-serio.png" alt="">serio</div>
+    <div><img src="../avance/brains-ilust/brain-drowzy.png" alt="">drowzy</div>
+    <div><img src="../avance/brains-ilust/brain-sad.png" alt="">sad</div>
+    <div><img src="../avance/brains-ilust/brain-f.png" alt="">f</div>
+  </div>
+  <p style="margin-top:36px">No reta: muestra <b>lo que el arrastre le hace</b>. Se gasta con el tiempo, y la única cara buena, <b>relief</b>, es la de salir antes.</p>
+  <p class="gris" style="margin-top:14px">Habla en 7 momentos, una vez cada uno, con frases al azar: un estímulo fijo se vuelve invisible.</p>
+  <aside class="notas"><b>~40 s</b> · La mascota resuelve cómo decir las cosas sin juzgar: no te mira a ti, se mira a sí misma.</aside>
+  <div class="seccion-tag">la app</div>
+</section>
+
+<!-- 7 · QUE SIGUE -->
+<section class="slide">
+  <div class="fecha">2026-09-30, miércoles</div>
+  <h2>Qué sigue</h2>
+  <div class="fila" style="align-items:flex-start">
+    <div class="col caja">
+      <h3>ya funciona</h3>
+      <ul><li>instalada en mi celular</li><li>mide sola, sin encenderla</li><li>burbuja, mascota, cielo y resumen</li></ul>
+    </div>
+    <div class="col caja">
+      <h3>por resolver</h3>
+      <ul><li>¿qué es "oscuridad" medible?</li><li>¿qué hace "Salir"?</li><li><b>validar con usuarios</b>: ¿baja el arrastre?</li></ul>
+    </div>
+  </div>
+  <aside class="notas"><b>~40 s</b> · Cerrar con lo pendiente, y dejar abierta la pregunta que quiero que me respondan en la revisión.</aside>
+</section>
+
+<!-- 8 · CIERRE -->
+<section class="slide" style="justify-content:flex-end;padding-bottom:90px">
+  <div class="fecha">2026-09-30, miércoles</div>
+  <h1>Love Yourself</h1>
+  <p class="fino" style="font-size:34px;margin-top:6px">no bloquea · devuelve la decisión</p>
+  <div style="border-top:1px solid var(--gris);margin:28px 0 20px"></div>
+  <p style="font-weight:500;font-size:16px">Santiago Gaete Fernández</p>
+  <aside class="notas"><b>~10 s</b> · Gracias. Preguntas.</aside>
+</section>
+
+</div>
+<div id="ayuda">← → navegar · N notas · F pantalla completa · E editar · Ctrl+S guardar edición</div>
+
+<script>
+  const slides = [...document.querySelectorAll('.slide')];
+  const escenario = document.getElementById('escenario');
+  let i = Math.max(0, Math.min(slides.length - 1, (parseInt(location.hash.slice(1)) || 1) - 1));
+
+  // Número de diapositiva en cada una.
+  slides.forEach((s, n) => s.insertAdjacentHTML('beforeend', `<div class="num">${n + 1} / ${slides.length}</div>`));
+
+  function mostrar(n) {
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach((s, k) => s.classList.toggle('activa', k === i));
+    history.replaceState(null, '', '#' + (i + 1));
+  }
+  function escalar() {
+    const e = Math.min(innerWidth / 1280, innerHeight / 720);
+    escenario.style.transform = `translate(-50%, -50%) scale(${e})`;
+  }
+  addEventListener('resize', escalar);
+  addEventListener('keydown', ev => {
+    if (document.body.classList.contains('editando') && ev.key !== 'Escape' && !(ev.ctrlKey || ev.metaKey)) return;
+    if (['ArrowRight', 'PageDown', ' '].includes(ev.key)) { ev.preventDefault(); mostrar(i + 1); }
+    if (['ArrowLeft', 'PageUp'].includes(ev.key)) { ev.preventDefault(); mostrar(i - 1); }
+    if (ev.key === 'n' || ev.key === 'N') document.body.classList.toggle('con-notas');
+    if (ev.key === 'f' || ev.key === 'F') document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
+    if (ev.key === 'e' || ev.key === 'E' || ev.key === 'Escape') editar(ev.key !== 'Escape' && !document.body.classList.contains('editando'));
+    if ((ev.ctrlKey || ev.metaKey) && ev.key === 's') { ev.preventDefault(); guardar(); }
+  });
+  escenario.addEventListener('click', ev => {
+    if (document.body.classList.contains('editando')) return;
+    mostrar(ev.clientX > innerWidth / 2 ? i + 1 : i - 1);
+  });
+
+  // Edición en el navegador: E activa/desactiva, Ctrl+S descarga el archivo editado.
+  function editar(si) {
+    document.body.classList.toggle('editando', si);
+    slides.forEach(s => s.contentEditable = si);
+  }
+  function guardar() {
+    editar(false);
+    const copia = document.documentElement.cloneNode(true);
+    copia.querySelectorAll('.num').forEach(n => n.remove());
+    copia.querySelectorAll('.slide').forEach(s => { s.classList.remove('activa'); s.removeAttribute('contenteditable'); });
+    copia.querySelector('body').classList.remove('editando');
+    copia.querySelector('#escenario').removeAttribute('style');
+    const html = '<!doctype html>\n' + copia.outerHTML;
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([html], { type: 'text/html' }));
+    a.download = '5min.html';
+    a.click();
+  }
+
+  escalar();
+  mostrar(i);
+</script>
+</body>
+</html>
