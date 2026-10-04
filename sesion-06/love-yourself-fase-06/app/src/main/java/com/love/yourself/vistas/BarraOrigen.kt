@@ -53,9 +53,12 @@ class BarraOrigen(context: Context) : View(context) {
         if (w <= 0f || h <= 0f) return
 
         // En el wireframe la transicion ocupa ~24% del ancho (de 69% a 93%).
+        // Cerca de los extremos se angosta: una sesion toda buscada es toda
+        // oscura, sin una franja clara que no paso.
         val fraccion = fraccionArrastrada * progreso
-        val desde = (fraccion - MEDIA_TRANSICION).coerceIn(0f, 1f)
-        val hasta = (fraccion + MEDIA_TRANSICION).coerceIn(0f, 1f)
+        val medio = minOf(MEDIA_TRANSICION, fraccion, 1f - fraccion)
+        val desde = (fraccion - medio).coerceIn(0f, 1f)
+        val hasta = (fraccion + medio).coerceIn(0f, 1f)
         pintura.shader = LinearGradient(
             0f, 0f, w, 0f,
             intArrayOf(Colores.ARRASTRADO, Colores.ARRASTRADO, Colores.BUSCADO, Colores.BUSCADO),

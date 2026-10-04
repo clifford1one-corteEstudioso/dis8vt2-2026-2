@@ -5,6 +5,7 @@ import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Typeface
 import android.graphics.drawable.GradientDrawable
+import android.text.TextUtils
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
@@ -175,8 +176,11 @@ class VistaInicio(private val context: Context) {
                 addView(barra, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(12)).apply { topMargin = dp(12) })
                 addView(LinearLayout(context).apply {
                     orientation = LinearLayout.HORIZONTAL
-                    addView(texto("${Formato.minutos(d.hoyArrastreMs)} arrastrado", 14f), peso())
-                    addView(texto("${Formato.minutos(d.hoyBuscadoMs)} buscado", 14f).apply { gravity = Gravity.END }, peso())
+                    addView(texto("${Formato.minutos(d.hoyArrastreMs)} arrastrado", 14f), envolver(0))
+                    addView(texto("${Formato.minutos(d.hoyBuscadoMs)} buscado", 14f).apply {
+                        gravity = Gravity.END
+                        unaLinea()
+                    }, peso(dp(8)))
                 }, conMargenArriba(dp(6)))
             }
         }
@@ -225,17 +229,23 @@ class VistaInicio(private val context: Context) {
     }
 
     private fun visita(s: SesionInicio, ahora: Long): View = seccion().apply {
+        // Lo de la izquierda mide lo que mide; lo de la derecha usa el resto.
+        // Asi "19:45 arrastrado · 71 videos" no se parte en dos lineas.
         addView(LinearLayout(context).apply {
             orientation = LinearLayout.HORIZONTAL
-            addView(texto(s.app, 16f).apply { setTypeface(typeface, Typeface.BOLD) }, peso())
-            addView(texto(Formato.minutos(s.totalMs), 16f).apply { gravity = Gravity.END }, peso())
+            addView(texto(s.app, 16f).apply {
+                setTypeface(typeface, Typeface.BOLD)
+                unaLinea()
+            }, peso())
+            addView(texto(Formato.minutos(s.totalMs), 16f), envolver(dp(8)))
         })
         addView(LinearLayout(context).apply {
             orientation = LinearLayout.HORIZONTAL
-            addView(texto(Formato.cuando(s.finMs, ahora), 13f, Colores.TEXTO_SUAVE), peso())
+            addView(texto(Formato.cuando(s.finMs, ahora), 13f, Colores.TEXTO_SUAVE), envolver(0))
             addView(texto(Formato.detalleSesion(s.arrastradoMs, s.videos), 13f, Colores.TEXTO_SUAVE).apply {
                 gravity = Gravity.END
-            }, peso())
+                unaLinea()
+            }, peso(dp(8)))
         }, conMargenArriba(dp(2)))
         if (s.totalMs > 0) {
             addView(BarraOrigen(context).apply { fraccionArrastrada = s.arrastradoMs.toFloat() / s.totalMs },
@@ -287,7 +297,19 @@ class VistaInicio(private val context: Context) {
         ViewGroup.LayoutParams.WRAP_CONTENT
     ).apply { topMargin = margen }
 
-    private fun peso() = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f)
+    private fun peso(margenInicio: Int = 0) = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f)
+        .apply { marginStart = margenInicio }
+
+    private fun envolver(margenInicio: Int) = LinearLayout.LayoutParams(
+        ViewGroup.LayoutParams.WRAP_CONTENT,
+        ViewGroup.LayoutParams.WRAP_CONTENT
+    ).apply { marginStart = margenInicio }
+
+    /** Si no cabe, se corta con "…" en vez de saltar de linea. */
+    private fun TextView.unaLinea() {
+        maxLines = 1
+        ellipsize = TextUtils.TruncateAt.END
+    }
 
     private fun dp(valor: Int) = (valor * densidad).toInt()
 

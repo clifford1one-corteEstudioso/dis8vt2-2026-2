@@ -4,6 +4,7 @@ import android.animation.LayoutTransition
 import android.content.Context
 import android.graphics.Typeface
 import android.graphics.drawable.GradientDrawable
+import android.text.TextUtils
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
@@ -242,12 +243,21 @@ class VistaBrief(private val context: Context) {
         val barra = BarraOrigen(context).apply {
             fraccionArrastrada = if (d.totalMs > 0) d.arrastradoMs.toFloat() / d.totalMs else 0f
         }
-        val arrastrado = texto("${Formato.reloj(d.arrastradoMs)} arrastrado", 18f)
-        val buscado = texto("${Formato.reloj(d.buscadoMs)} buscado", 18f).apply { gravity = Gravity.END }
+        // Arrastrado mide lo que mide y buscado usa el resto: asi ninguno salta
+        // de linea mientras los numeros se cuentan.
+        val arrastrado = texto("${Formato.reloj(d.arrastradoMs)} arrastrado", 18f).apply { maxLines = 1 }
+        val buscado = texto("${Formato.reloj(d.buscadoMs)} buscado", 18f).apply {
+            gravity = Gravity.END
+            maxLines = 1
+            ellipsize = TextUtils.TruncateAt.END
+        }
         val etiquetas = LinearLayout(context).apply {
             orientation = LinearLayout.HORIZONTAL
-            addView(arrastrado, peso(0))
-            addView(buscado, peso(0))
+            addView(arrastrado, LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            ))
+            addView(buscado, peso(dp(8)))
         }
         alEntrar += {
             barra.llenar(450L)
