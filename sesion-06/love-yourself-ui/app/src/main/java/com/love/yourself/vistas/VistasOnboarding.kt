@@ -1,8 +1,12 @@
-package com.love.yourself.lab
+package com.love.yourself.vistas
 
 import android.content.Context
+import android.graphics.Canvas
 import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.RectF
 import android.graphics.drawable.GradientDrawable
+import android.os.SystemClock
 import android.text.InputType
 import android.util.TypedValue
 import android.view.Gravity
@@ -14,6 +18,10 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
+import com.love.yourself.vistas.Animacion.frena
+import com.love.yourself.vistas.Animacion.lerp
+import com.love.yourself.vistas.Animacion.tramo
+import kotlin.math.abs
 
 /** Una app que se puede vigilar: paquete y nombre visible. */
 class AppInstalada(val paquete: String, val nombre: String)
@@ -31,7 +39,7 @@ class VistasOnboarding(private val context: Context) {
     private fun dp(v: Float) = (v * d).toInt()
 
     // ---- colores de los wireframes: cambiar aca ----
-    private val fondo = Color.parseColor("#262626")
+    private val fondo = Colores.PAGINA
     private val modal = Color.parseColor("#3A3A3A")
     private val linea = Color.parseColor("#5A5A5A")
     private val campo = Color.parseColor("#2E2E2E")
@@ -62,6 +70,8 @@ class VistasOnboarding(private val context: Context) {
             addView(texto(texto, 17f, Color.WHITE))
             addView(enlace, margenArriba(dp(18f)))
             addView(explicacion, margenArriba(dp(10f)))
+            // La explicacion se despliega estirando el modal, no de golpe.
+            layoutTransition = android.animation.LayoutTransition()
         }
         return pantalla(tarjeta(cuerpo, "Salir" to alSalir, "Activar" to alActivar))
     }
@@ -145,6 +155,33 @@ class VistasOnboarding(private val context: Context) {
         return pantalla(tarjeta(cuerpo, "Omitir" to alOmitir, "Continuar" to { alContinuar(entrada.text.toString().trim()) }))
     }
 
+    // ---- moverse entre pasos ----
+
+    /**
+     * Pone la pantalla nueva en el contenedor: la anterior se va hacia un lado
+     * y la nueva entra por el otro. Hacia atras (adelante = false), al reves.
+     */
+    fun cambiar(contenedor: ViewGroup, anterior: View?, nueva: View, adelante: Boolean = true) {
+        contenedor.addView(nueva, FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
+        if (!Animacion.activas()) {
+            anterior?.let { contenedor.removeView(it) }
+            return
+        }
+        val dx = (if (contenedor.width > 0) contenedor.width * 0.25f else dp(90f).toFloat()) * if (adelante) 1f else -1f
+        nueva.alpha = 0f
+        nueva.translationX = dx
+        nueva.animate().alpha(1f).translationX(0f)
+            .setStartDelay(if (anterior == null) 0L else 90L).setDuration(420L).setInterpolator(Animacion.FRENA)
+            .start()
+        anterior?.animate()?.alpha(0f)?.translationX(-dx)
+            ?.setStartDelay(0L)?.setDuration(240L)?.setInterpolator(Animacion.ACELERA)
+            ?.withEndAction { contenedor.removeView(anterior) }
+            ?.start()
+    }
+
+    /** Los puntos de arriba: en que paso vas, de cuantos. */
+    fun puntos(total: Int) = PuntosPasos(context, total)
+
     // ---- piezas ----
 
     /** El modal: contenido arriba y dos botones abajo, separados por lineas. */
@@ -190,6 +227,7 @@ class VistasOnboarding(private val context: Context) {
 
     private fun boton(texto: String, alTocar: () -> Unit) = texto(texto, 16f, Color.WHITE).apply {
         setPadding(0, dp(18f), 0, dp(18f))
+        Animacion.presionable(this)
         setOnClickListener { alTocar() }
     }
 
@@ -197,4 +235,54 @@ class VistasOnboarding(private val context: Context) {
         ViewGroup.LayoutParams.MATCH_PARENT,
         ViewGroup.LayoutParams.WRAP_CONTENT
     ).apply { topMargin = m }
+}
+
+/**
+ * Puntos que dicen en que paso de la bienvenida vas. El del paso actual es
+ * una pildora, y se desliza hasta el siguiente cuando avanzas.
+ */
+class PuntosPasos(context: Context, private val total: Int) : View(context) {
+
+    private val d = resources.displayMetrics.density
+    private val apagado = Paint(Paint.ANTI_ALIAS_FLAG).apply { color = Color.parseColor("#5A5A5A") }
+    private val encendido = Paint(Paint.ANTI_ALIAS_FLAG).apply { color = Color.WHITE }
+    private val forma = RectF()
+    private var desde = 0f
+    private var hasta = 0f
+    private var cambioMs = -1L
+
+    fun marcar(paso: Int) {
+        val ahora = SystemClock.uptimeMillis()
+        desde = posicion(ahora)
+        hasta = paso.toFloat()
+        cambioMs = if (Animacion.activas() && isAttachedToWindow) ahora else -1L
+        invalidate()
+    }
+
+    private fun posicion(ahora: Long): Float {
+        if (cambioMs < 0) return hasta
+        return lerp(desde, hasta, frena(tramo((ahora - cambioMs).toFloat(), 0f, 420f)))
+    }
+
+    override fun onMeasure(anchoSpec: Int, altoSpec: Int) {
+        setMeasuredDimension(resolveSize((total * 18 * d).toInt(), anchoSpec), resolveSize((8 * d).toInt(), altoSpec))
+    }
+
+    override fun onDraw(c: Canvas) {
+        super.onDraw(c)
+        val ahora = SystemClock.uptimeMillis()
+        val paso = 18 * d
+        val radio = 3 * d
+        val inicio = (width - total * paso) / 2f + paso / 2f
+        val cy = height / 2f
+        for (i in 0 until total) c.drawCircle(inicio + i * paso, cy, radio, apagado)
+        // La pildora va de un punto al otro, estirandose en el camino.
+        val p = posicion(ahora)
+        val estiramiento = 4 * d * abs(p - hasta).coerceAtMost(1f)
+        val cx = inicio + p * paso
+        val medio = 7 * d + estiramiento
+        forma.set(cx - medio, cy - radio, cx + medio, cy + radio)
+        c.drawRoundRect(forma, radio, radio, encendido)
+        if (cambioMs >= 0 && ahora - cambioMs < 420L) postInvalidateOnAnimation()
+    }
 }

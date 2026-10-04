@@ -1,4 +1,4 @@
-package com.love.yourself.lab
+package com.love.yourself.config
 
 const val TAG = "LoveYourself"
 
@@ -15,7 +15,7 @@ object Config {
 
     /**
      * Apps marcadas de fabrica. La persona puede quitar o agregar cualquiera
-     * en la pantalla de configuracion; las que no estan en su lista se ignoran.
+     * en Ajustes; las que no estan en su lista se ignoran.
      */
     val APPS_SUGERIDAS = setOf(
         "com.instagram.android",
@@ -108,7 +108,7 @@ object Config {
     /**
      * Volver antes de esto no abre una sesion nueva: la anterior sigue.
      * Sin esta tolerancia, responder un WhatsApp y volver partiria una sesion
-     * de 40 minutos en pedazos y el contador nunca llegaria a la decision.
+     * de 40 minutos en pedazos y el contador nunca llegaria al cielo.
      */
     const val TOLERANCIA_REGRESO_S = 30
 
@@ -117,6 +117,14 @@ object Config {
 
     /** Arrastre minimo para mostrar el resumen al salir. */
     const val MIN_ARRASTRE_BRIEF_S = 60
+
+    /**
+     * Las visitas sin arrastre (mensajes, buscar algo) tambien quedan en el
+     * historial de Inicio si duran al menos esto: muestran el uso con
+     * intencion, que es justo lo que el proyecto no quiere tocar. Las mas
+     * cortas son mirar una notificacion y no dicen nada.
+     */
+    const val MIN_VISITA_HISTORIAL_S = 60
 
     /**
      * Superficies del sistema que se dibujan encima sin que el usuario salga

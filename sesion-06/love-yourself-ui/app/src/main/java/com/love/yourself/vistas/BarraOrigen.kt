@@ -1,5 +1,6 @@
-package com.love.yourself.lab
+package com.love.yourself.vistas
 
+import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.LinearGradient
@@ -23,7 +24,27 @@ class BarraOrigen(context: Context) : View(context) {
             invalidate()
         }
 
+    /** Cuanto de la fraccion se ve: llenar() la hace crecer desde 0. */
+    private var progreso = 1f
+
     private val pintura = Paint(Paint.ANTI_ALIAS_FLAG)
+
+    /** Lo arrastrado entra desde la izquierda, como si se juntara. */
+    fun llenar(demoraMs: Long, duracionMs: Long = 900L) {
+        if (!Animacion.activas()) return
+        progreso = 0f
+        invalidate()
+        ValueAnimator.ofFloat(0f, 1f).apply {
+            startDelay = demoraMs
+            duration = duracionMs
+            interpolator = Animacion.FRENA
+            addUpdateListener {
+                progreso = it.animatedValue as Float
+                invalidate()
+            }
+            start()
+        }
+    }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
@@ -32,12 +53,12 @@ class BarraOrigen(context: Context) : View(context) {
         if (w <= 0f || h <= 0f) return
 
         // En el wireframe la transicion ocupa ~24% del ancho (de 69% a 93%).
-        val medio = MEDIA_TRANSICION
-        val desde = (fraccionArrastrada - medio).coerceIn(0f, 1f)
-        val hasta = (fraccionArrastrada + medio).coerceIn(0f, 1f)
+        val fraccion = fraccionArrastrada * progreso
+        val desde = (fraccion - MEDIA_TRANSICION).coerceIn(0f, 1f)
+        val hasta = (fraccion + MEDIA_TRANSICION).coerceIn(0f, 1f)
         pintura.shader = LinearGradient(
             0f, 0f, w, 0f,
-            intArrayOf(ColoresBrief.ARRASTRADO, ColoresBrief.ARRASTRADO, ColoresBrief.BUSCADO, ColoresBrief.BUSCADO),
+            intArrayOf(Colores.ARRASTRADO, Colores.ARRASTRADO, Colores.BUSCADO, Colores.BUSCADO),
             floatArrayOf(0f, desde, hasta, 1f),
             Shader.TileMode.CLAMP
         )
