@@ -16,7 +16,7 @@ estoy centrando mis esfuerzos en re redactar la memoria para reducir referentes 
 
 `economía de la atención > psicología cognitiva > diseño ux/ui`
 
-#### economía de la atención
+#### ECONOMÍA DE LA ATENCIÓN - ÁMBITO I
 
 secuencia:
 
@@ -61,3 +61,23 @@ secuencia:
 
 1. Contagio emocional mediante la curaduría algorítmica del feed, como evidencia empírica de modificación de conducta
 2. ausencia de consentimiento informado en el experimento de Kramer
+
+#### precindidos
+
+- Han (2015).
+- McLuhan (1964)
+- Kahneman (2011) - se corre pal ambito 2
+
+#### PSICOLOGÍA COGNITIVA - ÁMBITO II
+
+secuencia:
+
+1. 
+
+### nueva recopilación de biblio ámbito 2
+
+#### The expected value of control - Shenhav et. al
+
+- [The expected value of control - Shenhav et. al](../bilbiografia/2-sicologia-cognitiva/shenhav-expected-value-of-control.pdf)
+
+1. evaluación del costo y beneficio del esfuerzo cognitivo
