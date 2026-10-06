@@ -27,3 +27,37 @@ secuencia:
 5. Williams: la presión competitiva vuelve la captura una necesidad estructural.
 6. Implicancias éticas con Williams, en lugar de Han.
 7. Conclusión parcial y relevo.
+
+### nueva recopilación de biblio
+
+#### Capitalismo de Viglancia - Shoshana Zuboff
+
+- [Capitalismo de Viglancia - Zuboff](../bilbiografia/zuboff-capitalismo_de_vigilancia.pdf)
+
+1. capitalismo de vigilancia
+2. excedente conductual
+3. Modelos predictivos (así lo mencionas en el párrafo del ciclo)
+4. Poder instrumentario
+
+#### Designing Organizations for an information rich world - Herbert Simon
+
+- [Designing Organizations for an information rich world - Simon](../bilbiografia/simon-deisinging_orgs_in_an_info_rich_world.pdf)
+
+1. escacez de atención frente a la abundancia de información
+2. Procesamiento serial de la atención
+3. Rol filtrador de los sistemas de información
+
+#### Stand out of our light - James Williams
+
+- [Stand out of our Light - Williams](../bilbiografia/williams-Stand_out_of_our_Light.pdf)
+
+1. Presión estructural y competitiva por capturar la atención(mercado)
+2. Amenaza a la integridad de la voluntad humana (esa es tu formulación en el texto)
+3. Niveles de distracción: spotlight, starlight y daylight (funcional, existencial y epistémica)
+
+#### Kramer y Verma
+
+- [Experimental evidence of massive-scale emotional contagion through social networks - Kramer & Nota editorial - Verma](../bilbiografia/kramer-massive_scale_emotional_contagion_through_social_networks.pdf)
+
+1. Contagio emocional mediante la curaduría algorítmica del feed, como evidencia empírica de modificación de conducta
+2. ausencia de consentimiento informado en el experimento de Kramer
