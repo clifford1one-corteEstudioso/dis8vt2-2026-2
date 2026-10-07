@@ -53,3 +53,14 @@ hay distintos tonos que me gustaría explorar
 4. tono mascota tierna-cercana: ¿ya?
 
 ### detonadores
+
+
+### revisión cruzada correción
+
+administrar mejor el tiempo y qué quiero mostrar
+
+en la memoria profundixzar en estos proceso pero en la ppt mostrar el corazón del proyecto.
+
+re entiende como una nube, que se contrasta bien con el UI pulido y purista. Es bueno q contrastev para q no se mimetice.
+
+trabajar metodologías de cración de perosnajes.
