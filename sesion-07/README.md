@@ -72,7 +72,13 @@ secuencia:
 
 secuencia:
 
-1. 
+1. Economía del esfuerzo. El cerebro evalúa el costo y el beneficio del esfuerzo cognitivo. Explica por qué las recompensas que cuestan poco ganan. Fuente: Shenhav et al. (2013).
+2. La dopamina como predicción. La dopamina no responde a la recompensa en sí, sino al error de predicción de recompensa, y en eso se basa el aprendizaje. Fuente: Schultz et al. (1997).
+3. Wanting frente a liking. Es el núcleo del apartado y la base de Insatisfacción. Fuente: Berridge & Robinson (1998).
+4. Refuerzo variable. Ferster & Skinner (1957) aportan el mecanismo. Fiorillo et al. (2003) muestran que la incertidumbre máxima produce la máxima respuesta dopaminérgica. Este punto conecta con el "condicionamiento conductual" del apartado 1.
+5. Sistema 1 y Sistema 2. El procesamiento automático frente al deliberado. Fuente: Kahneman (2011).
+6. Hábito. La conducta se automatiza mediante el ciclo de señal, rutina y recompensa. Fuente: Wood & Neal (2007).
+7. Conclusión parcial y relevo: si estos mecanismos existen, ¿quién los materializa? La respuesta es el diseño de interfaces.
 
 ### nueva recopilación de biblio ámbito 2
 
@@ -106,11 +112,11 @@ secuencia:
 
 revisar estos conceptos de mi  hipótesis, evetnualmente cambiarlas. En teoria para cada cosa hay q elegir un autor q me diga como medir esto.
 
-- friccion adpadtativa
+- friccion adpadtativa (mencionar en el ambito de diseño ux)
 
-- decisión consciente
+- decisión consciente (mencionar en el ambito de psico)
 
-- restitución de agencia
+- restitución de agencia (mencionar en el ambito de economia)
 
 - reducción de uso no intencional
 
@@ -135,6 +141,8 @@ revisar estos conceptos de mi  hipótesis, evetnualmente cambiarlas. En teoria p
 - antigrafica como referente
 
 - ordenar fecha y calendario, ser mas recrptivo con el feedbck:
+
+### feedback memoria by simón
 
 ### pasos a seguir
 
@@ -186,3 +194,22 @@ El diseño de una intervención que reintroduzca momentos de decisión conscient
 #### objetivos
 
 los objetivos tienen que ser el camino para comprobar la hipótesis.
+
+### validación
+
+usar escala likert, y tener en cuenta como afectan a las respuesta cuántas niveles posibles de respuestas hay.
+
+darle las preguntas de eso, antes durate y al final del exp.
+
+Hay que correlacionar los datos de uso con las preguntas de likert. Establece un protocolo de interpetación de los datos.
+
+etapas:
+
+1. diseño del insturumento(en este caso usar un referente de base)
+2. diseño de la muestra
+3. diseño del terreno
+4. análisis de los datos
+
+como cruzamos los datos de uso con la sensación de recuperación de agencia que siente el usuario.
+
+***IMPORTANTE** COMO VOY A RELACIONAR LOS DATOS DE LA ESCALA LIKERT CON LOS DATOS DE USO, Y LUEGO COMO METER ESOS INSIGHTS EN ACCIONABLES EN LA APP.
