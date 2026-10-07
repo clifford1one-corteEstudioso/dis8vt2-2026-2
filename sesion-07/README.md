@@ -81,3 +81,17 @@ secuencia:
 - [The expected value of control - Shenhav et. al](../bilbiografia/2-sicologia-cognitiva/shenhav-expected-value-of-control.pdf)
 
 1. evaluación del costo y beneficio del esfuerzo cognitivo
+
+## Revisión — UI y usabilidad del prototipo (15 min)
+
+### 1. Encuadre (1 min)
+"Este mes me concentré en el prototipo. Hoy la app detecta la app en uso y el scroll mediante el servicio de accesibilidad, sin ver la pantalla. Muestra un overlay con el tiempo de sesión y los swipes por minuto, que crece a los 5 minutos y a los 15 pregunta si quiero seguir. Hoy me interesa más su aporte hacia adelante que validar lo hecho, sobre todo en interfaz y usabilidad."
+
+### 2. Contexto de decisiones (2 min)
+"Para que tenga el contexto: elegí un tono de invitación a salir ('hay algo mejor afuera'), no de freno; un escalamiento por tiempo (5 y 15 min); y [metáfora visual: cielo con nubes que gana opacidad / la propuesta vigente]. Si algo de esto le hace ruido, lo vemos al final. Ahora quiero usar el tiempo en lo que viene."
+
+### 3. Nudo central (9 min)
+"Mi duda de fondo es cómo intervenir sin romper el uso dirigido. Mi usuario necesita Instagram para trabajar, y el sistema se puede equivocar. ¿Cómo diseño una interrupción que se sienta pertinente en el uso de arrastre e ignorable en el uso dirigido? ¿Qué referentes o patrones de interfaz debería mirar?"
+
+### 4. Cierre (3 min)
+"Para la próxima revisión propongo traer [un test con N usuarios / una iteración del overlay / ___]. ¿Le parece suficiente o qué debería priorizar? Y si alguna de las decisiones del principio le hizo ruido, este es el momento."
