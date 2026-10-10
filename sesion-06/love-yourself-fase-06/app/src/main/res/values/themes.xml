@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.LoveYourself" parent="android:Theme.Material.Light.NoActionBar" />
+    <!--
+      Oscuro, como los wireframes. El fondo de la ventana es el de las
+      pantallas: asi al abrir la app no hay un destello blanco antes de que
+      se dibuje.
+    -->
+    <style name="Theme.LoveYourself" parent="android:Theme.Material.NoActionBar">
+        <item name="android:windowBackground">@color/pagina</item>
+        <item name="android:colorBackground">@color/pagina</item>
+        <item name="android:colorAccent">@color/acento</item>
+        <item name="android:statusBarColor">@color/pagina</item>
+        <item name="android:navigationBarColor">@color/pagina</item>
+    </style>
 </resources>

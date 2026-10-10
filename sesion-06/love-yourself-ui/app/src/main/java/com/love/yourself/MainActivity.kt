@@ -17,27 +17,32 @@ import android.widget.HorizontalScrollView
 import android.widget.LinearLayout
 import android.widget.SeekBar
 import android.widget.TextView
-import com.love.yourself.lab.Config
-import com.love.yourself.lab.DatosBrief
-import com.love.yourself.lab.BurbujaView
-import com.love.yourself.lab.CaraProgresiva
-import com.love.yourself.lab.FormatoBrief
-import com.love.yourself.lab.Momento
-import com.love.yourself.lab.VistaBrief
-import com.love.yourself.lab.AppInstalada
-import com.love.yourself.lab.VistaCielo
-import com.love.yourself.lab.VistasOnboarding
+import com.love.yourself.config.Config
+import com.love.yourself.vistas.AppInstalada
+import com.love.yourself.vistas.BurbujaView
+import com.love.yourself.vistas.CaraProgresiva
+import com.love.yourself.vistas.Colores
+import com.love.yourself.vistas.DatosBrief
+import com.love.yourself.vistas.DatosInicio
+import com.love.yourself.vistas.Formato
+import com.love.yourself.vistas.FrasesCierre
+import com.love.yourself.vistas.Momento
+import com.love.yourself.vistas.PuntosPasos
+import com.love.yourself.vistas.VistaBrief
+import com.love.yourself.vistas.VistaCielo
+import com.love.yourself.vistas.VistaInicio
+import com.love.yourself.vistas.VistasOnboarding
 
 /**
  * App solo de diseno. Muestra las mismas vistas que la app real, pero dentro
  * de una pantalla normal: sin permisos, sin accesibilidad, sin Instagram.
  *
  * Se mueve el tiempo de arrastre con un deslizador y se ve como reaccionan la
- * burbuja y el cielo. Lo que se ajuste en los archivos de lab/ se
+ * burbuja y el cielo. Lo que se ajuste en vistas/ (y config/Config.kt) se
  * copia entero a la app real.
  *
  * Capas, de abajo hacia arriba, en el mismo orden que en el celular:
- *   reel de mentira -> burbuja -> cielo / resumen -> panel
+ *   reel de mentira -> burbuja -> cielo / resumen / inicio / bienvenida -> panel
  */
 class MainActivity : Activity() {
 
@@ -93,7 +98,7 @@ class MainActivity : Activity() {
     private fun actualizar() {
         // En 0 todavia no hay arrastre: cerebro tranquilo. Despues se va gastando.
         burbuja.mostrarDatos(
-            FormatoBrief.reloj(segundos * 1000),
+            Formato.reloj(segundos * 1000),
             "%.0f".format(swipesPorMinuto),
             CaraProgresiva.para(segundos > 0, segundos * 1000)
         )
@@ -120,13 +125,43 @@ class MainActivity : Activity() {
     private val appsMarcadas = mutableSetOf("com.instagram.android", "com.zhiliaoapp.musically", "com.google.android.youtube")
     private var actividadDeMentira = ""
 
-    /** Paso 0 y 1: permisos. 2: apps. 3: actividad. Los botones avanzan. */
-    private fun mostrarBienvenida(paso: Int) {
+    private var pasosBienvenida: FrameLayout? = null
+    private var pasoBienvenida: View? = null
+    private var puntosBienvenida: PuntosPasos? = null
+
+    private fun cerrarBienvenida() {
         bienvenida?.let { raiz.removeView(it) }
         bienvenida = null
+        pasoBienvenida = null
+    }
+
+    /**
+     * Paso 0 y 1: permisos. 2: apps. 3: actividad. Los botones avanzan, con
+     * la misma transicion y los mismos puntos que en el celular.
+     */
+    private fun mostrarBienvenida(paso: Int) {
         val v = VistasOnboarding(this)
+        if (paso == 0 || bienvenida == null) {
+            cerrarBienvenida()
+            val pasos = FrameLayout(this)
+            val puntos = v.puntos(4)
+            val contenedor = FrameLayout(this).apply {
+                setBackgroundColor(Colores.PAGINA)
+                addView(pasos, completo())
+                // En el celular la bienvenida empieza bajo la barra de estado; aca se dibuja detras.
+                addView(puntos, FrameLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    Gravity.TOP or Gravity.CENTER_HORIZONTAL
+                ).apply { topMargin = barraDeEstado() + dp(28) })
+            }
+            raiz.addView(contenedor, raiz.indexOfChild(panel), completo())
+            bienvenida = contenedor
+            pasosBienvenida = pasos
+            puntosBienvenida = puntos
+        }
         val siguiente = { mostrarBienvenida(paso + 1) }
-        val cerrar = { bienvenida?.let { raiz.removeView(it) }; bienvenida = null }
+        val cerrar = { cerrarBienvenida() }
         val vista = when (paso) {
             0 -> v.permiso(
                 "Para mostrarte la burbuja encima de Instagram, Love Yourself necesita dibujar sobre otras apps.",
@@ -142,14 +177,44 @@ class MainActivity : Activity() {
             3 -> v.declaracion(actividadDeMentira, alOmitir = cerrar, alContinuar = { actividadDeMentira = it; cerrar() })
             else -> return
         }
-        raiz.addView(vista, raiz.indexOfChild(panel), completo())
-        bienvenida = vista
+        val pasos = pasosBienvenida ?: return
+        v.cambiar(pasos, pasoBienvenida, vista)
+        pasoBienvenida = vista
+        puntosBienvenida?.marcar(paso)
     }
+
+    // ---- inicio: la pantalla de la app, con una semana inventada ----
+
+    private var inicio: View? = null
+
+    private fun mostrarInicio() {
+        if (inicio != null) return
+        val datos = DatosInicio.ejemplo(System.currentTimeMillis())
+            .copy(actividad = actividadDeMentira.ifEmpty { "hacer música" })
+        // En el celular el engranaje abre Ajustes; aca cierra la vista.
+        val vista = FrameLayout(this).apply {
+            setBackgroundColor(Colores.PAGINA)
+            setPadding(0, barraDeEstado(), 0, 0)
+            addView(VistaInicio(this@MainActivity).crear(datos, animar = true, alAjustes = { cerrarInicio() }), completo())
+        }
+        raiz.addView(vista, raiz.indexOfChild(panel), completo())
+        inicio = vista
+    }
+
+    private fun cerrarInicio() {
+        inicio?.let { raiz.removeView(it) }
+        inicio = null
+    }
+
+    /** Lo que se contesto en "recuerdas", para verlo al abrir el resumen de nuevo. */
+    private var recuerdasDeMentira = ""
 
     /** El resumen de salida, con los numeros del deslizador (o los del wireframe, en 0). */
     private fun mostrarResumen() {
         if (resumen != null) return
         val ahora = System.currentTimeMillis()
+        // Antes de los 10 min, aliviado; despues, frito. Igual que en el celular.
+        val frito = segundos >= Config.MIN_CIELO * 60
         val datos = if (segundos == 0L) {
             DatosBrief.ejemplo(ahora)
         } else {
@@ -159,17 +224,23 @@ class MainActivity : Activity() {
                 arrastradoMs = segundos * 1000L,
                 videos = (segundos / 15).toInt(),
                 semanaArrastreMs = (14 * 60 + 20) * 60_000L,
+                semanaPasadaMs = (12 * 60 + 5) * 60_000L,
                 etiqueta = "diseño",
                 actividad = actividadDeMentira.ifEmpty { "hacer música" },
-                // Antes de los 10 min, aliviado; despues, frito. Igual que en el celular.
-                mascota = if (segundos < Config.MIN_CIELO * 60) R.drawable.brain_relief else R.drawable.brain_f,
-                fraseMascota = if (segundos < Config.MIN_CIELO * 60) "uf, gracias" else "quedé frito"
+                mascota = if (frito) R.drawable.brain_f else R.drawable.brain_relief,
+                fraseMascota = (if (frito) FrasesCierre.FRITO else FrasesCierre.ALIVIO).random()
             )
         }
-        val vista = VistaBrief(this).crear(datos, alCerrar = {
-            resumen?.let { raiz.removeView(it) }
-            resumen = null
-        })
+        lateinit var vista: View
+        vista = VistaBrief(this).crear(
+            datos.copy(recuerdas = recuerdasDeMentira),
+            alCerrar = {
+                raiz.removeView(vista)
+                if (resumen === vista) resumen = null
+            },
+            alVerDetalle = { mostrarInicio() },
+            alResponder = { recuerdasDeMentira = it }
+        )
         raiz.addView(vista, raiz.indexOfChild(panel), completo())
         resumen = vista
     }
@@ -246,8 +317,14 @@ class MainActivity : Activity() {
             }, peso())
             addView(boton("0:00") { tiempo.progress = 0 }, peso())
             addView(boton("${Config.MIN_CIELO} min") { tiempo.progress = Config.MIN_CIELO * 60 }, peso())
+        }
+
+        // Las pantallas completas, cada una con su entrada.
+        val pantallas = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
             addView(boton("Cielo") { mostrarCielo() }, peso())
             addView(boton("Resumen") { mostrarResumen() }, peso())
+            addView(boton("Inicio") { mostrarInicio() }, peso())
             addView(boton("Bienvenida") { mostrarBienvenida(0) }, peso())
         }
 
@@ -272,6 +349,7 @@ class MainActivity : Activity() {
             addView(etiquetaRitmo, conMargen(dp(4)))
             addView(ritmo)
             addView(atajos, conMargen(dp(8)))
+            addView(pantallas)
             addView(texto("burbuja", 13f), conMargen(dp(8)))
             addView(momentos)
         }
@@ -327,6 +405,10 @@ class MainActivity : Activity() {
     private fun peso() = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f)
 
     private fun dp(valor: Int) = (valor * resources.displayMetrics.density).toInt()
+
+    /** El alto de la barra de estado: esta pantalla se dibuja detras de ella. */
+    @Suppress("DEPRECATION")
+    private fun barraDeEstado(): Int = window.decorView.rootWindowInsets?.systemWindowInsetTop ?: dp(24)
 
     /**
      * En el celular la burbuja se mide desde el borde de arriba de la pantalla.

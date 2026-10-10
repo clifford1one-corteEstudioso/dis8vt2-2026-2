@@ -28,11 +28,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LoveYourself">
 
+        <!-- Inicio: tu semana. Tambien es a donde lleva "ver detalle" en el resumen. -->
         <activity
-            android:name=".MainActivity"
+            android:name=".InicioActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.LoveYourself">
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -41,18 +42,28 @@
         </activity>
 
         <activity
+            android:name=".AjustesActivity"
+            android:exported="false"
+            android:label="@string/ajustes"
+            android:parentActivityName=".InicioActivity" />
+
+        <activity
             android:name=".OnboardingActivity"
             android:exported="false"
-            android:theme="@style/Theme.LoveYourself"
             android:windowSoftInputMode="adjustResize" />
 
         <service
-            android:name=".lab.CapturaContinuaService"
+            android:name=".investigacion.CapturaContinuaService"
             android:exported="false"
             android:foregroundServiceType="mediaProjection" />
 
+        <!--
+          Si cambia este nombre (paquete o clase), Android lo trata como otro
+          servicio y hay que volver a activarlo en Accesibilidad. La app lo
+          detecta y vuelve a la bienvenida.
+        -->
         <service
-            android:name=".lab.SesionService"
+            android:name=".servicio.SesionService"
             android:exported="true"
             android:label="@string/servicio_label"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">

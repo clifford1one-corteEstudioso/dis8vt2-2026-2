@@ -97,14 +97,12 @@
   .linea-tiempo p { font-size: 18px; }
   .caja { border: 1px solid var(--linea); border-radius: 14px; padding: 24px 28px; }
 
-  #ayuda { position: fixed; bottom: 10px; left: 12px; font: 11px var(--titulo); color: #555; }
   body.editando .slide { outline: 2px dashed var(--acento); outline-offset: -8px; }
 
   @media print {
     html, body { overflow: visible; background: var(--fondo); }
     #escenario { position: static; transform: none !important; width: auto; height: auto; }
     .slide { display: flex !important; position: relative; width: 1280px; height: 720px; page-break-after: always; }
-    #ayuda { display: none; }
     @page { size: 1280px 720px; margin: 0; }
   }
 </style>
@@ -227,17 +225,29 @@
 <section class="slide" style="justify-content:center">
   <div class="fecha">2026-09-30, miércoles</div>
   <h2>La señal se separa sola</h2>
-  <div class="fila">
-    <table>
-      <tr><th>umbral</th><th>eventos</th></tr>
-      <tr><td>18</td><td>12</td></tr>
-      <tr><td>20</td><td>12</td></tr>
-      <tr><td>25</td><td>12</td></tr>
-    </table>
+  <p>Cada punto es un brillo de 0 a 255. Se compara con la muestra anterior y se promedia cuánto cambió.</p>
+  <div class="fila" style="align-items:flex-start;margin-top:30px">
     <div class="col">
-      <p>El umbral se puede mover un 40 % y el resultado no cambia.</p>
-      <p style="margin-top:18px">O la pantalla casi no cambia, o cambia entera. <b>No hay zona gris.</b></p>
-      <p class="gris" style="margin-top:18px">Pendiente: distinguir <b>corte de plano</b> (cuánto me estimula el contenido) de <b>swipe</b> (cuánto me muevo yo). Hoy suben la misma columna.</p>
+      <h3>mismo plano</h3>
+      <table style="width:100%">
+        <tr><th>punto</th><th>antes</th><th>ahora</th><th>cambio</th></tr>
+        <tr><td>1</td><td>200</td><td>198</td><td>2</td></tr>
+        <tr><td>2</td><td>50</td><td>52</td><td>2</td></tr>
+        <tr><td>3</td><td>120</td><td>119</td><td>1</td></tr>
+        <tr><td>4</td><td>90</td><td>90</td><td>0</td></tr>
+        <tr><td colspan="3"><b>promedio</b></td><td><b>1,25</b></td></tr>
+      </table>
+    </div>
+    <div class="col">
+      <h3>otra escena</h3>
+      <table style="width:100%">
+        <tr><th>punto</th><th>cambio</th></tr>
+        <tr><td>1</td><td>150</td></tr>
+        <tr><td>2</td><td>30</td></tr>
+        <tr><td>3</td><td>80</td></tr>
+        <tr><td>4</td><td>110</td></tr>
+        <tr><td><b>promedio</b></td><td><b style="color:var(--acento)">92,5</b></td></tr>
+      </table>
     </div>
   </div>
   <div class="seccion-tag">image recognition</div>
@@ -278,7 +288,24 @@
   <div class="seccion-tag">image recognition</div>
 </section>
 
-<!-- 12 · SECCION: LA APP -->
+<!-- 12 · DEMO -->
+<section class="slide">
+  <div class="fecha">2026-09-30, miércoles</div>
+  <div class="fila" style="height:100%">
+    <div class="col">
+      <h2>Así se vería</h2>
+      <p>Demo del reconocimiento de imagen sobre un reel: la app marca lo que detecta, sin bloquear ni calificar el contenido.</p>
+      <p style="margin-top:28px"><a href="https://youtube.com/shorts/HvG0XeTFUXc" target="_blank" rel="noopener" style="color:var(--texto);border:1px solid var(--gris);border-radius:12px;padding:12px 20px;text-decoration:none;display:inline-block">▶ ver el video en YouTube</a></p>
+      <p class="cita" style="margin-top:20px">Si el video no carga acá (sin internet o al imprimir): youtube.com/shorts/HvG0XeTFUXc</p>
+    </div>
+    <div style="width:290px;height:516px;border-radius:30px;border:6px solid #22262e;overflow:hidden;background:#000;flex:none">
+      <iframe src="https://www.youtube.com/embed/HvG0XeTFUXc?rel=0" title="Demo image recognition" loading="lazy" style="width:100%;height:100%;border:0" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>
+    </div>
+  </div>
+  <div class="seccion-tag">image recognition</div>
+</section>
+
+<!-- 13 · SECCION: LA APP -->
 <section class="slide" style="justify-content:center">
   <div class="fecha">2026-09-30, miércoles</div>
   <p class="gris" style="font:500 18px var(--titulo);letter-spacing:.1em">PARTE 2</p>
@@ -286,7 +313,7 @@
   <p class="fino" style="margin-top:24px">instalada y funcionando en mi celular</p>
 </section>
 
-<!-- 13 · ARRASTRE VS INTENCION -->
+<!-- 14 · ARRASTRE VS INTENCION -->
 <section class="slide">
   <div class="fecha">2026-09-30, miércoles</div>
   <h2>Qué cuenta como arrastre</h2>
@@ -305,7 +332,7 @@
   <div class="seccion-tag">la app</div>
 </section>
 
-<!-- 14 · RECORRIDO -->
+<!-- 15 · RECORRIDO -->
 <section class="slide">
   <div class="fecha">2026-09-30, miércoles</div>
   <h2>Una sesión</h2>
@@ -320,7 +347,7 @@
   <div class="seccion-tag">la app</div>
 </section>
 
-<!-- 15 · BURBUJA -->
+<!-- 16 · BURBUJA -->
 <section class="slide">
   <div class="fecha">2026-09-30, miércoles</div>
   <div class="fila" style="height:100%">
@@ -336,7 +363,7 @@
   <div class="seccion-tag">la app</div>
 </section>
 
-<!-- 16 · LA MASCOTA -->
+<!-- 17 · LA MASCOTA -->
 <section class="slide">
   <div class="fecha">2026-09-30, miércoles</div>
   <h2>Es tu cerebro, no un juez</h2>
@@ -360,7 +387,7 @@
   <div class="seccion-tag">la app</div>
 </section>
 
-<!-- 17 · CUANDO HABLA -->
+<!-- 18 · CUANDO HABLA -->
 <section class="slide">
   <div class="fecha">2026-09-30, miércoles</div>
   <h2>Cuándo habla</h2>
@@ -384,7 +411,7 @@
   <div class="seccion-tag">la app</div>
 </section>
 
-<!-- 18 · CIELO -->
+<!-- 19 · CIELO -->
 <section class="slide">
   <div class="fecha">2026-09-30, miércoles</div>
   <div class="fila" style="height:100%">
@@ -409,7 +436,7 @@
   <div class="seccion-tag">la app</div>
 </section>
 
-<!-- 19 · RESUMEN -->
+<!-- 20 · RESUMEN -->
 <section class="slide">
   <div class="fecha">2026-09-30, miércoles</div>
   <div class="fila" style="height:100%">
@@ -434,7 +461,7 @@
   <div class="seccion-tag">la app</div>
 </section>
 
-<!-- 20 · LO QUE ENSEÑO PROBAR -->
+<!-- 21 · LO QUE ENSEÑO PROBAR -->
 <section class="slide">
   <div class="fecha">2026-09-30, miércoles</div>
   <h2>Lo que enseñó probarla</h2>
@@ -448,7 +475,7 @@
   <p class="cita" style="margin-top:24px">Modo dev: reloj acelerado (x10, x60) para probar en segundos lo que dura minutos.</p>
 </section>
 
-<!-- 21 · PREGUNTAS ABIERTAS -->
+<!-- 22 · PREGUNTAS ABIERTAS -->
 <section class="slide">
   <div class="fecha">2026-09-30, miércoles</div>
   <h2>Preguntas abiertas</h2>
@@ -461,13 +488,13 @@
     </ul>
     <ul class="col">
       <li>¿Qué es "oscuridad" en términos medibles?</li>
-      <li>¿El cielo muestra el clima real?</li>
+      <li>La cara del cerebro, ¿se lee como un juicio sobre ti, o solo como su propio estado?</li>
       <li>Validar con usuarios: <b>objetivo específico 3</b>, evaluar la reducción del arrastre con métricas de uso.</li>
     </ul>
   </div>
 </section>
 
-<!-- 22 · CIERRE -->
+<!-- 23 · CIERRE -->
 <section class="slide" style="justify-content:flex-end;padding-bottom:90px">
   <div class="fecha">2026-09-30, miércoles</div>
   <h1>Love Yourself</h1>
@@ -477,7 +504,6 @@
 </section>
 
 </div>
-<div id="ayuda">← → navegar · F pantalla completa · E editar · Ctrl+S guardar edición</div>
 
 <script>
   const slides = [...document.querySelectorAll('.slide')];
@@ -507,6 +533,7 @@
   });
   escenario.addEventListener('click', ev => {
     if (document.body.classList.contains('editando')) return;
+    if (ev.target.closest('a, iframe')) return;
     mostrar(ev.clientX > innerWidth / 2 ? i + 1 : i - 1);
   });
 
