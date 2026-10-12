@@ -213,3 +213,6 @@ etapas:
 como cruzamos los datos de uso con la sensación de recuperación de agencia que siente el usuario.
 
 ***IMPORTANTE** COMO VOY A RELACIONAR LOS DATOS DE LA ESCALA LIKERT CON LOS DATOS DE USO, Y LUEGO COMO METER ESOS INSIGHTS EN ACCIONABLES EN LA APP.
+
+
+https://docs.google.com/document/d/1z6nvCx0L8lQdWKZmRvX6dDJxyKcv2Vl8-FevX4u9tek/edit?usp=sharing
