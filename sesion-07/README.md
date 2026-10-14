@@ -88,6 +88,8 @@ secuencia:
 
 1. evaluación del costo y beneficio del esfuerzo cognitivo
 
+#### A Neural Substrate of Prediction and Reward - Schultz
+
 ## Revisión — UI y usabilidad del prototipo (15 min)
 
 ### 1. Encuadre (1 min)
