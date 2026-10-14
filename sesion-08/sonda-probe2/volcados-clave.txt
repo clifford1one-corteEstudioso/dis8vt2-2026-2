@@ -1,0 +1,33 @@
+PROBE2 · 14-10-2026 · Instagram · fragmentos (indentación recortada)
+
+== 16:53:06 · perfil de una cuenta SEGUIDA (elhonestomike) ==
+FrameLayout id=profile_action_bar
+TextView id=action_bar_title text=elhonestomike
+TextView id=profile_header_follow_button text=Siguiendo desc=Sigues a El Honesto Mike
+TextView id=profile_header_follow_context_text text=<2 usuarios> y 27 personas más siguen esta cuenta
+ViewPager id=profile_viewpager
+GridView id=clips_grid_recyclerview
+
+== 16:53:43 · grilla de reels del perfil ==
+Button id=preview_clip_thumbnail desc=Reel de elhonestomike. Número de visualizaciones 22.1 mil. Toca dos veces para reproducirlo o pausarlo.
+TextView id=preview_clip_play_count text=22.1 mil
+
+== 16:53:44 · se abre un reel desde la grilla (sin volcado del reel) ==
+LoveYourself scroll ... clase=ViewPager id=clips_viewer_view_pager
+-> siguiente volcado recién a las 16:54:10: falta el reel elegido
+
+== 16:54:12 · inicio de Instagram + pestaña Reels (EMPUJADO) ==
+ViewGroup text=Sugerencias para ti desc=Sugerencias para ti
+ViewGroup id=row_feed_profile_header desc=<cuenta> publicó un photo el Hace 19 horas
+ImageView id=title_logo desc=Feed principal de Instagram
+FrameLayout id=root_clips_layout
+ViewPager id=clips_viewer_view_pager
+ViewGroup id=clips_media_info_component      (sin hijos)
+ViewGroup id=clips_ufi_component             (sin hijos)
+ViewGroup id=clips_media_component desc=Reel de andiefowler.wav. Toca dos veces para reproducirlo o pausarlo.
+Button id=clips_viewer_action_bar_title text=Reels
+FrameLayout id=clips_tab desc=Reels
+
+== 16:54:56 · inicio del teléfono (no es Instagram) ==
+(volcado del launcher Samsung, cortado en 300 nodos; incluye el widget de tiempo de uso)
+-> la sonda vuelca la ventana activa aunque ya no sea Instagram: el evento llegó de Instagram justo al salir

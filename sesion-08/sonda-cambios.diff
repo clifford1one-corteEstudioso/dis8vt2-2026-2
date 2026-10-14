@@ -1,0 +1,81 @@
+diff -ru a/java/com/love/yourself/servicio/SesionService.kt b/java/com/love/yourself/servicio/SesionService.kt
+--- a/java/com/love/yourself/servicio/SesionService.kt	2026-10-14 19:20:33.759716507 +0000
++++ b/java/com/love/yourself/servicio/SesionService.kt	2026-10-14 19:20:33.840943456 +0000
+@@ -15,6 +15,7 @@
+ import android.util.Log
+ import android.view.WindowManager
+ import android.view.accessibility.AccessibilityEvent
++import android.view.accessibility.AccessibilityNodeInfo
+ import android.widget.Toast
+ import com.love.yourself.InicioActivity
+ import com.love.yourself.R
+@@ -151,6 +152,7 @@
+     override fun onAccessibilityEvent(evento: AccessibilityEvent?) {
+         val e = evento ?: return
+         val paquete = e.packageName?.toString() ?: return
++        if (PROBE2_ENABLED && paquete == PROBE2_PAQUETE) sonda()
+         val ahora = ahora()
+ 
+         when (e.eventType) {
+@@ -564,6 +566,36 @@
+     private fun esInicio(paquete: String) =
+         paquete in launchers || "launcher" in paquete || paquete.endsWith(".home")
+ 
++    // ---- PROBE2: sonda de diagnostico, no es parte de la intervencion ----
++
++    private var ultimaSondaMs = 0L
++
++    /** Vuelca el arbol de la ventana activa en Logcat (tag PROBE2), como mucho cada PROBE2_THROTTLE_MS. */
++    private fun sonda() {
++        val ahora = SystemClock.uptimeMillis()
++        if (ahora - ultimaSondaMs < PROBE2_THROTTLE_MS) return
++        ultimaSondaMs = ahora
++        val raiz = runCatching { rootInActiveWindow }.getOrNull() ?: return
++        volcar(raiz, 0)
++        Log.d(PROBE2_TAG, "----------------------------------------")
++    }
++
++    private fun volcar(nodo: AccessibilityNodeInfo, profundidad: Int) {
++        Log.d(
++            PROBE2_TAG,
++            "  ".repeat(profundidad) +
++                "${nodo.className} id=${nodo.viewIdResourceName} text=${nodo.text} desc=${nodo.contentDescription}"
++        )
++        for (i in 0 until nodo.childCount) {
++            val hijo = nodo.getChild(i) ?: continue
++            volcar(hijo, profundidad + 1)
++        }
++        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
++            @Suppress("DEPRECATION")
++            nodo.recycle()
++        }
++    }
++
+     override fun onInterrupt() {}
+ 
+     override fun onDestroy() {
+@@ -575,4 +607,12 @@
+         friccion = null
+         brief = null
+     }
++
++    private companion object {
++        /** false = la sonda no corre. */
++        const val PROBE2_ENABLED = true
++        const val PROBE2_TAG = "PROBE2"
++        const val PROBE2_PAQUETE = "com.instagram.android"
++        const val PROBE2_THROTTLE_MS = 1500L
++    }
+ }
+diff -ru a/res/xml/sesion_config.xml b/res/xml/sesion_config.xml
+--- a/res/xml/sesion_config.xml	2026-10-14 19:20:33.739716508 +0000
++++ b/res/xml/sesion_config.xml	2026-10-14 19:20:33.836365018 +0000
+@@ -6,7 +6,7 @@
+ <accessibility-service xmlns:android="http://schemas.android.com/apk/res/android"
+     android:accessibilityEventTypes="typeWindowStateChanged|typeViewScrolled"
+     android:accessibilityFeedbackType="feedbackGeneric"
+-    android:accessibilityFlags="flagReportViewIds"
++    android:accessibilityFlags="flagReportViewIds|flagIncludeNotImportantViews"
+     android:notificationTimeout="100"
+     android:canRetrieveWindowContent="true"
+     android:description="@string/servicio_desc" />
