@@ -1,1 +1,68 @@
 # sesion-08
+
+## avance según feedback
+
+### paso 1: formulacion: obj y hipotesis
+
+#### hipótesis
+
+##### hipótesis antigua
+
+El diseño de una intervención que reintroduzca momentos de decisión consciente en el flujo de uso automático del smartphone mediante una fricción adaptativa que se calibra según el comportamiento y necesidad del usuario, permitirá restituir la capacidad de decisión sobre el comportamiento tecnológico propio, reduciendo el uso no intencional de forma duradera.
+
+###### problemas y oportunidades de mejora
+
+- hay que actualizar el usuario objetivo
+- uso compulsivo es poco medible y el término es poco consistente con el resto de la memoria
+- contribuir no es evaluable
+- el plazo es poco verificable
+
+##### hipótesis actualizada
+
+> Si se introducen interrupciones adaptativas deliberadas dentro del flujo frictionless de el formato de scroll infinito con contenido a pantalla completa, entonces personas que se dedican al rubro creativo de entre 25 a 32 años, en comparación con su tiempo de uso inicial, mostrará una reducción en su tiempo en pantalla, medido mediante métricas de uso, rescatadas por la propia app, desde el primer día y sostenido durante N días.
+
+> Si se introducen interrupciones adaptativas en el flujo del scroll vertical tipo TikTok, activadas al detectar uso de arrastre, entonces personas de entre 25 y 32 años que dependen de redes 	para su trabajo creativo mostrarán una disminución del tiempo de uso de arrastre respecto de su línea base de [N días], sostenida durante [N días] de intervención, sin que su tiempo de uso dirigido disminuya más de [X %]. El uso de arrastre y el uso dirigido se medirán mediante el origen del contenido (elegido por el usuario o propuesto por el algoritmo), registrado por la aplicación desarrollada.
+
+###### alcances
+
+- si se reduce el uso de arratsre, como conescuencia se reduce el uso total. Sin embargo, si mi medidor es solo *uso total* no puedo saber si redujo su uso no intencional por que funciona o porque odió la app y ahora no abre IG nunca
+- agregar cuál es el activador específico de la interrupción
+
+1. **TRIVIALIDAD:**
+    - **la hipótesis debe apuntar a resolver un porblema que solo mi proyecto podría resolver**
+    - Que una interrupción reduzca el tiempo de uso es casi seguro: cualquier fricción lo hace. Entonces, ¿qué aporto yo? ahora mi hipótesis no lo declara
+    - actualmetne no menciona mi contribución teórica(arrastre vs dirigido)
+2. **POCO COMPROBABLE:**
+    - "reducción" no es acertado, pq disminuir 1segundo ya es una reducción
+    - tiempo en pantalla es ambiguo(celular entero, instagram entero, o solo reels)
+3. **REDUNDANTE:**
+    - deliberado no me dice nada
+    - está demasiado especificado lo de "scroll infinito a pantalla completa", en el marco especificar aca poner solo *reels* o otra palabra específica
+    - no nombrar el instrumento de medición, solo la variable medida
+4. **FUERA DE ALCANCE:**
+    - cambiar usuario. Ahora está definido por su oficio, deberpia definirlo por la condición que me importa(que necesite tener insta activo)
+
+#### objetivos
+
+los objetivos tienen que ser el camino para comprobar la hipótesis.
+
+### validación
+
+usar escala likert, y tener en cuenta como afectan a las respuesta cuántas niveles posibles de respuestas hay.
+
+darle las preguntas de eso, antes durate y al final del exp.
+
+Hay que correlacionar los datos de uso con las preguntas de likert. Establece un protocolo de interpetación de los datos.
+
+etapas:
+
+1. diseño del insturumento(en este caso usar un referente de base)
+2. diseño de la muestra
+3. diseño del terreno
+4. análisis de los datos
+
+como cruzamos los datos de uso con la sensación de recuperación de agencia que siente el usuario.
+
+***IMPORTANTE** COMO VOY A RELACIONAR LOS DATOS DE LA ESCALA LIKERT CON LOS DATOS DE USO, Y LUEGO COMO METER ESOS INSIGHTS EN ACCIONABLES EN LA APP.
+
+https://docs.google.com/document/d/1z6nvCx0L8lQdWKZmRvX6dDJxyKcv2Vl8-FevX4u9tek/edit?usp=sharing
