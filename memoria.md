@@ -1,12 +1,4 @@
-# 
-
-# 
-
-# 
-
-# 
-
-# Cautiverio Voluntario:
+# Cautiverio Voluntario
 
 # Cómo se diseña la libertad
 

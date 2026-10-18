@@ -98,3 +98,105 @@ Definir los principios de diseño de una intervención que interrumpa el uso aut
 ##### Objetivos de Validación
 
 Evaluar mediante testeo con usuarios en qué medida la intervención favorece la recuperación de agencia y reduce el uso no intencional, y si esta perdura en el tiempo, para validar su efectividad y orientar su desarrollo.
+
+## VALIDACIÓN
+
+### Plan hacia la validación
+
+> Hipótesis: si se introducen interrupciones adaptativas en el flujo de Instagram Reels, activadas al detectar uso de arrastre, entonces personas de entre 25 y 32 años que dependen de Instagram para su trabajo creativo mostrarán una disminución del tiempo de uso de arrastre respecto de su línea base, sostenida durante la intervención, sin que su uso dirigido disminuya más allá de un umbral definido.
+
+---
+
+#### 0. Restricción de tiempo
+
+- [ ] Fecha límite de entrega: `[fecha]`
+- [ ] Calcular semanas disponibles para línea base + intervención + análisis
+- [ ] Verificar que la intervención supere el período en que fallaban las herramientas de fricción (horas o días). Si no alcanza, declararlo como limitación.
+
+---
+
+#### 1. Factibilidad del proxy (urgente)
+
+- [ ] **Probe 1:** ¿MediaProjection entrega imagen real o cuadro negro?
+- [ ] **Probe 2:** ¿El árbol de AccessibilityNodeInfo expone el origen del contenido en Reels (elegido por el usuario o propuesto por el algoritmo)?
+- [ ] Si el Probe 2 falla: definir un proxy alternativo o replantear la hipótesis
+
+---
+
+#### 2. Margen de error del proxy
+
+- [ ] Prueba breve: comparar lo que registra la app con lo que reporta el usuario
+- [ ] Calcular falsos positivos (uso dirigido clasificado como arrastre)
+- [ ] Calcular falsos negativos (arrastre no detectado)
+- [ ] Documentar el margen de error para la metodología
+
+---
+
+#### 3. Investigación (objetivo específico 1)
+
+- [ ] Definir instrumento: entrevistas y/o encuesta
+- [ ] Reclutar participantes del perfil (25–32, dependen de Instagram para trabajar)
+- [ ] Indagar:
+  - [ ] Estrategias de autorregulación actuales
+  - [ ] Razones de su fracaso
+  - [ ] Cómo distinguen su uso dirigido de su uso de arrastre
+- [ ] Sintetizar hallazgos en principios de diseño
+
+---
+
+#### 4. Prototipado (objetivo específico 2)
+
+- [ ] Traducir los principios en reglas de la intervención
+- [ ] Definir qué dispara una interrupción (detección de arrastre)
+- [ ] Verificar que la intervención no actúe sobre el uso dirigido
+- [ ] Prueba piloto interna
+
+---
+
+#### 5. Definiciones del estudio
+
+| Parámetro | Valor | Justificación |
+|---|---|---|
+| Duración de la línea base | `[N días]` | Mínimo una semana completa (días hábiles y fin de semana) |
+| Duración de la intervención | `[N días]` | Debe superar el período de falla de las herramientas de fricción |
+| Umbral de disminución del uso dirigido | `[X %]` | Variación natural del uso dirigido observada en la línea base |
+| Número de participantes | `[n]` | `[criterio]` |
+
+---
+
+#### 6. Protocolo
+
+- [ ] Consentimiento informado (registro de datos de uso)
+- [ ] Revisar si la escuela exige un procedimiento ético
+- [ ] Instalación y configuración de la app en los dispositivos
+- [ ] Fase A — Línea base: la app registra sin intervenir
+- [ ] Fase B — Intervención: la app registra e interviene
+- [ ] Plan de respaldo de datos
+
+---
+
+#### 7. Validación (objetivo específico 3)
+
+- [ ] Comparar el tiempo de uso de arrastre entre la fase A y la fase B
+- [ ] Verificar que el uso dirigido no disminuya más allá del umbral
+- [ ] Analizar si la reducción se sostiene a lo largo de la fase B (no solo los primeros días)
+- [ ] Opcional: medir la percepción de agencia (autorreporte)
+
+---
+
+#### 8. Limitaciones a declarar
+
+- [ ] Margen de error del proxy
+- [ ] Ausencia de grupo de control
+- [ ] Efecto de saber que se está siendo medido durante la línea base
+- [ ] Tamaño de la muestra
+- [ ] Duración acotada por el calendario
+- [ ] Resultados válidos solo para Instagram Reels (la generalización queda como proyección)
+
+---
+
+#### Registro de decisiones
+
+| Fecha | Decisión | Razón |
+|---|---|---|
+| | | |
