@@ -83,4 +83,4 @@ alcances:
 `4. Qué busca lograr:` reducir el uso de arrastre sin afectar el uso dirigido.
 `4. Con qué propósito:` que la persona recupere la capacidad de decidir sobre su uso. 
 
-Diseñar una intervención que, mediante interrupciones adaptativas, reduzca el uso de arrastre de Instagram Reels sin afectar el uso dirigido, en personas de entre 25 y 32 años que dependen de la plataforma para su trabajo creativo, con el fin de favorecer que recuperen la capacidad de decidir conscientemente sobre su uso.
+Diseñar una intervención que, mediante interrupciones adaptativas, reduzca el uso de arrastre de Instagram Reels sin afectar el uso dirigido, en personas de entre 20 y 30 años que dependen de la plataforma para su trabajo creativo, con el fin de favorecer que recuperen la capacidad de decidir conscientemente sobre su uso.
