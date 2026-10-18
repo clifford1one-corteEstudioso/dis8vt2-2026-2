@@ -69,11 +69,11 @@ https://docs.google.com/document/d/1z6nvCx0L8lQdWKZmRvX6dDJxyKcv2Vl8-FevX4u9tek/
 
 ### objetivos
 
-#### old
+#### general old
 
 Contribuir a que personas con uso no intencional recurrente del smartphone recuperen la capacidad de decidir conscientemente sobre su comportamiento tecnológico, reduciendo como consecuencia el uso compulsivo en contextos de tiempo no estructurado, mediante una intervención de diseño.
 
-#### new
+#### general new
 
 alcances:
 
@@ -84,3 +84,17 @@ alcances:
 `4. Con qué propósito:` que la persona recupere la capacidad de decidir sobre su uso. 
 
 Diseñar una intervención que, mediante interrupciones adaptativas, reduzca el uso de arrastre de Instagram Reels sin afectar el uso dirigido, en personas de entre 20 y 30 años que dependen de la plataforma para su trabajo creativo, con el fin de favorecer que recuperen la capacidad de decidir conscientemente sobre su uso.
+
+#### específicos old
+
+##### Objetivos de Investigación
+
+Caracterizar las estrategias de autorregulación que los usuarios emplean actualmente y las razones de su fracaso, para fundamentar los principios de la intervención en evidencia real.
+
+##### Objetivos de Prototipado
+
+Definir los principios de diseño de una intervención que interrumpa el uso automático y favorezca la decisión consciente, traduciendo los hallazgos de la investigación en una propuesta testeable.
+
+##### Objetivos de Validación
+
+Evaluar mediante testeo con usuarios en qué medida la intervención favorece la recuperación de agencia y reduce el uso no intencional, y si esta perdura en el tiempo, para validar su efectividad y orientar su desarrollo.
