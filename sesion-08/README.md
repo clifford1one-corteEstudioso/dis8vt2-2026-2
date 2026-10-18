@@ -66,3 +66,21 @@ como cruzamos los datos de uso con la sensación de recuperación de agencia que
 ***IMPORTANTE** COMO VOY A RELACIONAR LOS DATOS DE LA ESCALA LIKERT CON LOS DATOS DE USO, Y LUEGO COMO METER ESOS INSIGHTS EN ACCIONABLES EN LA APP.
 
 https://docs.google.com/document/d/1z6nvCx0L8lQdWKZmRvX6dDJxyKcv2Vl8-FevX4u9tek/edit?usp=sharing
+
+### objetivos
+
+#### old
+
+Contribuir a que personas con uso no intencional recurrente del smartphone recuperen la capacidad de decidir conscientemente sobre su comportamiento tecnológico, reduciendo como consecuencia el uso compulsivo en contextos de tiempo no estructurado, mediante una intervención de diseño.
+
+#### new
+
+alcances:
+
+`1. Qué harás:` diseñar una intervención
+`2. Dónde:` en Instagram Reels.
+`3. Para quién:` personas de 20 a 30 años que dependen de Instagram para su trabajo creativo.
+`4. Qué busca lograr:` reducir el uso de arrastre sin afectar el uso dirigido.
+`4. Con qué propósito:` que la persona recupere la capacidad de decidir sobre su uso. 
+
+Diseñar una intervención que, mediante interrupciones adaptativas, reduzca el uso de arrastre de Instagram Reels sin afectar el uso dirigido, en personas de entre 25 y 32 años que dependen de la plataforma para su trabajo creativo, con el fin de favorecer que recuperen la capacidad de decidir conscientemente sobre su uso.
