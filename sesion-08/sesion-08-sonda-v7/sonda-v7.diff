@@ -1,0 +1,412 @@
+diff -ruN -x build v6c-respaldo-proyecto/app/build.gradle.kts app/love-yourself-sonda/app/build.gradle.kts
+--- v6c-respaldo-proyecto/app/build.gradle.kts	2026-10-21 15:45:23.763832935 +0000
++++ app/love-yourself-sonda/app/build.gradle.kts	2026-10-21 15:45:23.827198902 +0000
+@@ -14,8 +14,8 @@
+         applicationId = "com.love.yourself.sonda"
+         minSdk = 24
+         targetSdk = 36
+-        versionCode = 2
+-        versionName = "6.1"
++        versionCode = 3
++        versionName = "7.0"
+ 
+         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+     }
+diff -ruN -x build v6c-respaldo-proyecto/app/src/main/AndroidManifest.xml app/love-yourself-sonda/app/src/main/AndroidManifest.xml
+--- v6c-respaldo-proyecto/app/src/main/AndroidManifest.xml	2026-10-21 15:45:23.751943048 +0000
++++ app/love-yourself-sonda/app/src/main/AndroidManifest.xml	2026-10-21 15:45:23.828283560 +0000
+@@ -52,6 +52,17 @@
+             android:exported="false"
+             android:windowSoftInputMode="adjustResize" />
+ 
++        <!-- Para exportar el registro del estudio (Ajustes > Exportar registro). -->
++        <provider
++            android:name="androidx.core.content.FileProvider"
++            android:authorities="${applicationId}.archivos"
++            android:exported="false"
++            android:grantUriPermissions="true">
++            <meta-data
++                android:name="android.support.FILE_PROVIDER_PATHS"
++                android:resource="@xml/archivos_compartidos" />
++        </provider>
++
+         <service
+             android:name=".investigacion.CapturaContinuaService"
+             android:exported="false"
+diff -ruN -x build v6c-respaldo-proyecto/app/src/main/java/com/love/yourself/AjustesActivity.kt app/love-yourself-sonda/app/src/main/java/com/love/yourself/AjustesActivity.kt
+--- v6c-respaldo-proyecto/app/src/main/java/com/love/yourself/AjustesActivity.kt	2026-10-21 15:45:23.752137964 +0000
++++ app/love-yourself-sonda/app/src/main/java/com/love/yourself/AjustesActivity.kt	2026-10-21 15:46:05.259700288 +0000
+@@ -29,6 +29,7 @@
+ import com.love.yourself.servicio.DiarioDev
+ import com.love.yourself.servicio.OverlayBrief
+ import com.love.yourself.servicio.OverlayFriccion
++import com.love.yourself.servicio.RegistroEstudio
+ import com.love.yourself.sesion.AcumuladoSemanal
+ import com.love.yourself.sesion.HistorialSesiones
+ import com.love.yourself.sesion.Reloj
+@@ -53,6 +54,8 @@
+     private lateinit var ajustes: Ajustes
+     private lateinit var raiz: LinearLayout
+     private var mostrarTodasLasApps = false
++    /** En la version de estudio el modo dev se esconde; se muestra manteniendo apretada la version. */
++    private var mostrarDev = false
+ 
+     // Para forzar pantallas desde el modo dev, sin esperar una sesion.
+     private var friccionDePrueba: OverlayFriccion? = null
+@@ -113,44 +116,98 @@
+ 
+         titulo(if (servicioActivo) "✓  2. Accesibilidad" else "2. Accesibilidad")
+         parrafo(
+-            "Para saber qué app tienes adelante y si lo que deslizas ocupa toda la " +
+-                "pantalla. Mira la forma de la pantalla, no lo que muestra, y no guarda " +
+-                "nada fuera de tu teléfono."
++            "Para reconocer cuándo estás en Reels y de dónde viene lo que ves (pestaña " +
++                "Reels, un mensaje, un perfil). No guarda imágenes, mensajes ni nombres de cuentas."
+         )
+-        if (!servicioActivo) boton("Activar \"Love Yourself · sonda\"") {
++        if (!servicioActivo) boton("Activar \"${getString(R.string.servicio_label)}\"") {
+             startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
+         }
+ 
++        // ---- estudio ----
++        if (Config.VERSION_ESTUDIO) estudio()
++
+         // ---- apps ----
+         separador()
+         titulo("Dónde mide")
+-        parrafo(
+-            "Solo cuenta el deslizamiento a pantalla completa en estas apps. " +
+-                "Mensajes y búsqueda no cuentan."
+-        )
++        if (Config.VERSION_ESTUDIO) {
++            parrafo("Solo en Instagram. Mensajes, perfiles y búsqueda no cuentan como arrastre.")
++        } else {
++            parrafo(
++                "Solo cuenta el deslizamiento a pantalla completa en estas apps. " +
++                    "Mensajes y búsqueda no cuentan."
++            )
++        }
+         listaDeApps()
+ 
+         // ---- comportamiento ----
+         separador()
+         titulo("Cómo se comporta")
+         parrafo(
+-            "· En una app marcada: arriba, una burbuja con el tiempo y el ritmo.\n" +
+-                "· Primer deslizamiento a pantalla completa: la burbuja se agranda y aparece la mascota.\n" +
+-                "· A los ${Config.MIN_CIELO} min en la app (si hubo arrastre): el cielo a pantalla completa, seguir o salir.\n" +
+-                "· Al salir al inicio: el resumen. \"ver detalle\" abre Inicio: tu día, la semana y las últimas sesiones.\n" +
+-                "Nunca bloquea. Solo devuelve la decisión."
++            if (Config.VERSION_ESTUDIO) {
++                "· Los primeros ${Config.DIAS_LINEA_BASE} días solo registra: no aparece nada.\n" +
++                    "· Después, solo en Reels que no elegiste (pestaña Reels, sugerencias, anuncios):\n" +
++                    "  - al ${Config.SWIPES_AVISO}er deslizamiento, un aviso arriba: deslizar te lleva al inicio; " +
++                    "quedarte ${Config.SEGUNDOS_AVISO} s en el reel te deja seguir.\n" +
++                    "  - a los ${Config.MIN_CIELO} min, el cielo a pantalla completa: seguir o salir.\n" +
++                    "· Al salir de Instagram, a veces tres preguntas cortas. Puedes saltarlas.\n" +
++                    "Nunca bloquea. Solo devuelve la decisión."
++            } else {
++                "· En una app marcada: arriba, una burbuja con el tiempo y el ritmo.\n" +
++                    "· Primer deslizamiento a pantalla completa: la burbuja se agranda y aparece la mascota.\n" +
++                    "· A los ${Config.MIN_CIELO} min en la app (si hubo arrastre): el cielo a pantalla completa, seguir o salir.\n" +
++                    "· Al salir al inicio: el resumen. \"ver detalle\" abre Inicio: tu día, la semana y las últimas sesiones.\n" +
++                    "Nunca bloquea. Solo devuelve la decisión."
++            }
+         )
+ 
+         // ---- modo dev ----
++        if (!Config.VERSION_ESTUDIO || ajustes.modoDev || mostrarDev) {
++            separador()
++            casilla("Modo dev", ajustes.modoDev) { si ->
++                ajustes.modoDev = si
++                Reloj.cambiarFactor(if (si) ajustes.factorReloj else 1)
++                dibujar()
++            }
++            if (ajustes.modoDev) modoDev(puedeDibujar)
++        }
++
++        if (!Config.VERSION_ESTUDIO) investigacion()
++
++        // Para saber que version esta instalada al probar en el celular.
++        // En la version de estudio, mantenerla apretada muestra el modo dev.
++        val version = runCatching { packageManager.getPackageInfo(packageName, 0).versionName }.getOrNull() ?: "?"
++        raiz.addView(TextView(this).apply {
++            text = "v$version · $packageName"
++            setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
++            alpha = 0.5f
++            gravity = Gravity.CENTER_HORIZONTAL
++            setOnLongClickListener {
++                mostrarDev = true
++                dibujar()
++                true
++            }
++        }, margenArriba(dp(28)))
++    }
++
++    // ---- estudio ----
++
++    private fun estudio() {
+         separador()
+-        casilla("Modo dev", ajustes.modoDev) { si ->
+-            ajustes.modoDev = si
+-            Reloj.cambiarFactor(if (si) ajustes.factorReloj else 1)
+-            dibujar()
++        titulo("Estudio")
++        val inicio = ajustes.inicioEstudioMs
++        val dias = if (inicio > 0) ((System.currentTimeMillis() - inicio) / 86_400_000L).toInt() + 1 else 0
++        val fase = if (ajustes.friccionActiva(System.currentTimeMillis())) "intervención" else "solo registro"
++        parrafo(if (inicio > 0) "Día $dias · $fase" else "Todavía no empieza: falta activar la accesibilidad.")
++        boton("Exportar registro") {
++            if (!RegistroEstudio.exportar(this)) {
++                Toast.makeText(this, "Todavía no hay registro.", Toast.LENGTH_SHORT).show()
++            }
+         }
+-        if (ajustes.modoDev) modoDev(puedeDibujar)
++    }
++
++    // ---- investigacion ----
+ 
+-        // ---- investigacion ----
++    private fun investigacion() {
+         separador()
+         titulo("Modo investigación")
+         parrafo(
+@@ -165,20 +222,24 @@
+             )
+             Toast.makeText(this, "Medición detenida.", Toast.LENGTH_SHORT).show()
+         }
+-
+-        // Para saber que version esta instalada al probar en el celular.
+-        val version = runCatching { packageManager.getPackageInfo(packageName, 0).versionName }.getOrNull() ?: "?"
+-        raiz.addView(TextView(this).apply {
+-            text = "v$version · $packageName"
+-            setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
+-            alpha = 0.5f
+-            gravity = Gravity.CENTER_HORIZONTAL
+-        }, margenArriba(dp(28)))
+     }
+ 
+     // ---- lista de apps ----
+ 
+     private fun listaDeApps() {
++        if (!Config.VERSION_ESTUDIO) casillasDeApps()
++
++        titulo("Lo que te gustaría hacer más")
++        parrafo(if (ajustes.actividad.isEmpty()) "(sin respuesta)" else ajustes.actividad)
++        botonSecundario("Volver a la bienvenida") {
++            ajustes.onboardingHecho = false
++            startActivity(Intent(this, OnboardingActivity::class.java))
++            // Tambien se va Inicio: al terminar la bienvenida se abre de nuevo.
++            finishAffinity()
++        }
++    }
++
++    private fun casillasDeApps() {
+         val vigiladas = ajustes.appsVigiladas
+         val todas = Ajustes.appsInstaladas(this, vigiladas)
+         // Primero las marcadas y las sugeridas instaladas; el resto, a pedido.
+@@ -196,15 +257,6 @@
+                 dibujar()
+             }
+         }
+-
+-        titulo("Lo que te gustaría hacer más")
+-        parrafo(if (ajustes.actividad.isEmpty()) "(sin respuesta)" else ajustes.actividad)
+-        botonSecundario("Volver a la bienvenida") {
+-            ajustes.onboardingHecho = false
+-            startActivity(Intent(this, OnboardingActivity::class.java))
+-            // Tambien se va Inicio: al terminar la bienvenida se abre de nuevo.
+-            finishAffinity()
+-        }
+     }
+ 
+     private fun casillaApp(paquete: String, nombre: String, marcada: Boolean) {
+diff -ruN -x build v6c-respaldo-proyecto/app/src/main/java/com/love/yourself/OnboardingActivity.kt app/love-yourself-sonda/app/src/main/java/com/love/yourself/OnboardingActivity.kt
+--- v6c-respaldo-proyecto/app/src/main/java/com/love/yourself/OnboardingActivity.kt	2026-10-21 15:45:23.754213489 +0000
++++ app/love-yourself-sonda/app/src/main/java/com/love/yourself/OnboardingActivity.kt	2026-10-21 15:45:57.617632803 +0000
+@@ -11,6 +11,7 @@
+ import android.view.ViewGroup
+ import android.widget.FrameLayout
+ import com.love.yourself.config.Ajustes
++import com.love.yourself.config.Config
+ import com.love.yourself.servicio.SesionService
+ import com.love.yourself.vistas.Colores
+ import com.love.yourself.vistas.PuntosPasos
+@@ -42,7 +43,8 @@
+     private var vistaActual: View? = null
+ 
+     /** Los pasos que no son permisos avanzan con los botones, no solos. */
+-    private var appsListas = false
++    /** En la version de estudio no se eligen apps: es solo Instagram. */
++    private var appsListas = Config.VERSION_ESTUDIO
+ 
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+@@ -92,9 +94,9 @@
+             )
+             Paso.ACCESIBILIDAD -> vistas.permiso(
+                 texto = "Para saber cuándo empiezas a scrollear, Love Yourself necesita el permiso de accesibilidad. " +
+-                    "Busca \"Love Yourself · sonda\" y actívalo.",
+-                porQue = "Mira qué app tienes adelante y cuánto de la pantalla ocupa lo que deslizas. " +
+-                    "No lee lo que ves ni guarda nada fuera de tu teléfono.",
++                    "Busca \"${getString(R.string.servicio_label)}\" y actívalo.",
++                porQue = "Reconoce cuándo estás en Reels y de dónde viene lo que ves (pestaña Reels, " +
++                    "un mensaje, un perfil). No guarda imágenes, mensajes ni nombres de cuentas.",
+                 alSalir = { finish() },
+                 alActivar = { startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)) }
+             )
+diff -ruN -x build v6c-respaldo-proyecto/app/src/main/java/com/love/yourself/config/Ajustes.kt app/love-yourself-sonda/app/src/main/java/com/love/yourself/config/Ajustes.kt
+--- v6c-respaldo-proyecto/app/src/main/java/com/love/yourself/config/Ajustes.kt	2026-10-21 15:45:23.752200702 +0000
++++ app/love-yourself-sonda/app/src/main/java/com/love/yourself/config/Ajustes.kt	2026-10-21 15:45:23.829328867 +0000
+@@ -12,9 +12,10 @@
+ 
+     private val prefs = context.getSharedPreferences("ajustes", Context.MODE_PRIVATE)
+ 
+-    /** Apps donde se mide. Parte con la lista sugerida. */
++    /** Apps donde se mide. Parte con la lista sugerida. En la version de estudio, solo Instagram. */
+     var appsVigiladas: Set<String>
+-        get() = prefs.getStringSet(CLAVE_APPS, null)?.toSet() ?: Config.APPS_SUGERIDAS
++        get() = if (Config.VERSION_ESTUDIO) setOf(Config.PAQUETE_INSTAGRAM)
++        else prefs.getStringSet(CLAVE_APPS, null)?.toSet() ?: Config.APPS_SUGERIDAS
+         set(valor) = prefs.edit().putStringSet(CLAVE_APPS, valor).apply()
+ 
+     fun vigilar(paquete: String, si: Boolean) {
+diff -ruN -x build v6c-respaldo-proyecto/app/src/main/java/com/love/yourself/config/Config.kt app/love-yourself-sonda/app/src/main/java/com/love/yourself/config/Config.kt
+--- v6c-respaldo-proyecto/app/src/main/java/com/love/yourself/config/Config.kt	2026-10-21 15:45:23.752231987 +0000
++++ app/love-yourself-sonda/app/src/main/java/com/love/yourself/config/Config.kt	2026-10-21 15:45:23.828756196 +0000
+@@ -146,6 +146,22 @@
+     // ---- el estudio ----
+ 
+     /**
++     * Version para participantes: solo Instagram (donde funciona el
++     * clasificador), sin el modo investigacion, y el modo dev escondido
++     * (se muestra manteniendo apretada la version al pie de Ajustes).
++     */
++    const val VERSION_ESTUDIO = true
++
++    const val PAQUETE_INSTAGRAM = "com.instagram.android"
++
++    /**
++     * Si el registro anota el autor de cada reel. Para participantes, no: son
++     * datos de terceros y el analisis solo necesita la relacion (seguida, no
++     * seguida, anuncio).
++     */
++    const val REGISTRAR_AUTORES = false
++
++    /**
+      * Dias de linea base desde la primera vez que se activa el servicio: la app
+      * solo registra, sin burbuja, aviso, cielo ni resumen. Despues empieza la
+      * intervencion. En modo dev la friccion esta siempre activa, para probar.
+diff -ruN -x build v6c-respaldo-proyecto/app/src/main/java/com/love/yourself/servicio/RegistroEstudio.kt app/love-yourself-sonda/app/src/main/java/com/love/yourself/servicio/RegistroEstudio.kt
+--- v6c-respaldo-proyecto/app/src/main/java/com/love/yourself/servicio/RegistroEstudio.kt	2026-10-21 15:45:23.753222025 +0000
++++ app/love-yourself-sonda/app/src/main/java/com/love/yourself/servicio/RegistroEstudio.kt	2026-10-21 15:46:16.896928092 +0000
+@@ -1,7 +1,10 @@
+ package com.love.yourself.servicio
+ 
+ import android.content.Context
++import android.content.Intent
++import android.os.Build
+ import android.util.Log
++import androidx.core.content.FileProvider
+ import java.io.File
+ import java.text.SimpleDateFormat
+ import java.util.Date
+@@ -13,8 +16,8 @@
+  * Android/data/com.love.yourself.sonda/files/estudio.tsv, que se copia al
+  * computador por cable. A diferencia de Logcat, sobrevive dias.
+  *
+- * Trae nombres de cuentas publicas (autores de reels): anonimizar antes de
+- * compartir.
++ * Con REGISTRAR_AUTORES apagado no trae nombres de cuentas. Se saca con
++ * Ajustes > Exportar registro.
+  */
+ object RegistroEstudio {
+     private const val TAG = "ESTUDIO"
+@@ -26,6 +29,35 @@
+         archivo = File(dir, "estudio.tsv")
+     }
+ 
++    /**
++     * Abre el menu de compartir con una copia del registro, nombrada con el
++     * modelo del telefono y la fecha para no confundir participantes.
++     * Devuelve false si todavia no hay registro.
++     */
++    @Synchronized
++    fun exportar(context: Context): Boolean {
++        // Ajustes puede abrirse antes de que el servicio haya iniciado el registro.
++        if (archivo == null) iniciar(context)
++        val origen = archivo?.takeIf { it.exists() } ?: return false
++        val carpeta = File(context.cacheDir, "exportar").apply { mkdirs() }
++        carpeta.listFiles()?.forEach { it.delete() }
++        val fecha = SimpleDateFormat("yyyy-MM-dd", Locale.US).format(Date())
++        val modelo = Build.MODEL.replace(Regex("[^A-Za-z0-9]"), "")
++        val copia = File(carpeta, "estudio-$modelo-$fecha.tsv")
++        origen.copyTo(copia, overwrite = true)
++        val uri = FileProvider.getUriForFile(context, "${context.packageName}.archivos", copia)
++        val enviar = Intent(Intent.ACTION_SEND).apply {
++            type = "text/plain"
++            putExtra(Intent.EXTRA_STREAM, uri)
++            putExtra(Intent.EXTRA_SUBJECT, copia.name)
++            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
++        }
++        context.startActivity(
++            Intent.createChooser(enviar, "Enviar registro").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
++        )
++        return true
++    }
++
+     @Synchronized
+     fun anotar(tipo: String, vararg campos: Any?) {
+         val linea = (listOf(hora.format(Date()), tipo) + campos.map { it?.toString()?.replace('\t', ' ') ?: "" })
+diff -ruN -x build v6c-respaldo-proyecto/app/src/main/java/com/love/yourself/servicio/SesionService.kt app/love-yourself-sonda/app/src/main/java/com/love/yourself/servicio/SesionService.kt
+--- v6c-respaldo-proyecto/app/src/main/java/com/love/yourself/servicio/SesionService.kt	2026-10-21 15:45:23.752875616 +0000
++++ app/love-yourself-sonda/app/src/main/java/com/love/yourself/servicio/SesionService.kt	2026-10-21 15:45:23.834243656 +0000
+@@ -159,6 +159,9 @@
+         preguntas = OverlayPreguntas(this)
+         launchers = paquetesDeInicio()
+         RegistroEstudio.iniciar(this)
++        // Si el sistema apaga el servicio y lo vuelve a prender, aca se ve el hueco.
++        val version = runCatching { packageManager.getPackageInfo(packageName, 0).versionName }.getOrNull()
++        RegistroEstudio.anotar("servicio_inicio", version, Build.MODEL, Build.VERSION.SDK_INT)
+         if (ajustes.inicioEstudioMs == 0L) {
+             ajustes.inicioEstudioMs = System.currentTimeMillis()
+             RegistroEstudio.anotar("estudio_inicio", Config.DIAS_LINEA_BASE)
+@@ -931,7 +934,7 @@
+         if (l.anuncio) segAnuncios++
+         if (relacion == "no seguida") segNoSeguidas++
+         Log.d(CLASIF_TAG, "reel ${hora.format(Date(ahora))} · $clase · $contexto · $reel · $relacion")
+-        RegistroEstudio.anotar("reel", clase, contexto, reel.trim(), relacion)
++        RegistroEstudio.anotar("reel", clase, contexto, if (Config.REGISTRAR_AUTORES) reel.trim() else "", relacion)
+         return nuevoDesconocido
+     }
+ 
+@@ -980,6 +983,7 @@
+         friccion?.ocultarTodo()
+         brief?.ocultar()
+         preguntas?.ocultar()
++        RegistroEstudio.anotar("servicio_fin")
+         friccion = null
+         brief = null
+         if (PROBE2_ENABLED) runCatching { hiloSonda.quitSafely() }
+diff -ruN -x build v6c-respaldo-proyecto/app/src/main/res/values/strings.xml app/love-yourself-sonda/app/src/main/res/values/strings.xml
+--- v6c-respaldo-proyecto/app/src/main/res/values/strings.xml	2026-10-21 15:45:23.761307377 +0000
++++ app/love-yourself-sonda/app/src/main/res/values/strings.xml	2026-10-21 15:45:23.827971076 +0000
+@@ -1,6 +1,6 @@
+ <resources>
+-    <string name="app_name">Love Yourself · sonda</string>
+-    <string name="servicio_label">Love Yourself · sonda</string>
++    <string name="app_name">Love Yourself (estudio)</string>
++    <string name="servicio_label">Love Yourself (estudio)</string>
+     <string name="ajustes">Ajustes</string>
+-    <string name="servicio_desc">Sabe qué app tienes adelante y si lo que deslizas ocupa toda la pantalla, para distinguir el scroll de reels del uso con intención (mensajes, búsqueda). Mira la forma de la pantalla, no lo que muestra, y no guarda nada fuera de tu teléfono.</string>
++    <string name="servicio_desc">Reconoce cuándo estás en Reels de Instagram y de dónde viene lo que ves (la pestaña Reels, un mensaje, un perfil), para poner una pausa solo cuando es arrastre. Lee la estructura de la pantalla de Instagram: no guarda imágenes, mensajes ni nombres de cuentas. El registro queda en tu teléfono hasta que tú lo exportes.</string>
+ </resources>
+diff -ruN -x build v6c-respaldo-proyecto/app/src/main/res/xml/archivos_compartidos.xml app/love-yourself-sonda/app/src/main/res/xml/archivos_compartidos.xml
+--- v6c-respaldo-proyecto/app/src/main/res/xml/archivos_compartidos.xml	1970-01-01 00:00:00.000000000 +0000
++++ app/love-yourself-sonda/app/src/main/res/xml/archivos_compartidos.xml	2026-10-21 15:45:23.828407115 +0000
+@@ -0,0 +1,5 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!-- Lo unico que se comparte: la copia del registro que se arma al exportar. -->
++<paths>
++    <cache-path name="exportar" path="exportar/" />
++</paths>

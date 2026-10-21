@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Lo unico que se comparte: la copia del registro que se arma al exportar. -->
+<paths>
+    <cache-path name="exportar" path="exportar/" />
+</paths>

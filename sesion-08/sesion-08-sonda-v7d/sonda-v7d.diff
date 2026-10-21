@@ -1,0 +1,942 @@
+diff -ruN -x build v7-respaldo-proyecto/app/src/main/java/com/love/yourself/AjustesActivity.kt app/love-yourself-sonda/app/src/main/java/com/love/yourself/AjustesActivity.kt
+--- v7-respaldo-proyecto/app/src/main/java/com/love/yourself/AjustesActivity.kt	2026-10-21 18:37:15.661789601 +0000
++++ app/love-yourself-sonda/app/src/main/java/com/love/yourself/AjustesActivity.kt	2026-10-21 19:16:25.862838354 +0000
+@@ -306,6 +306,45 @@
+             }
+         ))
+ 
++        titulo("Probar el cambio de fase")
++        parrafo(
++            "Mueve la fecha de inicio del estudio, sin esperar ${Config.DIAS_LINEA_BASE} días. " +
++                "Después apaga el modo dev (con él la intervención está siempre activa) y espera. " +
++                "Queda anotado en el registro: reinicia antes de empezar el estudio de verdad."
++        )
++        fila(listOf(
++            "Intervención en 1 min" to {
++                ajustes.inicioEstudioMs = System.currentTimeMillis() - Config.DIAS_LINEA_BASE * 86_400_000L + 60_000L
++                RegistroEstudio.anotar("estudio_inicio_ajustado", "intervencion_en_1_min")
++                Toast.makeText(this, "Apaga el modo dev y espera un minuto.", Toast.LENGTH_LONG).show()
++                dibujar()
++            },
++            "Reiniciar (día 1)" to {
++                ajustes.inicioEstudioMs = System.currentTimeMillis()
++                RegistroEstudio.anotar("estudio_inicio_ajustado", "dia_1")
++                Toast.makeText(this, "El estudio parte hoy.", Toast.LENGTH_SHORT).show()
++                dibujar()
++            }
++        ))
++
++        titulo("Mascota asomándose")
++        parrafo("Sale encima de esta pantalla. La altura y la velocidad cambian cada vez.")
++        fila(listOf(false, true).map { derecha ->
++            (if (derecha) "Por la derecha" else "Por la izquierda") to {
++                if (!puedeDibujar) sinPermiso() else {
++                    val f = friccionDePrueba ?: OverlayFriccion(this).also { friccionDePrueba = it }
++                    val m = Momento.values().random()
++                    val azar = kotlin.random.Random
++                    f.asomarMascota(
++                        m.desde, m.hasta, derecha,
++                        Config.ASOMO_Y_MIN + azar.nextFloat() * (Config.ASOMO_Y_MAX - Config.ASOMO_Y_MIN),
++                        azar.nextLong(Config.ASOMO_ENTRADA_MIN_MS, Config.ASOMO_ENTRADA_MAX_MS + 1),
++                        azar.nextLong(Config.ASOMO_QUEDA_MIN_MS, Config.ASOMO_QUEDA_MAX_MS + 1)
++                    ) { Toast.makeText(this, "tocaste la mascota", Toast.LENGTH_SHORT).show() }
++                }
++            }
++        })
++
+         titulo("Burbuja")
+         val burbuja = BurbujaView(this).apply { mostrarDatos("2:23", "18", CaraProgresiva.para(true, 143_000L)) }
+         raiz.addView(FrameLayout(this).apply {
+diff -ruN -x build v7-respaldo-proyecto/app/src/main/java/com/love/yourself/OnboardingActivity.kt app/love-yourself-sonda/app/src/main/java/com/love/yourself/OnboardingActivity.kt
+--- v7-respaldo-proyecto/app/src/main/java/com/love/yourself/OnboardingActivity.kt	2026-10-21 18:37:15.672271628 +0000
++++ app/love-yourself-sonda/app/src/main/java/com/love/yourself/OnboardingActivity.kt	2026-10-21 18:38:41.876173157 +0000
+@@ -13,6 +13,7 @@
+ import com.love.yourself.config.Ajustes
+ import com.love.yourself.config.Config
+ import com.love.yourself.servicio.SesionService
++import com.love.yourself.vistas.ChecklistPermisos
+ import com.love.yourself.vistas.Colores
+ import com.love.yourself.vistas.PuntosPasos
+ import com.love.yourself.vistas.VistasOnboarding
+@@ -20,19 +21,20 @@
+ /**
+  * La bienvenida, la primera vez que se abre la app:
+  *
+- *   1. permiso para dibujar encima de otras apps   (WF1a)
+- *   2. permiso de accesibilidad                    (WF1a)
+- *   3. ¿a qué quieres que le pongamos ojo?          (elegir apps)
+- *   4. ¿qué te gustaría hacer más y no alcanzas?    (WF1b)
++ *   1. los permisos, como lista: accesibilidad y mostrar encima
++ *   2. ¿a qué quieres que le pongamos ojo?          (elegir apps; no en la version de estudio)
++ *   3. ¿qué te gustaría hacer más y no alcanzas?    (WF1b)
+  *
+  * Los permisos se dan en los ajustes del telefono, fuera de la app. Al
+- * volver, onResume mira cual falta y muestra ese paso; si ya estaban dados,
+- * se los salta. Cada paso nuevo entra deslizandose y los puntos de arriba
+- * avanzan con el.
++ * volver, onResume marca en la lista los que ya estan. Cada paso nuevo entra
++ * deslizandose y los puntos de arriba avanzan con el.
+  */
+ class OnboardingActivity : Activity() {
+ 
+-    private enum class Paso { DIBUJAR, ACCESIBILIDAD, APPS, ACTIVIDAD }
++    private enum class Paso { PERMISOS, APPS, ACTIVIDAD }
++
++    /** Los pasos que se ven: en la version de estudio no se eligen apps. */
++    private val pasos = Paso.values().filter { it != Paso.APPS || !Config.VERSION_ESTUDIO }
+ 
+     private lateinit var ajustes: Ajustes
+     private lateinit var vistas: VistasOnboarding
+@@ -41,6 +43,8 @@
+ 
+     private var pasoMostrado: Paso? = null
+     private var vistaActual: View? = null
++    private var checklist: ChecklistPermisos? = null
++    private var permisosListos = false
+ 
+     /** Los pasos que no son permisos avanzan con los botones, no solos. */
+     /** En la version de estudio no se eligen apps: es solo Instagram. */
+@@ -51,7 +55,7 @@
+         ajustes = Ajustes(this)
+         vistas = VistasOnboarding(this)
+         contenedor = FrameLayout(this)
+-        puntos = vistas.puntos(Paso.values().size)
++        puntos = vistas.puntos(pasos.size)
+         // fitsSystemWindows: nada queda debajo de las barras del sistema ni del
+         // teclado (la actividad se escribe abajo).
+         setContentView(FrameLayout(this).apply {
+@@ -69,11 +73,12 @@
+     override fun onResume() {
+         super.onResume()
+         mostrar(pasoActual())
++        // Al volver de los ajustes del telefono, marca lo que ya se activo.
++        checklist?.actualizar(servicioActivo(this), Settings.canDrawOverlays(this))
+     }
+ 
+     private fun pasoActual(): Paso = when {
+-        !Settings.canDrawOverlays(this) -> Paso.DIBUJAR
+-        !servicioActivo(this) -> Paso.ACCESIBILIDAD
++        !permisosListos || !Settings.canDrawOverlays(this) || !servicioActivo(this) -> Paso.PERMISOS
+         !appsListas -> Paso.APPS
+         else -> Paso.ACTIVIDAD
+     }
+@@ -84,22 +89,22 @@
+         if (paso == pasoMostrado) return
+         val adelante = (pasoMostrado?.ordinal ?: -1) < paso.ordinal
+         val nueva = when (paso) {
+-            Paso.DIBUJAR -> vistas.permiso(
+-                texto = "Para mostrarte la burbuja encima de Instagram, Love Yourself necesita dibujar sobre otras apps.",
+-                porQue = "La burbuja y el cielo aparecen encima de la app que estás usando. Sin este permiso, Android no deja mostrarlos.",
+-                alSalir = { finish() },
+-                alActivar = {
++            Paso.PERMISOS -> vistas.permisos(
++                porQue = "Accesibilidad: reconoce cuándo estás en Reels y de dónde viene lo que ves " +
++                    "(pestaña Reels, un mensaje, un perfil). No guarda imágenes, mensajes ni nombres " +
++                    "de cuentas. En la lista de Accesibilidad busca \"${getString(R.string.servicio_label)}\".\n\n" +
++                    "Mostrar encima de otras apps: para que la burbuja, el aviso y el cielo aparezcan " +
++                    "encima de Instagram. Sin este permiso, Android no deja mostrarlos.",
++                alAccesibilidad = { startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)) },
++                alEncima = {
+                     startActivity(Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:$packageName")))
+-                }
+-            )
+-            Paso.ACCESIBILIDAD -> vistas.permiso(
+-                texto = "Para saber cuándo empiezas a scrollear, Love Yourself necesita el permiso de accesibilidad. " +
+-                    "Busca \"${getString(R.string.servicio_label)}\" y actívalo.",
+-                porQue = "Reconoce cuándo estás en Reels y de dónde viene lo que ves (pestaña Reels, " +
+-                    "un mensaje, un perfil). No guarda imágenes, mensajes ni nombres de cuentas.",
++                },
+                 alSalir = { finish() },
+-                alActivar = { startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)) }
+-            )
++                alContinuar = {
++                    permisosListos = true
++                    mostrar(pasoActual())
++                }
++            ).also { checklist = it }.vista
+             Paso.APPS -> vistas.apps(
+                 instaladas = Ajustes.appsInstaladas(this, ajustes.appsVigiladas),
+                 marcadas = ajustes.appsVigiladas,
+@@ -118,7 +123,8 @@
+         vistas.cambiar(contenedor, vistaActual, nueva, adelante)
+         vistaActual = nueva
+         pasoMostrado = paso
+-        puntos.marcar(paso.ordinal)
++        if (paso != Paso.PERMISOS) checklist = null
++        puntos.marcar(pasos.indexOf(paso))
+     }
+ 
+     private fun terminar(actividad: String) {
+diff -ruN -x build v7-respaldo-proyecto/app/src/main/java/com/love/yourself/config/Config.kt app/love-yourself-sonda/app/src/main/java/com/love/yourself/config/Config.kt
+--- v7-respaldo-proyecto/app/src/main/java/com/love/yourself/config/Config.kt	2026-10-21 18:37:15.662772172 +0000
++++ app/love-yourself-sonda/app/src/main/java/com/love/yourself/config/Config.kt	2026-10-21 18:49:52.128031504 +0000
+@@ -103,6 +103,30 @@
+     /** Ventana movil para el ritmo de swipes, en segundos. */
+     const val VENTANA_RITMO_S = 60
+ 
++    // ---- la mascota asomandose ----
++
++    /**
++     * true: cuando la mascota tiene algo que decir, la cara chica sale de la
++     * burbuja y la mascota grande se asoma por un costado, sin dialogo.
++     * false: la burbuja se agranda con la frase, como antes.
++     */
++    const val MASCOTA_ASOMA = true
++
++    /** Entre que alturas se asoma, en fraccion del alto de la pantalla: donde esta la info del reel. */
++    const val ASOMO_Y_MIN = 0.50f
++    const val ASOMO_Y_MAX = 0.72f
++
++    /** Cuanto tarda en entrar: varia cada vez. Sale un poco mas rapido. */
++    const val ASOMO_ENTRADA_MIN_MS = 300L
++    const val ASOMO_ENTRADA_MAX_MS = 950L
++
++    /** Cuanto se queda asomada. */
++    const val ASOMO_QUEDA_MIN_MS = 2500L
++    const val ASOMO_QUEDA_MAX_MS = 4500L
++
++    /** Espera para que la cara chica termine de salir de la burbuja antes de asomarse. */
++    const val ASOMO_ESPERA_MS = 550L
++
+     // ---- el aviso (notch) ----
+ 
+     /** Swipes dentro de un segmento de ARRASTRE hasta que aparece el aviso. */
+@@ -118,6 +142,9 @@
+      */
+     const val GRACIA_AVISO_MS = 900L
+ 
++    /** Cuanto fuera de arrastre hasta quitar la burbuja: evita parpadeos al cambiar de pantalla. */
++    const val ESPERA_OCULTAR_BURBUJA_MS = 1500L
++
+     const val TEXTO_AVISO = "¿Quieres salir del arrastre? Desliza para confirmar"
+ 
+     // ---- las preguntas al cerrar (muestreo de experiencias) ----
+diff -ruN -x build v7-respaldo-proyecto/app/src/main/java/com/love/yourself/servicio/OverlayFriccion.kt app/love-yourself-sonda/app/src/main/java/com/love/yourself/servicio/OverlayFriccion.kt
+--- v7-respaldo-proyecto/app/src/main/java/com/love/yourself/servicio/OverlayFriccion.kt	2026-10-21 18:37:15.666014245 +0000
++++ app/love-yourself-sonda/app/src/main/java/com/love/yourself/servicio/OverlayFriccion.kt	2026-10-21 18:49:52.124411637 +0000
+@@ -10,6 +10,7 @@
+ import com.love.yourself.vistas.AvisoNotch
+ import com.love.yourself.vistas.BurbujaView
+ import com.love.yourself.vistas.CajaDev
++import com.love.yourself.vistas.MascotaAsomada
+ import com.love.yourself.vistas.Momento
+ import com.love.yourself.vistas.VistaCielo
+ 
+@@ -20,6 +21,7 @@
+  *   CAJA       solo en modo dev: datos para calibrar
+  *   BURBUJA    arriba, siempre: tiempo y ritmo. Se agranda con la mascota en ciertos momentos
+  *   AVISO      al tercer swipe de arrastre: deslizar = salir, quedarse 5 s = seguir
++ *   ASOMO      la mascota grande asomandose por un costado. Recibe toques (solo ella)
+  *   CIELO      a los MIN_CIELO minutos, pantalla completa: seguir o salir
+  *
+  * Solo el cielo recibe toques; lo demas deja usar la app de abajo.
+@@ -31,7 +33,7 @@
+      * ultima ventana agregada, asi que agregar una capa obliga a volver a subir
+      * las que van sobre ella. Si no, la caja dev taparia la burbuja.
+      */
+-    private enum class Capa { CAJA, BURBUJA, AVISO, CIELO }
++    private enum class Capa { CAJA, BURBUJA, AVISO, ASOMO, CIELO }
+ 
+     private val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+     private val densidad = context.resources.displayMetrics.density
+@@ -94,6 +96,8 @@
+         return capas.getValue(Capa.BURBUJA).first as BurbujaView
+     }
+ 
++    fun quitarBurbuja() = quitar(Capa.BURBUJA)
++
+     fun mostrarBurbuja(tiempo: String, ritmo: String, cara: Int) = burbuja().mostrarDatos(tiempo, ritmo, cara)
+ 
+     fun expandirBurbuja(momento: Momento) = burbuja().expandir(momento)
+@@ -120,6 +124,47 @@
+ 
+     fun quitarAviso() = quitar(Capa.AVISO)
+ 
++    // ---- la mascota asomandose ----
++
++    fun mascotaAsomada(): Boolean = Capa.ASOMO in capas
++
++    /**
++     * La mascota grande por un costado, a altura yFraccion del alto de la
++     * pantalla. La ventana mide solo lo que se ve de ella: el resto de la
++     * pantalla sigue siendo Instagram.
++     */
++    fun asomarMascota(
++        cara: Int,
++        caraFinal: Int?,
++        derecha: Boolean,
++        yFraccion: Float,
++        entradaMs: Long,
++        quedaMs: Long,
++        alTocar: () -> Unit
++    ) {
++        quitar(Capa.ASOMO)
++        val vista = MascotaAsomada(context, cara, caraFinal, derecha).apply { this.alTocar = alTocar }
++        val params = WindowManager.LayoutParams(
++            vista.anchoVentana,
++            vista.altoVentana,
++            tipoVentana,
++            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
++            PixelFormat.TRANSLUCENT
++        ).apply {
++            gravity = Gravity.TOP or if (derecha) Gravity.END else Gravity.START
++            y = (context.resources.displayMetrics.heightPixels * yFraccion).toInt() - vista.altoVentana / 2
++        }
++        agregar(Capa.ASOMO, vista, params)
++        vista.post {
++            vista.asomar(entradaMs, quedaMs) {
++                // Solo si sigue siendo esta: si mientras tanto aparecio otra, no se la lleva.
++                if (capas[Capa.ASOMO]?.first === vista) quitar(Capa.ASOMO)
++            }
++        }
++    }
++
++    fun quitarMascota() = quitar(Capa.ASOMO)
++
+     // ---- cielo ----
+ 
+     fun cieloVisible(): Boolean = Capa.CIELO in capas
+diff -ruN -x build v7-respaldo-proyecto/app/src/main/java/com/love/yourself/servicio/SesionService.kt app/love-yourself-sonda/app/src/main/java/com/love/yourself/servicio/SesionService.kt
+--- v7-respaldo-proyecto/app/src/main/java/com/love/yourself/servicio/SesionService.kt	2026-10-21 18:37:15.666472231 +0000
++++ app/love-yourself-sonda/app/src/main/java/com/love/yourself/servicio/SesionService.kt	2026-10-21 18:49:52.127564741 +0000
+@@ -95,6 +95,12 @@
+     private var avisoDisponible = true
+     private var visitaDelAviso: Visita? = null
+     private var ultimaFase: Boolean? = null
++    // ---- la mascota asomandose: por que lado fue la ultima vez y hasta cuando la cara chica sale de la burbuja ----
++    private var asomoDerecha = false
++    private var caraFueraHasta = 0L
++
++    /** Desde cuando no se esta en arrastre (uptime). 0 = en arrastre. */
++    private var fueraDeArrastreDesde = 0L
+ 
+     // ---- las preguntas al cerrar ----
+     private var preguntas: OverlayPreguntas? = null
+@@ -461,12 +467,28 @@
+         }
+         if (ov.cieloVisible()) return
+ 
+-        // La burbuja esta siempre que haya una app vigilada adelante: tiempo en
+-        // la app y ritmo. El arrastrado queda para el resumen.
++        // La burbuja y la mascota solo en arrastre: en un DM o un perfil no hay
++        // nada encima. Se espera un poco antes de quitarla, para que un cambio
++        // de pantalla a medias no la haga parpadear.
++        if (PROBE2_ENABLED && claseActual != Clase.ARRASTRE) {
++            val ahoraMs = SystemClock.uptimeMillis()
++            if (fueraDeArrastreDesde == 0L) fueraDeArrastreDesde = ahoraMs
++            if (ahoraMs - fueraDeArrastreDesde >= Config.ESPERA_OCULTAR_BURBUJA_MS) {
++                ov.quitarBurbuja()
++                ov.quitarMascota()
++            }
++            if (ajustes.modoDev) ov.mostrarCaja(lineaDev(v)) else ov.quitarCaja()
++            return
++        }
++        fueraDeArrastreDesde = 0L
++
++        // Tiempo en la app y ritmo. El arrastrado queda para el resumen.
++        // Mientras la mascota se asoma, la cara chica no esta en la burbuja: salio por ahi.
++        val caraFuera = ov.mascotaAsomada() || SystemClock.uptimeMillis() < caraFueraHasta
+         ov.mostrarBurbuja(
+             Formato.reloj(v.totalMs),
+             "%.0f".format(registro.ritmoPorMinuto(ahora)),
+-            CaraProgresiva.para(v.sesionIniciada, v.totalMs)
++            if (caraFuera) 0 else CaraProgresiva.para(v.sesionIniciada, v.totalMs)
+         )
+ 
+         // En modo dev, debajo, una caja con lo que mide cada scroll.
+@@ -480,9 +502,9 @@
+             hablaLaMascota(v, ahora)
+             return
+         }
+-        // Si la mascota esta hablando, el cielo espera a que termine: no la
+-        // tapa a mitad de frase. Mientras tanto no empieza ningun momento nuevo.
+-        if (ov.burbujaExpandida()) return
++        // Si la mascota esta hablando o asomada, el cielo espera a que termine.
++        // Mientras tanto no empieza ningun momento nuevo.
++        if (ov.burbujaExpandida() || ov.mascotaAsomada()) return
+ 
+         val minutos = v.totalMs / 60_000
+         v.cielos++
+@@ -671,9 +693,42 @@
+ 
+     private fun momento(v: Visita, m: Momento, ahora: Long, sinPausa: Boolean = false) {
+         if (!friccionActiva()) return
++        // La mascota habla solo en arrastre, igual que la burbuja.
++        if (PROBE2_ENABLED && claseActual != Clase.ARRASTRE) return
+         if (!guionDe(v, ahora).pedir(m, ahora, sinPausa)) return
+-        friccion?.expandirBurbuja(m)
+         DiarioDev.anotar("mascota: ${m.name.lowercase()}")
++        if (!Config.MASCOTA_ASOMA) {
++            friccion?.expandirBurbuja(m)
++            return
++        }
++        asomar(m)
++    }
++
++    /**
++     * La cara chica sale de la burbuja y, cuando ya se fue, la mascota grande se
++     * asoma por un costado. Cambia de lado cada vez; la altura y la velocidad
++     * varian, para que no se vuelva paisaje.
++     */
++    private fun asomar(m: Momento) {
++        val ov = friccion ?: return
++        val azar = kotlin.random.Random
++        asomoDerecha = !asomoDerecha
++        val derecha = asomoDerecha
++        val y = Config.ASOMO_Y_MIN + azar.nextFloat() * (Config.ASOMO_Y_MAX - Config.ASOMO_Y_MIN)
++        val entrada = azar.nextLong(Config.ASOMO_ENTRADA_MIN_MS, Config.ASOMO_ENTRADA_MAX_MS + 1)
++        val queda = azar.nextLong(Config.ASOMO_QUEDA_MIN_MS, Config.ASOMO_QUEDA_MAX_MS + 1)
++        caraFueraHasta = SystemClock.uptimeMillis() + Config.ASOMO_ESPERA_MS + 200L
++        RegistroEstudio.anotar("mascota_asoma", m.name.lowercase(), if (derecha) "derecha" else "izquierda")
++        handler.postDelayed({
++            // Si mientras salia la cara se dejo el arrastre, no se asoma.
++            if (claseActual != Clase.ARRASTRE || !friccionActiva()) return@postDelayed
++            runCatching {
++                ov.asomarMascota(m.desde, m.hasta, derecha, y, entrada, queda) {
++                    RegistroEstudio.anotar("mascota_tocada", m.name.lowercase())
++                    DiarioDev.anotar("tocó la mascota")
++                }
++            }.onFailure { DiarioDev.anotar("mascota FALLÓ: ${it.message}") }
++        }, Config.ASOMO_ESPERA_MS)
+     }
+ 
+     /**
+diff -ruN -x build v7-respaldo-proyecto/app/src/main/java/com/love/yourself/vistas/Intereses.kt app/love-yourself-sonda/app/src/main/java/com/love/yourself/vistas/Intereses.kt
+--- v7-respaldo-proyecto/app/src/main/java/com/love/yourself/vistas/Intereses.kt	1970-01-01 00:00:00.000000000 +0000
++++ app/love-yourself-sonda/app/src/main/java/com/love/yourself/vistas/Intereses.kt	2026-10-21 18:48:13.736220337 +0000
+@@ -0,0 +1,25 @@
++package com.love.yourself.vistas
++
++import com.love.yourself.R
++
++/** Algo que la persona quiere hacer mas: el nombre que se guarda y su icono. */
++class Interes(val nombre: String, val icono: Int)
++
++/**
++ * Los intereses de la bienvenida ("¿Qué te gustaría hacer más?"), en una
++ * grilla de a tres. Los iconos son Material Symbols provisorios: se cambian
++ * por dibujos propios reemplazando los drawables ic_interes_*.
++ */
++object Intereses {
++    val TODOS = listOf(
++        Interes("Música", R.drawable.ic_interes_music_note),
++        Interes("Ejercicio", R.drawable.ic_interes_fitness_center),
++        Interes("Leer", R.drawable.ic_interes_menu_book),
++        Interes("Dibujar", R.drawable.ic_interes_palette),
++        Interes("Cocinar", R.drawable.ic_interes_restaurant),
++        Interes("Caminar", R.drawable.ic_interes_directions_walk),
++        Interes("Amigos", R.drawable.ic_interes_group),
++        Interes("Estudiar", R.drawable.ic_interes_school),
++        Interes("Jugar", R.drawable.ic_interes_sports_esports)
++    )
++}
+diff -ruN -x build v7-respaldo-proyecto/app/src/main/java/com/love/yourself/vistas/MascotaAsomada.kt app/love-yourself-sonda/app/src/main/java/com/love/yourself/vistas/MascotaAsomada.kt
+--- v7-respaldo-proyecto/app/src/main/java/com/love/yourself/vistas/MascotaAsomada.kt	1970-01-01 00:00:00.000000000 +0000
++++ app/love-yourself-sonda/app/src/main/java/com/love/yourself/vistas/MascotaAsomada.kt	2026-10-21 18:49:52.122555812 +0000
+@@ -0,0 +1,112 @@
++package com.love.yourself.vistas
++
++import android.annotation.SuppressLint
++import android.content.Context
++import android.graphics.Bitmap
++import android.graphics.Matrix
++import android.view.MotionEvent
++import android.widget.FrameLayout
++import android.widget.ImageView
++
++/**
++ * La mascota grande, asomandose por un costado de la pantalla, a la altura de
++ * la info del reel. Entra deslizandose desde el borde, se queda un rato y se
++ * vuelve a esconder. Sin dialogo: solo la cara. Al tocarla crece un poco,
++ * como un boton.
++ *
++ * La ventana mide solo lo que se ve de la mascota (mas un margen para que el
++ * crecer al tocarla no se corte): el resto queda detras del borde. Solo arma
++ * la vista y la anima; la ventana la pone OverlayFriccion.
++ */
++@SuppressLint("ViewConstructor")
++class MascotaAsomada(
++    context: Context,
++    cara: Int,
++    private val caraFinal: Int?,
++    /** true: se asoma por la derecha; false: por la izquierda, en espejo. */
++    private val derecha: Boolean
++) : FrameLayout(context) {
++
++    private val anchoPantalla = resources.displayMetrics.widthPixels
++    private val anchoCerebro = (anchoPantalla * PROPORCION_ANCHO).toInt()
++    private val altoCerebro: Int
++    private val visible = (anchoCerebro * PROPORCION_VISIBLE).toInt()
++    /** Lugar alrededor para crecer al tocarla sin cortarse. */
++    private val holgura = (anchoCerebro * 0.12f).toInt()
++
++    private val imagen = ImageView(context)
++    private val dentro: Float
++    private val fuera: Float
++
++    /** Lo que se hace al tocarla, ademas de crecer. */
++    var alTocar: (() -> Unit)? = null
++
++    val anchoVentana get() = visible + holgura
++    val altoVentana get() = altoCerebro + 2 * holgura
++
++    init {
++        val b = cargar(cara)
++        altoCerebro = if (b == null) anchoCerebro else anchoCerebro * b.height / b.width
++        imagen.setImageBitmap(b)
++        imagen.scaleType = ImageView.ScaleType.FIT_XY
++        clipChildren = true
++        addView(imagen, LayoutParams(anchoCerebro, altoCerebro).apply { topMargin = holgura })
++        // Derecha: la ventana va pegada al borde derecho y la imagen sobresale
++        // por ahi. Izquierda: al reves.
++        dentro = if (derecha) holgura.toFloat() else (visible - anchoCerebro).toFloat()
++        fuera = if (derecha) (holgura + visible + holgura).toFloat() else (-anchoCerebro - holgura).toFloat()
++        imagen.translationX = fuera
++        imagen.pivotY = altoCerebro / 2f
++        imagen.pivotX = if (derecha) visible / 2f else anchoCerebro - visible / 2f
++        imagen.setOnTouchListener { v, e ->
++            when (e.actionMasked) {
++                MotionEvent.ACTION_DOWN -> {
++                    v.animate().scaleX(1.12f).scaleY(1.12f)
++                        .setDuration(110L).setInterpolator(Animacion.FRENA).start()
++                    alTocar?.invoke()
++                }
++                MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> v.animate().scaleX(1f).scaleY(1f)
++                    .setDuration(320L).setInterpolator(Animacion.REBOTA).start()
++            }
++            true
++        }
++    }
++
++    /** La cara, en espejo si se asoma por la izquierda: siempre mira hacia adentro. */
++    private fun cargar(id: Int): Bitmap? {
++        val b = Imagenes.cargar(resources, id, anchoCerebro) ?: return null
++        if (derecha) return b
++        val espejo = Matrix().apply { preScale(-1f, 1f) }
++        return Bitmap.createBitmap(b, 0, 0, b.width, b.height, espejo, true)
++    }
++
++    /**
++     * Entra en entradaMs, se queda quedaMs (a mitad cambia a caraFinal, si hay)
++     * y sale un poco mas rapido de lo que entro. Avisa al terminar.
++     */
++    fun asomar(entradaMs: Long, quedaMs: Long, alTerminar: () -> Unit) {
++        if (!Animacion.activas()) {
++            imagen.translationX = dentro
++            postDelayed({ alTerminar() }, quedaMs)
++            return
++        }
++        imagen.animate().translationX(dentro).setDuration(entradaMs).setInterpolator(Animacion.REBOTA)
++            .withEndAction {
++                caraFinal?.let { id ->
++                    postDelayed({ cargar(id)?.let { imagen.setImageBitmap(it) } }, quedaMs / 2)
++                }
++                imagen.animate().translationX(fuera).setStartDelay(quedaMs)
++                    .setDuration((entradaMs * 0.7f).toLong()).setInterpolator(Animacion.ACELERA)
++                    .withEndAction { alTerminar() }
++                    .start()
++            }
++            .start()
++    }
++
++    private companion object {
++        /** Que tan grande es, respecto del ancho de la pantalla. */
++        const val PROPORCION_ANCHO = 0.55f
++        /** Cuanto de ella se asoma. */
++        const val PROPORCION_VISIBLE = 0.62f
++    }
++}
+diff -ruN -x build v7-respaldo-proyecto/app/src/main/java/com/love/yourself/vistas/VistasOnboarding.kt app/love-yourself-sonda/app/src/main/java/com/love/yourself/vistas/VistasOnboarding.kt
+--- v7-respaldo-proyecto/app/src/main/java/com/love/yourself/vistas/VistasOnboarding.kt	2026-10-21 18:37:15.671904008 +0000
++++ app/love-yourself-sonda/app/src/main/java/com/love/yourself/vistas/VistasOnboarding.kt	2026-10-21 18:48:13.759781712 +0000
+@@ -15,6 +15,7 @@
+ import android.widget.CheckBox
+ import android.widget.EditText
+ import android.widget.FrameLayout
++import android.widget.ImageView
+ import android.widget.LinearLayout
+ import android.widget.ScrollView
+ import android.widget.TextView
+@@ -26,6 +27,11 @@
+ /** Una app que se puede vigilar: paquete y nombre visible. */
+ class AppInstalada(val paquete: String, val nombre: String)
+ 
++/** La lista de permisos y como marcar los que ya estan dados al volver de los ajustes. */
++class ChecklistPermisos(val vista: View, private val marcar: (accesibilidad: Boolean, encima: Boolean) -> Unit) {
++    fun actualizar(accesibilidad: Boolean, encima: Boolean) = marcar(accesibilidad, encima)
++}
++
+ /**
+  * Las pantallas de bienvenida (Figma: WF1a, WF1b y "¿A qué quieres que le
+  * pongamos ojo?"). Solo arman vistas: que pasa al tocar lo decide quien las
+@@ -76,6 +82,106 @@
+         return pantalla(tarjeta(cuerpo, "Salir" to alSalir, "Activar" to alActivar))
+     }
+ 
++    /**
++     * Los dos permisos juntos, como lista: se ve que son dos cosas distintas y
++     * cuales ya estan, asi no parece que pide dos veces lo mismo. Tocar una fila
++     * pendiente abre el ajuste del telefono. El "?" de arriba a la derecha
++     * despliega para que sirve cada permiso.
++     */
++    fun permisos(
++        porQue: String,
++        alAccesibilidad: () -> Unit,
++        alEncima: () -> Unit,
++        alSalir: () -> Unit,
++        alContinuar: () -> Unit
++    ): ChecklistPermisos {
++        val explicacion = texto(porQue, 14f, ayuda).apply {
++            gravity = Gravity.START
++            visibility = View.GONE
++        }
++        val signo = texto("?", 16f, Color.WHITE).apply {
++            background = GradientDrawable().apply {
++                shape = GradientDrawable.OVAL
++                setColor(panel)
++                setStroke(dp(1f), bordePanel)
++            }
++            Animacion.presionable(this)
++            setOnClickListener {
++                explicacion.visibility = if (explicacion.visibility == View.VISIBLE) View.GONE else View.VISIBLE
++            }
++        }
++        val cabecera = FrameLayout(context).apply {
++            addView(texto("¡Bienvenide! Para continuar debes seguir estos pasos:", 17f, Color.WHITE).apply {
++                gravity = Gravity.START
++                setPadding(0, 0, dp(40f), 0)
++            }, FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT))
++            addView(signo, FrameLayout.LayoutParams(dp(30f), dp(30f), Gravity.TOP or Gravity.END))
++        }
++
++        var accesibilidad = false
++        var encima = false
++        lateinit var continuar: View
++        val (filaInstalar, _) = filaPaso("Instala la app") {}
++        val (filaAccesibilidad, marcaAccesibilidad) = filaPaso("Activa Accesibilidad") { if (!accesibilidad) alAccesibilidad() }
++        val (filaEncima, marcaEncima) = filaPaso("Activa \"Mostrar encima de otras apps\"") { if (!encima) alEncima() }
++
++        val cuerpo = LinearLayout(context).apply {
++            orientation = LinearLayout.VERTICAL
++            addView(cabecera)
++            addView(explicacion, margenArriba(dp(12f)))
++            addView(filaInstalar, margenArriba(dp(20f)))
++            addView(filaAccesibilidad, margenArriba(dp(10f)))
++            addView(filaEncima, margenArriba(dp(10f)))
++            layoutTransition = android.animation.LayoutTransition()
++        }
++        val vista = pantalla(tarjeta(
++            cuerpo,
++            "Salir" to alSalir,
++            "Continuar" to { if (accesibilidad && encima) alContinuar() },
++            alCrearDerecho = { continuar = it }
++        ))
++        fun aplicar(a: Boolean, e: Boolean) {
++            accesibilidad = a
++            encima = e
++            ponerMarca(marcaAccesibilidad, a)
++            ponerMarca(marcaEncima, e)
++            continuar.alpha = if (a && e) 1f else 0.35f
++        }
++        aplicar(false, false)
++        return ChecklistPermisos(vista) { a, e -> aplicar(a, e) }
++    }
++
++    /** Una fila de la lista: el paso a la izquierda y su casilla a la derecha. */
++    private fun filaPaso(etiqueta: String, alTocar: () -> Unit): Pair<View, TextView> {
++        val marca = texto("", 18f, Color.WHITE).apply {
++            background = GradientDrawable().apply {
++                cornerRadius = dp(4f).toFloat()
++                setColor(campo)
++                setStroke(dp(1f), bordeCampo)
++            }
++        }
++        ponerMarca(marca, true)
++        val fila = LinearLayout(context).apply {
++            orientation = LinearLayout.HORIZONTAL
++            gravity = Gravity.CENTER_VERTICAL
++            setPadding(dp(16f), dp(14f), dp(14f), dp(14f))
++            background = GradientDrawable().apply {
++                cornerRadius = dp(10f).toFloat()
++                setColor(panel)
++            }
++            addView(texto(etiqueta, 16f, Color.WHITE).apply { gravity = Gravity.START },
++                LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f))
++            addView(marca, LinearLayout.LayoutParams(dp(30f), dp(30f)).apply { leftMargin = dp(12f) })
++            Animacion.presionable(this)
++            setOnClickListener { alTocar() }
++        }
++        return fila to marca
++    }
++
++    private fun ponerMarca(marca: TextView, hecho: Boolean) {
++        marca.text = if (hecho) "✓" else ""
++    }
++
+     /** "¿A qué quieres que le pongamos ojo?": elegir las apps donde se mide. */
+     fun apps(
+         instaladas: List<AppInstalada>,
+@@ -123,15 +229,34 @@
+         }
+     }
+ 
+-    /** WF1b: la actividad que la persona quiere hacer mas. Aparece en el resumen. */
++    /**
++     * WF1b: lo que la persona quiere hacer mas. Una grilla de intereses de a
++     * tres (se pueden elegir varios) y, abajo, un campo para otra cosa. Se
++     * guarda como texto ("Música, Leer, tejer") y aparece en el resumen.
++     */
+     fun declaracion(
+         actual: String,
+         alOmitir: () -> Unit,
+         alContinuar: (actividad: String) -> Unit
+     ): View {
++        val previos = actual.split(",").map { it.trim() }.filter { it.isNotEmpty() }
++        val elegidos = Intereses.TODOS.filter { it.nombre in previos }.map { it.nombre }.toMutableSet()
++        val otra = previos.filter { p -> Intereses.TODOS.none { it.nombre == p } }.joinToString(", ")
++        val grilla = LinearLayout(context).apply { orientation = LinearLayout.VERTICAL }
++        Intereses.TODOS.chunked(3).forEachIndexed { i, tres ->
++            val fila = LinearLayout(context).apply { orientation = LinearLayout.HORIZONTAL }
++            tres.forEachIndexed { j, interes ->
++                fila.addView(celdaInteres(interes, interes.nombre in elegidos) { si ->
++                    if (si) elegidos += interes.nombre else elegidos -= interes.nombre
++                }, LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f).apply {
++                    if (j > 0) leftMargin = dp(8f)
++                })
++            }
++            grilla.addView(fila, margenArriba(if (i > 0) dp(8f) else 0))
++        }
+         val entrada = EditText(context).apply {
+-            setText(actual)
+-            hint = "hacer música, ejercicio, leer…"
++            setText(otra)
++            hint = "otra cosa…"
+             setHintTextColor(Color.parseColor("#CCCCCC"))
+             setTextColor(Color.WHITE)
+             setTextSize(TypedValue.COMPLEX_UNIT_SP, 15f)
+@@ -147,12 +272,49 @@
+         val cuerpo = LinearLayout(context).apply {
+             orientation = LinearLayout.VERTICAL
+             addView(texto("¿Qué te gustaría hacer más y no alcanzas?", 17f, Color.WHITE))
+-            addView(entrada, margenArriba(dp(22f)))
++            addView(grilla, margenArriba(dp(20f)))
++            addView(entrada, margenArriba(dp(14f)))
+             addView(texto("Aparecerá en tu resumen semanal como punto de comparación.", 11f, ayuda).apply {
+                 gravity = Gravity.START
+             }, margenArriba(dp(8f)))
+         }
+-        return pantalla(tarjeta(cuerpo, "Omitir" to alOmitir, "Continuar" to { alContinuar(entrada.text.toString().trim()) }))
++        return pantalla(tarjeta(cuerpo, "Omitir" to alOmitir, "Continuar" to {
++            // En el orden de la grilla, y lo escrito al final.
++            val partes = Intereses.TODOS.map { it.nombre }.filter { it in elegidos } +
++                listOfNotNull(entrada.text.toString().trim().takeIf { it.isNotEmpty() })
++            alContinuar(partes.joinToString(", "))
++        }))
++    }
++
++    /** Un interes de la grilla: icono y nombre. Tocarlo lo marca o lo desmarca. */
++    private fun celdaInteres(interes: Interes, marcado: Boolean, alCambiar: (Boolean) -> Unit): View {
++        var si = marcado
++        val icono = ImageView(context).apply { setImageResource(interes.icono) }
++        val nombre = texto(interes.nombre, 13f, Color.WHITE)
++        val celda = LinearLayout(context).apply {
++            orientation = LinearLayout.VERTICAL
++            gravity = Gravity.CENTER
++            setPadding(dp(4f), dp(12f), dp(4f), dp(10f))
++            addView(icono, LinearLayout.LayoutParams(dp(32f), dp(32f)))
++            addView(nombre, margenArriba(dp(6f)))
++        }
++        fun pintar() {
++            val color = if (si) Colores.PAGINA else Color.WHITE
++            icono.setColorFilter(color)
++            nombre.setTextColor(color)
++            celda.background = GradientDrawable().apply {
++                cornerRadius = dp(12f).toFloat()
++                setColor(if (si) Color.WHITE else panel)
++            }
++        }
++        pintar()
++        Animacion.presionable(celda)
++        celda.setOnClickListener {
++            si = !si
++            pintar()
++            alCambiar(si)
++        }
++        return celda
+     }
+ 
+     // ---- moverse entre pasos ----
+@@ -185,12 +347,18 @@
+     // ---- piezas ----
+ 
+     /** El modal: contenido arriba y dos botones abajo, separados por lineas. */
+-    private fun tarjeta(cuerpo: View, izq: Pair<String, () -> Unit>, der: Pair<String, () -> Unit>): View {
++    private fun tarjeta(
++        cuerpo: View,
++        izq: Pair<String, () -> Unit>,
++        der: Pair<String, () -> Unit>,
++        alCrearDerecho: ((View) -> Unit)? = null
++    ): View {
++        val derecho = boton(der.first, der.second).also { alCrearDerecho?.invoke(it) }
+         val botones = LinearLayout(context).apply {
+             orientation = LinearLayout.HORIZONTAL
+             addView(boton(izq.first, izq.second), LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f))
+             addView(View(context).apply { setBackgroundColor(linea) }, LinearLayout.LayoutParams(dp(1f), ViewGroup.LayoutParams.MATCH_PARENT))
+-            addView(boton(der.first, der.second), LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f))
++            addView(derecho, LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f))
+         }
+         return LinearLayout(context).apply {
+             orientation = LinearLayout.VERTICAL
+diff -ruN -x build v7-respaldo-proyecto/app/src/main/res/drawable/ic_interes_directions_walk.xml app/love-yourself-sonda/app/src/main/res/drawable/ic_interes_directions_walk.xml
+--- v7-respaldo-proyecto/app/src/main/res/drawable/ic_interes_directions_walk.xml	1970-01-01 00:00:00.000000000 +0000
++++ app/love-yourself-sonda/app/src/main/res/drawable/ic_interes_directions_walk.xml	2026-10-21 18:47:46.724181617 +0000
+@@ -0,0 +1,13 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!-- Material Symbols (directions_walk), Google, licencia Apache 2.0. Provisorio: se reemplaza por dibujos propios. -->
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:width="24dp"
++    android:height="24dp"
++    android:viewportWidth="960"
++    android:viewportHeight="960">
++    <group android:translateY="960">
++        <path
++            android:fillColor="@android:color/white"
++            android:pathData="m280-40 112-564-72 28v136h-80v-188l202-86q14-6 29.5-7t29.5 4q14 5 26.5 14t20.5 23l40 64q26 42 70.5 69T760-520v80q-70 0-125-29t-94-74l-25 123 84 80v300h-80v-260l-84-64-72 324h-84Zm203.5-723.5Q460-787 460-820t23.5-56.5Q507-900 540-900t56.5 23.5Q620-853 620-820t-23.5 56.5Q573-740 540-740t-56.5-23.5Z" />
++    </group>
++</vector>
+diff -ruN -x build v7-respaldo-proyecto/app/src/main/res/drawable/ic_interes_fitness_center.xml app/love-yourself-sonda/app/src/main/res/drawable/ic_interes_fitness_center.xml
+--- v7-respaldo-proyecto/app/src/main/res/drawable/ic_interes_fitness_center.xml	1970-01-01 00:00:00.000000000 +0000
++++ app/love-yourself-sonda/app/src/main/res/drawable/ic_interes_fitness_center.xml	2026-10-21 18:47:46.724352447 +0000
+@@ -0,0 +1,13 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!-- Material Symbols (fitness_center), Google, licencia Apache 2.0. Provisorio: se reemplaza por dibujos propios. -->
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:width="24dp"
++    android:height="24dp"
++    android:viewportWidth="960"
++    android:viewportHeight="960">
++    <group android:translateY="960">
++        <path
++            android:fillColor="@android:color/white"
++            android:pathData="m536-84-56-56 142-142-340-340-142 142-56-56 56-58-56-56 84-84-56-58 56-56 58 56 84-84 56 56 58-56 56 56-142 142 340 340 142-142 56 56-56 58 56 56-84 84 56 58-56 56-58-56-84 84-56-56-58 56Z" />
++    </group>
++</vector>
+diff -ruN -x build v7-respaldo-proyecto/app/src/main/res/drawable/ic_interes_group.xml app/love-yourself-sonda/app/src/main/res/drawable/ic_interes_group.xml
+--- v7-respaldo-proyecto/app/src/main/res/drawable/ic_interes_group.xml	1970-01-01 00:00:00.000000000 +0000
++++ app/love-yourself-sonda/app/src/main/res/drawable/ic_interes_group.xml	2026-10-21 18:47:46.724443451 +0000
+@@ -0,0 +1,13 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!-- Material Symbols (group), Google, licencia Apache 2.0. Provisorio: se reemplaza por dibujos propios. -->
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:width="24dp"
++    android:height="24dp"
++    android:viewportWidth="960"
++    android:viewportHeight="960">
++    <group android:translateY="960">
++        <path
++            android:fillColor="@android:color/white"
++            android:pathData="M40-160v-112q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v112H40Zm720 0v-120q0-44-24.5-84.5T666-434q51 6 96 20.5t84 35.5q36 20 55 44.5t19 53.5v120H760ZM247-527q-47-47-47-113t47-113q47-47 113-47t113 47q47 47 47 113t-47 113q-47 47-113 47t-113-47Zm466 0q-47 47-113 47-11 0-28-2.5t-28-5.5q27-32 41.5-71t14.5-81q0-42-14.5-81T544-792q14-5 28-6.5t28-1.5q66 0 113 47t47 113q0 66-47 113ZM120-240h480v-32q0-11-5.5-20T580-306q-54-27-109-40.5T360-360q-56 0-111 13.5T140-306q-9 5-14.5 14t-5.5 20v32Zm296.5-343.5Q440-607 440-640t-23.5-56.5Q393-720 360-720t-56.5 23.5Q280-673 280-640t23.5 56.5Q327-560 360-560t56.5-23.5ZM360-240Zm0-400Z" />
++    </group>
++</vector>
+diff -ruN -x build v7-respaldo-proyecto/app/src/main/res/drawable/ic_interes_menu_book.xml app/love-yourself-sonda/app/src/main/res/drawable/ic_interes_menu_book.xml
+--- v7-respaldo-proyecto/app/src/main/res/drawable/ic_interes_menu_book.xml	1970-01-01 00:00:00.000000000 +0000
++++ app/love-yourself-sonda/app/src/main/res/drawable/ic_interes_menu_book.xml	2026-10-21 18:47:46.724525239 +0000
+@@ -0,0 +1,13 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!-- Material Symbols (menu_book), Google, licencia Apache 2.0. Provisorio: se reemplaza por dibujos propios. -->
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:width="24dp"
++    android:height="24dp"
++    android:viewportWidth="960"
++    android:viewportHeight="960">
++    <group android:translateY="960">
++        <path
++            android:fillColor="@android:color/white"
++            android:pathData="M560-564v-68q33-14 67.5-21t72.5-7q26 0 51 4t49 10v64q-24-9-48.5-13.5T700-600q-38 0-73 9.5T560-564Zm0 220v-68q33-14 67.5-21t72.5-7q26 0 51 4t49 10v64q-24-9-48.5-13.5T700-380q-38 0-73 9t-67 27Zm0-110v-68q33-14 67.5-21t72.5-7q26 0 51 4t49 10v64q-24-9-48.5-13.5T700-490q-38 0-73 9.5T560-454ZM260-320q47 0 91.5 10.5T440-278v-394q-41-24-87-36t-93-12q-36 0-71.5 7T120-692v396q35-12 69.5-18t70.5-6Zm260 42q44-21 88.5-31.5T700-320q36 0 70.5 6t69.5 18v-396q-33-14-68.5-21t-71.5-7q-47 0-93 12t-87 36v394Zm-40 118q-48-38-104-59t-116-21q-42 0-82.5 11T100-198q-21 11-40.5-1T40-234v-482q0-11 5.5-21T62-752q46-24 96-36t102-12q58 0 113.5 15T480-740q51-30 106.5-45T700-800q52 0 102 12t96 36q11 5 16.5 15t5.5 21v482q0 23-19.5 35t-40.5 1q-37-20-77.5-31T700-240q-60 0-116 21t-104 59ZM280-494Z" />
++    </group>
++</vector>
+diff -ruN -x build v7-respaldo-proyecto/app/src/main/res/drawable/ic_interes_music_note.xml app/love-yourself-sonda/app/src/main/res/drawable/ic_interes_music_note.xml
+--- v7-respaldo-proyecto/app/src/main/res/drawable/ic_interes_music_note.xml	1970-01-01 00:00:00.000000000 +0000
++++ app/love-yourself-sonda/app/src/main/res/drawable/ic_interes_music_note.xml	2026-10-21 18:47:46.724613228 +0000
+@@ -0,0 +1,13 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!-- Material Symbols (music_note), Google, licencia Apache 2.0. Provisorio: se reemplaza por dibujos propios. -->
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:width="24dp"
++    android:height="24dp"
++    android:viewportWidth="960"
++    android:viewportHeight="960">
++    <group android:translateY="960">
++        <path
++            android:fillColor="@android:color/white"
++            android:pathData="M287-167q-47-47-47-113t47-113q47-47 113-47 23 0 42.5 5.5T480-418v-422h240v160H560v400q0 66-47 113t-113 47q-66 0-113-47Z" />
++    </group>
++</vector>
+diff -ruN -x build v7-respaldo-proyecto/app/src/main/res/drawable/ic_interes_palette.xml app/love-yourself-sonda/app/src/main/res/drawable/ic_interes_palette.xml
+--- v7-respaldo-proyecto/app/src/main/res/drawable/ic_interes_palette.xml	1970-01-01 00:00:00.000000000 +0000
++++ app/love-yourself-sonda/app/src/main/res/drawable/ic_interes_palette.xml	2026-10-21 18:47:46.724691758 +0000
+@@ -0,0 +1,13 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!-- Material Symbols (palette), Google, licencia Apache 2.0. Provisorio: se reemplaza por dibujos propios. -->
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:width="24dp"
++    android:height="24dp"
++    android:viewportWidth="960"
++    android:viewportHeight="960">
++    <group android:translateY="960">
++        <path
++            android:fillColor="@android:color/white"
++            android:pathData="M480-80q-82 0-155-31.5t-127.5-86Q143-252 111.5-325T80-480q0-83 32.5-156t88-127Q256-817 330-848.5T488-880q80 0 151 27.5t124.5 76q53.5 48.5 85 115T880-518q0 115-70 176.5T640-280h-74q-9 0-12.5 5t-3.5 11q0 12 15 34.5t15 51.5q0 50-27.5 74T480-80Zm0-400Zm-177 23q17-17 17-43t-17-43q-17-17-43-17t-43 17q-17 17-17 43t17 43q17 17 43 17t43-17Zm120-160q17-17 17-43t-17-43q-17-17-43-17t-43 17q-17 17-17 43t17 43q17 17 43 17t43-17Zm200 0q17-17 17-43t-17-43q-17-17-43-17t-43 17q-17 17-17 43t17 43q17 17 43 17t43-17Zm120 160q17-17 17-43t-17-43q-17-17-43-17t-43 17q-17 17-17 43t17 43q17 17 43 17t43-17ZM480-160q9 0 14.5-5t5.5-13q0-14-15-33t-15-57q0-42 29-67t71-25h70q66 0 113-38.5T800-518q0-121-92.5-201.5T488-800q-136 0-232 93t-96 227q0 133 93.5 226.5T480-160Z" />
++    </group>
++</vector>
+diff -ruN -x build v7-respaldo-proyecto/app/src/main/res/drawable/ic_interes_restaurant.xml app/love-yourself-sonda/app/src/main/res/drawable/ic_interes_restaurant.xml
+--- v7-respaldo-proyecto/app/src/main/res/drawable/ic_interes_restaurant.xml	1970-01-01 00:00:00.000000000 +0000
++++ app/love-yourself-sonda/app/src/main/res/drawable/ic_interes_restaurant.xml	2026-10-21 18:47:46.724771588 +0000
+@@ -0,0 +1,13 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!-- Material Symbols (restaurant), Google, licencia Apache 2.0. Provisorio: se reemplaza por dibujos propios. -->
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:width="24dp"
++    android:height="24dp"
++    android:viewportWidth="960"
++    android:viewportHeight="960">
++    <group android:translateY="960">
++        <path
++            android:fillColor="@android:color/white"
++            android:pathData="M280-80v-366q-51-14-85.5-56T160-600v-280h80v280h40v-280h80v280h40v-280h80v280q0 56-34.5 98T360-446v366h-80Zm400 0v-320H560v-280q0-83 58.5-141.5T760-880v800h-80Z" />
++    </group>
++</vector>
+diff -ruN -x build v7-respaldo-proyecto/app/src/main/res/drawable/ic_interes_school.xml app/love-yourself-sonda/app/src/main/res/drawable/ic_interes_school.xml
+--- v7-respaldo-proyecto/app/src/main/res/drawable/ic_interes_school.xml	1970-01-01 00:00:00.000000000 +0000
++++ app/love-yourself-sonda/app/src/main/res/drawable/ic_interes_school.xml	2026-10-21 18:47:46.724937680 +0000
+@@ -0,0 +1,13 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!-- Material Symbols (school), Google, licencia Apache 2.0. Provisorio: se reemplaza por dibujos propios. -->
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:width="24dp"
++    android:height="24dp"
++    android:viewportWidth="960"
++    android:viewportHeight="960">
++    <group android:translateY="960">
++        <path
++            android:fillColor="@android:color/white"
++            android:pathData="M480-120 200-272v-240L40-600l440-240 440 240v320h-80v-276l-80 44v240L480-120Zm0-332 274-148-274-148-274 148 274 148Zm0 241 200-108v-151L480-360 280-470v151l200 108Zm0-241Zm0 90Zm0 0Z" />
++    </group>
++</vector>
+diff -ruN -x build v7-respaldo-proyecto/app/src/main/res/drawable/ic_interes_sports_esports.xml app/love-yourself-sonda/app/src/main/res/drawable/ic_interes_sports_esports.xml
+--- v7-respaldo-proyecto/app/src/main/res/drawable/ic_interes_sports_esports.xml	1970-01-01 00:00:00.000000000 +0000
++++ app/love-yourself-sonda/app/src/main/res/drawable/ic_interes_sports_esports.xml	2026-10-21 18:47:46.725047779 +0000
+@@ -0,0 +1,13 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!-- Material Symbols (sports_esports), Google, licencia Apache 2.0. Provisorio: se reemplaza por dibujos propios. -->
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:width="24dp"
++    android:height="24dp"
++    android:viewportWidth="960"
++    android:viewportHeight="960">
++    <group android:translateY="960">
++        <path
++            android:fillColor="@android:color/white"
++            android:pathData="M182-200q-51 0-79-35.5T82-322l42-300q9-60 53.5-99T282-760h396q60 0 104.5 39t53.5 99l42 300q7 51-21 86.5T778-200q-21 0-39-7.5T706-230l-90-90H344l-90 90q-15 15-33 22.5t-39 7.5Zm16-86 114-114h336l114 114q2 2 16 6 11 0 17.5-6.5T800-304l-44-308q-4-29-26-48.5T678-680H282q-30 0-52 19.5T204-612l-44 308q-2 11 4.5 17.5T182-280q2 0 16-6Zm510.5-165.5Q720-463 720-480t-11.5-28.5Q697-520 680-520t-28.5 11.5Q640-497 640-480t11.5 28.5Q663-440 680-440t28.5-11.5Zm-80-120Q640-583 640-600t-11.5-28.5Q617-640 600-640t-28.5 11.5Q560-617 560-600t11.5 28.5Q583-560 600-560t28.5-11.5ZM310-440h60v-70h70v-60h-70v-70h-60v70h-70v60h70v70Zm170-40Z" />
++    </group>
++</vector>

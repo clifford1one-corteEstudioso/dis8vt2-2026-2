@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Love Yourself (estudio)</string>
+    <string name="servicio_label">Love Yourself (estudio)</string>
+    <string name="ajustes">Ajustes</string>
+    <string name="servicio_desc">Reconoce cuándo estás en Reels de Instagram y de dónde viene lo que ves (la pestaña Reels, un mensaje, un perfil), para poner una pausa solo cuando es arrastre. Lee la estructura de la pantalla de Instagram: no guarda imágenes, mensajes ni nombres de cuentas. El registro queda en tu teléfono hasta que tú lo exportes.</string>
+</resources>

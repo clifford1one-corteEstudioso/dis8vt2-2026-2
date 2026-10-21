@@ -1,0 +1,164 @@
+diff -ruN -x build v8g-respaldo-proyecto/app/src/main/java/com/love/yourself/config/Config.kt app/love-yourself-sonda/app/src/main/java/com/love/yourself/config/Config.kt
+--- v8g-respaldo-proyecto/app/src/main/java/com/love/yourself/config/Config.kt	2026-10-21 23:12:27.932075753 +0000
++++ app/love-yourself-sonda/app/src/main/java/com/love/yourself/config/Config.kt	2026-10-21 23:12:56.885525484 +0000
+@@ -220,6 +220,22 @@
+      * El formulario de consentimiento (Google Forms). Pegar aca el enlace "para
+      * enviar" que da el script. La bienvenida lo abre antes de pedir permisos.
+      */
++    /** Los codigos que se entregan a los participantes. La app no acepta otros. */
++    val CODIGOS_PARTICIPANTES = (1..9).map { "U$it" }.toSet()
++
++    /**
++     * La clave que muestra el formulario de consentimiento solo a quien acepta
++     * participar. Sin ella no se puede pasar de la bienvenida.
++     */
++    const val CLAVE_CONSENTIMIENTO = "once"
++
++    /** "u 3", "U3 " -> "U3": sin espacios y en mayusculas. */
++    fun normalizarCodigo(texto: String) = texto.replace(" ", "").trim().uppercase()
++
++    fun codigoValido(texto: String) = normalizarCodigo(texto) in CODIGOS_PARTICIPANTES
++
++    fun claveValida(texto: String) = texto.trim().lowercase() == CLAVE_CONSENTIMIENTO
++
+     const val URL_CONSENTIMIENTO =
+         "https://docs.google.com/forms/d/e/1FAIpQLSeVxIsb-pG3rCWtXQh43Susr6dAfy0-BWoQ2Ql8p4Esx88wsA/viewform"
+ 
+diff -ruN -x build v8g-respaldo-proyecto/app/src/main/java/com/love/yourself/vistas/VistasOnboarding.kt app/love-yourself-sonda/app/src/main/java/com/love/yourself/vistas/VistasOnboarding.kt
+--- v8g-respaldo-proyecto/app/src/main/java/com/love/yourself/vistas/VistasOnboarding.kt	2026-10-21 23:12:27.936979696 +0000
++++ app/love-yourself-sonda/app/src/main/java/com/love/yourself/vistas/VistasOnboarding.kt	2026-10-21 23:12:56.886679379 +0000
+@@ -19,6 +19,7 @@
+ import android.widget.LinearLayout
+ import android.widget.ScrollView
+ import android.widget.TextView
++import com.love.yourself.config.Config
+ import com.love.yourself.vistas.Animacion.frena
+ import com.love.yourself.vistas.Animacion.lerp
+ import com.love.yourself.vistas.Animacion.tramo
+@@ -86,10 +87,10 @@
+     }
+ 
+     /**
+-     * Antes de todo, en la version de estudio: abrir el formulario de
+-     * consentimiento y escribir el codigo de participante que une la firma con
+-     * el registro. "Continuar" se enciende cuando se abrio el formulario y hay
+-     * codigo (la app no puede saber si se envio: eso se revisa en Forms).
++     * Antes de todo, en la version de estudio: completar el formulario de
++     * consentimiento y escribir el codigo de participante (lo entrega el
++     * estudiante) y la clave (la muestra el formulario solo a quien acepta).
++     * Sin las dos, no se puede seguir.
+      */
+     fun consentimiento(
+         codigoActual: String,
+@@ -98,25 +99,16 @@
+         alSalir: () -> Unit,
+         alContinuar: (codigo: String) -> Unit
+     ): View {
+-        var abrioFormulario = codigoActual.isNotEmpty()
+         lateinit var continuar: View
+-        val codigo = EditText(context).apply {
+-            setText(codigoActual)
+-            hint = "Código de participante (ej. P3)"
+-            setHintTextColor(Color.parseColor("#CCCCCC"))
+-            setTextColor(Color.WHITE)
+-            setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
+-            inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS
+-            isSingleLine = true
+-            setPadding(dp(12f), dp(12f), dp(12f), dp(12f))
+-            background = GradientDrawable().apply {
+-                cornerRadius = dp(4f).toFloat()
+-                setColor(campo)
+-                setStroke(dp(1f), bordeCampo)
+-            }
+-        }
++        val codigo = campoTexto("Código de participante (ej. U3)", codigoActual,
++            InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS)
++        val clave = campoTexto("Clave del formulario", "",
++            InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS)
++        val error = texto("", 13f, Color.parseColor("#FFB4A8")).apply { visibility = View.GONE }
++        fun listo() = Config.codigoValido(codigo.text.toString()) && Config.claveValida(clave.text.toString())
+         fun revisar() {
+-            continuar.alpha = if (abrioFormulario && codigo.text.isNotBlank()) 1f else 0.35f
++            continuar.alpha = if (listo()) 1f else 0.35f
++            error.visibility = View.GONE
+         }
+         val abrir = texto("Abrir formulario", 16f, Color.WHITE).apply {
+             setPadding(0, dp(14f), 0, dp(14f))
+@@ -126,40 +118,67 @@
+                 setStroke(dp(1f), bordePanel)
+             }
+             Animacion.presionable(this)
+-            setOnClickListener {
+-                if (alAbrirFormulario()) abrioFormulario = true
+-                revisar()
+-            }
++            setOnClickListener { alAbrirFormulario() }
+         }
+         val cuerpo = LinearLayout(context).apply {
+             orientation = LinearLayout.VERTICAL
+             addView(texto("Antes de empezar", 19f, Color.WHITE))
+             addView(texto(
+-                "Love Yourself es parte de un estudio. Lee el consentimiento informado y, " +
+-                    "si estás de acuerdo, complétalo. Después escribe aquí tu código de participante.",
++                "Love Yourself es parte de un estudio. Lee el consentimiento informado y, si estás " +
++                    "de acuerdo, complétalo: al final te muestra una clave. Escribe aquí tu código de " +
++                    "participante y esa clave.",
+                 14f, ayuda
+             ), margenArriba(dp(12f)))
+             addView(abrir, margenArriba(dp(20f)))
+             addView(codigo, margenArriba(dp(14f)))
++            addView(clave, margenArriba(dp(10f)))
++            addView(error, margenArriba(dp(8f)))
+         }
+         val vista = pantalla(tarjeta(
+             cuerpo,
+             "Salir" to alSalir,
+             "Continuar" to {
+-                val c = codigo.text.toString().trim().uppercase()
+-                if (abrioFormulario && c.isNotEmpty()) alContinuar(c)
++                when {
++                    !Config.codigoValido(codigo.text.toString()) -> {
++                        error.text = "Revisa tu código: es el que te envié (U1 a U9)."
++                        error.visibility = View.VISIBLE
++                    }
++                    !Config.claveValida(clave.text.toString()) -> {
++                        error.text = "La clave no es correcta. Aparece al final del formulario."
++                        error.visibility = View.VISIBLE
++                    }
++                    else -> alContinuar(Config.normalizarCodigo(codigo.text.toString()))
++                }
+             },
+             alCrearDerecho = { continuar = it }
+         ))
+-        codigo.addTextChangedListener(object : android.text.TextWatcher {
++        val alEscribir = object : android.text.TextWatcher {
+             override fun beforeTextChanged(s: CharSequence?, a: Int, b: Int, c: Int) {}
+             override fun onTextChanged(s: CharSequence?, a: Int, b: Int, c: Int) {}
+             override fun afterTextChanged(s: android.text.Editable?) = revisar()
+-        })
++        }
++        codigo.addTextChangedListener(alEscribir)
++        clave.addTextChangedListener(alEscribir)
+         revisar()
+         return vista
+     }
+ 
++    private fun campoTexto(pista: String, valor: String, tipo: Int) = EditText(context).apply {
++        setText(valor)
++        hint = pista
++        setHintTextColor(Color.parseColor("#CCCCCC"))
++        setTextColor(Color.WHITE)
++        setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
++        inputType = tipo
++        isSingleLine = true
++        setPadding(dp(12f), dp(12f), dp(12f), dp(12f))
++        background = GradientDrawable().apply {
++            cornerRadius = dp(4f).toFloat()
++            setColor(campo)
++            setStroke(dp(1f), bordeCampo)
++        }
++    }
++
+     /**
+      * Los permisos juntos, como lista: se ve que son cosas distintas y cuales
+      * ya estan, asi no parece que pide dos veces lo mismo. Tocar una fila

@@ -1,0 +1,13 @@
+diff -ruN -x build v8f-respaldo-proyecto/app/src/main/java/com/love/yourself/config/Config.kt app/love-yourself-sonda/app/src/main/java/com/love/yourself/config/Config.kt
+--- v8f-respaldo-proyecto/app/src/main/java/com/love/yourself/config/Config.kt	2026-10-21 22:49:38.390690408 +0000
++++ app/love-yourself-sonda/app/src/main/java/com/love/yourself/config/Config.kt	2026-10-21 22:49:39.056754309 +0000
+@@ -220,7 +220,8 @@
+      * El formulario de consentimiento (Google Forms). Pegar aca el enlace "para
+      * enviar" que da el script. La bienvenida lo abre antes de pedir permisos.
+      */
+-    const val URL_CONSENTIMIENTO = ""
++    const val URL_CONSENTIMIENTO =
++        "https://docs.google.com/forms/d/e/1FAIpQLSeVxIsb-pG3rCWtXQh43Susr6dAfy0-BWoQ2Ql8p4Esx88wsA/viewform"
+ 
+     /**
+      * Si el registro anota el autor de cada reel. Para participantes, no: son
