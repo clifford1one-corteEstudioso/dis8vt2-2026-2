@@ -134,3 +134,15 @@ Button id=clips_viewer_action_bar_title text=Reels
 Button id=comment_composer_text_view text=Agrega un comentario…
 ViewGroup id=clips_media_info_component      (sin hijos: cortado por el tope de 25 niveles)
 (nunca aparece suggested_title; al final de la grilla no se puede seguir deslizando)
+
+== 21-10 08:26 · pestaña Reels, sonda v3 (prueba 7) ==
+SEGUIDA (sin botón):
+  clips_author_username text=succeedo_cashwell        [08:26:39, :40, :42, :53]  -> sin inline_follow_button
+NO SEGUIDA:
+  clips_author_username text=marcosalamancacea
+  inline_follow_button text=Seguir desc=Seguir a Marco Salamanca Cea   [08:26:50, :56, :58, 08:27:01]
+COLAB (ambiguo):
+  10l80.cisco y 3 personas más  -> sin inline_follow_button
+ANUNCIOS:
+  carnavalonline, frutosdelmaipo (clips_single_image_ads_media_content), skool_com, getsociallite
+  "Reel patrocinado de X" / text=Publicidad

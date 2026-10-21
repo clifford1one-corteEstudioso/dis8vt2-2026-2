@@ -1,0 +1,108 @@
+--- SesionService.v4.kt	2026-10-21 12:12:01.737079696 +0000
++++ app/love-yourself-sonda/app/src/main/java/com/love/yourself/servicio/SesionService.kt	2026-10-21 12:12:01.788519986 +0000
+@@ -157,7 +157,8 @@
+         val e = evento ?: return
+         val paquete = e.packageName?.toString() ?: return
+         // Tambien fuera de Instagram mientras haya un segmento abierto: asi se cierra al salir.
+-        if (PROBE2_ENABLED && (paquete == PROBE2_PAQUETE || segmentoAbierto)) sonda()
++        if (PROBE2_ENABLED && paquete == PROBE2_PAQUETE) sonda()
++        else if (PROBE2_ENABLED && segmentoAbierto) sonda(forzar = true)
+         val ahora = ahora()
+ 
+         when (e.eventType) {
+@@ -621,9 +622,9 @@
+      * nunca dos a la vez. Con tope de nodos y de profundidad: el arbol de
+      * Instagram completo satura el telefono.
+      */
+-    private fun sonda() {
++    private fun sonda(forzar: Boolean = false) {
+         val ahora = SystemClock.uptimeMillis()
+-        if (sondaCorriendo || ahora - ultimaSondaMs < PROBE2_THROTTLE_MS) return
++        if (sondaCorriendo || (!forzar && ahora - ultimaSondaMs < PROBE2_THROTTLE_MS)) return
+         ultimaSondaMs = ahora
+         sondaCorriendo = true
+         manejadorSonda.post {
+@@ -635,7 +636,13 @@
+                     if (PROBE2_VOLCAR) volcar(raiz, 0, intArrayOf(0))
+                     leer(raiz, 0, intArrayOf(0), lectura)
+                 }
+-                registrar(lectura, System.currentTimeMillis())
++                val nuevoDesconocido = registrar(lectura, System.currentTimeMillis())
++                // Contexto sin senales conocidas: se vuelca una vez para aprender de el.
++                if (nuevoDesconocido && !PROBE2_VOLCAR) {
++                    Log.d(CLASIF_TAG, "visor desconocido: volcado en tag $PROBE2_TAG")
++                    runCatching { rootInActiveWindow }.getOrNull()?.let { volcar(it, 0, intArrayOf(0)) }
++                    Log.d(PROBE2_TAG, "----------------------------------------")
++                }
+             } catch (e: Exception) {
+                 Log.d(CLASIF_TAG, "error: $e")
+             } finally {
+@@ -645,6 +652,14 @@
+     }
+ 
+     private fun leer(nodo: AccessibilityNodeInfo, profundidad: Int, nodos: IntArray, l: Lectura) {
++        // Instagram deja pantallas anteriores (la pestana Reels) ocultas en el arbol: solo cuenta lo visible.
++        if (profundidad > 0 && !nodo.isVisibleToUser) {
++            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
++                @Suppress("DEPRECATION")
++                nodo.recycle()
++            }
++            return
++        }
+         nodos[0]++
+         val id = nodo.viewIdResourceName?.substringAfter(":id/")
+         val texto = nodo.text?.toString()
+@@ -684,15 +699,18 @@
+     private fun clasificar(l: Lectura): Pair<Clase, String> = when {
+         !l.visorReels -> Clase.FUERA to ""
+         l.sugerencias -> Clase.ARRASTRE to "sugerencias"
+-        l.crearReel || (l.barraPestanas && l.tituloReels) -> Clase.ARRASTRE to "pestaña reels"
+         l.remitente -> Clase.DIRIGIDO to "enviado por mensaje"
+         l.volver && l.comentarios -> Clase.DIRIGIDO to "perfil"
++        // La pestana Reels nunca tiene "Volver": si aparece, es un visor encima.
++        !l.volver && (l.crearReel || (l.barraPestanas && l.tituloReels)) -> Clase.ARRASTRE to "pestaña reels"
+         else -> Clase.DESCONOCIDO to "visor sin señales claras"
+     }
+ 
+-    private fun registrar(l: Lectura, ahora: Long) {
++    /** Devuelve true si se acaba de abrir un segmento DESCONOCIDO. */
++    private fun registrar(l: Lectura, ahora: Long): Boolean {
+         val (clase, contexto) = clasificar(l)
+-        if (clase != segClase || contexto != segContexto) {
++        val cambia = clase != segClase || contexto != segContexto
++        if (cambia) {
+             cerrarSegmento()
+             segClase = clase
+             segContexto = contexto
+@@ -703,11 +721,12 @@
+             ultimoReel = null
+             segmentoAbierto = clase != Clase.FUERA
+         }
+-        if (clase == Clase.FUERA) return
++        val nuevoDesconocido = cambia && clase == Clase.DESCONOCIDO
++        if (clase == Clase.FUERA) return false
+         segUltima = ahora
+         // Un reel nuevo = cambia el autor (dos seguidos de la misma cuenta cuentan como uno).
+-        val reel = l.autor ?: l.patrocinador ?: return
+-        if (reel == ultimoReel) return
++        val reel = l.autor ?: l.patrocinador ?: return nuevoDesconocido
++        if (reel == ultimoReel) return nuevoDesconocido
+         ultimoReel = reel
+         segReels++
+         val relacion = when {
+@@ -719,6 +738,7 @@
+         if (l.anuncio) segAnuncios++
+         if (relacion == "no seguida") segNoSeguidas++
+         Log.d(CLASIF_TAG, "reel ${hora.format(Date(ahora))} · $clase · $contexto · $reel · $relacion")
++        return nuevoDesconocido
+     }
+ 
+     private fun cerrarSegmento() {
+@@ -732,6 +752,7 @@
+     }
+ 
+     private fun volcar(nodo: AccessibilityNodeInfo, profundidad: Int, nodos: IntArray) {
++        if (profundidad > 0 && !nodo.isVisibleToUser) return
+         nodos[0]++
+         Log.d(
+             PROBE2_TAG,

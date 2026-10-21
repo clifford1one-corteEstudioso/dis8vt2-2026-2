@@ -1,0 +1,867 @@
+diff -ruN -x build v5-respaldo-proyecto/app/src/main/java/com/love/yourself/config/Ajustes.kt app/love-yourself-sonda/app/src/main/java/com/love/yourself/config/Ajustes.kt
+--- v5-respaldo-proyecto/app/src/main/java/com/love/yourself/config/Ajustes.kt	2026-10-21 13:57:44.435196875 +0000
++++ app/love-yourself-sonda/app/src/main/java/com/love/yourself/config/Ajustes.kt	2026-10-21 13:58:03.066496727 +0000
+@@ -45,6 +45,15 @@
+         get() = prefs.getString(CLAVE_ACTIVIDAD, "") ?: ""
+         set(valor) = prefs.edit().putString(CLAVE_ACTIVIDAD, valor).apply()
+ 
++    /** Cuando empezo el estudio (hora real). 0 si todavia no. Lo fija el servicio la primera vez. */
++    var inicioEstudioMs: Long
++        get() = prefs.getLong(CLAVE_INICIO_ESTUDIO, 0L)
++        set(valor) = prefs.edit().putLong(CLAVE_INICIO_ESTUDIO, valor).apply()
++
++    /** Linea base o intervencion, segun los dias desde el inicio del estudio. */
++    fun friccionActiva(ahoraReal: Long): Boolean =
++        modoDev || (inicioEstudioMs > 0 && ahoraReal - inicioEstudioMs >= Config.DIAS_LINEA_BASE * 86_400_000L)
++
+     companion object {
+         /**
+          * Las apps con icono en el telefono: primero las sugeridas y las ya
+@@ -66,5 +75,6 @@
+         private const val CLAVE_APPS = "apps_vigiladas"
+         private const val CLAVE_DEV = "modo_dev"
+         private const val CLAVE_FACTOR = "factor_reloj"
++        private const val CLAVE_INICIO_ESTUDIO = "inicio_estudio"
+     }
+ }
+diff -ruN -x build v5-respaldo-proyecto/app/src/main/java/com/love/yourself/config/Config.kt app/love-yourself-sonda/app/src/main/java/com/love/yourself/config/Config.kt
+--- v5-respaldo-proyecto/app/src/main/java/com/love/yourself/config/Config.kt	2026-10-21 13:57:44.435226480 +0000
++++ app/love-yourself-sonda/app/src/main/java/com/love/yourself/config/Config.kt	2026-10-21 15:08:57.408780949 +0000
+@@ -103,6 +103,55 @@
+     /** Ventana movil para el ritmo de swipes, en segundos. */
+     const val VENTANA_RITMO_S = 60
+ 
++    // ---- el aviso (notch) ----
++
++    /** Swipes dentro de un segmento de ARRASTRE hasta que aparece el aviso. */
++    const val SWIPES_AVISO = 3
++
++    /** Segundos que hay que quedarse en el reel para seguir. Deslizar antes lleva al inicio. */
++    const val SEGUNDOS_AVISO = 5
++
++    /**
++     * Un swipe dispara varios eventos mientras termina de moverse el reel. Los
++     * que llegan justo despues de mostrar el aviso son del mismo gesto, no una
++     * confirmacion.
++     */
++    const val GRACIA_AVISO_MS = 900L
++
++    const val TEXTO_AVISO = "¿Quieres salir del arrastre? Desliza para confirmar"
++
++    // ---- las preguntas al cerrar (muestreo de experiencias) ----
++
++    /**
++     * Basadas en Lukoff et al. (2018) para motivacion y sentido, y en Lukoff et
++     * al. (2021) para control. Aparecen en las dos fases del estudio.
++     */
++    const val PREGUNTA_MOTIVACION = "¿A qué entraste?"
++    /** En este orden se anotan como instrumental, habitual y no_se. */
++    val OPCIONES_MOTIVACION = listOf("A algo puntual", "A pasar el rato", "No sé")
++    const val PREGUNTA_SENTIDO = "¿Qué tan significativo fue este rato pa' ti?"
++    const val PREGUNTA_CONTROL = "¿Sentiste que tú llevabas el control de este rato?"
++    const val ESCALA_MIN = "Nada"
++    const val ESCALA_MAX = "Harto"
++
++    /** Solo despues de visitas a Instagram de al menos esto: menos es mirar una notificacion. */
++    const val MIN_VISITA_PREGUNTA_S = 15
++
++    /** Minimo entre dos preguntas, para no hostigar (Lukoff 2018 usa 30). */
++    const val MIN_ENTRE_PREGUNTAS = 30
++
++    /** Si no se pudo mostrar en este tiempo (resumen abierto, volvio a la app), se descarta. */
++    const val VENCE_PREGUNTA_S = 180
++
++    // ---- el estudio ----
++
++    /**
++     * Dias de linea base desde la primera vez que se activa el servicio: la app
++     * solo registra, sin burbuja, aviso, cielo ni resumen. Despues empieza la
++     * intervencion. En modo dev la friccion esta siempre activa, para probar.
++     */
++    const val DIAS_LINEA_BASE = 7
++
+     // ---- cuando termina una sesion ----
+ 
+     /**
+diff -ruN -x build v5-respaldo-proyecto/app/src/main/java/com/love/yourself/servicio/OverlayFriccion.kt app/love-yourself-sonda/app/src/main/java/com/love/yourself/servicio/OverlayFriccion.kt
+--- v5-respaldo-proyecto/app/src/main/java/com/love/yourself/servicio/OverlayFriccion.kt	2026-10-21 13:57:44.436659660 +0000
++++ app/love-yourself-sonda/app/src/main/java/com/love/yourself/servicio/OverlayFriccion.kt	2026-10-21 13:58:18.217915255 +0000
+@@ -7,6 +7,7 @@
+ import android.view.View
+ import android.view.WindowManager
+ import android.widget.TextView
++import com.love.yourself.vistas.AvisoNotch
+ import com.love.yourself.vistas.BurbujaView
+ import com.love.yourself.vistas.CajaDev
+ import com.love.yourself.vistas.Momento
+@@ -18,6 +19,7 @@
+  *
+  *   CAJA       solo en modo dev: datos para calibrar
+  *   BURBUJA    arriba, siempre: tiempo y ritmo. Se agranda con la mascota en ciertos momentos
++ *   AVISO      al tercer swipe de arrastre: deslizar = salir, quedarse 5 s = seguir
+  *   CIELO      a los MIN_CIELO minutos, pantalla completa: seguir o salir
+  *
+  * Solo el cielo recibe toques; lo demas deja usar la app de abajo.
+@@ -29,7 +31,7 @@
+      * ultima ventana agregada, asi que agregar una capa obliga a volver a subir
+      * las que van sobre ella. Si no, la caja dev taparia la burbuja.
+      */
+-    private enum class Capa { CAJA, BURBUJA, CIELO }
++    private enum class Capa { CAJA, BURBUJA, AVISO, CIELO }
+ 
+     private val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+     private val densidad = context.resources.displayMetrics.density
+@@ -99,6 +101,25 @@
+     /** Si la burbuja esta agrandada, hablando. */
+     fun burbujaExpandida(): Boolean = (capas[Capa.BURBUJA]?.first as? BurbujaView)?.expandida() == true
+ 
++    // ---- aviso ----
++
++    fun avisoVisible(): Boolean = Capa.AVISO in capas
++
++    /** Muestra el aviso o actualiza su cuenta regresiva. Deja pasar los toques. */
++    fun mostrarAviso(segundos: Int) {
++        if (Capa.AVISO !in capas) {
++            val p = paramsAtravesables().apply {
++                gravity = AvisoNotch.GRAVEDAD
++                y = (AvisoNotch.MARGEN_SUPERIOR_DP * densidad).toInt()
++            }
++            agregar(Capa.AVISO, AvisoNotch.crear(context), p)
++        }
++        val v = capas.getValue(Capa.AVISO).first as TextView
++        v.text = AvisoNotch.texto(segundos)
++    }
++
++    fun quitarAviso() = quitar(Capa.AVISO)
++
+     // ---- cielo ----
+ 
+     fun cieloVisible(): Boolean = Capa.CIELO in capas
+diff -ruN -x build v5-respaldo-proyecto/app/src/main/java/com/love/yourself/servicio/OverlayPreguntas.kt app/love-yourself-sonda/app/src/main/java/com/love/yourself/servicio/OverlayPreguntas.kt
+--- v5-respaldo-proyecto/app/src/main/java/com/love/yourself/servicio/OverlayPreguntas.kt	1970-01-01 00:00:00.000000000 +0000
++++ app/love-yourself-sonda/app/src/main/java/com/love/yourself/servicio/OverlayPreguntas.kt	2026-10-21 15:08:57.356979462 +0000
+@@ -0,0 +1,214 @@
++package com.love.yourself.servicio
++
++import android.content.Context
++import android.graphics.PixelFormat
++import android.graphics.drawable.GradientDrawable
++import android.os.Build
++import android.util.TypedValue
++import android.view.Gravity
++import android.view.KeyEvent
++import android.view.View
++import android.view.ViewGroup
++import android.view.WindowManager
++import android.widget.FrameLayout
++import android.widget.LinearLayout
++import android.widget.TextView
++import com.love.yourself.config.Config
++import com.love.yourself.vistas.Colores
++
++/**
++ * Las preguntas al cerrar una sesion de Instagram (muestreo de experiencias,
++ * como Lukoff et al. 2018): por que entro, que tan significativo fue y cuanto
++ * control sintio. Se pueden saltar con "Saltar" o el boton atras.
++ *
++ * Wireframe: grises de Colores, sin animacion. Los textos estan en Config.
++ */
++class OverlayPreguntas(private val context: Context) {
++
++    private val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
++    private val densidad = context.resources.displayMetrics.density
++    private var raiz: View? = null
++
++    fun visible(): Boolean = raiz != null
++
++    /**
++     * @param alResponder motivacion (instrumental / habitual / no_se), sentido y control (1 a 7).
++     */
++    fun mostrar(alResponder: (String, Int, Int) -> Unit, alSaltar: () -> Unit) {
++        ocultar()
++        var motivacion: String? = null
++        var sentido = 0
++        var control = 0
++        lateinit var listo: TextView
++
++        fun revisar() {
++            val completo = motivacion != null && sentido > 0 && control > 0
++            listo.isEnabled = completo
++            listo.alpha = if (completo) 1f else 0.4f
++        }
++
++        val tarjeta = LinearLayout(context).apply {
++            orientation = LinearLayout.VERTICAL
++            setPadding(dp(20), dp(20), dp(20), dp(16))
++            background = GradientDrawable().apply {
++                cornerRadius = dp(20).toFloat()
++                setColor(Colores.FONDO)
++            }
++        }
++
++        tarjeta.addView(titulo(Config.PREGUNTA_MOTIVACION))
++        tarjeta.addView(grupo(Config.OPCIONES_MOTIVACION) { i ->
++            motivacion = CODIGOS_MOTIVACION[i]
++            revisar()
++        }, separado(10))
++
++        tarjeta.addView(titulo(Config.PREGUNTA_SENTIDO), separado(22))
++        tarjeta.addView(grupo((1..7).map { it.toString() }) { i ->
++            sentido = i + 1
++            revisar()
++        }, separado(10))
++        tarjeta.addView(extremos(), separado(4))
++
++        tarjeta.addView(titulo(Config.PREGUNTA_CONTROL), separado(22))
++        tarjeta.addView(grupo((1..7).map { it.toString() }) { i ->
++            control = i + 1
++            revisar()
++        }, separado(10))
++        tarjeta.addView(extremos(), separado(4))
++
++        lateinit var contenedor: FrameLayout
++        val saltar = boton("Saltar") { ocultar(); alSaltar() }
++        listo = boton("Listo") {
++            val m = motivacion ?: return@boton
++            ocultar()
++            alResponder(m, sentido, control)
++        }
++        val acciones = LinearLayout(context).apply {
++            orientation = LinearLayout.HORIZONTAL
++            addView(saltar, LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f))
++            addView(listo, LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f).apply {
++                leftMargin = dp(12)
++            })
++        }
++        tarjeta.addView(acciones, separado(24))
++        revisar()
++
++        contenedor = object : FrameLayout(context) {
++            override fun dispatchKeyEvent(evento: KeyEvent): Boolean {
++                if (evento.keyCode == KeyEvent.KEYCODE_BACK && evento.action == KeyEvent.ACTION_UP) {
++                    ocultar()
++                    alSaltar()
++                    return true
++                }
++                return super.dispatchKeyEvent(evento)
++            }
++        }.apply {
++            isFocusableInTouchMode = true
++            isClickable = true
++            setBackgroundColor(Colores.VELO)
++        }
++        contenedor.addView(tarjeta, FrameLayout.LayoutParams(
++            ViewGroup.LayoutParams.MATCH_PARENT,
++            ViewGroup.LayoutParams.WRAP_CONTENT,
++            Gravity.CENTER
++        ).apply { setMargins(dp(20), 0, dp(20), 0) })
++
++        val tipo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
++            WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
++        } else {
++            @Suppress("DEPRECATION")
++            WindowManager.LayoutParams.TYPE_PHONE
++        }
++        val params = WindowManager.LayoutParams(
++            WindowManager.LayoutParams.MATCH_PARENT,
++            WindowManager.LayoutParams.MATCH_PARENT,
++            tipo,
++            // Sin NOT_FOCUSABLE: tiene que recibir el boton atras.
++            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
++            PixelFormat.TRANSLUCENT
++        )
++        wm.addView(contenedor, params)
++        contenedor.requestFocus()
++        raiz = contenedor
++    }
++
++    fun ocultar() {
++        raiz?.let { runCatching { wm.removeView(it) } }
++        raiz = null
++    }
++
++    private fun titulo(contenido: String) = TextView(context).apply {
++        text = contenido
++        setTextColor(Colores.TEXTO)
++        setTextSize(TypedValue.COMPLEX_UNIT_SP, 17f)
++    }
++
++    /** Una fila de opciones; queda marcada la ultima que se toco. */
++    private fun grupo(etiquetas: List<String>, alElegir: (Int) -> Unit) = LinearLayout(context).apply {
++        orientation = LinearLayout.HORIZONTAL
++        val opciones = etiquetas.mapIndexed { i, etiqueta ->
++            TextView(context).apply {
++                text = etiqueta
++                gravity = Gravity.CENTER
++                setTextSize(TypedValue.COMPLEX_UNIT_SP, if (etiquetas.size > 3) 15f else 13f)
++                setPadding(dp(4), dp(10), dp(4), dp(10))
++                marcar(this, false)
++            }
++        }
++        opciones.forEachIndexed { i, opcion ->
++            opcion.setOnClickListener {
++                opciones.forEach { marcar(it, it === opcion) }
++                alElegir(i)
++            }
++            addView(opcion, LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f).apply {
++                if (i > 0) leftMargin = dp(6)
++            })
++        }
++    }
++
++    private fun marcar(opcion: TextView, elegida: Boolean) {
++        opcion.setTextColor(if (elegida) Colores.PAGINA else Colores.TEXTO)
++        opcion.background = GradientDrawable().apply {
++            cornerRadius = dp(10).toFloat()
++            setColor(if (elegida) Colores.ARRASTRADO else Colores.TARJETA)
++        }
++    }
++
++    /** "Nada" a la izquierda, "Harto" a la derecha. */
++    private fun extremos() = LinearLayout(context).apply {
++        orientation = LinearLayout.HORIZONTAL
++        listOf(Config.ESCALA_MIN to Gravity.START, Config.ESCALA_MAX to Gravity.END).forEach { (etiqueta, lado) ->
++            addView(TextView(context).apply {
++                text = etiqueta
++                gravity = lado
++                setTextColor(Colores.TEXTO_SUAVE)
++                setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
++            }, LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f))
++        }
++    }
++
++    private fun boton(etiqueta: String, alTocar: () -> Unit) = TextView(context).apply {
++        text = etiqueta
++        gravity = Gravity.CENTER
++        setTextColor(Colores.TEXTO)
++        setTextSize(TypedValue.COMPLEX_UNIT_SP, 15f)
++        setPadding(dp(8), dp(12), dp(8), dp(12))
++        background = GradientDrawable().apply {
++            cornerRadius = dp(12).toFloat()
++            setColor(Colores.SECCION)
++        }
++        setOnClickListener { alTocar() }
++    }
++
++    private fun separado(margen: Int) = LinearLayout.LayoutParams(
++        ViewGroup.LayoutParams.MATCH_PARENT,
++        ViewGroup.LayoutParams.WRAP_CONTENT
++    ).apply { topMargin = dp(margen) }
++
++    private fun dp(valor: Int) = (valor * densidad).toInt()
++
++    private companion object {
++        /** Lo que queda en el registro, en el orden de OPCIONES_MOTIVACION (Lukoff 2018). */
++        val CODIGOS_MOTIVACION = listOf("instrumental", "habitual", "no_se")
++    }
++}
+diff -ruN -x build v5-respaldo-proyecto/app/src/main/java/com/love/yourself/servicio/RegistroEstudio.kt app/love-yourself-sonda/app/src/main/java/com/love/yourself/servicio/RegistroEstudio.kt
+--- v5-respaldo-proyecto/app/src/main/java/com/love/yourself/servicio/RegistroEstudio.kt	1970-01-01 00:00:00.000000000 +0000
++++ app/love-yourself-sonda/app/src/main/java/com/love/yourself/servicio/RegistroEstudio.kt	2026-10-21 13:58:03.075157211 +0000
+@@ -0,0 +1,36 @@
++package com.love.yourself.servicio
++
++import android.content.Context
++import android.util.Log
++import java.io.File
++import java.text.SimpleDateFormat
++import java.util.Date
++import java.util.Locale
++
++/**
++ * El registro del estudio: una linea por evento (segmentos, reels, aviso,
++ * cielo, visitas), separada por tabuladores. Queda en
++ * Android/data/com.love.yourself.sonda/files/estudio.tsv, que se copia al
++ * computador por cable. A diferencia de Logcat, sobrevive dias.
++ *
++ * Trae nombres de cuentas publicas (autores de reels): anonimizar antes de
++ * compartir.
++ */
++object RegistroEstudio {
++    private const val TAG = "ESTUDIO"
++    private val hora = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US)
++    private var archivo: File? = null
++
++    fun iniciar(context: Context) {
++        val dir = context.getExternalFilesDir(null) ?: context.filesDir
++        archivo = File(dir, "estudio.tsv")
++    }
++
++    @Synchronized
++    fun anotar(tipo: String, vararg campos: Any?) {
++        val linea = (listOf(hora.format(Date()), tipo) + campos.map { it?.toString()?.replace('\t', ' ') ?: "" })
++            .joinToString("\t")
++        Log.d(TAG, linea)
++        runCatching { archivo?.appendText(linea + "\n") }
++    }
++}
+diff -ruN -x build v5-respaldo-proyecto/app/src/main/java/com/love/yourself/servicio/SesionService.kt app/love-yourself-sonda/app/src/main/java/com/love/yourself/servicio/SesionService.kt
+--- v5-respaldo-proyecto/app/src/main/java/com/love/yourself/servicio/SesionService.kt	2026-10-21 13:57:44.436685185 +0000
++++ app/love-yourself-sonda/app/src/main/java/com/love/yourself/servicio/SesionService.kt	2026-10-21 15:09:12.484954738 +0000
+@@ -54,8 +54,12 @@
+  * Capas de friccion, de menos a mas:
+  *  - siempre en una app vigilada: la burbuja con tiempo y ritmo
+  *  - primer swipe: la burbuja se agranda y aparece la mascota
+- *  - a los 10 min en la app: el cielo a pantalla completa, seguir o salir
++ *  - al tercer swipe de arrastre: el aviso arriba; deslizar lleva al inicio,
++ *    quedarse 5 s en el reel deja seguir
++ *  - a los 10 min en la app, si se esta en arrastre: el cielo a pantalla completa
+  *  - al salir: el resumen, y la sesion queda en el historial de Inicio
++ *
++ * Los primeros DIAS_LINEA_BASE dias del estudio no hay friccion: solo se registra.
+  */
+ class SesionService : AccessibilityService() {
+ 
+@@ -85,6 +89,19 @@
+     private val indices = mutableMapOf<String, Int>()
+     private var ultimoIndice = -1
+ 
++    // ---- el aviso: cuantos swipes de arrastre lleva y si esta en pantalla ----
++    private var avisoDesdeMs = 0L
++    private var swipesArrastre = 0
++    private var avisoDisponible = true
++    private var visitaDelAviso: Visita? = null
++    private var ultimaFase: Boolean? = null
++
++    // ---- las preguntas al cerrar ----
++    private var preguntas: OverlayPreguntas? = null
++    private class Pendiente(val app: String, val motivo: Motivo, val cierre: String, val arrastradoS: Long, val creadaReal: Long)
++    private var pendiente: Pendiente? = null
++    private var ultimaPreguntaReal = 0L
++
+     private val tic = object : Runnable {
+         override fun run() {
+             // Si algo falla adentro, el reloj igual sigue: sin tic no se cierra
+@@ -94,6 +111,9 @@
+                 revisarAdelante(ahora)
+                 atender(registro.tic(ahora))
+                 refrescar(ahora)
++                revisarAviso()
++                revisarFase()
++                revisarPregunta()
+             } catch (e: Exception) {
+                 DiarioDev.anotar("error en el tic: $e")
+             } finally {
+@@ -136,7 +156,13 @@
+         Reloj.cambiarFactor(if (ajustes.modoDev) ajustes.factorReloj else 1)
+         friccion = OverlayFriccion(this)
+         brief = OverlayBrief(this)
++        preguntas = OverlayPreguntas(this)
+         launchers = paquetesDeInicio()
++        RegistroEstudio.iniciar(this)
++        if (ajustes.inicioEstudioMs == 0L) {
++            ajustes.inicioEstudioMs = System.currentTimeMillis()
++            RegistroEstudio.anotar("estudio_inicio", Config.DIAS_LINEA_BASE)
++        }
+ 
+         val filtro = IntentFilter().apply {
+             addAction(Intent.ACTION_SCREEN_OFF)
+@@ -188,6 +214,7 @@
+                     atender(registro.enPrimerPlano(paquete, false, true, ahora))
+                 }
+                 val completa = esPantallaCompleta(e, paquete) && cambioDeElemento(e)
++                if (completa && paquete == PROBE2_PAQUETE) alDeslizar()
+                 if (registro.scroll(paquete, completa, ahora)) {
+                     DiarioDev.anotar("sesión inicia en $paquete · reloj x${Reloj.factor}")
+                     registro.actual?.let { momento(it, Momento.PRIMER_SWIPE, ahora) }
+@@ -349,9 +376,20 @@
+                 "cierra ${v.app} por ${c.motivo} · x${Reloj.factor} · arrastre ${v.arrastradoMs / 1000}s · " +
+                     "iniciada ${v.sesionIniciada} · resumen ${c.muestraBrief}"
+             )
++            RegistroEstudio.anotar(
++                "visita", v.app, c.motivo, v.totalMs / 1000, v.arrastradoMs / 1000, v.cielos, v.seguir, fase()
++            )
+             if (v.sesionIniciada) ultimoCierre[v.app] = c.cierreMs
++            // Las preguntas van en las dos fases, solo para Instagram.
++            if (v.app == PROBE2_PAQUETE && v.totalMs >= Config.MIN_VISITA_PREGUNTA_S * 1000L &&
++                real - ultimaPreguntaReal >= Config.MIN_ENTRE_PREGUNTAS * 60_000L
++            ) {
++                // Formato propio: el de la sonda vive en otro hilo.
++                val cierre = SimpleDateFormat("HH:mm:ss", Locale.US).format(Date(real))
++                pendiente = Pendiente(v.app, c.motivo, cierre, v.arrastradoMs / 1000, real)
++            }
+             if (ajustes.modoDev) avisoDev(c)
+-            if (c.muestraBrief) {
++            if (c.muestraBrief && friccionActiva()) {
+                 friccion?.ocultarTodo()
+                 // Aliviado si salio antes del cielo; frito si llego a verlo.
+                 val frito = vioElCielo(c)
+@@ -408,6 +446,11 @@
+     /** Un tic por segundo: quedarse quieto mirando un reel tambien es estar ahi. */
+     private fun refrescar(ahora: Long) {
+         val ov = friccion ?: return
++        // Linea base: la app solo registra.
++        if (!friccionActiva()) {
++            ov.ocultarTodo()
++            return
++        }
+         val v = registro.actual
+         if (v == null || v.pausada || v.afuera || brief?.visible() == true) {
+             ov.ocultarTodo()
+@@ -427,7 +470,9 @@
+         if (ajustes.modoDev) ov.mostrarCaja(lineaDev(v)) else ov.quitarCaja()
+ 
+         // El cielo cuenta tiempo en la app, pero solo si hubo arrastre.
+-        val tocaCielo = v.sesionIniciada && v.totalMs >= v.proximoCieloMs
++        // Y solo en un segmento de ARRASTRE: no interrumpe un DM ni un perfil.
++        val tocaCielo = v.sesionIniciada && v.totalMs >= v.proximoCieloMs &&
++            (!PROBE2_ENABLED || claseActual == Clase.ARRASTRE)
+         if (!tocaCielo) {
+             hablaLaMascota(v, ahora)
+             return
+@@ -439,6 +484,11 @@
+         val minutos = v.totalMs / 60_000
+         v.cielos++
+         DiarioDev.anotar("cielo a los $minutos min")
++        RegistroEstudio.anotar("cielo_mostrado", v.app, minutos)
++        cancelarAviso("cielo")
++        // Despues del cielo el aviso vuelve a estar disponible.
++        avisoDisponible = true
++        swipesArrastre = 0
+         ov.mostrarCielo(
+             minutos = minutos,
+             cara = CaraProgresiva.para(true, v.totalMs),
+@@ -449,22 +499,154 @@
+                 v.seguir++
+                 eligioSeguir = true
+                 DiarioDev.anotar("eligió seguir a los $minutos min")
++                RegistroEstudio.anotar("cielo_seguir", v.app, minutos)
+             },
+             alSalir = {
+                 DiarioDev.anotar("eligió salir a los $minutos min")
+-                atender(registro.cerrarActual(Motivo.SALIR, ahora()))
+-                // No se puede cerrar Instagram por el usuario; se lo lleva al
+-                // inicio, donde queda el resumen esperandolo.
+-                startActivity(
+-                    Intent(Intent.ACTION_MAIN).apply {
+-                        addCategory(Intent.CATEGORY_HOME)
+-                        flags = Intent.FLAG_ACTIVITY_NEW_TASK
+-                    }
+-                )
++                RegistroEstudio.anotar("cielo_salir", v.app, minutos)
++                salirAlInicio()
++            }
++        )
++    }
++
++    /**
++     * Cierra la visita y lleva al inicio del telefono, donde queda el resumen
++     * esperando. No se puede cerrar Instagram por el usuario.
++     */
++    private fun salirAlInicio() {
++        atender(registro.cerrarActual(Motivo.SALIR, ahora()))
++        startActivity(
++            Intent(Intent.ACTION_MAIN).apply {
++                addCategory(Intent.CATEGORY_HOME)
++                flags = Intent.FLAG_ACTIVITY_NEW_TASK
+             }
+         )
+     }
+ 
++    // ---- fase del estudio ----
++
++    private fun friccionActiva() = ajustes.friccionActiva(System.currentTimeMillis())
++
++    private fun fase() = if (friccionActiva()) "intervencion" else "linea_base"
++
++    /** Anota cuando cambia de linea base a intervencion (o al activar el modo dev). */
++    private fun revisarFase() {
++        val activa = friccionActiva()
++        if (activa == ultimaFase) return
++        ultimaFase = activa
++        RegistroEstudio.anotar("fase", fase())
++        DiarioDev.anotar("fase: ${fase()}")
++    }
++
++    // ---- las preguntas ----
++
++    /**
++     * Cada tic: si hay una pregunta pendiente, la muestra cuando no hay otra
++     * pantalla encima (el resumen va primero) y la persona no volvio a Instagram.
++     */
++    private fun revisarPregunta() {
++        val p = pendiente ?: return
++        val ov = preguntas ?: return
++        val real = System.currentTimeMillis()
++        if (real - p.creadaReal > Config.VENCE_PREGUNTA_S * 1000L) {
++            pendiente = null
++            RegistroEstudio.anotar("pregunta_vencida", p.app, p.motivo, p.cierre)
++            return
++        }
++        if (ov.visible() || brief?.visible() == true) return
++        val actual = registro.actual
++        if (actual != null && actual.app == p.app && !actual.afuera) return
++        pendiente = null
++        ultimaPreguntaReal = real
++        val fase = fase()
++        RegistroEstudio.anotar("pregunta_mostrada", p.app, p.motivo, p.cierre, fase)
++        runCatching {
++            ov.mostrar(
++                alResponder = { motivacion, sentido, control ->
++                    RegistroEstudio.anotar(
++                        "respuesta", p.app, p.motivo, p.cierre, p.arrastradoS, fase, motivacion, sentido, control
++                    )
++                    DiarioDev.anotar("respuesta: $motivacion · sentido $sentido · control $control")
++                },
++                alSaltar = {
++                    RegistroEstudio.anotar("pregunta_saltada", p.app, p.motivo, p.cierre, fase)
++                    DiarioDev.anotar("pregunta saltada")
++                }
++            )
++        }.onFailure { DiarioDev.anotar("preguntas FALLÓ: ${it.message}") }
++    }
++
++    // ---- el aviso ----
++
++    /**
++     * Cada swipe a un reel nuevo en Instagram. Con el aviso en pantalla, deslizar
++     * (al siguiente o al anterior) es confirmar: lleva al inicio. Sin aviso,
++     * cuenta los swipes de arrastre hasta SWIPES_AVISO.
++     */
++    private fun alDeslizar() {
++        if (!friccionActiva()) return
++        val v = registro.actual ?: return
++        val ov = friccion ?: return
++        if (v !== visitaDelAviso) {
++            visitaDelAviso = v
++            swipesArrastre = 0
++            avisoDisponible = true
++        }
++        if (avisoDesdeMs > 0) {
++            // Los eventos que siguen al swipe que lo hizo aparecer son del mismo gesto.
++            if (SystemClock.uptimeMillis() - avisoDesdeMs < Config.GRACIA_AVISO_MS) return
++            RegistroEstudio.anotar("aviso_salio", v.app)
++            DiarioDev.anotar("aviso: deslizó, al inicio")
++            terminarAviso()
++            salirAlInicio()
++            return
++        }
++        if (claseActual != Clase.ARRASTRE || !avisoDisponible) return
++        if (ov.cieloVisible() || brief?.visible() == true) return
++        swipesArrastre++
++        if (swipesArrastre < Config.SWIPES_AVISO) return
++        avisoDesdeMs = SystemClock.uptimeMillis()
++        avisoDisponible = false
++        ov.mostrarAviso(Config.SEGUNDOS_AVISO)
++        RegistroEstudio.anotar("aviso_mostrado", v.app, swipesArrastre)
++        DiarioDev.anotar("aviso al swipe $swipesArrastre")
++    }
++
++    /** Cada tic: la cuenta regresiva, o se quita si ya no corresponde. */
++    private fun revisarAviso() {
++        if (avisoDesdeMs == 0L) return
++        val ov = friccion ?: return
++        when {
++            // Otra capa lo saco (salio de la app, resumen, bloqueo).
++            !ov.avisoVisible() -> cancelarAviso("oculto")
++            // Ir al feed, a un DM o a un perfil quita la cuenta sin sacar de
++            // Instagram. Dar like o abrir comentarios no: se sigue en el reel.
++            claseActual != Clase.ARRASTRE -> cancelarAviso("salió de reels")
++            else -> {
++                val restante = Config.SEGUNDOS_AVISO - ((SystemClock.uptimeMillis() - avisoDesdeMs) / 1000).toInt()
++                if (restante > 0) {
++                    ov.mostrarAviso(restante)
++                } else {
++                    RegistroEstudio.anotar("aviso_espero", registro.actual?.app)
++                    DiarioDev.anotar("aviso: esperó, sigue")
++                    terminarAviso()
++                }
++            }
++        }
++    }
++
++    private fun cancelarAviso(motivo: String) {
++        if (avisoDesdeMs == 0L) return
++        RegistroEstudio.anotar("aviso_cancelado", registro.actual?.app, motivo)
++        DiarioDev.anotar("aviso cancelado: $motivo")
++        terminarAviso()
++    }
++
++    private fun terminarAviso() {
++        avisoDesdeMs = 0L
++        friccion?.quitarAviso()
++    }
++
+     // ---- la mascota ----
+ 
+     /** El guion de esta visita. Una visita nueva empieza uno nuevo. */
+@@ -485,6 +667,7 @@
+     }
+ 
+     private fun momento(v: Visita, m: Momento, ahora: Long, sinPausa: Boolean = false) {
++        if (!friccionActiva()) return
+         if (!guionDe(v, ahora).pedir(m, ahora, sinPausa)) return
+         friccion?.expandirBurbuja(m)
+         DiarioDev.anotar("mascota: ${m.name.lowercase()}")
+@@ -592,6 +775,7 @@
+     /** Lo que una lectura del arbol encontro. */
+     private class Lectura {
+         var visorReels = false
++        var raizReels = false
+         var crearReel = false
+         var barraPestanas = false
+         var tituloReels = false
+@@ -607,6 +791,8 @@
+ 
+     // Estado del segmento: solo se toca desde hiloSonda (segmentoAbierto se lee tambien afuera).
+     @Volatile private var segmentoAbierto = false
++    /** La clase del segmento actual. La escribe hiloSonda y la lee el aviso y el cielo. */
++    @Volatile private var claseActual = Clase.FUERA
+     private var segClase = Clase.FUERA
+     private var segContexto = ""
+     private var segInicio = 0L
+@@ -665,7 +851,11 @@
+         val texto = nodo.text?.toString()
+         val desc = nodo.contentDescription?.toString()
+         when (id) {
+-            "root_clips_layout", "clips_viewer_view_pager", "clips_media_component" -> l.visorReels = true
++            "root_clips_layout" -> {
++                l.visorReels = true
++                l.raizReels = true
++            }
++            "clips_viewer_view_pager", "clips_media_component" -> l.visorReels = true
+             "tab_bar" -> l.barraPestanas = true
+             "clips_viewer_action_bar_title" -> if (texto == "Reels") l.tituloReels = true
+             "comment_composer_text_view" -> l.comentarios = true
+@@ -702,7 +892,9 @@
+         l.remitente -> Clase.DIRIGIDO to "enviado por mensaje"
+         l.volver && l.comentarios -> Clase.DIRIGIDO to "perfil"
+         // La pestana Reels nunca tiene "Volver": si aparece, es un visor encima.
+-        !l.volver && (l.crearReel || (l.barraPestanas && l.tituloReels)) -> Clase.ARRASTRE to "pestaña reels"
++        // Algunos anuncios esconden el titulo, pero la barra de pestanas sigue visible.
++        !l.volver && (l.crearReel || (l.barraPestanas && (l.tituloReels || l.raizReels))) ->
++            Clase.ARRASTRE to "pestaña reels"
+         else -> Clase.DESCONOCIDO to "visor sin señales claras"
+     }
+ 
+@@ -720,6 +912,7 @@
+             segNoSeguidas = 0
+             ultimoReel = null
+             segmentoAbierto = clase != Clase.FUERA
++            claseActual = clase
+         }
+         val nuevoDesconocido = cambia && clase == Clase.DESCONOCIDO
+         if (clase == Clase.FUERA) return false
+@@ -738,6 +931,7 @@
+         if (l.anuncio) segAnuncios++
+         if (relacion == "no seguida") segNoSeguidas++
+         Log.d(CLASIF_TAG, "reel ${hora.format(Date(ahora))} · $clase · $contexto · $reel · $relacion")
++        RegistroEstudio.anotar("reel", clase, contexto, reel.trim(), relacion)
+         return nuevoDesconocido
+     }
+ 
+@@ -749,6 +943,10 @@
+             "SEGMENTO $segClase · $segContexto · ${hora.format(Date(segInicio))}–${hora.format(Date(segUltima))}" +
+                 " · ${segundos / 60}m ${segundos % 60}s · $segReels reels ($segAnuncios anuncios, $segNoSeguidas no seguidas)"
+         )
++        RegistroEstudio.anotar(
++            "segmento", segClase, segContexto, hora.format(Date(segInicio)), hora.format(Date(segUltima)),
++            segundos, segReels, segAnuncios, segNoSeguidas
++        )
+     }
+ 
+     private fun volcar(nodo: AccessibilityNodeInfo, profundidad: Int, nodos: IntArray) {
+@@ -781,6 +979,7 @@
+         runCatching { unregisterReceiver(receptorPantalla) }
+         friccion?.ocultarTodo()
+         brief?.ocultar()
++        preguntas?.ocultar()
+         friccion = null
+         brief = null
+         if (PROBE2_ENABLED) runCatching { hiloSonda.quitSafely() }
+diff -ruN -x build v5-respaldo-proyecto/app/src/main/java/com/love/yourself/vistas/AvisoNotch.kt app/love-yourself-sonda/app/src/main/java/com/love/yourself/vistas/AvisoNotch.kt
+--- v5-respaldo-proyecto/app/src/main/java/com/love/yourself/vistas/AvisoNotch.kt	1970-01-01 00:00:00.000000000 +0000
++++ app/love-yourself-sonda/app/src/main/java/com/love/yourself/vistas/AvisoNotch.kt	2026-10-21 13:59:24.602962951 +0000
+@@ -0,0 +1,36 @@
++package com.love.yourself.vistas
++
++import android.content.Context
++import android.graphics.Color
++import android.graphics.drawable.GradientDrawable
++import android.util.TypedValue
++import android.view.Gravity
++import android.widget.TextView
++import com.love.yourself.config.Config
++
++/**
++ * El aviso tipo notch: arriba, al tercer swipe de arrastre. Pregunta si salir
++ * y cuenta los segundos que hay que quedarse para seguir. No recibe toques: el
++ * swipe pasa a Instagram y el servicio lo lee. Solo arma la vista.
++ */
++object AvisoNotch {
++
++    const val GRAVEDAD = Gravity.TOP or Gravity.CENTER_HORIZONTAL
++
++    /** Debajo de la burbuja y de la caja del modo dev. */
++    const val MARGEN_SUPERIOR_DP = BurbujaView.MARGEN_SUPERIOR_DP + 150f
++
++    fun crear(context: Context): TextView = TextView(context).apply {
++        val d = resources.displayMetrics.density
++        setTextColor(Colores.TEXTO)
++        setTextSize(TypedValue.COMPLEX_UNIT_SP, 15f)
++        gravity = Gravity.CENTER
++        setPadding((18 * d).toInt(), (10 * d).toInt(), (18 * d).toInt(), (10 * d).toInt())
++        background = GradientDrawable().apply {
++            cornerRadius = 24 * d
++            setColor(Color.argb(230, 0, 0, 0))
++        }
++    }
++
++    fun texto(segundos: Int) = "${Config.TEXTO_AVISO}\nQuédate en este reel para seguir: $segundos"
++}
+diff -ruN -x build v5-respaldo-proyecto/app/src/main/java/com/love/yourself/vistas/BurbujaView.kt app/love-yourself-sonda/app/src/main/java/com/love/yourself/vistas/BurbujaView.kt
+--- v5-respaldo-proyecto/app/src/main/java/com/love/yourself/vistas/BurbujaView.kt	2026-10-21 13:57:44.438090560 +0000
++++ app/love-yourself-sonda/app/src/main/java/com/love/yourself/vistas/BurbujaView.kt	2026-10-21 15:30:19.587592739 +0000
+@@ -163,7 +163,8 @@
+         val caida = (1f - frena(entrada)) * (margenSuperior + altoRecogida + holgura)
+ 
+         if (cambioAnchoMs >= 0 && ahora - cambioAnchoMs < CAMBIO_ANCHO_MS) moviendo = true
+-        val w = lerp(anchoRecogida(ahora), anchoExpandida, f.ancho)
++        val recogida = anchoRecogida(ahora)
++        val w = lerp(recogida, anchoQueCabe(recogida), f.ancho)
+         val h = lerp(altoRecogida, altoExpandida, f.alto)
+         val izq = (width - w) / 2f
+         val arriba = margenSuperior - salto * f.salto - caida
+@@ -177,6 +178,18 @@
+         if (m != null || moviendo) postInvalidateOnAnimation()
+     }
+ 
++    /**
++     * El ancho expandido que cabe en la ventana. Algunos telefonos (Samsung) le
++     * dan a la ventana menos ancho que el pedido: si la pildora no cabe, se
++     * corta en los costados y pierde las esquinas redondeadas. Cuenta tambien
++     * lo que se pasa al crecer.
++     */
++    private fun anchoQueCabe(recogida: Float): Float {
++        val disponible = width - 2 * BORDE_MIN_DP * d
++        val maximo = (disponible + SOBREPASO * recogida) / (1f + SOBREPASO)
++        return minOf(anchoExpandida, maximo).coerceAtLeast(recogida)
++    }
++
+     /** El ancho de la pildora recogida: se estira suave cuando aparece o se va la cara. */
+     private fun anchoRecogida(ahora: Long): Float {
+         val meta = if (cara == 0) anchoSinCara else anchoConCara
+@@ -374,5 +387,10 @@
+         private const val ENTRADA_MS = 480f
+         private const val CAMBIO_CARA_CHICA_MS = 520f
+         private const val CAMBIO_ANCHO_MS = 420f
++
++        /** Cuanto se pasa el ancho al crecer: rebota(x, 1.1f) llega a ~4,5 % sobre la meta. */
++        private const val SOBREPASO = 0.05f
++        /** Espacio minimo entre la pildora y el borde de la ventana, en dp. */
++        private const val BORDE_MIN_DP = 4f
+     }
+ }
+diff -ruN -x build v5-respaldo-proyecto/app/src/main/res/xml/sesion_config.xml app/love-yourself-sonda/app/src/main/res/xml/sesion_config.xml
+--- v5-respaldo-proyecto/app/src/main/res/xml/sesion_config.xml	2026-10-21 13:57:44.444045159 +0000
++++ app/love-yourself-sonda/app/src/main/res/xml/sesion_config.xml	2026-10-21 14:22:28.368327001 +0000
+@@ -1,7 +1,8 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <!--
+   canRetrieveWindowContent: hace falta para saber cuanto ocupa la zona que se
+-  desliza (event.source). No se lee el texto ni las imagenes.
++  desliza (event.source) y, en esta version de estudio, para leer en Instagram
++  los ids y algunos textos que dicen de donde viene un reel. No se leen imagenes.
+ -->
+ <accessibility-service xmlns:android="http://schemas.android.com/apk/res/android"
+     android:accessibilityEventTypes="typeWindowStateChanged|typeViewScrolled"

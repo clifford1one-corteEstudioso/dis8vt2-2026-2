@@ -117,6 +117,37 @@ Recorrido: perfil de `clifford1one` → reel de su grilla → deslizar uno por u
 
 **Conclusión:** desde un perfil no hay fuga hacia el algoritmo. "Volver" + título "Reels" = elegido, con fin natural.
 
+## Prueba 7 (21-10, 08:26): pestaña Reels con sonda v3 (profundidad 40)
+
+Cuenta seguida: `succeedo_cashwell`. No seguida: `marcosalamancacea`. Todo en la pestaña Reels ("Crear un reel" + título "Reels" + tab_bar).
+
+| Reel | `inline_follow_button` | Lectura |
+|---|---|---|
+| succeedo_cashwell (08:26:39, :40, :42, :53) | **no aparece** | seguida |
+| marcosalamancacea (08:26:50, :56, :58, 08:27:01) | `text=Seguir desc=Seguir a Marco Salamanca Cea` | no seguida |
+| abeandchloe, raree200x, setupsai, lindenwhitt, nick.vost, cabrodecente, crocodile.jackson, farigatouu | `Seguir` | no seguidas |
+| 10l80.cisco y 3 personas más (colab) | no aparece | **ambiguo** |
+| carnavalonline, frutosdelmaipo, skool_com, getsociallite | — | anuncios ("Reel patrocinado", "Publicidad", `clips_single_image_ads_media_content`) |
+
+**Conclusión:** con profundidad suficiente, el árbol expone la relación con el autor. El botón "Seguir" está si y solo si no sigues la cuenta (sin botón "Siguiendo": simplemente desaparece).
+
+Cuidados para el clasificador:
+- **Reel precargado:** hay varios `clips_media_component`; el actual es el que trae hijos en `clips_author_info_component`.
+- **Colaborativos y reels propios:** sin botón, pero no implican "seguida". Tratarlos como categoría aparte o mirar el texto "y N personas más".
+
+## ✅ Estado del Probe 2: resuelto (positivo)
+
+El árbol no etiqueta "algoritmo", pero combinando señales se puede clasificar el origen:
+
+| Señal | Nodo | Indica |
+|---|---|---|
+| Visor de DM | `sender_username_or_fullname` | lo eligió alguien que conoces |
+| Sugerencias tras DM | `suggested_title text=Sugerencias` | algoritmo |
+| Pestaña Reels | "Crear un reel" + título "Reels" + tab_bar | algoritmo |
+| Visor de perfil | "Volver" + título Reels, sin sugerencias | elección propia |
+| Relación con autor | `inline_follow_button` presente/ausente | no seguida / seguida |
+| Anuncio | "Reel patrocinado" / `Publicidad` | publicidad |
+
 ## ⚠️ Corrección: el tope de profundidad escondía datos
 
 En las pruebas 1–4 y 6, `clips_media_info_component` salía "sin hijos". En la prueba 5 sí trajo hijos (autor, botón Seguir). La diferencia: en las pruebas 1–4 y 6 el visor está más hundido en el árbol (debajo del feed) y ese componente queda en el nivel ~25, justo donde la sonda dejaba de bajar (`PROBE2_MAX_PROFUNDIDAD = 25`). En la prueba 5 el visor está más arriba, así que el tope no lo cortó.
@@ -129,16 +160,16 @@ En las pruebas 1–4 y 6, `clips_media_info_component` salía "sin hijos". En la
 
 - ~~Falta el volcado del reel elegido~~: resuelto en la prueba 2 (hay que deslizar apenas para que la sonda se dispare).
 - ~~Falta el caso "no seguido" desde la pestaña Reels~~: resuelto en la prueba 3.
-- **En el reel de la pestaña Reels no aparece el botón Seguir.** `clips_media_info_component` y `clips_ufi_component` salen sin hijos: el nombre, el botón y los "me gusta" no se exponen como nodos sueltos (o quedan bajo el tope). Solo el autor, dentro del `desc`.
-- ~~Falta el cruce~~: resuelto en la prueba 4 para el contexto. **Pendiente con sonda v3:** ¿el botón dice "Siguiendo" en una cuenta seguida?
+- ~~**En el reel de la pestaña Reels no aparece el botón Seguir.**~~ Era el tope de profundidad (ver corrección). `clips_media_info_component` y `clips_ufi_component` salen sin hijos: el nombre, el botón y los "me gusta" no se exponen como nodos sueltos (o quedan bajo el tope). Solo el autor, dentro del `desc`.
+- ~~Falta el cruce~~: resuelto en la prueba 4 para el contexto. **Resuelto en la prueba 7:** en una cuenta seguida el botón no aparece.
 
 ## Hipótesis de trabajo
 
-El árbol no dice "esto es algoritmo", pero sí deja ver **el camino**: un reel que vive dentro del perfil (`profile_viewpager`) llegó por elección; uno que vive bajo `root_clips_layout` con título "Reels", o bajo "Sugerencias para ti", llegó empujado. **Distinguir por contexto es posible, pero la señal fiable no es "Volver" sino el título del visor: remitente / "Reels" / "Sugerencias". La relación con el autor podría estar en `inline_follow_button` (por confirmar). Los anuncios se distinguen por id y por "Publicidad".**
+El árbol no dice "esto es algoritmo", pero sí deja ver **el camino**: un reel que vive dentro del perfil (`profile_viewpager`) llegó por elección; uno que vive bajo `root_clips_layout` con título "Reels", o bajo "Sugerencias para ti", llegó empujado. **Distinguir por contexto es posible, pero la señal fiable no es "Volver" sino el título del visor: remitente / "Reels" / "Sugerencias". La relación con el autor está en `inline_follow_button` (confirmado en la prueba 7). Los anuncios se distinguen por id y por "Publicidad".**
 
 ## Próxima prueba
 
-1. Perfil seguido → reel → seguir deslizando varios → ¿cuándo empiezan los no seguidos y qué cambia en el árbol?
+Ninguna para el Probe 2. Siguiente paso: definir "arrastre" y convertir la sonda en clasificador.
 
 ## Ojo con publicar esto
 

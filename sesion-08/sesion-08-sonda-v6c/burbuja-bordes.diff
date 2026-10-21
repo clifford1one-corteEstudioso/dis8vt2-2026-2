@@ -1,0 +1,42 @@
+--- BurbujaView.antes.kt	2026-10-21 15:30:19.568489671 +0000
++++ app/love-yourself-sonda/app/src/main/java/com/love/yourself/vistas/BurbujaView.kt	2026-10-21 15:30:19.587592739 +0000
+@@ -163,7 +163,8 @@
+         val caida = (1f - frena(entrada)) * (margenSuperior + altoRecogida + holgura)
+ 
+         if (cambioAnchoMs >= 0 && ahora - cambioAnchoMs < CAMBIO_ANCHO_MS) moviendo = true
+-        val w = lerp(anchoRecogida(ahora), anchoExpandida, f.ancho)
++        val recogida = anchoRecogida(ahora)
++        val w = lerp(recogida, anchoQueCabe(recogida), f.ancho)
+         val h = lerp(altoRecogida, altoExpandida, f.alto)
+         val izq = (width - w) / 2f
+         val arriba = margenSuperior - salto * f.salto - caida
+@@ -177,6 +178,18 @@
+         if (m != null || moviendo) postInvalidateOnAnimation()
+     }
+ 
++    /**
++     * El ancho expandido que cabe en la ventana. Algunos telefonos (Samsung) le
++     * dan a la ventana menos ancho que el pedido: si la pildora no cabe, se
++     * corta en los costados y pierde las esquinas redondeadas. Cuenta tambien
++     * lo que se pasa al crecer.
++     */
++    private fun anchoQueCabe(recogida: Float): Float {
++        val disponible = width - 2 * BORDE_MIN_DP * d
++        val maximo = (disponible + SOBREPASO * recogida) / (1f + SOBREPASO)
++        return minOf(anchoExpandida, maximo).coerceAtLeast(recogida)
++    }
++
+     /** El ancho de la pildora recogida: se estira suave cuando aparece o se va la cara. */
+     private fun anchoRecogida(ahora: Long): Float {
+         val meta = if (cara == 0) anchoSinCara else anchoConCara
+@@ -374,5 +387,10 @@
+         private const val ENTRADA_MS = 480f
+         private const val CAMBIO_CARA_CHICA_MS = 520f
+         private const val CAMBIO_ANCHO_MS = 420f
++
++        /** Cuanto se pasa el ancho al crecer: rebota(x, 1.1f) llega a ~4,5 % sobre la meta. */
++        private const val SOBREPASO = 0.05f
++        /** Espacio minimo entre la pildora y el borde de la ventana, en dp. */
++        private const val BORDE_MIN_DP = 4f
+     }
+ }

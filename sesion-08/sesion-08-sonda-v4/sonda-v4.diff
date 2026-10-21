@@ -1,0 +1,216 @@
+--- SesionService.v3.kt	2026-10-21 11:36:15.976893766 +0000
++++ app/love-yourself-sonda/app/src/main/java/com/love/yourself/servicio/SesionService.kt	2026-10-21 11:36:35.064385258 +0000
+@@ -38,6 +38,9 @@
+ import com.love.yourself.vistas.Formato
+ import com.love.yourself.vistas.FrasesCierre
+ import com.love.yourself.vistas.Momento
++import java.text.SimpleDateFormat
++import java.util.Date
++import java.util.Locale
+ import kotlin.math.abs
+ 
+ /**
+@@ -153,7 +156,8 @@
+     override fun onAccessibilityEvent(evento: AccessibilityEvent?) {
+         val e = evento ?: return
+         val paquete = e.packageName?.toString() ?: return
+-        if (PROBE2_ENABLED && paquete == PROBE2_PAQUETE) sonda()
++        // Tambien fuera de Instagram mientras haya un segmento abierto: asi se cierra al salir.
++        if (PROBE2_ENABLED && (paquete == PROBE2_PAQUETE || segmentoAbierto)) sonda()
+         val ahora = ahora()
+ 
+         when (e.eventType) {
+@@ -568,6 +572,12 @@
+         paquete in launchers || "launcher" in paquete || paquete.endsWith(".home")
+ 
+     // ---- PROBE2: sonda de diagnostico, no es parte de la intervencion ----
++    //
++    // Clasificador de origen (tag CLASIF). Regla, segun la definicion de arrastre:
++    //  - pestana Reels y "Sugerencias" (incluidos anuncios) -> ARRASTRE
++    //  - reel enviado por mensaje (el primero) y reels de un perfil -> DIRIGIDO
++    //  - visor de reels sin senales conocidas -> DESCONOCIDO (para revisar en el piloto)
++    // Solo lee ids y textos de nodos conocidos; nada se guarda fuera de Logcat.
+ 
+     private var ultimaSondaMs = 0L
+ 
+@@ -576,10 +586,40 @@
+     private val manejadorSonda by lazy { Handler(hiloSonda.looper) }
+     @Volatile private var sondaCorriendo = false
+ 
+-    /**
+-     * Vuelca el arbol de la ventana activa en Logcat (tag PROBE2), como mucho
+-     * cada PROBE2_THROTTLE_MS y nunca dos a la vez. Con tope de nodos y de
+-     * profundidad: el arbol de Instagram completo satura el telefono.
++    private enum class Clase { ARRASTRE, DIRIGIDO, DESCONOCIDO, FUERA }
++
++    /** Lo que una lectura del arbol encontro. */
++    private class Lectura {
++        var visorReels = false
++        var crearReel = false
++        var barraPestanas = false
++        var tituloReels = false
++        var volver = false
++        var comentarios = false
++        var remitente = false
++        var sugerencias = false
++        var anuncio = false
++        var autor: String? = null
++        var patrocinador: String? = null
++        var botonSeguir = false
++    }
++
++    // Estado del segmento: solo se toca desde hiloSonda (segmentoAbierto se lee tambien afuera).
++    @Volatile private var segmentoAbierto = false
++    private var segClase = Clase.FUERA
++    private var segContexto = ""
++    private var segInicio = 0L
++    private var segUltima = 0L
++    private var segReels = 0
++    private var segAnuncios = 0
++    private var segNoSeguidas = 0
++    private var ultimoReel: String? = null
++    private val hora = SimpleDateFormat("HH:mm:ss", Locale.US)
++
++    /**
++     * Lee el arbol de la ventana activa como mucho cada PROBE2_THROTTLE_MS y
++     * nunca dos a la vez. Con tope de nodos y de profundidad: el arbol de
++     * Instagram completo satura el telefono.
+      */
+     private fun sonda() {
+         val ahora = SystemClock.uptimeMillis()
+@@ -589,20 +629,108 @@
+         manejadorSonda.post {
+             try {
+                 val raiz = runCatching { rootInActiveWindow }.getOrNull() ?: return@post
+-                // A veces la ventana activa es la nuestra (el resumen), no Instagram.
+-                if (raiz.packageName?.toString() != PROBE2_PAQUETE) return@post
+-                val nodos = intArrayOf(0)
+-                volcar(raiz, 0, nodos)
+-                if (nodos[0] >= PROBE2_MAX_NODOS) Log.d(PROBE2_TAG, "(cortado en $PROBE2_MAX_NODOS nodos)")
+-                Log.d(PROBE2_TAG, "----------------------------------------")
++                val lectura = Lectura()
++                // A veces la ventana activa es la nuestra (el resumen) u otra app: cuenta como fuera.
++                if (raiz.packageName?.toString() == PROBE2_PAQUETE) {
++                    if (PROBE2_VOLCAR) volcar(raiz, 0, intArrayOf(0))
++                    leer(raiz, 0, intArrayOf(0), lectura)
++                }
++                registrar(lectura, System.currentTimeMillis())
+             } catch (e: Exception) {
+-                Log.d(PROBE2_TAG, "error: $e")
++                Log.d(CLASIF_TAG, "error: $e")
+             } finally {
+                 sondaCorriendo = false
+             }
+         }
+     }
+ 
++    private fun leer(nodo: AccessibilityNodeInfo, profundidad: Int, nodos: IntArray, l: Lectura) {
++        nodos[0]++
++        val id = nodo.viewIdResourceName?.substringAfter(":id/")
++        val texto = nodo.text?.toString()
++        val desc = nodo.contentDescription?.toString()
++        when (id) {
++            "root_clips_layout", "clips_viewer_view_pager", "clips_media_component" -> l.visorReels = true
++            "tab_bar" -> l.barraPestanas = true
++            "clips_viewer_action_bar_title" -> if (texto == "Reels") l.tituloReels = true
++            "comment_composer_text_view" -> l.comentarios = true
++            "sender_username_or_fullname" -> l.remitente = true
++            "suggested_title" -> l.sugerencias = true
++            "clips_single_image_ads_media_content" -> l.anuncio = true
++            // Los reels precargados traen el bloque del autor vacio: el primero con texto es el actual.
++            "clips_author_username" -> if (l.autor == null) l.autor = texto
++            "inline_follow_button" -> l.botonSeguir = true
++        }
++        if (desc == "Crear un reel") l.crearReel = true
++        if (desc == "Volver") l.volver = true
++        if (texto == "Publicidad") l.anuncio = true
++        if (desc != null && desc.startsWith("Reel patrocinado de ")) {
++            l.anuncio = true
++            if (l.patrocinador == null) l.patrocinador = desc.removePrefix("Reel patrocinado de ").substringBefore('.')
++        }
++        if (profundidad < PROBE2_MAX_PROFUNDIDAD) {
++            for (i in 0 until nodo.childCount) {
++                if (nodos[0] >= PROBE2_MAX_NODOS) break
++                val hijo = nodo.getChild(i) ?: continue
++                leer(hijo, profundidad + 1, nodos, l)
++            }
++        }
++        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
++            @Suppress("DEPRECATION")
++            nodo.recycle()
++        }
++    }
++
++    private fun clasificar(l: Lectura): Pair<Clase, String> = when {
++        !l.visorReels -> Clase.FUERA to ""
++        l.sugerencias -> Clase.ARRASTRE to "sugerencias"
++        l.crearReel || (l.barraPestanas && l.tituloReels) -> Clase.ARRASTRE to "pestaña reels"
++        l.remitente -> Clase.DIRIGIDO to "enviado por mensaje"
++        l.volver && l.comentarios -> Clase.DIRIGIDO to "perfil"
++        else -> Clase.DESCONOCIDO to "visor sin señales claras"
++    }
++
++    private fun registrar(l: Lectura, ahora: Long) {
++        val (clase, contexto) = clasificar(l)
++        if (clase != segClase || contexto != segContexto) {
++            cerrarSegmento()
++            segClase = clase
++            segContexto = contexto
++            segInicio = ahora
++            segReels = 0
++            segAnuncios = 0
++            segNoSeguidas = 0
++            ultimoReel = null
++            segmentoAbierto = clase != Clase.FUERA
++        }
++        if (clase == Clase.FUERA) return
++        segUltima = ahora
++        // Un reel nuevo = cambia el autor (dos seguidos de la misma cuenta cuentan como uno).
++        val reel = l.autor ?: l.patrocinador ?: return
++        if (reel == ultimoReel) return
++        ultimoReel = reel
++        segReels++
++        val relacion = when {
++            l.anuncio -> "anuncio"
++            " y " in reel -> "colab"
++            l.botonSeguir -> "no seguida"
++            else -> "seguida"
++        }
++        if (l.anuncio) segAnuncios++
++        if (relacion == "no seguida") segNoSeguidas++
++        Log.d(CLASIF_TAG, "reel ${hora.format(Date(ahora))} · $clase · $contexto · $reel · $relacion")
++    }
++
++    private fun cerrarSegmento() {
++        if (segClase == Clase.FUERA) return
++        val segundos = (segUltima - segInicio) / 1000
++        Log.d(
++            CLASIF_TAG,
++            "SEGMENTO $segClase · $segContexto · ${hora.format(Date(segInicio))}–${hora.format(Date(segUltima))}" +
++                " · ${segundos / 60}m ${segundos % 60}s · $segReels reels ($segAnuncios anuncios, $segNoSeguidas no seguidas)"
++        )
++    }
++
+     private fun volcar(nodo: AccessibilityNodeInfo, profundidad: Int, nodos: IntArray) {
+         nodos[0]++
+         Log.d(
+@@ -617,7 +745,8 @@
+                 volcar(hijo, profundidad + 1, nodos)
+             }
+         }
+-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
++        // La raiz la reutiliza leer(): no se recicla aqui.
++        if (profundidad > 0 && Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+             @Suppress("DEPRECATION")
+             nodo.recycle()
+         }
+@@ -640,6 +769,9 @@
+         /** false = la sonda no corre. */
+         const val PROBE2_ENABLED = true
+         const val PROBE2_TAG = "PROBE2"
++        const val CLASIF_TAG = "CLASIF"
++        /** true = ademas vuelca el arbol entero (tag PROBE2), como en la v3. */
++        const val PROBE2_VOLCAR = false
+         const val PROBE2_PAQUETE = "com.instagram.android"
+         const val PROBE2_THROTTLE_MS = 1500L
+         /** Topes del volcado: alcanzan para ver botones y textos sin saturar el telefono. */

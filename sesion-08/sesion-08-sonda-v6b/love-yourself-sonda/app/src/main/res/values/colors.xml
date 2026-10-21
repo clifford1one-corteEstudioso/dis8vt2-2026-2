@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Los mismos de vistas/Colores.kt: PAGINA y ARRASTRADO. -->
+    <color name="pagina">#FF262626</color>
+    <color name="acento">#FFD9D9D9</color>
+</resources>
