@@ -1,0 +1,136 @@
+PROBE2 · 14-10-2026 · Instagram · fragmentos (indentación recortada)
+
+== 16:53:06 · perfil de una cuenta SEGUIDA (elhonestomike) ==
+FrameLayout id=profile_action_bar
+TextView id=action_bar_title text=elhonestomike
+TextView id=profile_header_follow_button text=Siguiendo desc=Sigues a El Honesto Mike
+TextView id=profile_header_follow_context_text text=<2 usuarios> y 27 personas más siguen esta cuenta
+ViewPager id=profile_viewpager
+GridView id=clips_grid_recyclerview
+
+== 16:53:43 · grilla de reels del perfil ==
+Button id=preview_clip_thumbnail desc=Reel de elhonestomike. Número de visualizaciones 22.1 mil. Toca dos veces para reproducirlo o pausarlo.
+TextView id=preview_clip_play_count text=22.1 mil
+
+== 16:53:44 · se abre un reel desde la grilla (sin volcado del reel) ==
+LoveYourself scroll ... clase=ViewPager id=clips_viewer_view_pager
+-> siguiente volcado recién a las 16:54:10: falta el reel elegido
+
+== 16:54:12 · inicio de Instagram + pestaña Reels (EMPUJADO) ==
+ViewGroup text=Sugerencias para ti desc=Sugerencias para ti
+ViewGroup id=row_feed_profile_header desc=<cuenta> publicó un photo el Hace 19 horas
+ImageView id=title_logo desc=Feed principal de Instagram
+FrameLayout id=root_clips_layout
+ViewPager id=clips_viewer_view_pager
+ViewGroup id=clips_media_info_component      (sin hijos)
+ViewGroup id=clips_ufi_component             (sin hijos)
+ViewGroup id=clips_media_component desc=Reel de andiefowler.wav. Toca dos veces para reproducirlo o pausarlo.
+Button id=clips_viewer_action_bar_title text=Reels
+FrameLayout id=clips_tab desc=Reels
+
+== 16:54:56 · inicio del teléfono (no es Instagram) ==
+(volcado del launcher Samsung, cortado en 300 nodos; incluye el widget de tiempo de uso)
+-> la sonda vuelca la ventana activa aunque ya no sea Instagram: el evento llegó de Instagram justo al salir
+
+== 17:09:27 · inicio: publicación colaborativa (prueba 2) ==
+ViewGroup id=row_feed_profile_header desc=piruetas.xyz publicó un carousel en <lugar> el Hace 7 minutos
+Button id=row_feed_photo_profile_name text=piruetas.xyz y montoyamoraga
+ViewGroup desc=A <usuario> le gustó este reel
+
+== 17:09:33 · perfil SEGUIDO (piruetas.xyz) ==
+TextView id=profile_header_follow_button text=Siguiendo desc=Sigues a piruetas
+Button id=preview_clip_thumbnail desc=Reel de montoyamoraga. Número de visualizaciones 2,422…
+
+== 17:09:41 · reel ELEGIDO, abierto desde la grilla del perfil ==
+FrameLayout id=root_clips_layout
+ViewGroup id=clips_media_component desc=Reel de montoyamoraga. Toca dos veces…
+ViewGroup id=clips_media_component desc=Reel de piruetas.xyz. Toca dos veces…   (el de al lado, precargado)
+ViewGroup id=clips_media_info_component      (sin hijos)
+LinearLayout id=clips_action_bar_start_action_buttons
+  ImageView desc=Volver                                   <- en la pestaña Reels aquí dice "Crear un reel"
+Button id=clips_viewer_action_bar_title text=Reels
+Button id=comment_composer_text_view text=Agrega un comentario…
+(no aparece tab_bar: sin barra inferior de pestañas)
+
+== 17:10:59 · ruido: la sonda volcó nuestra propia ventana ==
+TextView text=uf, gracias
+TextView text=Estuviste 1 minuto
+-> rootInActiveWindow era el resumen de Love Yourself, no Instagram
+
+== 17:11:05 · reel EMPUJADO, pestaña Reels, cuenta NO seguida (prueba 3) ==
+FrameLayout id=root_clips_layout
+ViewGroup id=clips_media_component desc=Reel de historiantique. Toca dos veces…
+ViewGroup id=clips_media_component desc=Reel de shitpost.fau. Toca dos veces…   (precargado)
+LinearLayout id=clips_action_bar_start_action_buttons
+  ImageView desc=Crear un reel
+Button id=clips_viewer_action_bar_title text=Reels
+FrameLayout id=tab_bar
+  FrameLayout id=clips_tab desc=Reels
+(no hay comment_composer)
+
+== 17:11:09 ==
+ViewGroup id=clips_media_component desc=Reel de index.opensource. Toca dos veces…   (siguiente precargado)
+
+== 17:11:12 · menú de opciones del reel ==
+TextView text=Información sobre este reel
+TextView text=Born To Be My Baby • bonjovi
+TextView text=Por qué ves esta publicación
+TextView text=Me interesa
+TextView text=No me interesa
+TextView text=Solicitar una nota de la comunidad
+EditText text=Pregunta a Meta AI…
+
+== 17:11:13 · después de "No me interesa" ==
+ViewGroup text=Gracias por los comentarios. Te sugeriremos menos publicaciones como esta.
+-> reemplaza a clips_media_info_component
+
+== 17:16:57–17:17:04 · cuenta SEGUIDA en pestaña Reels (prueba 4) ==
+ViewGroup id=clips_media_component desc=Reel de succeedo_cashwell. Toca dos veces…
+ImageView desc=Crear un reel                 <- igual que un no seguido
+Button id=clips_viewer_action_bar_title text=Reels
+FrameLayout id=clips_tab desc=Reels          (tab_bar presente)
+
+== 17:17:06 · su perfil, abierto desde el reel ==
+ImageView desc=Volver
+TextView id=action_bar_title text=succeedo_cashwell
+TextView id=profile_header_follow_button text=Siguiendo desc=Sigues a Daniel Raphael
+
+== anuncios en la pestaña Reels ==
+17:16:32  View text=🏡 Protege tu hogar con ZeroVision. Evaluación de seguridad GRATIS.
+          ViewGroup id=clips_media_component desc=Reel de verisurecl…
+17:16:39  ViewGroup id=clips_media_component desc=Reel de mdf.chile…
+            ViewGroup id=clips_single_image_ads_media_content
+17:16:43  ViewGroup id=clips_media_component desc=Reel de meltpizzas…
+            ViewGroup id=clips_single_image_ads_media_content
+17:16:57  View text=Cocos Week: Hasta 50% OFF 🚨
+          ViewGroup id=clips_media_component desc=Reel de mycocos.cl…
+            ViewGroup id=clips_single_image_ads_media_content
+
+== 19-10 20:00:45 · reel ENVIADO por Miguel (prueba 5) ==
+ImageView desc=Volver
+Button id=sender_username_or_fullname text=Miguel
+TextView id=sender_timestamp text=Hace 1 sem
+ViewGroup id=clips_media_component desc=Reel de amoi.builds…
+Button id=clips_author_username text=amoi.builds
+TextView id=inline_follow_button text=Seguir desc=Seguir a amoi
+AutoCompleteTextView id=reply_bar_edittext text=Responder a Miguel
+
+== 20:00:54 · siguiente: el algoritmo entra en el mismo visor ==
+ImageView desc=Volver                          <- sigue igual
+TextView id=suggested_title text=Sugerencias   <- la frontera
+ViewGroup id=clips_media_component desc=Reel de salopeyjoey…
+TextView id=inline_follow_button text=Seguir desc=Seguir a cool joe
+TextView id=send_cta text=Enviar al chat
+
+== 20:00:56 · anuncio dentro de Sugerencias ==
+FrameLayout id=clips_video_container desc=Reel patrocinado de bitepal_app…
+ViewGroup text=Publicidad
+TextView id=suggested_title text=Sugerencias
+(LoveYourself: "sesión inicia en com.instagram.android")
+
+== 19-10 20:10:09–20:10:23 · reels desde el perfil de clifford1one (prueba 6) ==
+ImageView desc=Volver
+Button id=clips_viewer_action_bar_title text=Reels
+Button id=comment_composer_text_view text=Agrega un comentario…
+ViewGroup id=clips_media_info_component      (sin hijos: cortado por el tope de 25 niveles)
+(nunca aparece suggested_title; al final de la grilla no se puede seguir deslizando)
