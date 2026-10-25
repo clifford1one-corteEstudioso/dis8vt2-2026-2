@@ -1,0 +1,1424 @@
+2026-10-22 17:03:33	participante	U5
+2026-10-22 17:07:13	servicio_inicio	8.0	2406APNFAG	36
+2026-10-22 17:07:13	estudio_inicio	7
+2026-10-22 17:07:13	latido	linea_base		FUERA
+2026-10-22 17:07:13	fase	linea_base
+2026-10-22 17:10:17	pantalla	apagada
+2026-10-22 17:11:47	pantalla	encendida
+2026-10-22 17:11:49	pantalla	apagada
+2026-10-22 17:34:13	pantalla	encendida
+2026-10-22 17:34:15	pantalla	apagada
+2026-10-22 17:38:20	latido	linea_base		FUERA
+2026-10-22 17:39:10	pantalla	encendida
+2026-10-22 17:39:21	pantalla	apagada
+2026-10-22 18:08:20	latido	linea_base		FUERA
+2026-10-22 18:14:35	pantalla	encendida
+2026-10-22 18:15:01	pantalla	apagada
+2026-10-22 18:16:54	pantalla	encendida
+2026-10-22 18:16:56	pantalla	apagada
+2026-10-22 18:38:21	latido	linea_base		FUERA
+2026-10-22 18:40:56	pantalla	encendida
+2026-10-22 18:40:59	pantalla	apagada
+2026-10-22 18:45:36	pantalla	encendida
+2026-10-22 18:45:38	pantalla	apagada
+2026-10-22 18:46:08	pantalla	encendida
+2026-10-22 18:46:10	pantalla	apagada
+2026-10-22 18:46:11	pantalla	encendida
+2026-10-22 18:46:15	pantalla	apagada
+2026-10-22 18:46:37	pantalla	encendida
+2026-10-22 18:46:43	pantalla	apagada
+2026-10-22 18:46:44	pantalla	encendida
+2026-10-22 18:46:45	pantalla	apagada
+2026-10-22 18:47:56	pantalla	encendida
+2026-10-22 18:48:10	pantalla	apagada
+2026-10-22 18:49:10	pantalla	encendida
+2026-10-22 18:50:37	pantalla	apagada
+2026-10-22 18:53:11	pantalla	encendida
+2026-10-22 18:53:12	pantalla	apagada
+2026-10-22 18:55:27	pantalla	encendida
+2026-10-22 18:57:45	pantalla	apagada
+2026-10-22 18:58:54	pantalla	encendida
+2026-10-22 19:06:23	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-22 19:06:25	segmento	DESCONOCIDO	visor sin señales claras	19:06:23	19:06:23	0	1	0	1
+2026-10-22 19:06:27	reel	ARRASTRE	pestaña reels		colab
+2026-10-22 19:06:29	segmento	ARRASTRE	pestaña reels	19:06:27	19:06:27	0	1	0	0
+2026-10-22 19:07:58	visita	com.instagram.android	INICIO	241	240	0	0	linea_base	1
+2026-10-22 19:07:58	pregunta_mostrada	com.instagram.android	INICIO	19:07:58	linea_base	regular	241	1
+2026-10-22 19:08:10	respuesta	com.instagram.android	INICIO	19:07:58	1	linea_base	habitual	2	4	regular	241
+2026-10-22 19:08:19	pantalla	apagada
+2026-10-22 19:08:21	latido	linea_base		FUERA
+2026-10-22 19:08:29	pantalla	encendida
+2026-10-22 19:08:32	visita	com.instagram.android	INICIO	1	0	0	0	linea_base	0
+2026-10-22 19:09:01	reel	DIRIGIDO	enviado por mensaje		no seguida
+2026-10-22 19:09:05	segmento	DIRIGIDO	enviado por mensaje	19:09:01	19:09:03	2	1	0	1
+2026-10-22 19:09:20	reel	DIRIGIDO	enviado por mensaje		no seguida
+2026-10-22 19:09:29	segmento	DIRIGIDO	enviado por mensaje	19:09:20	19:09:26	6	1	0	1
+2026-10-22 19:09:30	segmento	ARRASTRE	sugerencias	19:09:29	19:09:29	0	0	0	0
+2026-10-22 19:09:30	reel	DIRIGIDO	enviado por mensaje		no seguida
+2026-10-22 19:09:34	segmento	DIRIGIDO	enviado por mensaje	19:09:30	19:09:32	1	1	0	1
+2026-10-22 19:09:38	reel	DIRIGIDO	enviado por mensaje		no seguida
+2026-10-22 19:09:41	segmento	DIRIGIDO	enviado por mensaje	19:09:38	19:09:39	1	1	0	1
+2026-10-22 19:09:47	reel	DIRIGIDO	enviado por mensaje		no seguida
+2026-10-22 19:09:53	segmento	DIRIGIDO	enviado por mensaje	19:09:47	19:09:51	3	1	0	1
+2026-10-22 19:09:58	visita	com.instagram.android	INICIO	81	77	0	0	linea_base	2
+2026-10-22 19:11:33	pantalla	apagada
+2026-10-22 19:11:35	pantalla	encendida
+2026-10-22 19:11:59	reel	DIRIGIDO	enviado por mensaje		no seguida
+2026-10-22 19:12:19	segmento	DIRIGIDO	enviado por mensaje	19:11:59	19:12:18	18	1	0	1
+2026-10-22 19:12:34	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 19:12:42	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 19:12:48	reel	ARRASTRE	pestaña reels		anuncio
+2026-10-22 19:12:50	reel	ARRASTRE	pestaña reels		anuncio
+2026-10-22 19:12:52	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 19:13:11	reel	ARRASTRE	pestaña reels		anuncio
+2026-10-22 19:13:14	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 19:13:22	segmento	ARRASTRE	pestaña reels	19:12:34	19:13:21	47	7	3	4
+2026-10-22 19:15:22	visita	com.instagram.android	OTRA_APP	213	160	0	0	linea_base	48
+2026-10-22 19:18:09	visita	com.instagram.android	INICIO	165	91	0	0	linea_base	0
+2026-10-22 19:18:20	pantalla	apagada
+2026-10-22 19:18:41	pantalla	encendida
+2026-10-22 19:19:04	reel	DIRIGIDO	enviado por mensaje		no seguida
+2026-10-22 19:19:19	segmento	DIRIGIDO	enviado por mensaje	19:19:04	19:19:17	13	1	0	1
+2026-10-22 19:23:50	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-22 19:23:54	segmento	DESCONOCIDO	visor sin señales claras	19:23:50	19:23:52	2	1	0	1
+2026-10-22 19:24:09	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 19:24:24	segmento	ARRASTRE	pestaña reels	19:24:09	19:24:21	12	1	0	1
+2026-10-22 19:24:24	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-22 19:24:25	segmento	DESCONOCIDO	visor sin señales claras	19:24:24	19:24:24	0	1	1	0
+2026-10-22 19:24:43	pantalla	apagada
+2026-10-22 19:24:50	pantalla	encendida
+2026-10-22 19:24:52	visita	com.instagram.android	OTRA_APP	325	216	0	0	linea_base	14
+2026-10-22 19:24:53	reel	ARRASTRE	pestaña reels		anuncio
+2026-10-22 19:24:55	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 19:25:01	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 19:25:06	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 19:25:08	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 19:25:25	reel	ARRASTRE	pestaña reels		anuncio
+2026-10-22 19:25:28	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 19:25:34	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 19:25:42	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 19:25:46	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 19:25:50	reel	ARRASTRE	pestaña reels		anuncio
+2026-10-22 19:25:54	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 19:25:57	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 19:26:03	reel	ARRASTRE	pestaña reels		anuncio
+2026-10-22 19:26:05	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 19:26:11	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 19:26:13	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 19:26:19	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 19:26:21	reel	ARRASTRE	pestaña reels		anuncio
+2026-10-22 19:26:23	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 19:26:43	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 19:26:47	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 19:26:51	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 19:27:01	reel	ARRASTRE	pestaña reels		anuncio
+2026-10-22 19:27:03	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 19:27:07	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 19:27:12	reel	ARRASTRE	pestaña reels		anuncio
+2026-10-22 19:27:14	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 19:27:16	segmento	ARRASTRE	pestaña reels	19:24:53	19:27:14	140	28	7	21
+2026-10-22 19:28:37	visita	com.instagram.android	INICIO	224	224	0	0	linea_base	141
+2026-10-22 19:28:42	pantalla	apagada
+2026-10-22 19:28:47	pantalla	encendida
+2026-10-22 19:29:16	visita	com.instagram.android	INICIO	26	0	0	0	linea_base	0
+2026-10-22 19:29:18	pantalla	apagada
+2026-10-22 19:29:26	pantalla	encendida
+2026-10-22 19:29:30	pantalla	apagada
+2026-10-22 19:29:44	pantalla	encendida
+2026-10-22 19:30:43	pantalla	apagada
+2026-10-22 19:31:08	pantalla	encendida
+2026-10-22 19:31:56	pantalla	apagada
+2026-10-22 19:31:57	pantalla	encendida
+2026-10-22 19:31:59	pantalla	apagada
+2026-10-22 19:33:57	pantalla	encendida
+2026-10-22 19:34:04	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 19:34:11	segmento	ARRASTRE	pestaña reels	19:34:04	19:34:10	5	1	0	1
+2026-10-22 19:37:26	pantalla	apagada
+2026-10-22 19:38:22	latido	linea_base	com.instagram.android	FUERA
+2026-10-22 19:38:58	pantalla	encendida
+2026-10-22 19:39:08	visita	com.instagram.android	INICIO	205	89	0	0	linea_base	8
+2026-10-22 19:39:10	pantalla	apagada
+2026-10-22 19:39:14	pantalla	encendida
+2026-10-22 19:39:17	visita	com.instagram.android	INICIO	0	0	0	0	linea_base	0
+2026-10-22 19:43:49	pantalla	apagada
+2026-10-22 19:43:50	pantalla	encendida
+2026-10-22 19:43:57	visita	com.instagram.android	OTRA_APP	262	194	0	0	linea_base	0
+2026-10-22 19:43:58	pantalla	apagada
+2026-10-22 19:45:41	pantalla	encendida
+2026-10-22 19:45:44	pantalla	apagada
+2026-10-22 19:45:47	pantalla	encendida
+2026-10-22 19:49:48	visita	com.instagram.android	INICIO	237	0	0	0	linea_base	0
+2026-10-22 19:49:51	pantalla	apagada
+2026-10-22 19:57:04	pantalla	encendida
+2026-10-22 19:57:10	pantalla	apagada
+2026-10-22 20:00:25	pantalla	encendida
+2026-10-22 20:00:31	pantalla	apagada
+2026-10-22 20:00:32	pantalla	encendida
+2026-10-22 20:00:47	pantalla	apagada
+2026-10-22 20:01:09	pantalla	encendida
+2026-10-22 20:01:13	pantalla	apagada
+2026-10-22 20:04:23	pantalla	encendida
+2026-10-22 20:07:28	pantalla	apagada
+2026-10-22 20:07:29	pantalla	encendida
+2026-10-22 20:08:22	visita	com.instagram.android	OTRA_APP	54	0	0	0	linea_base	0
+2026-10-22 20:08:22	latido	linea_base		FUERA
+2026-10-22 20:09:11	visita	com.instagram.android	OTRA_APP	17	0	0	0	linea_base	0
+2026-10-22 20:13:37	reel	DIRIGIDO	explorar		no seguida
+2026-10-22 20:13:53	segmento	DIRIGIDO	explorar	20:13:37	20:13:51	13	1	0	1
+2026-10-22 20:13:58	reel	DIRIGIDO	explorar		no seguida
+2026-10-22 20:14:20	segmento	DIRIGIDO	explorar	20:13:58	20:14:19	20	1	0	1
+2026-10-22 20:14:20	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-22 20:14:22	segmento	DESCONOCIDO	visor sin señales claras	20:14:20	20:14:20	0	1	1	0
+2026-10-22 20:14:22	reel	DIRIGIDO	explorar		no seguida
+2026-10-22 20:14:40	segmento	DIRIGIDO	explorar	20:14:22	20:14:39	16	1	0	1
+2026-10-22 20:14:40	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-22 20:14:43	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-22 20:14:47	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-22 20:14:49	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-22 20:14:52	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-22 20:15:03	segmento	DESCONOCIDO	visor sin señales claras	20:14:40	20:15:03	22	5	2	3
+2026-10-22 20:15:04	pantalla	apagada
+2026-10-22 20:18:59	pantalla	encendida
+2026-10-22 20:19:00	visita	com.instagram.android	BLOQUEO	344	133	0	0	linea_base	0
+2026-10-22 20:19:00	reel	DIRIGIDO	explorar		no seguida
+2026-10-22 20:19:09	segmento	DIRIGIDO	explorar	20:19:00	20:19:07	6	1	0	1
+2026-10-22 20:19:09	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-22 20:19:17	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-22 20:19:19	segmento	DESCONOCIDO	visor sin señales claras	20:19:09	20:19:17	7	2	1	1
+2026-10-22 20:19:43	reel	DIRIGIDO	enviado por mensaje		no seguida
+2026-10-22 20:19:44	segmento	DIRIGIDO	enviado por mensaje	20:19:43	20:19:43	0	1	0	1
+2026-10-22 20:21:45	pantalla	apagada
+2026-10-22 20:22:07	pantalla	encendida
+2026-10-22 20:22:10	pantalla	apagada
+2026-10-22 20:22:47	visita	com.instagram.android	OTRA_APP	122	97	0	0	linea_base	0
+2026-10-22 20:31:36	pantalla	encendida
+2026-10-22 20:35:38	reel	DIRIGIDO	explorar		no seguida
+2026-10-22 20:35:55	segmento	DIRIGIDO	explorar	20:35:38	20:35:53	15	1	0	1
+2026-10-22 20:35:55	reel	ARRASTRE	explorar deslizando		no seguida
+2026-10-22 20:36:11	segmento	ARRASTRE	explorar deslizando	20:35:55	20:36:09	14	1	0	1
+2026-10-22 20:36:11	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-22 20:36:12	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-22 20:37:02	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-22 20:37:12	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-22 20:37:18	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-22 20:37:26	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-22 20:37:30	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-22 20:37:32	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-22 20:37:38	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-22 20:37:58	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-22 20:38:13	segmento	DESCONOCIDO	visor sin señales claras	20:36:11	20:38:11	119	10	2	8
+2026-10-22 20:38:20	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 20:38:22	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 20:38:23	latido	linea_base	com.instagram.android	ARRASTRE
+2026-10-22 20:38:38	reel	ARRASTRE	pestaña reels		anuncio
+2026-10-22 20:38:39	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 20:38:45	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 20:38:59	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 20:39:16	reel	ARRASTRE	pestaña reels		anuncio
+2026-10-22 20:39:18	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 20:39:22	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 20:39:34	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 20:40:09	reel	ARRASTRE	pestaña reels		anuncio
+2026-10-22 20:40:11	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 20:40:31	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 20:41:24	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 20:41:32	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 20:41:35	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 20:41:50	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 20:44:44	segmento	ARRASTRE	pestaña reels	20:38:20	20:44:43	382	17	3	14
+2026-10-22 20:44:48	visita	com.instagram.android	INICIO	792	545	0	0	linea_base	400
+2026-10-22 20:44:48	pregunta_mostrada	com.instagram.android	INICIO	20:44:48	linea_base	regular	792	400
+2026-10-22 20:44:59	respuesta	com.instagram.android	INICIO	20:44:48	400	linea_base	habitual	5	2	regular	792
+2026-10-22 20:45:02	visita	com.instagram.android	INICIO	1	0	0	0	linea_base	0
+2026-10-22 20:46:50	pantalla	apagada
+2026-10-22 20:49:57	pantalla	encendida
+2026-10-22 20:50:07	pantalla	apagada
+2026-10-22 20:50:58	pantalla	encendida
+2026-10-22 20:51:04	reel	DIRIGIDO	explorar		no seguida
+2026-10-22 20:51:07	segmento	DIRIGIDO	explorar	20:51:04	20:51:05	0	1	0	1
+2026-10-22 20:51:07	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 20:51:33	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 20:51:46	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 20:52:01	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 20:52:05	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 20:52:30	reel	ARRASTRE	pestaña reels		anuncio
+2026-10-22 20:52:32	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 20:52:45	segmento	ARRASTRE	pestaña reels	20:51:07	20:52:45	97	7	1	6
+2026-10-22 20:52:47	reel	ARRASTRE	pestaña reels		anuncio
+2026-10-22 20:52:48	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 20:53:06	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 20:53:16	reel	ARRASTRE	pestaña reels		anuncio
+2026-10-22 20:53:18	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 20:53:47	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 20:54:19	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 20:54:31	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 20:54:33	segmento	ARRASTRE	pestaña reels	20:52:47	20:54:31	104	8	2	6
+2026-10-22 20:54:33	reel	DIRIGIDO	explorar		no seguida
+2026-10-22 20:54:47	segmento	DIRIGIDO	explorar	20:54:33	20:54:45	12	1	0	1
+2026-10-22 20:54:47	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-22 20:54:49	segmento	DESCONOCIDO	visor sin señales claras	20:54:47	20:54:47	0	1	0	1
+2026-10-22 20:54:49	reel	DIRIGIDO	explorar		no seguida
+2026-10-22 20:55:08	segmento	DIRIGIDO	explorar	20:54:49	20:55:07	17	1	0	1
+2026-10-22 20:55:08	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 20:55:14	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 20:55:18	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 20:55:20	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 20:55:27	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 20:55:45	reel	ARRASTRE	pestaña reels		anuncio
+2026-10-22 20:55:48	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 20:55:54	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 20:55:55	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 20:56:26	segmento	ARRASTRE	pestaña reels	20:55:08	20:56:24	75	9	1	8
+2026-10-22 20:56:26	reel	DIRIGIDO	explorar		anuncio
+2026-10-22 20:56:27	segmento	DIRIGIDO	explorar	20:56:26	20:56:26	0	1	1	0
+2026-10-22 20:56:27	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 20:56:48	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 20:56:59	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 20:57:37	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 20:57:47	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 20:57:58	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 20:58:27	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 20:58:34	reel	ARRASTRE	pestaña reels		anuncio
+2026-10-22 20:58:37	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 20:58:39	segmento	ARRASTRE	pestaña reels	20:56:27	20:58:37	129	9	1	8
+2026-10-22 20:58:39	reel	DIRIGIDO	explorar		no seguida
+2026-10-22 20:58:45	segmento	DIRIGIDO	explorar	20:58:39	20:58:43	4	1	0	1
+2026-10-22 20:58:45	reel	ARRASTRE	explorar deslizando		no seguida
+2026-10-22 20:59:24	reel	ARRASTRE	explorar deslizando		no seguida
+2026-10-22 20:59:28	reel	ARRASTRE	explorar deslizando		no seguida
+2026-10-22 20:59:32	reel	ARRASTRE	explorar deslizando		no seguida
+2026-10-22 20:59:35	reel	ARRASTRE	explorar deslizando		no seguida
+2026-10-22 20:59:44	reel	ARRASTRE	explorar deslizando		no seguida
+2026-10-22 21:00:13	reel	ARRASTRE	explorar deslizando		no seguida
+2026-10-22 21:00:35	segmento	ARRASTRE	explorar deslizando	20:58:45	21:00:33	108	7	0	7
+2026-10-22 21:00:37	reel	DIRIGIDO	explorar		no seguida
+2026-10-22 21:00:46	segmento	DIRIGIDO	explorar	21:00:37	21:00:45	8	1	0	1
+2026-10-22 21:00:46	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 21:01:37	reel	ARRASTRE	pestaña reels		anuncio
+2026-10-22 21:01:39	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 21:01:52	segmento	ARRASTRE	pestaña reels	21:00:46	21:01:52	65	3	1	2
+2026-10-22 21:02:04	reel	DIRIGIDO	explorar		no seguida
+2026-10-22 21:02:11	segmento	DIRIGIDO	explorar	21:02:04	21:02:09	5	1	0	1
+2026-10-22 21:02:11	reel	ARRASTRE	explorar deslizando		no seguida
+2026-10-22 21:02:20	segmento	ARRASTRE	explorar deslizando	21:02:11	21:02:17	5	1	0	1
+2026-10-22 21:02:20	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 21:02:43	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 21:02:51	reel	ARRASTRE	pestaña reels		anuncio
+2026-10-22 21:02:53	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 21:02:59	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 21:03:03	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 21:03:05	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 21:03:15	segmento	ARRASTRE	pestaña reels	21:02:20	21:03:13	53	7	1	6
+2026-10-22 21:03:15	reel	DIRIGIDO	explorar		no seguida
+2026-10-22 21:03:16	segmento	DIRIGIDO	explorar	21:03:15	21:03:15	0	1	0	1
+2026-10-22 21:03:16	reel	ARRASTRE	explorar deslizando		anuncio
+2026-10-22 21:03:18	reel	ARRASTRE	explorar deslizando		no seguida
+2026-10-22 21:03:20	segmento	ARRASTRE	explorar deslizando	21:03:16	21:03:18	1	2	1	1
+2026-10-22 21:03:20	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-22 21:04:07	visita	com.instagram.android	INICIO	782	777	0	0	linea_base	699
+2026-10-22 21:04:07	segmento	ARRASTRE	pestaña reels	21:03:20	21:04:06	46	1	0	1
+2026-10-22 21:04:09	visita	com.instagram.android	INICIO	0	0	0	0	linea_base	0
+2026-10-22 21:05:18	reel	DIRIGIDO	explorar		colab
+2026-10-22 21:05:23	segmento	DIRIGIDO	explorar	21:05:18	21:05:20	1	1	0	0
+2026-10-22 21:07:11	visita	com.instagram.android	INICIO	180	89	0	0	linea_base	0
+2026-10-22 21:07:40	pantalla	apagada
+2026-10-22 21:08:24	latido	linea_base		FUERA
+2026-10-22 21:13:27	pantalla	encendida
+2026-10-22 21:13:39	pantalla	apagada
+2026-10-22 21:13:42	pantalla	encendida
+2026-10-22 21:13:44	pantalla	apagada
+2026-10-22 21:26:02	pantalla	encendida
+2026-10-22 21:26:04	pantalla	apagada
+2026-10-22 21:29:53	pantalla	encendida
+2026-10-22 21:29:56	pantalla	apagada
+2026-10-22 21:34:54	pantalla	encendida
+2026-10-22 21:35:06	pantalla	apagada
+2026-10-22 21:38:25	latido	linea_base		FUERA
+2026-10-22 21:46:09	pantalla	encendida
+2026-10-22 21:46:13	pantalla	apagada
+2026-10-22 22:08:29	latido	linea_base		FUERA
+2026-10-22 22:38:41	latido	linea_base		FUERA
+2026-10-22 23:04:10	pantalla	encendida
+2026-10-22 23:05:14	pantalla	apagada
+2026-10-22 23:08:43	latido	linea_base		FUERA
+2026-10-22 23:33:45	pantalla	encendida
+2026-10-22 23:37:32	pantalla	apagada
+2026-10-22 23:38:43	latido	linea_base	com.instagram.android	FUERA
+2026-10-22 23:43:42	pantalla	encendida
+2026-10-22 23:43:43	visita	com.instagram.android	BLOQUEO	221	0	0	0	linea_base	0
+2026-10-22 23:43:43	pregunta_descartada	com.instagram.android	BLOQUEO	bloqueo	221	0
+2026-10-22 23:44:04	pantalla	apagada
+2026-10-22 23:52:02	pantalla	encendida
+2026-10-22 23:52:07	visita	com.instagram.android	BLOQUEO	3	0	0	0	linea_base	0
+2026-10-22 23:54:19	pantalla	apagada
+2026-10-23 00:09:00	latido	linea_base		FUERA
+2026-10-23 00:31:39	pantalla	encendida
+2026-10-23 00:32:49	pantalla	apagada
+2026-10-23 00:37:10	pantalla	encendida
+2026-10-23 00:37:13	visita	com.instagram.android	BLOQUEO	48	0	0	0	linea_base	0
+2026-10-23 00:37:13	pregunta_descartada	com.instagram.android	BLOQUEO	bloqueo	48	0
+2026-10-23 00:39:01	latido	linea_base	com.instagram.android	FUERA
+2026-10-23 00:39:19	reel	DIRIGIDO	explorar		colab
+2026-10-23 00:39:54	segmento	DIRIGIDO	explorar	00:39:19	00:39:52	33	1	0	0
+2026-10-23 00:39:56	segmento	DESCONOCIDO	visor sin señales claras	00:39:54	00:39:54	0	0	0	0
+2026-10-23 00:39:56	reel	DIRIGIDO	explorar		colab
+2026-10-23 00:40:39	segmento	DIRIGIDO	explorar	00:39:56	00:40:37	41	1	0	0
+2026-10-23 00:40:39	reel	ARRASTRE	explorar deslizando		no seguida
+2026-10-23 00:40:40	segmento	ARRASTRE	explorar deslizando	00:40:39	00:40:39	0	1	0	1
+2026-10-23 00:40:40	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 00:40:54	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 00:41:26	segmento	DESCONOCIDO	visor sin señales claras	00:40:40	00:41:24	43	2	0	2
+2026-10-23 00:41:29	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 00:42:55	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 00:43:11	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 00:43:20	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 00:43:22	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 00:44:00	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 00:44:34	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 00:45:58	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 00:46:00	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-23 00:46:02	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 00:46:24	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-23 00:46:27	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 00:46:30	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-23 00:46:33	segmento	DESCONOCIDO	visor sin señales claras	00:41:29	00:46:30	301	13	3	10
+2026-10-23 00:46:33	reel	DIRIGIDO	explorar		no seguida
+2026-10-23 00:46:49	segmento	DIRIGIDO	explorar	00:46:33	00:46:47	14	1	0	1
+2026-10-23 00:46:49	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-23 00:46:51	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 00:47:04	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 00:47:35	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 00:48:07	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 00:48:30	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-23 00:48:31	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 00:49:27	segmento	DESCONOCIDO	visor sin señales claras	00:46:49	00:49:25	156	7	2	5
+2026-10-23 00:49:27	reel	DIRIGIDO	explorar		no seguida
+2026-10-23 00:49:33	segmento	DIRIGIDO	explorar	00:49:27	00:49:31	3	1	0	1
+2026-10-23 00:49:33	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-23 00:49:35	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 00:49:51	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 00:49:53	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-23 00:49:54	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 00:50:00	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 00:50:56	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-23 00:50:58	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 00:51:37	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 00:52:44	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-23 00:52:46	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 00:52:56	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-23 00:52:58	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 00:53:14	segmento	DESCONOCIDO	visor sin señales claras	00:49:33	00:53:12	219	13	5	8
+2026-10-23 00:53:14	reel	DIRIGIDO	explorar		no seguida
+2026-10-23 00:53:36	segmento	DIRIGIDO	explorar	00:53:14	00:53:34	20	1	0	1
+2026-10-23 00:53:36	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 00:53:44	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-23 00:53:46	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 00:53:52	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 00:53:54	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-23 00:53:56	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 00:54:31	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 00:55:09	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 00:55:21	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 00:56:12	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 00:56:17	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 00:56:20	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 00:56:50	reel	DESCONOCIDO	visor sin señales claras		colab
+2026-10-23 00:57:31	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 00:57:35	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 00:58:01	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 00:58:04	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 00:58:16	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-23 00:58:18	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 00:58:27	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 00:58:34	reel	DESCONOCIDO	visor sin señales claras		colab
+2026-10-23 00:59:04	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 00:59:12	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-23 00:59:14	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 01:00:09	segmento	DESCONOCIDO	visor sin señales claras	00:53:36	01:00:06	390	24	4	18
+2026-10-23 01:00:09	reel	DIRIGIDO	explorar		no seguida
+2026-10-23 01:00:10	segmento	DIRIGIDO	explorar	01:00:09	01:00:09	0	1	0	1
+2026-10-23 01:00:10	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 01:00:12	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-23 01:00:15	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 01:01:09	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 01:01:21	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 01:01:27	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-23 01:01:29	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 01:01:33	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 01:02:09	segmento	DESCONOCIDO	visor sin señales claras	01:00:10	01:02:09	118	8	2	6
+2026-10-23 01:02:39	visita	com.instagram.android	OTRA_APP	1431	1258	0	0	linea_base	2
+2026-10-23 01:03:30	pantalla	apagada
+2026-10-23 01:03:33	pantalla	encendida
+2026-10-23 01:04:06	pregunta_mostrada	com.instagram.android	OTRA_APP	01:02:39	linea_base	regular	1431	2
+2026-10-23 01:04:21	respuesta	com.instagram.android	OTRA_APP	01:02:39	2	linea_base	habitual	2	2	regular	1431
+2026-10-23 01:04:21	reel	DIRIGIDO	explorar		no seguida
+2026-10-23 01:04:25	segmento	DIRIGIDO	explorar	01:04:21	01:04:23	1	1	0	1
+2026-10-23 01:04:25	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 01:04:26	segmento	DESCONOCIDO	visor sin señales claras	01:04:25	01:04:25	0	1	0	1
+2026-10-23 01:04:54	visita	com.instagram.android	OTRA_APP	12	10	0	0	linea_base	0
+2026-10-23 01:05:31	visita	com.instagram.android	INICIO	35	17	0	0	linea_base	0
+2026-10-23 01:33:48	servicio_inicio	8.0	2406APNFAG	36
+2026-10-23 01:33:48	latido	linea_base		FUERA
+2026-10-23 01:33:48	fase	linea_base
+2026-10-23 01:39:08	reel	DIRIGIDO	enviado por mensaje		no seguida
+2026-10-23 01:39:28	segmento	DIRIGIDO	enviado por mensaje	01:39:08	01:39:26	18	1	0	1
+2026-10-23 01:39:51	visita	com.instagram.android	OTRA_APP	348	214	0	0	linea_base	0
+2026-10-23 01:41:54	pantalla	apagada
+2026-10-23 01:42:25	pantalla	encendida
+2026-10-23 02:03:49	latido	linea_base		FUERA
+2026-10-23 02:18:09	pantalla	apagada
+2026-10-23 02:18:51	pantalla	encendida
+2026-10-23 02:19:03	pantalla	apagada
+2026-10-23 02:21:07	pantalla	encendida
+2026-10-23 02:24:27	pantalla	apagada
+2026-10-23 02:27:34	pantalla	encendida
+2026-10-23 02:33:50	latido	linea_base		FUERA
+2026-10-23 02:35:08	pantalla	apagada
+2026-10-23 02:35:12	pantalla	encendida
+2026-10-23 02:35:15	pantalla	apagada
+2026-10-23 02:36:00	pantalla	encendida
+2026-10-23 02:40:15	visita	com.instagram.android	INICIO	0	0	0	0	linea_base	0
+2026-10-23 02:42:38	reel	DIRIGIDO	explorar		no seguida
+2026-10-23 02:43:10	segmento	DIRIGIDO	explorar	02:42:38	02:43:08	29	1	0	1
+2026-10-23 02:43:10	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-23 02:43:12	segmento	DESCONOCIDO	visor sin señales claras	02:43:10	02:43:10	0	1	1	0
+2026-10-23 02:43:12	reel	DIRIGIDO	explorar		no seguida
+2026-10-23 02:43:47	segmento	DIRIGIDO	explorar	02:43:12	02:43:45	33	1	0	1
+2026-10-23 02:43:47	reel	ARRASTRE	explorar deslizando		no seguida
+2026-10-23 02:43:59	segmento	ARRASTRE	explorar deslizando	02:43:47	02:43:57	9	1	0	1
+2026-10-23 02:43:59	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 02:44:51	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 02:45:44	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-23 02:45:46	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 02:46:39	reel	DESCONOCIDO	visor sin señales claras		colab
+2026-10-23 02:46:42	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 02:46:43	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 02:47:12	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 02:47:18	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-23 02:47:21	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 02:47:39	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 02:47:41	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-23 02:47:43	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 02:48:22	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 02:48:39	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 02:48:45	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-23 02:48:47	reel	DESCONOCIDO	visor sin señales claras		colab
+2026-10-23 02:49:10	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 02:49:28	segmento	DESCONOCIDO	visor sin señales claras	02:43:59	02:49:26	327	18	4	12
+2026-10-23 02:49:28	reel	DIRIGIDO	explorar		no seguida
+2026-10-23 02:49:37	segmento	DIRIGIDO	explorar	02:49:28	02:49:35	7	1	0	1
+2026-10-23 02:49:37	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 02:49:39	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 02:49:52	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 02:49:54	segmento	DESCONOCIDO	visor sin señales claras	02:49:37	02:49:52	14	3	0	3
+2026-10-23 02:49:54	reel	DIRIGIDO	explorar		no seguida
+2026-10-23 02:50:23	segmento	DIRIGIDO	explorar	02:49:54	02:50:21	26	1	0	1
+2026-10-23 02:50:23	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-23 02:50:25	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 02:51:48	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 02:52:09	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 02:52:25	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-23 02:52:26	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 02:52:41	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 02:52:49	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 02:53:01	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 02:53:31	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 02:53:39	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 02:53:41	segmento	DESCONOCIDO	visor sin señales claras	02:50:23	02:53:39	195	11	2	9
+2026-10-23 02:53:41	reel	DIRIGIDO	explorar		no seguida
+2026-10-23 02:54:19	segmento	DIRIGIDO	explorar	02:53:41	02:54:17	36	1	0	1
+2026-10-23 02:54:20	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-23 02:54:21	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 02:55:50	segmento	DESCONOCIDO	visor sin señales claras	02:54:19	02:55:48	88	2	1	1
+2026-10-23 02:55:50	reel	DIRIGIDO	explorar		colab
+2026-10-23 02:56:11	segmento	DIRIGIDO	explorar	02:55:50	02:56:08	18	1	0	0
+2026-10-23 02:56:11	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-23 02:56:12	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 02:56:21	segmento	DESCONOCIDO	visor sin señales claras	02:56:11	02:56:18	7	2	1	1
+2026-10-23 02:56:21	reel	DIRIGIDO	explorar		no seguida
+2026-10-23 02:56:24	segmento	DIRIGIDO	explorar	02:56:21	02:56:22	1	1	0	1
+2026-10-23 02:56:24	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 02:57:03	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 02:57:49	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-23 02:57:51	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 02:57:55	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 02:58:24	reel	DESCONOCIDO	visor sin señales claras		seguida
+2026-10-23 02:58:30	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-23 02:58:32	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 02:58:42	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:03:50	latido	linea_base	com.instagram.android	DESCONOCIDO
+2026-10-23 03:03:55	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:04:08	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:04:10	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:04:36	segmento	DESCONOCIDO	visor sin señales claras	02:56:24	03:04:33	488	12	2	9
+2026-10-23 03:04:36	reel	DIRIGIDO	explorar		colab
+2026-10-23 03:05:10	segmento	DIRIGIDO	explorar	03:04:36	03:05:07	31	1	0	0
+2026-10-23 03:05:10	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:05:42	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:05:44	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:05:46	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-23 03:05:48	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:05:50	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:05:54	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:06:09	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:06:21	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:07:00	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:08:34	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:08:38	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:08:45	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:08:56	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:09:46	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-23 03:09:49	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:09:51	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:10:08	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:10:21	segmento	DESCONOCIDO	visor sin señales claras	03:05:10	03:10:19	309	18	2	16
+2026-10-23 03:10:21	reel	DIRIGIDO	explorar		no seguida
+2026-10-23 03:10:28	segmento	DIRIGIDO	explorar	03:10:21	03:10:26	5	1	0	1
+2026-10-23 03:10:28	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:10:30	segmento	DESCONOCIDO	visor sin señales claras	03:10:28	03:10:28	0	1	0	1
+2026-10-23 03:10:30	reel	DIRIGIDO	explorar		no seguida
+2026-10-23 03:11:03	segmento	DIRIGIDO	explorar	03:10:30	03:11:01	31	1	0	1
+2026-10-23 03:11:03	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:11:08	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-23 03:11:10	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:13:26	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:13:41	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:14:25	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:15:58	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:16:32	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:16:45	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:16:49	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:16:53	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:16:55	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:17:30	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:17:34	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:17:41	segmento	DESCONOCIDO	visor sin señales claras	03:11:03	03:17:39	396	14	1	13
+2026-10-23 03:17:41	reel	DIRIGIDO	explorar		no seguida
+2026-10-23 03:17:43	segmento	DIRIGIDO	explorar	03:17:41	03:17:41	0	1	0	1
+2026-10-23 03:17:43	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:17:45	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:17:49	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:18:56	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:18:58	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:19:00	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:19:39	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:20:49	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:20:50	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:21:02	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:21:11	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:22:09	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:22:11	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-23 03:22:13	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:22:17	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:22:33	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:23:02	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-23 03:23:05	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:24:02	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:24:14	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:24:55	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:27:38	segmento	DESCONOCIDO	visor sin señales claras	03:17:43	03:27:37	593	21	2	19
+2026-10-23 03:27:38	reel	DIRIGIDO	explorar		no seguida
+2026-10-23 03:27:42	segmento	DIRIGIDO	explorar	03:27:38	03:27:40	1	1	0	1
+2026-10-23 03:27:42	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:27:54	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-23 03:27:56	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:28:16	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:28:36	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:29:06	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:29:37	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:30:25	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:30:29	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:30:32	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:30:57	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:31:10	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 03:31:21	segmento	DESCONOCIDO	visor sin señales claras	03:27:42	03:31:18	216	12	1	11
+2026-10-23 03:33:51	latido	linea_base	com.instagram.android	FUERA
+2026-10-23 03:34:52	visita	com.instagram.android	INICIO	3267	2664	0	0	linea_base	12
+2026-10-23 03:34:56	pregunta_descartada	com.instagram.android	INICIO	volvio_a_instagram	3267	12
+2026-10-23 03:36:18	reel	DIRIGIDO	enviado por mensaje		seguida
+2026-10-23 03:36:26	segmento	DIRIGIDO	enviado por mensaje	03:36:18	03:36:24	6	1	0	0
+2026-10-23 03:36:31	reel	DIRIGIDO	enviado por mensaje		no seguida
+2026-10-23 03:36:39	segmento	DIRIGIDO	enviado por mensaje	03:36:31	03:36:37	6	1	0	1
+2026-10-23 03:36:42	reel	DIRIGIDO	enviado por mensaje		no seguida
+2026-10-23 03:37:32	segmento	DIRIGIDO	enviado por mensaje	03:36:42	03:37:30	47	1	0	1
+2026-10-23 03:37:34	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-23 03:38:13	reel	ARRASTRE	pestaña reels		colab
+2026-10-23 03:38:31	reel	ARRASTRE	pestaña reels		anuncio
+2026-10-23 03:38:33	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-23 03:38:49	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-23 03:39:02	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-23 03:39:27	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-23 03:39:29	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-23 03:40:07	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-23 03:40:10	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-23 03:40:12	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-23 03:40:49	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-23 03:41:46	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-23 03:42:47	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-23 03:43:48	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-23 03:43:51	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-23 03:43:54	reel	ARRASTRE	pestaña reels		anuncio
+2026-10-23 03:43:56	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-23 03:44:10	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-23 03:44:12	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-23 03:44:14	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-23 03:44:16	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-23 03:44:24	segmento	ARRASTRE	pestaña reels	03:37:34	03:44:22	407	22	2	19
+2026-10-23 03:51:02	segmento	ARRASTRE	pestaña reels	03:51:00	03:51:00	0	0	0	0
+2026-10-23 03:56:06	reel	DIRIGIDO	explorar		no seguida
+2026-10-23 03:56:22	segmento	DIRIGIDO	explorar	03:56:06	03:56:19	12	1	0	1
+2026-10-23 04:02:13	reel	DIRIGIDO	explorar		no seguida
+2026-10-23 04:02:31	segmento	DIRIGIDO	explorar	04:02:13	04:02:30	16	1	0	1
+2026-10-23 04:03:51	latido	linea_base	com.instagram.android	FUERA
+2026-10-23 04:04:38	visita	com.instagram.android	OTRA_APP	1759	1156	0	0	linea_base	408
+2026-10-23 04:04:39	pregunta_mostrada	com.instagram.android	OTRA_APP	04:04:38	linea_base	regular	1759	408
+2026-10-23 04:04:46	respuesta	com.instagram.android	OTRA_APP	04:04:38	408	linea_base	no_se	1	1	regular	1759
+2026-10-23 04:33:52	latido	linea_base		FUERA
+2026-10-23 04:59:42	pantalla	apagada
+2026-10-23 05:03:53	latido	linea_base		FUERA
+2026-10-23 05:11:25	pantalla	encendida
+2026-10-23 05:11:27	pantalla	apagada
+2026-10-23 05:33:56	latido	linea_base		FUERA
+2026-10-23 06:03:58	latido	linea_base		FUERA
+2026-10-23 06:33:59	latido	linea_base		FUERA
+2026-10-23 07:01:03	pantalla	encendida
+2026-10-23 07:01:14	pantalla	apagada
+2026-10-23 07:01:19	pantalla	encendida
+2026-10-23 07:01:45	pantalla	apagada
+2026-10-23 07:04:07	latido	linea_base		FUERA
+2026-10-23 07:05:28	pantalla	encendida
+2026-10-23 07:05:39	pantalla	apagada
+2026-10-23 07:31:43	pantalla	encendida
+2026-10-23 07:31:45	pantalla	apagada
+2026-10-23 07:31:47	pantalla	encendida
+2026-10-23 07:31:53	pantalla	apagada
+2026-10-23 07:34:08	latido	linea_base		FUERA
+2026-10-23 07:34:23	pantalla	encendida
+2026-10-23 07:34:28	pantalla	apagada
+2026-10-23 22:00:50	servicio_inicio	8.0	2406APNFAG	36
+2026-10-23 22:00:50	latido	linea_base		FUERA
+2026-10-23 22:00:50	fase	linea_base
+2026-10-23 22:30:51	latido	linea_base		FUERA
+2026-10-23 23:00:51	latido	linea_base		FUERA
+2026-10-23 23:30:52	latido	linea_base		FUERA
+2026-10-23 23:45:07	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 23:45:19	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 23:45:36	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 23:45:40	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 23:46:04	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 23:46:13	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-23 23:46:16	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 23:47:04	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 23:47:23	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 23:47:27	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 23:47:28	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 23:47:33	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 23:47:53	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 23:48:32	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 23:48:58	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 23:50:01	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 23:50:01	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 23:50:03	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 23:50:07	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 23:50:18	segmento	DESCONOCIDO	visor sin señales claras	23:45:07	23:50:17	310	19	1	18
+2026-10-23 23:50:20	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 23:52:06	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 23:52:35	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 23:52:37	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 23:52:51	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 23:52:54	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 23:52:58	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 23:53:24	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 23:53:40	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 23:54:27	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 23:54:30	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 23:55:05	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 23:56:36	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 23:57:00	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 23:57:13	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 23:57:18	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 23:57:22	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 23:57:36	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 23:58:16	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 23:58:18	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 23:59:06	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:00:08	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:00:10	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:00:53	latido	linea_base	com.instagram.android	DESCONOCIDO
+2026-10-24 00:01:27	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:01:46	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:01:47	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:02:01	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:02:44	reel	DESCONOCIDO	visor sin señales claras		seguida
+2026-10-24 00:02:47	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:03:00	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:04:08	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:04:11	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:05:35	segmento	DESCONOCIDO	visor sin señales claras	23:50:20	00:05:34	913	32	0	31
+2026-10-24 00:05:46	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:05:56	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:05:58	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:06:16	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:06:20	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:06:22	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:06:36	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:07:03	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:07:15	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:07:41	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:07:47	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:08:20	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:08:52	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:08:58	reel	DESCONOCIDO	visor sin señales claras		seguida
+2026-10-24 00:12:12	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:12:33	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:13:56	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:14:07	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:14:11	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:14:15	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:14:22	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:15:47	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:16:03	reel	DESCONOCIDO	visor sin señales claras		seguida
+2026-10-24 00:16:07	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:16:09	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:16:23	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:16:49	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:16:53	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:16:55	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:17:01	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:18:53	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:18:57	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:18:59	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:20:06	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:20:07	reel	DESCONOCIDO	visor sin señales claras		seguida
+2026-10-24 00:20:09	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:20:11	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:20:25	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:20:31	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:20:33	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:20:39	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:21:19	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:22:08	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:25:05	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:25:07	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:25:08	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:26:02	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:26:04	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:27:21	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:27:23	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:27:31	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:27:33	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:29:02	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:29:38	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:29:51	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:30:53	latido	linea_base	com.instagram.android	DESCONOCIDO
+2026-10-24 00:31:39	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:32:26	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:32:27	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-24 00:32:30	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:32:41	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:32:44	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:34:06	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:34:14	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:34:26	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:34:37	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:34:41	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:35:54	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:35:56	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:37:09	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:38:10	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:38:28	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:39:06	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:39:08	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:39:10	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:39:14	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:39:45	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:41:05	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:41:11	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:41:27	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:41:33	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:43:17	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:44:01	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:44:45	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:46:50	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:46:52	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:47:49	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:48:13	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:48:23	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-24 00:48:25	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:49:19	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:51:14	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:51:30	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:51:46	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:51:50	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:52:02	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:52:18	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:52:24	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:53:33	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:53:55	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:54:13	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:54:15	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:54:17	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:54:41	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:55:30	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:55:32	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:55:46	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:56:04	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:56:24	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:57:13	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:57:17	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:58:17	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:58:50	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:59:00	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 00:59:18	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:00:14	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:00:28	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:00:54	latido	linea_base	com.instagram.android	DESCONOCIDO
+2026-10-24 01:00:58	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:02:08	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-24 01:02:26	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:02:32	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:02:56	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:03:28	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:03:41	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:04:07	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:04:28	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:04:40	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:05:32	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:05:34	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:05:38	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:07:04	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:07:32	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:07:48	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:08:00	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:08:04	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:08:06	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:08:10	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:08:12	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:08:31	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:09:11	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:09:17	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:09:18	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:09:28	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:10:10	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:10:35	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:10:37	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:10:41	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:10:52	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-24 01:10:54	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:11:12	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:11:25	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:11:29	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:13:07	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:13:36	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:13:57	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:13:59	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:14:19	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:15:15	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:15:43	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:18:19	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:18:28	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:18:57	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:19:19	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:19:31	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:21:08	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:21:10	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:21:32	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:21:42	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:21:51	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:22:03	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:22:44	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:23:14	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:23:16	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:23:17	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:23:26	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:23:58	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:26:07	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:26:55	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:26:57	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:27:01	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:28:28	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:29:20	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:29:24	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-24 01:29:26	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:30:08	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:30:55	latido	linea_base	com.instagram.android	DESCONOCIDO
+2026-10-24 01:31:25	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:31:43	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-24 01:31:44	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:31:46	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:32:00	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:33:42	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:35:08	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:35:10	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:35:12	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-24 01:35:14	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:36:42	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:36:44	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:36:46	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:36:48	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:36:50	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:37:22	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:38:19	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:38:32	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-24 01:38:35	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:39:08	reel	DESCONOCIDO	visor sin señales claras		seguida
+2026-10-24 01:39:10	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:40:08	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:40:40	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:40:44	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:40:46	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:41:05	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:42:58	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:43:19	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:43:20	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:43:35	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:43:43	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:44:25	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-24 01:44:50	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:45:14	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:45:23	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:46:25	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:47:28	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:47:40	reel	DESCONOCIDO	visor sin señales claras		seguida
+2026-10-24 01:47:42	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:48:08	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:48:16	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:48:18	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:48:22	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:48:52	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:49:35	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:49:46	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:49:50	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:50:12	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-24 01:50:13	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:50:15	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:50:55	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:51:25	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:51:27	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:51:52	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:53:19	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:53:27	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:54:09	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:55:14	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:55:16	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:56:33	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:57:19	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:57:25	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:57:51	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:57:53	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:59:07	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 01:59:29	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:00:01	segmento	DESCONOCIDO	visor sin señales claras	00:05:46	01:59:59	6853	250	10	235
+2026-10-24 02:00:04	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:00:34	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:00:44	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:00:56	latido	linea_base	com.instagram.android	DESCONOCIDO
+2026-10-24 02:01:18	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:01:30	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:02:18	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:02:44	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:02:54	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:02:56	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:03:52	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:03:57	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:04:00	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:04:02	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:04:30	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:04:31	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:06:01	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:07:35	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:08:37	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:08:39	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:08:41	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:09:15	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:09:19	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:10:39	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:11:15	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:11:20	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:11:21	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:12:37	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:12:39	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:12:43	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:13:21	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:14:23	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-24 02:14:27	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:14:31	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:14:41	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:14:53	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:14:55	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:15:38	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:15:40	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:15:45	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:17:08	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:18:11	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:18:31	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:18:35	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:19:23	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:19:41	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:19:43	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:21:00	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:21:26	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:21:29	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:22:25	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:22:31	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:22:33	reel	DESCONOCIDO	visor sin señales claras		seguida
+2026-10-24 02:22:49	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:23:50	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:24:18	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:25:00	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:25:25	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:25:28	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:25:36	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:25:39	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:26:54	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-24 02:27:05	segmento	DESCONOCIDO	visor sin señales claras	02:00:04	02:27:04	1620	61	1	59
+2026-10-24 02:27:05	pantalla	apagada
+2026-10-24 02:28:47	pantalla	encendida
+2026-10-24 02:28:49	pantalla	apagada
+2026-10-24 02:31:01	latido	linea_base	com.instagram.android	FUERA
+2026-10-24 02:31:45	pantalla	encendida
+2026-10-24 02:31:47	visita	com.instagram.android	BLOQUEO	10526	9089	0	0	linea_base	0
+2026-10-24 02:31:47	pregunta_descartada	com.instagram.android	BLOQUEO	bloqueo	10526	0
+2026-10-24 02:31:50	segmento	DESCONOCIDO	visor sin señales claras	02:31:48	02:31:48	0	0	0	0
+2026-10-24 02:31:50	reel	DIRIGIDO	explorar		colab
+2026-10-24 02:32:15	segmento	DIRIGIDO	explorar	02:31:50	02:31:50	0	1	0	0
+2026-10-24 02:34:19	reel	DIRIGIDO	explorar		colab
+2026-10-24 02:34:21	segmento	DIRIGIDO	explorar	02:34:19	02:34:19	0	1	0	0
+2026-10-24 02:34:34	visita	com.instagram.android	INICIO	14	0	0	0	linea_base	0
+2026-10-24 03:01:01	latido	linea_base		FUERA
+2026-10-24 03:31:02	latido	linea_base		FUERA
+2026-10-24 04:01:02	latido	linea_base		FUERA
+2026-10-24 04:05:40	pantalla	apagada
+2026-10-24 04:31:08	latido	linea_base		FUERA
+2026-10-24 04:36:11	pantalla	encendida
+2026-10-24 04:36:22	pantalla	apagada
+2026-10-24 05:01:09	latido	linea_base		FUERA
+2026-10-24 05:32:22	latido	linea_base		FUERA
+2026-10-24 05:46:37	pantalla	encendida
+2026-10-24 05:46:45	pantalla	apagada
+2026-10-24 06:02:22	latido	linea_base		FUERA
+2026-10-24 06:32:22	latido	linea_base		FUERA
+2026-10-24 07:02:31	latido	linea_base		FUERA
+2026-10-24 07:05:23	pantalla	encendida
+2026-10-24 07:05:34	pantalla	apagada
+2026-10-24 07:32:31	latido	linea_base		FUERA
+2026-10-24 07:45:03	pantalla	encendida
+2026-10-24 07:45:39	pantalla	apagada
+2026-10-24 08:00:00	pantalla	encendida
+2026-10-24 08:00:17	pantalla	apagada
+2026-10-24 08:02:32	latido	linea_base		FUERA
+2026-10-24 08:04:06	pantalla	encendida
+2026-10-24 08:04:10	pantalla	apagada
+2026-10-24 08:15:00	pantalla	encendida
+2026-10-24 08:15:19	pantalla	apagada
+2026-10-24 08:25:38	pantalla	encendida
+2026-10-24 08:25:41	pantalla	apagada
+2026-10-24 08:32:41	latido	linea_base		FUERA
+2026-10-24 08:32:54	pantalla	encendida
+2026-10-24 08:32:59	pantalla	apagada
+2026-10-24 09:02:43	latido	linea_base		FUERA
+2026-10-24 09:32:46	latido	linea_base		FUERA
+2026-10-24 09:46:56	pantalla	encendida
+2026-10-24 09:46:59	pantalla	apagada
+2026-10-24 09:47:00	pantalla	encendida
+2026-10-24 09:47:03	pantalla	apagada
+2026-10-24 09:51:12	pantalla	encendida
+2026-10-24 09:51:15	pantalla	apagada
+2026-10-24 10:03:50	latido	linea_base		FUERA
+2026-10-24 10:06:04	pantalla	encendida
+2026-10-24 10:06:10	pantalla	apagada
+2026-10-24 10:16:53	pantalla	encendida
+2026-10-24 10:17:48	pantalla	apagada
+2026-10-24 10:20:15	pantalla	encendida
+2026-10-24 10:20:45	pantalla	apagada
+2026-10-24 10:27:12	pantalla	encendida
+2026-10-24 10:27:23	pantalla	apagada
+2026-10-24 10:28:09	pantalla	encendida
+2026-10-24 10:28:28	pantalla	apagada
+2026-10-24 10:29:12	pantalla	encendida
+2026-10-24 10:29:23	pantalla	apagada
+2026-10-24 10:33:58	latido	linea_base		FUERA
+2026-10-24 10:37:34	pantalla	encendida
+2026-10-24 10:37:51	reel	DIRIGIDO	enviado por mensaje		no seguida
+2026-10-24 10:38:09	segmento	DIRIGIDO	enviado por mensaje	10:37:51	10:38:07	15	1	0	1
+2026-10-24 10:38:15	reel	DIRIGIDO	enviado por mensaje		no seguida
+2026-10-24 10:39:05	segmento	DIRIGIDO	enviado por mensaje	10:38:15	10:39:04	48	1	0	1
+2026-10-24 10:39:07	reel	DIRIGIDO	enviado por mensaje		no seguida
+2026-10-24 10:39:41	segmento	DIRIGIDO	enviado por mensaje	10:39:07	10:39:39	32	1	0	1
+2026-10-24 10:40:28	reel	DIRIGIDO	enviado por mensaje		no seguida
+2026-10-24 10:40:32	segmento	DIRIGIDO	enviado por mensaje	10:40:28	10:40:30	2	1	0	1
+2026-10-24 10:40:34	reel	DIRIGIDO	enviado por mensaje		no seguida
+2026-10-24 10:40:36	segmento	DIRIGIDO	enviado por mensaje	10:40:34	10:40:34	0	1	0	1
+2026-10-24 10:40:55	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 10:41:38	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 10:42:18	reel	ARRASTRE	pestaña reels		anuncio
+2026-10-24 10:42:24	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 10:43:27	reel	ARRASTRE	pestaña reels		anuncio
+2026-10-24 10:43:31	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 10:43:36	segmento	ARRASTRE	pestaña reels	10:40:55	10:43:35	160	6	2	4
+2026-10-24 10:43:42	visita	com.instagram.android	OTRA_APP	352	173	0	0	linea_base	161
+2026-10-24 10:43:46	pregunta_descartada	com.instagram.android	OTRA_APP	volvio_a_instagram	352	161
+2026-10-24 10:43:47	visita	com.instagram.android	INICIO	0	0	0	0	linea_base	0
+2026-10-24 10:43:47	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 10:46:24	reel	ARRASTRE	pestaña reels		anuncio
+2026-10-24 10:46:26	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 10:46:30	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 10:47:03	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 10:47:36	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 10:49:09	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 10:50:37	reel	ARRASTRE	pestaña reels		anuncio
+2026-10-24 10:50:40	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 10:50:50	reel	ARRASTRE	pestaña reels		anuncio
+2026-10-24 10:50:52	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 10:51:39	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 10:51:41	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 10:52:52	reel	ARRASTRE	pestaña reels		anuncio
+2026-10-24 10:52:54	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 10:54:03	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 10:54:49	reel	ARRASTRE	pestaña reels		anuncio
+2026-10-24 10:54:51	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 10:55:55	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 10:56:08	reel	ARRASTRE	pestaña reels		colab
+2026-10-24 10:56:14	reel	ARRASTRE	pestaña reels		colab
+2026-10-24 10:58:21	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 10:58:48	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:00:42	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:01:33	segmento	ARRASTRE	pestaña reels	10:43:47	11:01:32	1064	24	5	17
+2026-10-24 11:01:35	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:01:40	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:01:43	segmento	ARRASTRE	pestaña reels	11:01:35	11:01:41	6	2	0	2
+2026-10-24 11:01:47	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:02:37	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:02:53	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:03:07	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:03:21	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:03:59	latido	linea_base	com.instagram.android	ARRASTRE
+2026-10-24 11:04:34	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:07:25	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:08:38	reel	ARRASTRE	pestaña reels		anuncio
+2026-10-24 11:08:40	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:08:42	reel	ARRASTRE	pestaña reels		anuncio
+2026-10-24 11:08:44	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:08:50	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:10:07	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:10:39	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:10:43	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:10:55	reel	ARRASTRE	pestaña reels		anuncio
+2026-10-24 11:10:57	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:12:46	reel	ARRASTRE	pestaña reels		anuncio
+2026-10-24 11:12:47	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:13:05	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:13:31	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:14:41	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:14:42	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:14:46	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:15:19	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:15:24	reel	ARRASTRE	pestaña reels		anuncio
+2026-10-24 11:15:25	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:15:38	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:15:46	segmento	ARRASTRE	pestaña reels	11:01:47	11:15:46	838	28	5	23
+2026-10-24 11:15:46	pantalla	apagada
+2026-10-24 11:31:56	pantalla	encendida
+2026-10-24 11:31:58	visita	com.instagram.android	BLOQUEO	1919	1531	0	0	linea_base	1912
+2026-10-24 11:31:58	pregunta_descartada	com.instagram.android	BLOQUEO	bloqueo	1919	1912
+2026-10-24 11:31:59	reel	ARRASTRE	pestaña reels		anuncio
+2026-10-24 11:32:00	segmento	ARRASTRE	pestaña reels	11:31:59	11:32:00	0	1	1	0
+2026-10-24 11:32:00	pantalla	apagada
+2026-10-24 11:33:45	pantalla	encendida
+2026-10-24 11:33:50	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:33:59	latido	linea_base		ARRASTRE
+2026-10-24 11:34:10	reel	ARRASTRE	pestaña reels		anuncio
+2026-10-24 11:34:29	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:35:37	reel	ARRASTRE	pestaña reels		colab
+2026-10-24 11:36:14	reel	ARRASTRE	pestaña reels		anuncio
+2026-10-24 11:36:24	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:39:38	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:39:46	reel	ARRASTRE	pestaña reels		anuncio
+2026-10-24 11:39:54	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:40:07	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:40:09	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:40:13	reel	ARRASTRE	pestaña reels		anuncio
+2026-10-24 11:40:20	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:40:48	reel	ARRASTRE	pestaña reels		anuncio
+2026-10-24 11:40:50	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:41:12	reel	ARRASTRE	pestaña reels		anuncio
+2026-10-24 11:41:32	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:41:57	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:42:12	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:42:53	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:43:07	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:43:29	reel	ARRASTRE	pestaña reels		anuncio
+2026-10-24 11:43:38	reel	ARRASTRE	pestaña reels		anuncio
+2026-10-24 11:43:42	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:44:41	reel	ARRASTRE	pestaña reels		anuncio
+2026-10-24 11:45:29	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:46:12	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:46:22	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:46:36	reel	ARRASTRE	pestaña reels		anuncio
+2026-10-24 11:46:44	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:47:28	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:47:35	reel	ARRASTRE	pestaña reels		colab
+2026-10-24 11:48:46	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:49:24	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:51:15	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:51:59	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:52:10	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:52:30	reel	ARRASTRE	pestaña reels		anuncio
+2026-10-24 11:53:13	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:53:43	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:53:51	reel	ARRASTRE	pestaña reels		anuncio
+2026-10-24 11:54:01	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:54:51	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:55:02	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:56:37	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:56:59	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:57:01	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:57:53	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:58:02	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:58:08	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 11:59:29	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 12:00:00	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 12:01:15	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 12:01:23	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 12:03:09	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 12:03:30	reel	ARRASTRE	pestaña reels		anuncio
+2026-10-24 12:03:32	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 12:04:00	latido	linea_base	com.instagram.android	ARRASTRE
+2026-10-24 12:04:15	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 12:04:34	reel	ARRASTRE	pestaña reels		colab
+2026-10-24 12:05:22	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 12:06:27	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 12:06:33	reel	ARRASTRE	pestaña reels		colab
+2026-10-24 12:07:00	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 12:07:35	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 12:08:03	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 12:08:53	segmento	ARRASTRE	pestaña reels	11:33:50	12:08:53	2102	65	13	48
+2026-10-24 12:08:56	visita	com.instagram.android	OTRA_APP	340	323	0	0	linea_base	337
+2026-10-24 12:09:09	pregunta_descartada	com.instagram.android	OTRA_APP	volvio_a_instagram	340	337
+2026-10-24 12:09:09	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 12:09:15	segmento	ARRASTRE	pestaña reels	12:09:09	12:09:12	3	1	0	1
+2026-10-24 12:09:23	visita	com.instagram.android	INICIO	13	2	0	0	linea_base	4
+2026-10-24 12:09:26	pantalla	apagada
+2026-10-24 12:09:31	pantalla	encendida
+2026-10-24 12:10:02	pantalla	apagada
+2026-10-24 12:11:59	pantalla	encendida
+2026-10-24 12:12:35	pantalla	apagada
+2026-10-24 12:12:37	pantalla	encendida
+2026-10-24 12:13:07	pantalla	apagada
+2026-10-24 12:17:13	pantalla	encendida
+2026-10-24 12:18:26	pantalla	apagada
+2026-10-24 12:19:56	pantalla	encendida
+2026-10-24 12:20:03	pantalla	apagada
+2026-10-24 12:21:30	pantalla	encendida
+2026-10-24 12:21:41	pantalla	apagada
+2026-10-24 12:23:33	pantalla	encendida
+2026-10-24 12:23:39	pantalla	apagada
+2026-10-24 12:34:03	latido	linea_base		FUERA
+2026-10-24 12:35:15	pantalla	encendida
+2026-10-24 12:35:17	pantalla	apagada
+2026-10-24 12:42:35	pantalla	encendida
+2026-10-24 12:42:37	pantalla	apagada
+2026-10-24 12:48:08	pantalla	encendida
+2026-10-24 12:48:10	pantalla	apagada
+2026-10-24 12:49:01	pantalla	encendida
+2026-10-24 12:49:20	pantalla	apagada
+2026-10-24 13:04:07	latido	linea_base		FUERA
+2026-10-24 13:13:15	pantalla	encendida
+2026-10-24 13:13:21	pantalla	apagada
+2026-10-24 13:13:22	pantalla	encendida
+2026-10-24 13:13:25	pantalla	apagada
+2026-10-24 13:38:18	latido	linea_base		FUERA
+2026-10-24 13:40:03	pantalla	encendida
+2026-10-24 13:40:10	pantalla	apagada
+2026-10-24 14:08:18	latido	linea_base		FUERA
+2026-10-24 14:34:30	pantalla	encendida
+2026-10-24 14:34:36	pantalla	apagada
+2026-10-24 14:37:04	pantalla	encendida
+2026-10-24 14:37:07	pantalla	apagada
+2026-10-24 14:37:14	pantalla	encendida
+2026-10-24 14:37:30	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 14:37:35	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 14:38:00	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 14:38:18	latido	linea_base	com.instagram.android	ARRASTRE
+2026-10-24 14:38:31	reel	ARRASTRE	pestaña reels		anuncio
+2026-10-24 14:38:33	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 14:38:41	reel	ARRASTRE	pestaña reels		colab
+2026-10-24 14:38:46	reel	ARRASTRE	pestaña reels		anuncio
+2026-10-24 14:38:48	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 14:39:02	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 14:39:14	reel	ARRASTRE	pestaña reels		anuncio
+2026-10-24 14:39:16	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 14:39:34	segmento	ARRASTRE	pestaña reels	14:37:30	14:39:33	122	11	3	7
+2026-10-24 14:39:34	pantalla	apagada
+2026-10-24 14:40:06	pantalla	encendida
+2026-10-24 14:40:08	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 14:40:10	reel	ARRASTRE	pestaña reels		colab
+2026-10-24 14:40:44	segmento	ARRASTRE	pestaña reels	14:40:08	14:40:44	35	2	0	1
+2026-10-24 14:40:44	pantalla	apagada
+2026-10-24 14:41:27	pantalla	encendida
+2026-10-24 14:41:34	reel	ARRASTRE	pestaña reels		colab
+2026-10-24 14:41:42	reel	ARRASTRE	pestaña reels		anuncio
+2026-10-24 14:41:48	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 14:42:18	pantalla	apagada
+2026-10-24 14:42:18	segmento	ARRASTRE	pestaña reels	14:41:34	14:42:18	44	3	1	1
+2026-10-24 14:42:26	pantalla	encendida
+2026-10-24 14:42:27	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 14:42:35	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 14:43:08	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 14:43:18	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 14:43:24	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 14:43:26	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 14:43:42	reel	ARRASTRE	pestaña reels		anuncio
+2026-10-24 14:43:43	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 14:44:06	segmento	ARRASTRE	pestaña reels	14:42:27	14:44:05	97	8	1	7
+2026-10-24 14:44:06	pantalla	apagada
+2026-10-24 14:45:34	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 14:45:34	pantalla	encendida
+2026-10-24 14:45:54	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 14:46:08	reel	ARRASTRE	pestaña reels		anuncio
+2026-10-24 14:46:10	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 14:46:14	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-24 14:46:23	segmento	ARRASTRE	pestaña reels	14:45:34	14:46:21	46	5	1	4
+2026-10-24 14:48:31	pantalla	apagada
+2026-10-24 14:48:33	pantalla	encendida
+2026-10-24 14:51:21	visita	com.instagram.android	INICIO	650	547	0	0	linea_base	347
+2026-10-24 14:51:22	pregunta_mostrada	com.instagram.android	INICIO	14:51:21	linea_base	regular	650	347
+2026-10-24 14:51:30	respuesta	com.instagram.android	INICIO	14:51:21	347	linea_base	no_se	1	1	regular	650
+2026-10-24 14:51:39	pantalla	apagada
+2026-10-24 14:53:08	pantalla	encendida
+2026-10-24 14:53:10	visita	com.instagram.android	INICIO	0	0	0	0	linea_base	0
+2026-10-24 14:55:30	pantalla	apagada
+2026-10-24 14:57:05	pantalla	encendida
+2026-10-24 14:57:07	pantalla	apagada
+2026-10-24 15:08:21	latido	linea_base	com.instagram.android	FUERA
+2026-10-24 15:10:55	pantalla	encendida
+2026-10-24 15:10:58	visita	com.instagram.android	BLOQUEO	139	95	0	0	linea_base	0
+2026-10-24 15:16:32	pantalla	apagada
+2026-10-24 15:16:38	pantalla	encendida
+2026-10-24 15:21:43	pantalla	apagada
+2026-10-24 15:21:51	pantalla	encendida
+2026-10-24 15:25:52	pantalla	apagada
+2026-10-24 15:26:38	pantalla	encendida
+2026-10-24 15:26:40	pantalla	apagada
+2026-10-24 15:27:43	pantalla	encendida
+2026-10-24 15:38:21	latido	linea_base	com.instagram.android	FUERA
+2026-10-24 15:38:37	visita	com.instagram.android	INICIO	1196	219	0	0	linea_base	0
+2026-10-24 15:48:46	pantalla	apagada
+2026-10-24 16:09:52	latido	linea_base		FUERA
+2026-10-24 16:37:09	pantalla	encendida
+2026-10-24 16:37:24	pantalla	apagada
+2026-10-24 16:39:53	latido	linea_base		FUERA
+2026-10-24 16:55:11	pantalla	encendida
+2026-10-24 16:55:32	pantalla	apagada
+2026-10-24 17:09:53	latido	linea_base		FUERA
+2026-10-24 17:35:10	pantalla	encendida
+2026-10-24 17:35:16	pantalla	apagada
+2026-10-24 17:39:54	latido	linea_base		FUERA
+2026-10-24 18:01:48	pantalla	encendida
+2026-10-24 18:01:56	pantalla	apagada
+2026-10-24 18:01:56	pantalla	encendida
+2026-10-24 18:02:03	pantalla	apagada
+2026-10-24 18:03:59	pantalla	encendida
+2026-10-24 18:08:28	pantalla	apagada
+2026-10-24 18:08:42	pantalla	encendida
+2026-10-24 18:09:54	latido	linea_base		FUERA

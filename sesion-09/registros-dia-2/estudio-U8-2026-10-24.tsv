@@ -1,0 +1,548 @@
+2026-10-22 22:27:02	participante	U8
+2026-10-22 22:29:00	servicio_inicio	8.2	Redmi Note 9 Pro	29	true
+2026-10-22 22:29:00	estudio_inicio	7
+2026-10-22 22:29:00	latido	linea_base		FUERA	true
+2026-10-22 22:29:00	fase	linea_base
+2026-10-22 22:38:27	reel	DIRIGIDO	enviado por mensaje		no seguida
+2026-10-22 22:38:51	segmento	DIRIGIDO	enviado por mensaje	22:38:27	22:38:49	22	1	0	1
+2026-10-22 22:42:35	visita	com.instagram.android	OTRA_APP	234	0	0	0	linea_base	0
+2026-10-22 22:42:56	pregunta_mostrada	com.instagram.android	OTRA_APP	22:42:35	linea_base	regular	234	0
+2026-10-22 22:43:33	respuesta	com.instagram.android	OTRA_APP	22:42:35	0	linea_base	no_se	4	3	regular	234
+2026-10-22 22:44:52	pantalla	apagada
+2026-10-22 22:47:25	pantalla	encendida
+2026-10-22 22:57:57	visita	com.instagram.android	OTRA_APP	54	47	0	0	linea_base	0
+2026-10-22 22:59:01	latido	linea_base		FUERA	true
+2026-10-22 22:59:25	pantalla	apagada
+2026-10-22 22:59:26	pantalla	encendida
+2026-10-22 23:03:32	pantalla	apagada
+2026-10-22 23:03:45	pantalla	encendida
+2026-10-22 23:09:17	pantalla	apagada
+2026-10-22 23:16:16	pantalla	encendida
+2026-10-22 23:16:55	pantalla	apagada
+2026-10-22 23:23:07	pantalla	encendida
+2026-10-22 23:29:01	latido	linea_base		FUERA	true
+2026-10-22 23:38:25	visita	com.instagram.android	OTRA_APP	309	198	0	0	linea_base	0
+2026-10-22 23:41:55	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-22 23:42:03	segmento	DESCONOCIDO	visor sin señales claras	23:41:55	23:42:00	4	1	0	1
+2026-10-22 23:42:03	reel	DIRIGIDO	explorar		no seguida
+2026-10-22 23:43:13	segmento	DIRIGIDO	explorar	23:42:03	23:43:09	66	1	0	1
+2026-10-22 23:43:17	reel	DIRIGIDO	explorar		no seguida
+2026-10-22 23:43:32	segmento	DIRIGIDO	explorar	23:43:17	23:43:27	10	1	0	1
+2026-10-22 23:43:33	reel	DIRIGIDO	explorar		colab
+2026-10-22 23:43:56	segmento	DIRIGIDO	explorar	23:43:33	23:43:52	19	1	0	0
+2026-10-22 23:43:56	reel	DESCONOCIDO	visor sin señales claras		colab
+2026-10-22 23:43:58	segmento	DESCONOCIDO	visor sin señales claras	23:43:56	23:43:56	0	1	0	0
+2026-10-22 23:44:22	reel	DIRIGIDO	perfil		no seguida
+2026-10-22 23:44:45	reel	DIRIGIDO	perfil		no seguida
+2026-10-22 23:45:01	visita	com.instagram.android	OTRA_APP	194	191	0	0	linea_base	0
+2026-10-22 23:45:02	segmento	DIRIGIDO	perfil	23:44:22	23:45:00	37	2	0	2
+2026-10-22 23:59:01	latido	linea_base		FUERA	true
+2026-10-23 00:05:39	pantalla	apagada
+2026-10-23 00:05:48	pantalla	encendida
+2026-10-23 00:05:58	pantalla	apagada
+2026-10-23 00:06:02	pantalla	encendida
+2026-10-23 00:06:13	pantalla	apagada
+2026-10-23 00:06:25	pantalla	encendida
+2026-10-23 00:06:36	pantalla	apagada
+2026-10-23 00:06:42	pantalla	encendida
+2026-10-23 00:06:53	pantalla	apagada
+2026-10-23 00:16:42	pantalla	encendida
+2026-10-23 00:17:22	reel	DIRIGIDO	perfil		no seguida
+2026-10-23 00:17:57	segmento	DIRIGIDO	perfil	00:17:22	00:17:55	33	1	0	1
+2026-10-23 00:17:57	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-23 00:18:08	segmento	DESCONOCIDO	visor sin señales claras	00:17:57	00:18:07	9	1	1	0
+2026-10-23 00:18:10	reel	DIRIGIDO	explorar		anuncio
+2026-10-23 00:18:23	segmento	DIRIGIDO	explorar	00:18:10	00:18:22	11	1	1	0
+2026-10-23 00:18:24	pantalla	apagada
+2026-10-23 00:18:32	pantalla	encendida
+2026-10-23 00:18:42	pantalla	apagada
+2026-10-23 00:19:01	visita	com.instagram.android	OTRA_APP	62	27	0	0	linea_base	0
+2026-10-23 00:19:06	pantalla	encendida
+2026-10-23 00:19:09	reel	DIRIGIDO	explorar		anuncio
+2026-10-23 00:19:09	segmento	DIRIGIDO	explorar	00:19:09	00:19:09	0	1	1	0
+2026-10-23 00:19:10	pregunta_descartada	com.instagram.android	OTRA_APP	volvio_a_instagram	62	0
+2026-10-23 14:04:05	servicio_inicio	8.2	Redmi Note 9 Pro	29	false
+2026-10-23 14:04:05	latido	linea_base		FUERA	false
+2026-10-23 14:04:05	fase	linea_base
+2026-10-23 14:09:09	reel	DIRIGIDO	explorar		no seguida
+2026-10-23 14:09:22	segmento	DIRIGIDO	explorar	14:09:09	14:09:20	11	1	0	1
+2026-10-23 14:09:24	reel	DIRIGIDO	perfil		no seguida
+2026-10-23 14:10:27	segmento	DIRIGIDO	perfil	14:09:24	14:10:26	61	1	0	1
+2026-10-23 14:10:29	reel	DIRIGIDO	perfil		no seguida
+2026-10-23 14:10:33	segmento	DIRIGIDO	perfil	14:10:29	14:10:31	1	1	0	1
+2026-10-23 14:10:33	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 14:10:33	segmento	DESCONOCIDO	visor sin señales claras	14:10:33	14:10:33	0	1	0	1
+2026-10-23 14:10:33	pantalla	apagada
+2026-10-23 14:10:36	pantalla	encendida
+2026-10-23 14:10:50	pantalla	apagada
+2026-10-23 14:10:53	pantalla	encendida
+2026-10-23 14:11:03	visita	com.instagram.android	OTRA_APP	383	352	0	0	linea_base	0
+2026-10-23 14:11:03	pantalla	apagada
+2026-10-23 14:11:05	pantalla	encendida
+2026-10-23 14:11:15	pantalla	apagada
+2026-10-23 14:11:28	pantalla	encendida
+2026-10-23 14:11:39	pantalla	apagada
+2026-10-23 14:11:41	pantalla	encendida
+2026-10-23 14:11:51	pantalla	apagada
+2026-10-23 14:11:56	pantalla	encendida
+2026-10-23 14:12:17	pantalla	apagada
+2026-10-23 14:12:19	pantalla	encendida
+2026-10-23 14:12:30	pantalla	apagada
+2026-10-23 14:12:34	pantalla	encendida
+2026-10-23 14:12:44	pantalla	apagada
+2026-10-23 14:13:03	pantalla	encendida
+2026-10-23 14:13:13	pantalla	apagada
+2026-10-23 14:13:27	pantalla	encendida
+2026-10-23 14:13:38	pantalla	apagada
+2026-10-23 14:13:39	pantalla	encendida
+2026-10-23 14:13:50	pantalla	apagada
+2026-10-23 14:13:56	pantalla	encendida
+2026-10-23 14:14:14	pregunta_descartada	com.instagram.android	OTRA_APP	volvio_a_instagram	383	0
+2026-10-23 14:14:49	pantalla	apagada
+2026-10-23 14:15:14	pantalla	encendida
+2026-10-23 14:15:44	visita	com.instagram.android	OTRA_APP	36	34	0	0	linea_base	0
+2026-10-23 14:16:12	pantalla	apagada
+2026-10-23 14:25:50	pregunta_vencida	com.instagram.android	OTRA_APP	14:15:44		regular	36	0
+2026-10-23 14:35:06	latido	linea_base		FUERA	false
+2026-10-23 14:40:14	pantalla	encendida
+2026-10-23 14:40:25	pantalla	apagada
+2026-10-23 14:40:41	pantalla	encendida
+2026-10-23 14:40:42	pantalla	apagada
+2026-10-23 14:40:43	pantalla	encendida
+2026-10-23 14:47:24	reel	DIRIGIDO	perfil		no seguida
+2026-10-23 14:48:12	segmento	DIRIGIDO	perfil	14:47:24	14:48:10	46	1	0	1
+2026-10-23 14:53:04	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 14:56:45	segmento	DESCONOCIDO	visor sin señales claras	14:53:04	14:56:44	219	1	0	1
+2026-10-23 14:56:47	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 14:57:14	segmento	DESCONOCIDO	visor sin señales claras	14:56:47	14:57:12	24	1	0	1
+2026-10-23 14:57:33	reel	DIRIGIDO	perfil		colab
+2026-10-23 14:58:19	segmento	DIRIGIDO	perfil	14:57:33	14:58:18	44	1	0	0
+2026-10-23 14:58:19	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 15:00:13	segmento	DESCONOCIDO	visor sin señales claras	14:58:19	15:00:11	111	1	0	1
+2026-10-23 15:00:13	reel	ARRASTRE	pestaña reels		colab
+2026-10-23 15:01:40	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-23 15:02:56	segmento	ARRASTRE	pestaña reels	15:00:13	15:02:54	160	2	0	1
+2026-10-23 15:02:59	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 15:03:00	segmento	DESCONOCIDO	visor sin señales claras	15:02:59	15:02:59	0	1	0	1
+2026-10-23 15:03:05	reel	DIRIGIDO	perfil		no seguida
+2026-10-23 15:04:02	segmento	DIRIGIDO	perfil	15:03:05	15:04:00	55	1	0	1
+2026-10-23 15:04:22	visita	com.instagram.android	OTRA_APP	1415	570	0	0	linea_base	161
+2026-10-23 15:04:24	pregunta_mostrada	com.instagram.android	OTRA_APP	15:04:22	linea_base	regular	1415	161
+2026-10-23 15:04:40	respuesta	com.instagram.android	OTRA_APP	15:04:22	161	linea_base	habitual	2	3	regular	1415
+2026-10-23 15:05:07	latido	linea_base		FUERA	false
+2026-10-23 15:06:18	pantalla	apagada
+2026-10-23 15:09:00	pantalla	encendida
+2026-10-23 15:14:48	visita	com.instagram.android	OTRA_APP	21	0	0	0	linea_base	0
+2026-10-23 15:14:55	pantalla	apagada
+2026-10-23 15:16:44	pantalla	encendida
+2026-10-23 15:17:31	pantalla	apagada
+2026-10-23 15:17:57	pantalla	encendida
+2026-10-23 15:18:13	pantalla	apagada
+2026-10-23 15:18:19	pantalla	encendida
+2026-10-23 15:23:47	reel	DIRIGIDO	perfil		no seguida
+2026-10-23 15:23:59	segmento	DIRIGIDO	perfil	15:23:47	15:23:56	9	1	0	1
+2026-10-23 15:25:15	visita	com.instagram.android	OTRA_APP	140	137	0	0	linea_base	0
+2026-10-23 15:29:14	visita	com.instagram.android	OTRA_APP	29	0	0	0	linea_base	0
+2026-10-23 15:29:41	pantalla	apagada
+2026-10-23 15:29:52	pantalla	encendida
+2026-10-23 15:30:09	pantalla	apagada
+2026-10-23 15:30:55	pantalla	encendida
+2026-10-23 15:31:22	reel	DIRIGIDO	perfil		no seguida
+2026-10-23 15:31:30	reel	DIRIGIDO	perfil		colab
+2026-10-23 15:33:04	reel	DIRIGIDO	perfil		no seguida
+2026-10-23 15:33:25	segmento	DIRIGIDO	perfil	15:31:22	15:33:22	120	3	0	2
+2026-10-23 15:33:25	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 15:33:26	segmento	DESCONOCIDO	visor sin señales claras	15:33:25	15:33:25	0	1	0	1
+2026-10-23 15:33:26	reel	DIRIGIDO	perfil		no seguida
+2026-10-23 15:33:41	segmento	DIRIGIDO	perfil	15:33:26	15:33:39	12	1	0	1
+2026-10-23 15:33:43	segmento	DESCONOCIDO	visor sin señales claras	15:33:41	15:33:41	0	0	0	0
+2026-10-23 15:33:43	reel	DIRIGIDO	perfil		no seguida
+2026-10-23 15:35:07	latido	linea_base	com.instagram.android	DIRIGIDO	false
+2026-10-23 15:35:51	segmento	DIRIGIDO	perfil	15:33:43	15:35:49	126	1	0	1
+2026-10-23 15:35:51	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 15:36:02	reel	DESCONOCIDO	visor sin señales claras		colab
+2026-10-23 15:37:38	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 15:38:22	segmento	DESCONOCIDO	visor sin señales claras	15:35:51	15:38:21	150	3	0	2
+2026-10-23 15:38:22	reel	DIRIGIDO	explorar		no seguida
+2026-10-23 15:38:34	segmento	DIRIGIDO	explorar	15:38:22	15:38:31	8	1	0	1
+2026-10-23 15:38:34	reel	DIRIGIDO	perfil		no seguida
+2026-10-23 15:38:35	segmento	DIRIGIDO	perfil	15:38:34	15:38:34	0	1	0	1
+2026-10-23 15:38:35	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-23 15:39:13	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 15:40:25	segmento	DESCONOCIDO	visor sin señales claras	15:38:35	15:40:22	106	2	1	1
+2026-10-23 15:40:35	reel	DIRIGIDO	explorar		no seguida
+2026-10-23 15:40:55	segmento	DIRIGIDO	explorar	15:40:35	15:40:53	17	1	0	1
+2026-10-23 15:40:55	reel	ARRASTRE	explorar deslizando		no seguida
+2026-10-23 15:42:06	reel	ARRASTRE	explorar deslizando		no seguida
+2026-10-23 15:42:35	segmento	ARRASTRE	explorar deslizando	15:40:55	15:42:33	97	2	0	2
+2026-10-23 15:42:41	reel	DIRIGIDO	explorar		no seguida
+2026-10-23 15:43:03	segmento	DIRIGIDO	explorar	15:42:41	15:43:01	19	1	0	1
+2026-10-23 15:43:03	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-23 15:43:05	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 15:44:20	segmento	DESCONOCIDO	visor sin señales claras	15:43:03	15:44:18	74	2	1	1
+2026-10-23 15:50:01	reel	DIRIGIDO	explorar		no seguida
+2026-10-23 15:50:08	segmento	DIRIGIDO	explorar	15:50:01	15:50:06	4	1	0	1
+2026-10-23 15:50:14	reel	DIRIGIDO	explorar		no seguida
+2026-10-23 15:50:18	segmento	DIRIGIDO	explorar	15:50:14	15:50:18	3	1	0	1
+2026-10-23 15:50:21	reel	DIRIGIDO	explorar		no seguida
+2026-10-23 15:50:33	segmento	DIRIGIDO	explorar	15:50:21	15:50:31	10	1	0	1
+2026-10-23 15:50:33	reel	ARRASTRE	explorar deslizando		no seguida
+2026-10-23 15:50:55	reel	ARRASTRE	explorar deslizando		no seguida
+2026-10-23 15:53:12	segmento	ARRASTRE	explorar deslizando	15:50:33	15:53:09	156	2	0	2
+2026-10-23 15:53:12	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-23 15:53:18	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 15:55:09	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 15:55:24	segmento	DESCONOCIDO	visor sin señales claras	15:53:12	15:55:23	131	3	1	2
+2026-10-23 15:55:30	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 15:57:07	segmento	DESCONOCIDO	visor sin señales claras	15:55:30	15:57:05	94	1	0	1
+2026-10-23 15:58:29	segmento	DESCONOCIDO	visor sin señales claras	15:58:27	15:58:27	0	0	0	0
+2026-10-23 15:58:29	reel	DIRIGIDO	perfil		colab
+2026-10-23 16:00:37	segmento	DIRIGIDO	perfil	15:58:29	16:00:34	124	1	0	0
+2026-10-23 16:01:16	visita	com.instagram.android	OTRA_APP	1770	1478	0	0	linea_base	258
+2026-10-23 16:03:06	pregunta_mostrada	com.instagram.android	OTRA_APP	16:01:16	linea_base	sesion_larga	1770	258
+2026-10-23 16:03:23	respuesta	com.instagram.android	OTRA_APP	16:01:16	258	linea_base	no_se	2	4	sesion_larga	1770
+2026-10-23 16:04:54	pantalla	apagada
+2026-10-23 16:04:56	pantalla	encendida
+2026-10-23 16:05:06	pantalla	apagada
+2026-10-23 16:05:08	latido	linea_base		FUERA	false
+2026-10-23 16:05:14	pantalla	encendida
+2026-10-23 16:06:19	pantalla	apagada
+2026-10-23 16:06:24	pantalla	encendida
+2026-10-23 16:06:34	pantalla	apagada
+2026-10-23 16:06:40	pantalla	encendida
+2026-10-23 16:06:50	pantalla	apagada
+2026-10-23 16:06:52	pantalla	encendida
+2026-10-23 16:07:01	pantalla	apagada
+2026-10-23 16:07:04	pantalla	encendida
+2026-10-23 16:08:16	pantalla	apagada
+2026-10-23 16:11:10	pantalla	encendida
+2026-10-23 16:11:20	pantalla	apagada
+2026-10-23 16:13:05	pantalla	encendida
+2026-10-23 16:13:16	pantalla	apagada
+2026-10-23 16:13:57	pantalla	encendida
+2026-10-23 16:14:07	pantalla	apagada
+2026-10-23 16:14:09	pantalla	encendida
+2026-10-23 16:14:19	pantalla	apagada
+2026-10-23 16:16:21	pantalla	encendida
+2026-10-23 16:16:32	pantalla	apagada
+2026-10-23 16:17:40	pantalla	encendida
+2026-10-23 16:17:50	pantalla	apagada
+2026-10-23 16:18:01	pantalla	encendida
+2026-10-23 16:18:12	pantalla	apagada
+2026-10-23 16:19:09	pantalla	encendida
+2026-10-23 16:19:19	pantalla	apagada
+2026-10-23 16:20:04	pantalla	encendida
+2026-10-23 16:20:15	pantalla	apagada
+2026-10-23 16:26:00	pantalla	encendida
+2026-10-23 16:26:10	pantalla	apagada
+2026-10-23 16:26:58	pantalla	encendida
+2026-10-23 16:27:08	pantalla	apagada
+2026-10-23 16:27:53	pantalla	encendida
+2026-10-23 16:28:03	pantalla	apagada
+2026-10-23 16:30:03	pantalla	encendida
+2026-10-23 16:30:14	pantalla	apagada
+2026-10-23 16:34:43	pantalla	encendida
+2026-10-23 16:34:53	pantalla	apagada
+2026-10-23 16:35:16	latido	linea_base		FUERA	false
+2026-10-23 16:37:04	pantalla	encendida
+2026-10-23 16:37:14	pantalla	apagada
+2026-10-23 16:37:26	pantalla	encendida
+2026-10-23 16:37:36	pantalla	apagada
+2026-10-23 16:39:05	pantalla	encendida
+2026-10-23 16:39:15	pantalla	apagada
+2026-10-23 16:41:18	pantalla	encendida
+2026-10-23 16:41:28	pantalla	apagada
+2026-10-23 16:41:30	pantalla	encendida
+2026-10-23 16:41:40	pantalla	apagada
+2026-10-23 16:44:55	pantalla	encendida
+2026-10-23 16:45:06	pantalla	apagada
+2026-10-23 16:45:23	pantalla	encendida
+2026-10-23 16:45:34	pantalla	apagada
+2026-10-23 16:45:36	pantalla	encendida
+2026-10-23 16:45:47	pantalla	apagada
+2026-10-23 16:45:50	pantalla	encendida
+2026-10-23 16:45:59	pantalla	apagada
+2026-10-23 16:46:06	pantalla	encendida
+2026-10-23 16:46:16	pantalla	apagada
+2026-10-23 16:46:24	pantalla	encendida
+2026-10-23 16:46:34	pantalla	apagada
+2026-10-23 16:46:43	pantalla	encendida
+2026-10-23 16:46:53	pantalla	apagada
+2026-10-23 16:47:03	pantalla	encendida
+2026-10-23 16:47:13	pantalla	apagada
+2026-10-23 16:47:29	pantalla	encendida
+2026-10-23 16:57:51	reel	DIRIGIDO	enviado por mensaje		no seguida
+2026-10-23 16:58:07	segmento	DIRIGIDO	enviado por mensaje	16:57:51	16:58:04	13	1	0	1
+2026-10-23 17:01:21	pantalla	apagada
+2026-10-23 17:01:25	pantalla	encendida
+2026-10-23 17:01:36	pantalla	apagada
+2026-10-23 17:02:03	pantalla	encendida
+2026-10-23 17:02:14	pantalla	apagada
+2026-10-23 17:02:34	visita	com.instagram.android	OTRA_APP	682	606	0	0	linea_base	0
+2026-10-23 17:03:12	pantalla	encendida
+2026-10-23 17:03:22	pantalla	apagada
+2026-10-23 17:04:43	pantalla	encendida
+2026-10-23 17:04:54	pantalla	apagada
+2026-10-23 17:05:20	latido	linea_base		FUERA	false
+2026-10-23 17:06:09	pantalla	encendida
+2026-10-23 17:09:17	visita	com.instagram.android	INICIO	148	96	0	0	linea_base	0
+2026-10-23 17:11:48	pantalla	apagada
+2026-10-23 17:11:59	pantalla	encendida
+2026-10-23 17:21:54	visita	com.instagram.android	OTRA_APP	554	130	0	0	linea_base	0
+2026-10-23 17:23:20	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-23 17:26:02	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-23 17:27:09	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-23 17:27:12	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-23 17:28:28	reel	ARRASTRE	pestaña reels		no seguida
+2026-10-23 17:30:50	segmento	ARRASTRE	pestaña reels	17:23:20	17:30:49	448	5	0	5
+2026-10-23 17:31:23	visita	com.instagram.android	INICIO	528	481	0	0	linea_base	450
+2026-10-23 17:31:29	pantalla	apagada
+2026-10-23 17:31:32	pantalla	encendida
+2026-10-23 17:31:44	pantalla	apagada
+2026-10-23 17:35:47	latido	linea_base		FUERA	false
+2026-10-23 17:40:20	pantalla	encendida
+2026-10-23 17:40:22	pantalla	apagada
+2026-10-23 17:44:45	pantalla	encendida
+2026-10-23 17:45:10	pantalla	apagada
+2026-10-23 17:45:15	pantalla	encendida
+2026-10-23 17:47:13	pantalla	apagada
+2026-10-23 17:47:15	pantalla	encendida
+2026-10-23 17:47:29	pantalla	apagada
+2026-10-23 17:47:39	pantalla	encendida
+2026-10-23 17:49:13	pantalla	apagada
+2026-10-23 17:49:25	pantalla	encendida
+2026-10-23 17:49:49	visita	com.instagram.android	INICIO	18	0	0	0	linea_base	0
+2026-10-23 17:49:49	pregunta_mostrada	com.instagram.android	INICIO	17:49:49	linea_base	regular	18	0
+2026-10-23 17:49:55	respuesta	com.instagram.android	INICIO	17:49:49	0	linea_base	instrumental	2	2	regular	18
+2026-10-23 17:51:10	pantalla	apagada
+2026-10-23 17:51:17	pantalla	encendida
+2026-10-23 17:51:28	pantalla	apagada
+2026-10-23 17:51:29	pantalla	encendida
+2026-10-23 17:51:40	pantalla	apagada
+2026-10-23 17:51:46	pantalla	encendida
+2026-10-23 17:51:57	pantalla	apagada
+2026-10-23 17:52:10	pantalla	encendida
+2026-10-23 17:52:50	pantalla	apagada
+2026-10-23 17:56:15	pantalla	encendida
+2026-10-23 17:56:25	pantalla	apagada
+2026-10-23 18:04:03	pantalla	encendida
+2026-10-23 18:05:48	latido	linea_base		FUERA	false
+2026-10-23 18:05:50	visita	com.instagram.android	OTRA_APP	43	42	0	0	linea_base	0
+2026-10-23 18:09:47	visita	com.instagram.android	OTRA_APP	138	3	0	0	linea_base	0
+2026-10-23 18:15:56	pantalla	apagada
+2026-10-23 18:21:35	pantalla	encendida
+2026-10-23 18:21:46	pantalla	apagada
+2026-10-23 18:22:04	visita	com.instagram.android	OTRA_APP	354	240	0	0	linea_base	0
+2026-10-23 18:35:49	latido	linea_base		FUERA	false
+2026-10-23 18:42:15	pantalla	encendida
+2026-10-23 18:42:26	pantalla	apagada
+2026-10-23 18:43:02	pantalla	encendida
+2026-10-23 18:43:12	pantalla	apagada
+2026-10-23 18:43:16	pantalla	encendida
+2026-10-23 18:43:23	pantalla	apagada
+2026-10-23 18:46:05	pantalla	encendida
+2026-10-23 18:46:16	pantalla	apagada
+2026-10-23 18:55:39	pantalla	encendida
+2026-10-23 18:55:49	pantalla	apagada
+2026-10-23 18:56:59	pantalla	encendida
+2026-10-23 18:57:09	pantalla	apagada
+2026-10-23 18:59:42	pantalla	encendida
+2026-10-23 18:59:53	pantalla	apagada
+2026-10-23 19:01:52	pantalla	encendida
+2026-10-23 19:02:02	pantalla	apagada
+2026-10-23 19:05:50	latido	linea_base		FUERA	false
+2026-10-23 19:14:11	pantalla	encendida
+2026-10-23 19:14:21	pantalla	apagada
+2026-10-23 19:31:07	pantalla	encendida
+2026-10-23 19:31:22	pantalla	apagada
+2026-10-23 19:35:53	latido	linea_base		FUERA	false
+2026-10-23 19:38:15	pantalla	encendida
+2026-10-23 19:38:25	pantalla	apagada
+2026-10-23 19:39:07	pantalla	encendida
+2026-10-23 19:47:00	visita	com.instagram.android	OTRA_APP	78	42	0	0	linea_base	0
+2026-10-23 19:48:15	pregunta_descartada	com.instagram.android	OTRA_APP	volvio_a_instagram	78	0
+2026-10-23 19:50:48	visita	com.instagram.android	OTRA_APP	121	0	0	0	linea_base	0
+2026-10-23 19:50:50	pregunta_descartada	com.instagram.android	OTRA_APP	volvio_a_instagram	121	0
+2026-10-23 19:51:45	visita	com.instagram.android	OTRA_APP	25	0	0	0	linea_base	0
+2026-10-23 20:01:46	pregunta_vencida	com.instagram.android	OTRA_APP	19:51:45		regular	25	0
+2026-10-23 20:05:54	latido	linea_base	com.instagram.android	FUERA	false
+2026-10-23 20:08:43	pantalla	apagada
+2026-10-23 20:09:27	pantalla	encendida
+2026-10-23 20:09:58	pantalla	apagada
+2026-10-23 20:10:22	pantalla	encendida
+2026-10-23 20:13:59	pantalla	apagada
+2026-10-23 20:14:01	pantalla	encendida
+2026-10-23 20:31:37	visita	com.instagram.android	OTRA_APP	304	163	0	0	linea_base	0
+2026-10-23 20:33:02	pregunta_descartada	com.instagram.android	OTRA_APP	volvio_a_instagram	304	0
+2026-10-23 20:35:54	latido	linea_base	com.instagram.android	FUERA	false
+2026-10-23 20:43:53	reel	DIRIGIDO	enviado por mensaje		no seguida
+2026-10-23 20:44:18	segmento	DIRIGIDO	enviado por mensaje	20:43:53	20:44:16	23	1	0	1
+2026-10-23 20:45:20	reel	DIRIGIDO	enviado por mensaje		no seguida
+2026-10-23 20:45:22	segmento	DIRIGIDO	enviado por mensaje	20:45:20	20:45:20	0	1	0	1
+2026-10-23 20:45:28	reel	DIRIGIDO	enviado por mensaje		no seguida
+2026-10-23 20:45:45	segmento	DIRIGIDO	enviado por mensaje	20:45:28	20:45:42	14	1	0	1
+2026-10-23 20:45:47	visita	com.instagram.android	INICIO	763	546	0	0	linea_base	0
+2026-10-23 20:45:48	pregunta_mostrada	com.instagram.android	INICIO	20:45:47	linea_base	regular	763	0
+2026-10-23 20:45:56	respuesta	com.instagram.android	INICIO	20:45:47	0	linea_base	instrumental	4	6	regular	763
+2026-10-23 20:48:07	visita	com.instagram.android	INICIO	72	64	0	0	linea_base	0
+2026-10-23 20:52:13	pantalla	apagada
+2026-10-23 20:52:31	pantalla	encendida
+2026-10-23 20:53:45	visita	com.instagram.android	INICIO	182	169	0	0	linea_base	0
+2026-10-23 20:58:23	visita	com.instagram.android	OTRA_APP	16	0	0	0	linea_base	0
+2026-10-23 21:00:38	pantalla	apagada
+2026-10-23 21:00:50	pantalla	encendida
+2026-10-23 21:01:01	pantalla	apagada
+2026-10-23 21:01:21	visita	com.instagram.android	OTRA_APP	134	124	0	0	linea_base	0
+2026-10-23 21:01:22	pantalla	encendida
+2026-10-23 21:02:09	reel	DIRIGIDO	explorar		no seguida
+2026-10-23 21:02:13	segmento	DIRIGIDO	explorar	21:02:09	21:02:10	1	1	0	1
+2026-10-23 21:02:19	visita	com.instagram.android	INICIO	50	50	0	0	linea_base	0
+2026-10-23 21:03:51	reel	DIRIGIDO	perfil		no seguida
+2026-10-23 21:04:45	reel	DIRIGIDO	perfil		no seguida
+2026-10-23 21:05:32	reel	DIRIGIDO	perfil		no seguida
+2026-10-23 21:05:54	latido	linea_base	com.instagram.android	DIRIGIDO	false
+2026-10-23 21:06:22	segmento	DIRIGIDO	perfil	21:03:51	21:06:19	148	3	0	3
+2026-10-23 21:06:22	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 21:06:54	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 21:06:55	segmento	DESCONOCIDO	visor sin señales claras	21:06:22	21:06:54	32	2	0	2
+2026-10-23 21:06:55	reel	DIRIGIDO	perfil		no seguida
+2026-10-23 21:08:32	segmento	DIRIGIDO	perfil	21:06:55	21:08:30	94	1	0	1
+2026-10-23 21:08:32	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 21:15:47	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 21:19:46	segmento	DESCONOCIDO	visor sin señales claras	21:08:32	21:19:46	673	2	0	2
+2026-10-23 21:20:24	visita	com.instagram.android	OTRA_APP	987	474	0	0	linea_base	0
+2026-10-23 21:21:07	reel	DIRIGIDO	perfil		no seguida
+2026-10-23 21:21:38	segmento	DIRIGIDO	perfil	21:21:07	21:21:36	29	1	0	1
+2026-10-23 21:21:38	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-23 21:22:18	segmento	DESCONOCIDO	visor sin señales claras	21:21:38	21:22:15	37	1	1	0
+2026-10-23 21:22:18	reel	DIRIGIDO	explorar		anuncio
+2026-10-23 21:22:21	segmento	DIRIGIDO	explorar	21:22:18	21:22:20	2	1	1	0
+2026-10-23 21:22:53	reel	DIRIGIDO	explorar		anuncio
+2026-10-23 21:22:55	segmento	DIRIGIDO	explorar	21:22:53	21:22:53	0	1	1	0
+2026-10-23 21:22:59	reel	DIRIGIDO	explorar		no seguida
+2026-10-23 21:23:18	segmento	DIRIGIDO	explorar	21:22:59	21:23:16	16	1	0	1
+2026-10-23 21:23:20	reel	DIRIGIDO	explorar		no seguida
+2026-10-23 21:24:07	segmento	DIRIGIDO	explorar	21:23:20	21:24:05	45	1	0	1
+2026-10-23 21:24:39	visita	com.instagram.android	OTRA_APP	182	151	0	0	linea_base	0
+2026-10-23 21:24:53	pantalla	apagada
+2026-10-23 21:25:48	pantalla	encendida
+2026-10-23 21:25:56	reel	DIRIGIDO	explorar		no seguida
+2026-10-23 21:25:58	segmento	DIRIGIDO	explorar	21:25:56	21:25:56	0	1	0	1
+2026-10-23 21:25:58	reel	ARRASTRE	explorar deslizando		no seguida
+2026-10-23 21:26:00	reel	ARRASTRE	explorar deslizando		no seguida
+2026-10-23 21:26:14	reel	ARRASTRE	explorar deslizando		no seguida
+2026-10-23 21:27:55	segmento	ARRASTRE	explorar deslizando	21:25:58	21:27:53	114	3	0	3
+2026-10-23 21:27:55	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 21:28:03	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 21:28:43	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 21:30:43	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 21:30:52	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-23 21:30:54	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 21:31:28	segmento	DESCONOCIDO	visor sin señales claras	21:27:55	21:31:27	211	6	1	5
+2026-10-23 21:31:35	reel	DIRIGIDO	explorar		no seguida
+2026-10-23 21:31:54	segmento	DIRIGIDO	explorar	21:31:35	21:31:52	16	1	0	1
+2026-10-23 21:31:56	reel	DIRIGIDO	explorar		no seguida
+2026-10-23 21:32:04	segmento	DIRIGIDO	explorar	21:31:56	21:32:02	6	1	0	1
+2026-10-23 21:32:06	reel	DIRIGIDO	perfil		no seguida
+2026-10-23 21:35:33	segmento	DIRIGIDO	perfil	21:32:06	21:35:31	205	1	0	1
+2026-10-23 21:35:55	latido	linea_base		FUERA	false
+2026-10-23 21:36:04	visita	com.instagram.android	OTRA_APP	577	425	0	0	linea_base	116
+2026-10-23 21:36:34	pantalla	apagada
+2026-10-23 21:37:03	pantalla	encendida
+2026-10-23 21:37:16	reel	DIRIGIDO	perfil		colab
+2026-10-23 21:40:59	pantalla	apagada
+2026-10-23 21:41:00	segmento	DIRIGIDO	perfil	21:37:16	21:40:59	222	1	0	0
+2026-10-23 21:41:45	pantalla	encendida
+2026-10-23 21:41:54	reel	DIRIGIDO	perfil		colab
+2026-10-23 21:42:29	segmento	DIRIGIDO	perfil	21:41:54	21:41:54	0	1	0	0
+2026-10-23 21:42:29	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-23 21:42:34	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 21:43:50	segmento	DESCONOCIDO	visor sin señales claras	21:42:29	21:43:46	76	2	1	1
+2026-10-23 21:44:02	reel	DIRIGIDO	perfil		no seguida
+2026-10-23 21:44:49	reel	DIRIGIDO	perfil		no seguida
+2026-10-23 21:45:17	reel	DIRIGIDO	perfil		no seguida
+2026-10-23 21:45:39	segmento	DIRIGIDO	perfil	21:44:02	21:45:26	84	3	0	3
+2026-10-23 21:45:39	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-23 21:48:10	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 21:48:20	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 21:49:24	segmento	DESCONOCIDO	visor sin señales claras	21:45:39	21:49:24	224	3	1	2
+2026-10-23 21:49:33	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 21:50:36	segmento	DESCONOCIDO	visor sin señales claras	21:49:33	21:50:34	60	1	0	1
+2026-10-23 21:50:51	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 21:50:58	reel	DESCONOCIDO	visor sin señales claras		colab
+2026-10-23 21:51:11	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 21:51:15	segmento	DESCONOCIDO	visor sin señales claras	21:50:51	21:51:11	19	3	0	2
+2026-10-23 21:51:48	visita	com.instagram.android	OTRA_APP	233	0	0	0	linea_base	0
+2026-10-23 21:51:59	reel	DIRIGIDO	perfil		no seguida
+2026-10-23 21:53:21	segmento	DIRIGIDO	perfil	21:51:59	21:53:20	81	1	0	1
+2026-10-23 21:53:21	reel	DESCONOCIDO	visor sin señales claras		anuncio
+2026-10-23 21:53:25	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 21:53:50	segmento	DESCONOCIDO	visor sin señales claras	21:53:21	21:53:48	27	2	1	1
+2026-10-23 21:54:28	reel	DIRIGIDO	perfil		no seguida
+2026-10-23 21:54:36	segmento	DIRIGIDO	perfil	21:54:28	21:54:34	6	1	0	1
+2026-10-23 21:54:45	reel	DIRIGIDO	perfil		no seguida
+2026-10-23 21:54:47	segmento	DIRIGIDO	perfil	21:54:45	21:54:45	0	1	0	1
+2026-10-23 21:54:47	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 21:55:15	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 21:55:21	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 21:56:11	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 21:56:41	reel	DESCONOCIDO	visor sin señales claras		no seguida
+2026-10-23 21:56:57	segmento	DESCONOCIDO	visor sin señales claras	21:54:47	21:56:54	127	5	0	5
+2026-10-23 22:05:55	latido	linea_base	com.instagram.android	FUERA	false
+2026-10-23 22:07:13	pantalla	apagada
+2026-10-23 22:13:54	pantalla	encendida
+2026-10-23 22:14:05	pantalla	apagada
+2026-10-23 22:14:28	visita	com.instagram.android	OTRA_APP	914	506	0	0	linea_base	0
+2026-10-23 22:36:20	latido	linea_base		FUERA	false
+2026-10-23 23:06:21	latido	linea_base		FUERA	false
+2026-10-23 23:11:22	pantalla	encendida
+2026-10-23 23:13:52	visita	com.instagram.android	OTRA_APP	99	32	0	0	linea_base	0
+2026-10-23 23:14:09	pregunta_descartada	com.instagram.android	OTRA_APP	volvio_a_instagram	99	0
+2026-10-23 23:15:54	visita	com.instagram.android	OTRA_APP	74	0	0	0	linea_base	0
+2026-10-23 23:18:03	pantalla	apagada
+2026-10-23 23:18:27	pantalla	encendida
+2026-10-23 23:18:38	pantalla	apagada
+2026-10-23 23:22:31	pantalla	encendida
+2026-10-23 23:22:41	pantalla	apagada
+2026-10-23 23:23:10	pantalla	encendida
+2026-10-23 23:23:21	pantalla	apagada
+2026-10-23 23:23:55	pantalla	encendida
+2026-10-23 23:24:05	pantalla	apagada
+2026-10-23 23:24:19	pantalla	encendida
+2026-10-23 23:24:30	pantalla	apagada
+2026-10-23 23:24:33	pantalla	encendida
+2026-10-23 23:24:43	pantalla	apagada
+2026-10-23 23:25:02	pantalla	encendida
+2026-10-23 23:25:06	pantalla	apagada
+2026-10-23 23:25:23	pantalla	encendida
+2026-10-23 23:25:33	pantalla	apagada
+2026-10-23 23:25:39	pantalla	encendida
+2026-10-23 23:25:49	pantalla	apagada
+2026-10-23 23:26:02	pregunta_vencida	com.instagram.android	OTRA_APP	23:15:54		regular	74	0
+2026-10-23 23:26:03	pantalla	encendida
+2026-10-23 23:26:13	pantalla	apagada
+2026-10-23 23:26:28	pantalla	encendida
+2026-10-23 23:26:38	pantalla	apagada
+2026-10-23 23:26:41	pantalla	encendida
+2026-10-23 23:26:51	pantalla	apagada
+2026-10-23 23:30:19	pantalla	encendida
+2026-10-23 23:30:30	pantalla	apagada
+2026-10-23 23:30:56	pantalla	encendida
+2026-10-23 23:32:54	pantalla	apagada
+2026-10-23 23:32:57	visita	com.instagram.android	OTRA_APP	30	21	0	0	linea_base	0
+2026-10-23 23:32:57	pantalla	encendida
+2026-10-23 23:33:08	pantalla	apagada
+2026-10-23 23:36:21	latido	linea_base		FUERA	false
+2026-10-23 23:41:57	pantalla	encendida
+2026-10-23 23:42:15	pregunta_mostrada	com.instagram.android	OTRA_APP	23:32:57	linea_base	regular	30	0
+2026-10-23 23:42:17	pregunta_abandonada	otra_app
+2026-10-23 23:43:35	visita	com.instagram.android	INICIO	0	0	0	0	linea_base	0
+2026-10-23 23:45:02	pantalla	apagada
+2026-10-23 23:45:13	pantalla	encendida
+2026-10-23 23:45:25	pantalla	apagada
+2026-10-23 23:45:44	visita	com.instagram.android	OTRA_APP	85	0	0	0	linea_base	0
+2026-10-23 23:55:30	pantalla	encendida
+2026-10-23 23:55:33	pantalla	apagada
+2026-10-23 23:55:34	pantalla	encendida
+2026-10-23 23:55:46	pantalla	apagada
+2026-10-24 00:06:31	latido	linea_base		FUERA	false
