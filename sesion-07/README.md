@@ -152,4 +152,3 @@ revisar estos conceptos de mi  hipótesis, evetnualmente cambiarlas. En teoria p
 2. aplicar ajustes de ui
 3. definir instrumetnos de validación
 4. diseñar el experimento. VALIDAR
-git pull
