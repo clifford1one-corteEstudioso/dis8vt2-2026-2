@@ -17,8 +17,8 @@ todo lo importante, por tema y no por clase. Dentro de cada tema, lo más nuevo 
 - [memoria.md](memoria.md): texto completo, descargado del doc
 - [plan de diagramación del marco teórico](sesion-04/avance/avance-memoria/README.md)
 - [diagramas HTML](sesion-04/avance/avance-memoria/diagramas/index.html): una lámina por página con pieza
-- [referentes de diseño de memoria](sesion-03/avance%20memoria/README.md)
-- [página de transición ascii](sesion-03/avance%20memoria/pagina_transicion_ascii_claude.html)
+- [referentes de diseño de memoria](sesion-03/avance-memoria/README.md)
+- [página de transición ascii](sesion-03/avance-memoria/pagina_transicion_ascii_claude.html)
 - [correcciones a la memoria](sesion-02/plan-claude/correcciones-memoria.md)
 
 archivos de Affinity:
